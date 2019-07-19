@@ -11,6 +11,11 @@
 |
 */
 
-$router->get('/{route:.*}/', function ()  {
-    return view('app');
+$router->get('/', function () use ($router) {
+    return $router->app->version();
 });
+
+
+//$router->get('/{route:.*}/', function ()  {
+//    return view('app');
+//});
