@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0a03024b86b6ea6c7a5afe200f4dc8a",
+    "content-hash": "458aaee8e3716a16a84a6d70f17188b9",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -189,16 +189,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.9",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25"
+                "reference": "a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/128cc721d771ec2c46ce59698f4ca42b73f71b25",
-                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec",
+                "reference": "a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec",
                 "shasum": ""
             },
             "require": {
@@ -208,7 +208,8 @@
             "require-dev": {
                 "dominicsayers/isemail": "dev-master",
                 "phpunit/phpunit": "^4.8.35||^5.7||^6.0",
-                "satooshi/php-coveralls": "^1.0.1"
+                "satooshi/php-coveralls": "^1.0.1",
+                "symfony/phpunit-bridge": "^4.4@dev"
             },
             "suggest": {
                 "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
@@ -242,7 +243,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-06-23T10:14:27+00:00"
+            "time": "2019-07-19T20:52:08+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -606,44 +607,6 @@
             "time": "2018-08-22T07:45:22+00:00"
         },
         {
-            "name": "mlntn/lumen-artisan-serve",
-            "version": "1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mlntn/lumen-artisan-serve.git",
-                "reference": "554c5ce862f92a92895cf05bf25ba04f21ca8714"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mlntn/lumen-artisan-serve/zipball/554c5ce862f92a92895cf05bf25ba04f21ca8714",
-                "reference": "554c5ce862f92a92895cf05bf25ba04f21ca8714",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jared Mellentine",
-                    "email": "jared@mellentine.com"
-                }
-            ],
-            "description": "artisan serve for Lumen projects",
-            "homepage": "http://github.com/mlntn/lumen-artisan-serve",
-            "keywords": [
-                "artisan",
-                "lumen"
-            ],
-            "time": "2018-05-28T02:23:21+00:00"
-        },
-        {
             "name": "monolog/monolog",
             "version": "1.24.0",
             "source": {
@@ -894,59 +857,6 @@
                 "serialize"
             ],
             "time": "2019-07-09T21:58:11+00:00"
-        },
-        {
-            "name": "pallares/laravel-nuxt",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/skyrpex/laravel-nuxt.git",
-                "reference": "8f9c9bb16ac5d011f703935ebf544e7ab3323410"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/skyrpex/laravel-nuxt/zipball/8f9c9bb16ac5d011f703935ebf544e7ab3323410",
-                "reference": "8f9c9bb16ac5d011f703935ebf544e7ab3323410",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*",
-                "php": ">=7.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Pallares\\LaravelNuxt\\LaravelNuxtServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Pallares\\LaravelNuxt\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Pallarés",
-                    "email": "cristian@pallares.io",
-                    "homepage": "https://pallares.io",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Build a SPA with Laravel and Nuxt",
-            "homepage": "https://github.com/skyrpex/laravel-nuxt",
-            "keywords": [
-                "SPA",
-                "laravel",
-                "nuxt",
-                "vue"
-            ],
-            "time": "2019-03-04T16:12:35+00:00"
         },
         {
             "name": "paragonie/random_compat",
