@@ -9,16 +9,10 @@
     </head>
 
     <body>
-        <h1>My App</h1>
         <div id="app">
-            <h1>Hello App!</h1>
-            <p>
-                <router-link to="/foo">Go to Foo</router-link>
-                <router-link to="/bar">Go to Bar</router-link>
-            </p>
-
-            <router-view></router-view>
+            <App></App>
         </div>
+        <script src="https://kit.fontawesome.com/ec4ee65413.js"></script>
         <script src="dist/app.js"></script>
     </body>
 </html>

@@ -1,20 +1,19 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import 'es6-promise/auto'
 
+import Vue from 'vue'; // Importing Vue Library
+window.Vue = Vue;
+
+import VueRouter from 'vue-router'; // importing Vue router library
+import router from './router';
 Vue.use(VueRouter);
 
-const Foo = {template: '<div>foo</div>'}
-const Bar = {template: '<div>bar</div>'}
+import store from './store';
 
-const router = new VueRouter({
-    mode: 'history',
-    base: '/',
-    routes: [
-        {path: '/foo', component: Foo},
-        {path: '/bar', component: Bar}
-    ]
-});
 
-new Vue({
+Vue.component('App', require('./components/App'));
+
+const app = new Vue({
+    el: '#app',
+    store,
     router
-}).$mount('#app');
+});
