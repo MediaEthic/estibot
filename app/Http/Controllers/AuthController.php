@@ -44,4 +44,27 @@ class AuthController extends Controller
         $response['user'] = Auth::user();
         return response()->json($response);
     }
+
+    public function logout(Request $request)
+    {
+        $this->validate($request, [
+            'token' => 'required'
+        ]);
+
+
+        try {
+            $this->jwt->parseToken()->invalidate();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User logged out successfully'
+            ]);
+        } catch (JWTException $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, the user cannot be logged out'
+            ], 500);
+        }
+
+    }
 }

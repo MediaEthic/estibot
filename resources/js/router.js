@@ -14,22 +14,34 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: {
+            requiresVisitor: true
+        }
     },
     {
         path: '/',
         name: 'home',
-        component: Home
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/quotation',
-        name: 'quotatiion',
-        component: Quotation
+        name: 'quotation',
+        component: Quotation,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/profile',
         name: 'profile',
-        component: Profile
+        component: Profile,
+        meta: {
+            requiresAuth: true
+        }
     }
 ];
 

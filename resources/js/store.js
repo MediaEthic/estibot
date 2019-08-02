@@ -4,32 +4,21 @@ import axios from 'axios'
 
 Vue.use(Vuex);
 
-const state = {
-    isLogged: !!localStorage.getItem('token')
-}
-
-const mutations = {
-    LOGIN_USER (state) {
-        state.isLogged = true
-    },
-
-    LOGOUT_USER (state) {
-        state.isLogged = false
-    }
-}
-
 export default new Vuex.Store({
     state: {
-        token: !!localStorage.getItem('token')
+        token: localStorage.getItem('token') || null,
     },
     getters: {
-        isLogged(state) {
+        loggedIn(state) {
             return state.token !== null;
         }
     },
     mutations: {
         login(state, token) {
             state.token = token;
+        },
+        logout(state, token) {
+            state.token = null;
         }
     },
     actions: {
@@ -44,9 +33,28 @@ export default new Vuex.Store({
                     context.commit("login", token);
                     resolve(response);
                 }).catch(error => {
+                    localStorage.removeItem("token");
                     reject(error);
                 });
             });
+        },
+        logout(context) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            if (context.getters.loggedIn) {
+                return new Promise((resolve, reject) => {
+                    axios.post('/api/auth/logout', {
+                        token: context.state.token
+                    }).then(response => {
+                        localStorage.removeItem("token");
+                        context.commit("logout");
+                        resolve(response);
+                    }).catch(error => {
+                        localStorage.removeItem("token");
+                        context.commit("logout");
+                        reject(error);
+                    });
+                });
+            }
         }
     },
 })

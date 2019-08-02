@@ -16,7 +16,7 @@ $router->group(['prefix' => 'api'], function ($router) {
     $router->group(['prefix' => 'auth'], function ($router) {
         $router->post('/login', 'AuthController@login');
 
-        $router->group(['middleware' => 'auth:api'], function ($router) {
+        $router->group(['middleware' => 'jwt.auth'], function ($router) {
             $router->post('/logout', 'AuthController@logout');
         });
     });

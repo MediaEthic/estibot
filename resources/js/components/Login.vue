@@ -50,7 +50,7 @@
                         <span class="symbol-left-field"><i class="fas fa-lock"></i></span>
                     </div>
 
-                    <div class="info info-error" v-if="infoError">La connexion a échoué. Veuillez réessayer.</div>
+                    <div class="info info-error" v-if="infoError">Mauvais identifiant et/ou mot de passe.</div>
 
                     <button type="submit" class="wrap-button-submit">
                         <a href="#" class="cta">
@@ -97,18 +97,13 @@
                 this.passwordFieldType = this.passwordFieldType === "password" ? "text" : "password";
             },
             login () {
-                console.log("login");
                 this.infoError = false;
                 this.$store.dispatch('login', {
                     email: this.form.email,
                     password: this.form.password,
                 }).then(resp => {
-                    console.log("resp");
-                    console.log(resp);
                     this.$router.push({ name: "home" });
                 }).catch(error => {
-                    console.log("error");
-                    console.log(error);
                     this.infoError = true;
                 });
             }
@@ -241,6 +236,7 @@
     @media (min-width: 680px) and (orientation: landscape) {
         .wrap-full-content {
             flex-flow: row nowrap;
+            justify-content: space-around;
             padding: 5rem 7rem;
 
             .wrap-illustration {
