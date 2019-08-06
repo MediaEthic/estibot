@@ -1,6 +1,10 @@
 <template>
     <div class="wrap-padding">
-        <router-view :user="user"></router-view>
+        <transition :name="transitionName"
+                mode="out-in">
+            <router-view :user="user"></router-view>
+        </transition>
+
         <footer class="wrap-main-footer">
             <nav>
                 <ul class="wrap-main-menu">
@@ -19,9 +23,12 @@
 </template>
 
 <script>
+    const DEFAULT_TRANSITION = 'fade';
+
     export default {
         data() {
             return {
+                transitionName: DEFAULT_TRANSITION,
                 routes: [
                     {
                         name: 'Accueil',
@@ -153,6 +160,18 @@
         &.info-error{
             color: $secondary-color;
         }
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition-duration: 0.3s;
+        transition-property: opacity;
+        transition-timing-function: ease;
+    }
+
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0
     }
 
     .wrap-main-footer {
