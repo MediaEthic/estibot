@@ -1,6 +1,6 @@
 <template>
     <div class="wrap-padding">
-        <router-view></router-view>
+        <router-view :user="user"></router-view>
         <footer class="wrap-main-footer">
             <ul class="wrap-main-menu">
                 <li v-for="(route, key) in routes">
@@ -39,8 +39,10 @@
                 ]
             }
         },
-        mounted() {
-
+        computed: {
+            user() {
+                return this.$store.state.user;
+            }
         }
     }
 </script>
@@ -162,6 +164,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 5;
 
         .wrap-main-menu {
             display: flex;
@@ -175,14 +178,14 @@
                 }
             }
 
-            .router-link-active {
+            .router-link-exact-active {
                 font-weight: $bold;
                 color: $secondary-color;
                 padding: 1rem 1.5rem;
                 background-color: rgba($secondary-color-light, 0.25);
                 border-radius: 4rem;
 
-                .fas {
+                [class^='fa'] {
                     margin-right: 1rem;
                 }
             }

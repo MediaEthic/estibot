@@ -81,14 +81,6 @@
                 passwordFieldType: 'password',
             }
         },
-        beforeCreate () {
-            // if (store.state.isLogged) {
-            //     router.push('/')
-            // }
-        },
-        mounted () {
-
-        },
         methods: {
             checkAnimation({ target, animationName }) {
                 if(animationName.startsWith("onAutoFillStart")) {
