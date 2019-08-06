@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quote;
 use Illuminate\Http\Request;
 use App\Models\Quotation;
 
@@ -15,6 +16,16 @@ class QuotationController extends Controller
     public function __construct()
     {
         //
+    }
+
+    /**
+     * Show the quote.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getQuote()
+    {
+        return Quote::inRandomOrder()->first();
     }
 
     /**

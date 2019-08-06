@@ -8,6 +8,7 @@ export default new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || null,
         user: localStorage.getItem('user') || null,
+        quote: [],
         quotations: [],
     },
     getters: {
@@ -24,6 +25,9 @@ export default new Vuex.Store({
         },
         logout(state) {
             state.token = null;
+        },
+        setQuote(state, data) {
+            state.quote = data;
         },
         setQuotations(state, data) {
             state.quotations = data;
@@ -67,6 +71,11 @@ export default new Vuex.Store({
                     });
                 });
             }
+        },
+        async getQuote(context, credentials) {
+            let data = (await axios.get('/api/quote')).data;
+            console.log(data);
+            context.commit("setQuote", data);
         },
         async getQuotations(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;

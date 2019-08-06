@@ -36443,6 +36443,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
     state: {
         token: localStorage.getItem('token') || null,
         user: localStorage.getItem('user') || null,
+        quote: [],
         quotations: []
     },
     getters: {
@@ -36459,6 +36460,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         },
         logout: function logout(state) {
             state.token = null;
+        },
+        setQuote: function setQuote(state, data) {
+            state.quote = data;
         },
         setQuotations: function setQuotations(state, data) {
             state.quotations = data;
@@ -36503,24 +36507,23 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 });
             }
         },
-        getQuotations: function () {
+        getQuote: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(context, credentials) {
-                var url, data;
+                var data;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-                                url = credentials.url;
-                                _context.next = 4;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get(url);
+                                _context.next = 2;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/quote');
 
-                            case 4:
+                            case 2:
                                 data = _context.sent.data;
 
-                                context.commit("setQuotations", data);
+                                console.log(data);
+                                context.commit("setQuote", data);
 
-                            case 6:
+                            case 5:
                             case 'end':
                                 return _context.stop();
                         }
@@ -36528,8 +36531,39 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee, this);
             }));
 
-            function getQuotations(_x, _x2) {
+            function getQuote(_x, _x2) {
                 return _ref.apply(this, arguments);
+            }
+
+            return getQuote;
+        }(),
+        getQuotations: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(context, credentials) {
+                var url, data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                                url = credentials.url;
+                                _context2.next = 4;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get(url);
+
+                            case 4:
+                                data = _context2.sent.data;
+
+                                context.commit("setQuotations", data);
+
+                            case 6:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function getQuotations(_x3, _x4) {
+                return _ref2.apply(this, arguments);
             }
 
             return getQuotations;
@@ -39230,6 +39264,8 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Spinner_vue__);
 //
 //
 //
@@ -39254,12 +39290,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 var DEFAULT_TRANSITION = 'fade';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Spinner: __WEBPACK_IMPORTED_MODULE_0__Spinner_vue___default.a
+    },
     data: function data() {
         return {
+            loading: false,
             transitionName: DEFAULT_TRANSITION,
             routes: [{
                 name: 'Accueil',
@@ -39276,10 +39318,35 @@ var DEFAULT_TRANSITION = 'fade';
             }]
         };
     },
+    created: function created() {
+        var _this = this;
+
+        this.loading = true;
+
+        this.$store.dispatch('getQuote').then(function () {
+            _this.isViewed();
+        });
+    },
 
     computed: {
+        quote: function quote() {
+            return this.$store.state.quote;
+        },
         user: function user() {
             return this.$store.state.user;
+        }
+    },
+    methods: {
+        isViewed: function isViewed() {
+            var _this2 = this;
+
+            var quote = this.quote.quote;
+            var numberWords = quote.split(' ');
+            var readTime = numberWords.length * 300;
+
+            setTimeout(function () {
+                _this2.loading = false;
+            }, readTime);
         }
     }
 });
@@ -39292,53 +39359,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "wrap-padding" },
-    [
-      _c(
-        "transition",
-        { attrs: { name: _vm.transitionName, mode: "out-in" } },
-        [_c("router-view", { attrs: { user: _vm.user } })],
-        1
-      ),
-      _vm._v(" "),
-      _c("footer", { staticClass: "wrap-main-footer" }, [
-        _c("nav", [
+  return !_vm.loading
+    ? _c(
+        "div",
+        { staticClass: "wrap-padding" },
+        [
           _c(
-            "ul",
-            { staticClass: "wrap-main-menu" },
-            _vm._l(_vm.routes, function(route, key) {
-              return _c(
-                "li",
-                [
-                  _c(
-                    "router-link",
-                    {
-                      key: key,
-                      staticClass: "link-menu",
-                      attrs: { to: { name: route.path } }
-                    },
+            "transition",
+            { attrs: { name: _vm.transitionName, mode: "out-in" } },
+            [_c("router-view", { attrs: { user: _vm.user } })],
+            1
+          ),
+          _vm._v(" "),
+          _c("footer", { staticClass: "wrap-main-footer" }, [
+            _c("nav", [
+              _c(
+                "ul",
+                { staticClass: "wrap-main-menu" },
+                _vm._l(_vm.routes, function(route, key) {
+                  return _c(
+                    "li",
                     [
-                      _c("i", { class: route.icon }),
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(route.name) +
-                          "\n                    "
+                      _c(
+                        "router-link",
+                        {
+                          key: key,
+                          staticClass: "link-menu",
+                          attrs: { to: { name: route.path } }
+                        },
+                        [
+                          _c("i", { class: route.icon }),
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(route.name) +
+                              "\n                    "
+                          )
+                        ]
                       )
-                    ]
+                    ],
+                    1
                   )
-                ],
-                1
+                }),
+                0
               )
-            }),
-            0
-          )
-        ])
-      ])
-    ],
-    1
-  )
+            ])
+          ])
+        ],
+        1
+      )
+    : _c("Spinner", { attrs: { quote: _vm.quote } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39355,6 +39424,183 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(211)
+}
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(209)
+/* template */
+var __vue_template__ = __webpack_require__(213)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7ae326fe"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Spinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7ae326fe", Component.options)
+  } else {
+    hotAPI.reload("data-v-7ae326fe", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 207 */,
+/* 208 */,
+/* 209 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['quote'],
+    data: function data() {
+        return {};
+    },
+    created: function created() {
+        // this.$store.dispatch('getQuote');
+    },
+
+    computed: {
+        // quote() {
+        //     return this.$store.state.quote;
+        // }
+    }
+});
+
+/***/ }),
+/* 210 */,
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(212);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("a8c9b05e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: 4rem;\n}\n.wrap-spinner img[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n}\n.wrap-spinner .author[data-v-7ae326fe] {\n    /*font-variant: ;*/\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "wrap-spinner" }, [
+    _c("img", {
+      staticClass: "main-image",
+      attrs: {
+        src: "/assets/img/undraw_Artificial_intelligence_oyxx.svg",
+        alt: "Illustration de la page de connexion"
+      }
+    }),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-quote" }, [
+      _c("i", { staticClass: "fas fa-angle-double-left" }),
+      _vm._v(" "),
+      _c("p", { staticClass: "quote page-subtitle" }, [
+        _c("q", [_vm._v(_vm._s(_vm.quote.quote))])
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "author baseline-main-title" }, [
+        _vm._v(_vm._s(_vm.quote.author))
+      ]),
+      _vm._v(" "),
+      _c("i", { staticClass: "fas fa-angle-double-right" })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7ae326fe", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

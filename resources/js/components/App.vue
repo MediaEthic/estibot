@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap-padding">
+    <div v-if="!loading" class="wrap-padding">
         <transition :name="transitionName"
                 mode="out-in">
             <router-view :user="user"></router-view>
@@ -20,14 +20,20 @@
             </nav>
         </footer>
     </div>
+    <Spinner v-else :quote="quote" />
 </template>
 
 <script>
+    import Spinner from './Spinner.vue';
     const DEFAULT_TRANSITION = 'fade';
 
     export default {
+        components: {
+            Spinner
+        },
         data() {
             return {
+                loading: false,
                 transitionName: DEFAULT_TRANSITION,
                 routes: [
                     {
@@ -48,9 +54,30 @@
                 ]
             }
         },
+        created() {
+            this.loading = true;
+
+            this.$store.dispatch('getQuote').then(() => {
+                this.isViewed();
+            });
+        },
         computed: {
+            quote() {
+                return this.$store.state.quote;
+            },
             user() {
                 return this.$store.state.user;
+            }
+        },
+        methods: {
+            isViewed() {
+                let quote = this.quote.quote;
+                let numberWords = quote.split(' ');
+                let readTime = numberWords.length * 300;
+
+                setTimeout(() => {
+                    this.loading = false;
+                }, readTime);
             }
         }
     }
