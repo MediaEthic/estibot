@@ -16,6 +16,7 @@ const routes = [
         name: 'login',
         component: Login,
         meta: {
+            title: 'Connexion Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresVisitor: true
         }
     },
@@ -24,6 +25,7 @@ const routes = [
         name: 'home',
         component: Home,
         meta: {
+            title: 'Liste de devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true
         }
     },
@@ -32,6 +34,7 @@ const routes = [
         name: 'quotation',
         component: Quotation,
         meta: {
+            title: 'Création d\'un nouveau devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true
         }
     },
@@ -40,6 +43,7 @@ const routes = [
         name: 'profile',
         component: Profile,
         meta: {
+            title: 'Compte utilisateur Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true
         }
     }

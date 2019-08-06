@@ -21245,6 +21245,52 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_
 
 
 __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to, from, next) {
+    // This goes through the matched routes from last to first, finding the closest route with a title.
+    // eg. if we have /some/deep/nested/route and /some, /deep, and /nested have titles, nested's will be chosen.
+    var nearestWithTitle = to.matched.slice().reverse().find(function (r) {
+        return r.meta && r.meta.title;
+    });
+
+    // Find the nearest route element with meta tags.
+    var nearestWithMeta = to.matched.slice().reverse().find(function (r) {
+        return r.meta && r.meta.metaTags;
+    });
+    var previousNearestWithMeta = from.matched.slice().reverse().find(function (r) {
+        return r.meta && r.meta.metaTags;
+    });
+
+    // If a route with a title was found, set the document (page) title to that value.
+    if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
+
+    // Remove any stale meta tags from the document using the key attribute we set below.
+    Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(function (el) {
+        return el.parentNode.removeChild(el);
+    });
+
+    // Skip rendering meta tags if there are none.
+    if (!nearestWithMeta) return next();
+
+    // Turn the meta tag definitions into actual elements in the head.
+    nearestWithMeta.meta.metaTags.map(function (tagDef) {
+        var tag = document.createElement('meta');
+
+        Object.keys(tagDef).forEach(function (key) {
+            tag.setAttribute(key, tagDef[key]);
+        });
+
+        // We use this to track which meta tags we create, so we don't interfere with other ones.
+        tag.setAttribute('data-vue-router-controlled', '');
+
+        return tag;
+    })
+    // Add the meta tags to the document head.
+    .forEach(function (tag) {
+        return document.head.appendChild(tag);
+    });
+
+    next();
+
+    // requiresAuth && requiresVisitor
     if (to.matched.some(function (record) {
         return record.meta.requiresAuth;
     })) {
@@ -34710,6 +34756,7 @@ var routes = [{
     name: 'login',
     component: __WEBPACK_IMPORTED_MODULE_2__components_Login___default.a,
     meta: {
+        title: 'Connexion Estibot - Application de devis simple et rapide pour les imprimeurs',
         requiresVisitor: true
     }
 }, {
@@ -34717,6 +34764,7 @@ var routes = [{
     name: 'home',
     component: __WEBPACK_IMPORTED_MODULE_3__components_Home___default.a,
     meta: {
+        title: 'Liste de devis Estibot - Application de devis simple et rapide pour les imprimeurs',
         requiresAuth: true
     }
 }, {
@@ -34724,6 +34772,7 @@ var routes = [{
     name: 'quotation',
     component: __WEBPACK_IMPORTED_MODULE_4__components_Quotation___default.a,
     meta: {
+        title: 'Création d\'un nouveau devis Estibot - Application de devis simple et rapide pour les imprimeurs',
         requiresAuth: true
     }
 }, {
@@ -34731,6 +34780,7 @@ var routes = [{
     name: 'profile',
     component: __WEBPACK_IMPORTED_MODULE_5__components_Profile___default.a,
     meta: {
+        title: 'Compte utilisateur Estibot - Application de devis simple et rapide pour les imprimeurs',
         requiresAuth: true
     }
 }];
