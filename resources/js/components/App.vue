@@ -2,10 +2,11 @@
     <div class="wrap-padding">
         <router-view></router-view>
         <footer class="wrap-main-footer">
-            <ul>
+            <ul class="wrap-main-menu">
                 <li v-for="(route, key) in routes">
                     <router-link :to="{ name : route.path }"
-                                 :key="key">
+                                 :key="key"
+                                 class="link-menu">
                         <i :class="route.icon"></i>
                         {{route.name}}
                     </router-link>
@@ -78,6 +79,7 @@
             color: $secondary-color;
             padding: 1rem 1.5rem;
             background-color: rgba($secondary-color-light, 0.25);
+            border-radius: 4rem;
         }
     }
 
@@ -110,6 +112,35 @@
         letter-spacing: 0.1em;
     }
 
+    .page-subtitle {
+        font-weight: $bold;
+        font-size: 2rem;
+        line-height: 2.4rem;
+        color: $primary-color-dark;
+    }
+
+    .tag {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .5rem 1rem;
+        min-width: 3.5rem;
+
+        font-family: $font-family-secondary-medium;
+        font-size: 1.4rem;
+        line-height: 1.8rem;
+        color: $secondary-color-dark;
+        background-color: $secondary-color-light;
+        border-radius: 1rem;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+
+        .tag-info {
+            color: $secondary-color-dark;
+            background-color: $secondary-color-light;
+        }
+    }
+
     .info {
         width: 100%;
         font-size: 1.4rem;
@@ -117,6 +148,44 @@
 
         &.info-error{
             color: $secondary-color;
+        }
+    }
+
+    .wrap-main-footer {
+        background-color: #fff;
+        box-shadow: 0 0 .5rem rgba($grey-dark, 0.1);
+        width: 100%;
+        height: 7rem;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .wrap-main-menu {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            padding: 0 1.5rem;
+
+            .link-menu {
+                .fas {
+                    margin-right: .5rem;
+                }
+            }
+
+            .router-link-active {
+                font-weight: $bold;
+                color: $secondary-color;
+                padding: 1rem 1.5rem;
+                background-color: rgba($secondary-color-light, 0.25);
+                border-radius: 4rem;
+
+                .fas {
+                    margin-right: 1rem;
+                }
+            }
         }
     }
 

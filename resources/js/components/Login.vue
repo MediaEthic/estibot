@@ -1,8 +1,8 @@
 <template>
-    <main class="wrap-full-content no-footer">
+    <div class="wrap-full-content no-footer">
         <div class="wrap-illustration">
             <header class="wrap-main-header">
-                <div class="page-main-title">Ethic Estibot</div>
+                <h2 class="page-main-title">Ethic Estibot</h2>
                 <h1 class="baseline-main-title">Solution de devis simple et rapide</h1>
             </header>
 
@@ -13,58 +13,60 @@
             </div>
         </div>
 
-        <form @submit.prevent="login" class="main-form" autocomplete="off">
-            <fieldset>
-                <legend class="page-main-title mobile-hidden">Accès membre</legend>
-                <p class="baseline-main-title mobile-hidden">Entrez vos identifiants et poursuivez l’aventure parmi nous...</p>
+        <main>
+            <form @submit.prevent="login" class="main-form" autocomplete="off">
+                <fieldset>
+                    <legend class="page-main-title mobile-hidden">Accès membre</legend>
+                    <p class="baseline-main-title mobile-hidden">Entrez vos identifiants et poursuivez l’aventure parmi nous...</p>
 
-                <div class="wrap-form-main">
-                    <div class="wrap-field validate-field">
-                        <input v-model.trim="form.email"
-                               class="field "
-                               :class="{ hasValue: form.email }"
-                               name="email"
-                               type="email"
-                               @animationstart="checkAnimation"
-                               autofocus
-                               required>
-                        <span class="focus-field"></span>
-                        <span class="label-field">Adresse e-mail</span>
-                        <span class="symbol-left-field"><i class="fas fa-at"></i></span>
+                    <div class="wrap-form-main">
+                        <div class="wrap-field validate-field">
+                            <input v-model.trim="form.email"
+                                   class="field "
+                                   :class="{ hasValue: form.email }"
+                                   name="email"
+                                   type="email"
+                                   @animationstart="checkAnimation"
+                                   autofocus
+                                   required>
+                            <span class="focus-field"></span>
+                            <label class="label-field">Adresse e-mail</label>
+                            <span class="symbol-left-field"><i class="fas fa-at"></i></span>
+                        </div>
+
+                        <div class="wrap-field">
+                            <span class="btn-right-field" @click="switchVisibility">
+                                <i :class="this.passwordFieldType === 'password' ? 'far fa-eye' : 'far fa-eye-slash'"></i>
+                            </span>
+                            <input v-model.trim="form.password"
+                                   class="field"
+                                   :class="{ hasValue: form.password }"
+                                   name="password"
+                                   :type="passwordFieldType"
+                                   @animationstart="checkAnimation"
+                                   required>
+
+                            <span class="focus-field"></span>
+                            <label class="label-field">Mot de passe</label>
+                            <span class="symbol-left-field"><i class="fas fa-lock"></i></span>
+                        </div>
+
+                        <div class="info info-error" v-if="infoError">Mauvais identifiant et/ou mot de passe.</div>
+
+                        <button type="submit" class="wrap-button-submit">
+                            <a href="#" class="cta">
+                                <span>Connexion</span>
+                                <svg width="13px" height="10px" viewBox="0 0 13 10">
+                                    <path d="M1,5 L11,5"></path>
+                                    <polyline points="8 1 12 5 8 9"></polyline>
+                                </svg>
+                            </a>
+                        </button>
                     </div>
-
-                    <div class="wrap-field">
-                        <span class="btn-right-field" @click="switchVisibility">
-                            <i :class="this.passwordFieldType === 'password' ? 'far fa-eye' : 'far fa-eye-slash'"></i>
-                        </span>
-                        <input v-model.trim="form.password"
-                               class="field"
-                               :class="{ hasValue: form.password }"
-                               name="password"
-                               :type="passwordFieldType"
-                               @animationstart="checkAnimation"
-                               required>
-
-                        <span class="focus-field"></span>
-                        <span class="label-field">Mot de passe</span>
-                        <span class="symbol-left-field"><i class="fas fa-lock"></i></span>
-                    </div>
-
-                    <div class="info info-error" v-if="infoError">Mauvais identifiant et/ou mot de passe.</div>
-
-                    <button type="submit" class="wrap-button-submit">
-                        <a href="#" class="cta">
-                            <span>Connexion</span>
-                            <svg width="13px" height="10px" viewBox="0 0 13 10">
-                                <path d="M1,5 L11,5"></path>
-                                <polyline points="8 1 12 5 8 9"></polyline>
-                            </svg>
-                        </a>
-                    </button>
-                </div>
-            </fieldset>
-        </form>
-    </main>
+                </fieldset>
+            </form>
+        </main>
+    </div>
 </template>
 
 <script>
@@ -89,7 +91,7 @@
         },
         methods: {
             checkAnimation({ target, animationName }) {
-                if(animationName == "onAutoFillStart") {
+                if(animationName.startsWith("onAutoFillStart")) {
                     target.classList.add("hasValue");
                 }
             },
@@ -111,7 +113,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import '~@/_variables.scss';
 
     .wrap-full-content {
@@ -133,9 +135,11 @@
             .wrap-image {
                 order: 1;
                 width: 100%;
+                max-height: calc(100vh - 32.7rem);
 
                 .main-image {
                     width: 100%;
+                    max-height: calc(100vh - 32.7rem);
                 }
             }
         }
@@ -182,6 +186,14 @@
 
     // Extra large devices (large desktops, 1200px and up)
     @media (min-width: 1200px) {  }
+
+    @media (max-width: 321px) and (orientation: portrait) {
+        .wrap-illustration {
+            .wrap-main-header {
+                margin: 1rem 0 !important;
+            }
+        }
+    }
 
     @media (min-width: 680px) {
         .wrap-full-content {
