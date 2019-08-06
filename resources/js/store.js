@@ -7,18 +7,26 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || null,
+        user: localStorage.getItem('user') || null,
+        quotations: [],
     },
     getters: {
         loggedIn(state) {
             return state.token !== null;
-        }
+        },
     },
     mutations: {
         login(state, token) {
             state.token = token;
         },
-        logout(state, token) {
+        setUser(state, user) {
+            state.user = user;
+        },
+        logout(state) {
             state.token = null;
+        },
+        setQuotations(state, data) {
+            state.quotations = data;
         }
     },
     actions: {
@@ -28,12 +36,17 @@ export default new Vuex.Store({
                     email: credentials.email,
                     password: credentials.password
                 }).then(response => {
-                    const token = response.data.token;
-                    localStorage.setItem("token", token);
-                    context.commit("login", token);
+                    const data = response.data;
+                    console.log("login");
+                    console.log(data);
+                    localStorage.setItem("token", data.token);
+                    context.commit("login", data.token);
+                    localStorage.setItem("user", data.user.name);
+                    context.commit("setUser", data.user.name);
                     resolve(response);
                 }).catch(error => {
                     localStorage.removeItem("token");
+                    localStorage.removeItem("user");
                     reject(error);
                 });
             });
@@ -42,19 +55,24 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             if (context.getters.loggedIn) {
                 return new Promise((resolve, reject) => {
-                    axios.post('/api/auth/logout', {
-                        token: context.state.token
-                    }).then(response => {
+                    axios.post('/api/auth/logout').then(response => {
                         localStorage.removeItem("token");
                         context.commit("logout");
                         resolve(response);
                     }).catch(error => {
                         localStorage.removeItem("token");
+                        localStorage.removeItem("user");
                         context.commit("logout");
                         reject(error);
                     });
                 });
             }
+        },
+        async getQuotations(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            const url = credentials.url;
+            let data = (await axios.get(url)).data;
+            context.commit("setQuotations", data);
         }
     },
 })
