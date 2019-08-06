@@ -16927,19 +16927,19 @@ var routes = [{
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(16)
+  __webpack_require__(77)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(19)
 /* template */
-var __vue_template__ = __webpack_require__(20)
+var __vue_template__ = __webpack_require__(79)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-6bdc8b8e"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -16972,46 +16972,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(17);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("c86819e2", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bdc8b8e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Login.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bdc8b8e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Login.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-full-content {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image {\n        width: 100%;\n}\n.wrap-full-content .main-form {\n    width: 100%;\n}\n.wrap-full-content .main-form .wrap-button-submit {\n      display: block;\n      margin: 3rem auto 0 auto;\n      border: 0;\n      background: transparent;\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 0 3rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 16 */,
+/* 17 */,
 /* 18 */
 /***/ (function(module, exports) {
 
@@ -17119,6 +17081,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -17143,7 +17107,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var target = _ref.target,
                 animationName = _ref.animationName;
 
-            if (animationName == "onAutoFillStart") {
+            if (animationName.startsWith("onAutoFillStart")) {
                 target.classList.add("hasValue");
             }
         },
@@ -17167,252 +17131,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("main", { staticClass: "wrap-full-content no-footer" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        staticClass: "main-form",
-        attrs: { autocomplete: "off" },
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.login($event)
-          }
-        }
-      },
-      [
-        _c("fieldset", [
-          _c("legend", { staticClass: "page-main-title mobile-hidden" }, [
-            _vm._v("Accès membre")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "baseline-main-title mobile-hidden" }, [
-            _vm._v(
-              "Entrez vos identifiants et poursuivez l’aventure parmi nous..."
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "wrap-form-main" }, [
-            _c("div", { staticClass: "wrap-field validate-field" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.trim",
-                    value: _vm.form.email,
-                    expression: "form.email",
-                    modifiers: { trim: true }
-                  }
-                ],
-                staticClass: "field ",
-                class: { hasValue: _vm.form.email },
-                attrs: {
-                  name: "email",
-                  type: "email",
-                  autofocus: "",
-                  required: ""
-                },
-                domProps: { value: _vm.form.email },
-                on: {
-                  animationstart: _vm.checkAnimation,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "email", $event.target.value.trim())
-                  },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "focus-field" }),
-              _vm._v(" "),
-              _c("span", { staticClass: "label-field" }, [
-                _vm._v("Adresse e-mail")
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "wrap-field" }, [
-              _c(
-                "span",
-                {
-                  staticClass: "btn-right-field",
-                  on: { click: _vm.switchVisibility }
-                },
-                [
-                  _c("i", {
-                    class:
-                      this.passwordFieldType === "password"
-                        ? "far fa-eye"
-                        : "far fa-eye-slash"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.trim",
-                    value: _vm.form.password,
-                    expression: "form.password",
-                    modifiers: { trim: true }
-                  }
-                ],
-                staticClass: "field",
-                class: { hasValue: _vm.form.password },
-                attrs: {
-                  name: "password",
-                  type: _vm.passwordFieldType,
-                  required: ""
-                },
-                domProps: { value: _vm.form.password },
-                on: {
-                  animationstart: _vm.checkAnimation,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "password", $event.target.value.trim())
-                  },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "focus-field" }),
-              _vm._v(" "),
-              _c("span", { staticClass: "label-field" }, [
-                _vm._v("Mot de passe")
-              ]),
-              _vm._v(" "),
-              _vm._m(2)
-            ]),
-            _vm._v(" "),
-            _vm.infoError
-              ? _c("div", { staticClass: "info info-error" }, [
-                  _vm._v("Mauvais identifiant et/ou mot de passe.")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "wrap-button-submit", attrs: { type: "submit" } },
-              [
-                _c("a", { staticClass: "cta", attrs: { href: "#" } }, [
-                  _c("span", [_vm._v("Connexion")]),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        width: "13px",
-                        height: "10px",
-                        viewBox: "0 0 13 10"
-                      }
-                    },
-                    [
-                      _c("path", { attrs: { d: "M1,5 L11,5" } }),
-                      _vm._v(" "),
-                      _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
-                    ]
-                  )
-                ])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "wrap-illustration" }, [
-      _c("header", { staticClass: "wrap-main-header" }, [
-        _c("div", { staticClass: "page-main-title" }, [
-          _vm._v("Ethic Estibot")
-        ]),
-        _vm._v(" "),
-        _c("h1", { staticClass: "baseline-main-title" }, [
-          _vm._v("Solution de devis simple et rapide")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-image" }, [
-        _c("img", {
-          staticClass: "main-image",
-          attrs: {
-            src: "/assets/img/undraw_Artificial_intelligence_oyxx.svg",
-            alt: "Illustration de la page de connexion"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "symbol-left-field" }, [
-      _c("i", { staticClass: "fas fa-at" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "symbol-left-field" }, [
-      _c("i", { staticClass: "fas fa-lock" })
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6bdc8b8e", module.exports)
-  }
-}
-
-/***/ }),
+/* 20 */,
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(22)
+  __webpack_require__(80)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(24)
 /* template */
-var __vue_template__ = __webpack_require__(25)
+var __vue_template__ = __webpack_require__(82)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-f2b6376c"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -17445,46 +17183,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(23);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("08811998", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f2b6376c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f2b6376c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 22 */,
+/* 23 */,
 /* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -17496,38 +17196,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            search: ""
+        };
     },
     created: function created() {},
 
     computed: {},
-    methods: {}
+    methods: {
+        clearSearch: function clearSearch() {
+            this.search = "";
+        },
+        randomBgImage: function randomBgImage() {
+            var random_images_array = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
+
+            return "/assets/img/quotations/" + random_images_array[Math.floor(Math.random() * random_images_array.length)];
+        }
+    }
 });
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Home component\n")])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f2b6376c", module.exports)
-  }
-}
-
-/***/ }),
+/* 25 */,
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17898,7 +17641,7 @@ exports = module.exports = __webpack_require__(0)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n    padding: 1rem 1.5rem;\n    background-color: rgba(247, 202, 201, 0.25);\n}\n.wrap-padding {\n  width: 100%;\n  padding: 2rem;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n    padding: 1rem 1.5rem;\n    background-color: rgba(247, 202, 201, 0.25);\n    border-radius: 4rem;\n}\n.wrap-padding {\n  width: 100%;\n  padding: 2rem;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.wrap-main-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-main-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-active .fas {\n        margin-right: 1rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
@@ -17909,6 +17652,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -17965,13 +17709,18 @@ var render = function() {
       _c("footer", { staticClass: "wrap-main-footer" }, [
         _c(
           "ul",
+          { staticClass: "wrap-main-menu" },
           _vm._l(_vm.routes, function(route, key) {
             return _c(
               "li",
               [
                 _c(
                   "router-link",
-                  { key: key, attrs: { to: { name: route.path } } },
+                  {
+                    key: key,
+                    staticClass: "link-menu",
+                    attrs: { to: { name: route.path } }
+                  },
                   [
                     _c("i", { class: route.icon }),
                     _vm._v(
@@ -20745,6 +20494,502 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(78);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("27b43fca", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bdc8b8e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Login.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bdc8b8e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Login.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-full-content[data-v-6bdc8b8e] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration[data-v-6bdc8b8e] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n      max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image[data-v-6bdc8b8e] {\n        width: 100%;\n        max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    width: 100%;\n}\n.wrap-full-content .main-form .wrap-button-submit[data-v-6bdc8b8e] {\n      display: block;\n      margin: 3rem auto 0 auto;\n      border: 0;\n      background: transparent;\n}\n[data-v-6bdc8b8e]:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart-data-v-6bdc8b8e;\n          animation-name: onAutoFillStart-data-v-6bdc8b8e;\n}\n[data-v-6bdc8b8e]:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n          animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n}\n@-webkit-keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    margin: 1rem 0 !important;\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title[data-v-6bdc8b8e] {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title[data-v-6bdc8b8e] {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 0 3rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main[data-v-6bdc8b8e] {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "wrap-full-content no-footer" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("main", [
+      _c(
+        "form",
+        {
+          staticClass: "main-form",
+          attrs: { autocomplete: "off" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.login($event)
+            }
+          }
+        },
+        [
+          _c("fieldset", [
+            _c("legend", { staticClass: "page-main-title mobile-hidden" }, [
+              _vm._v("Accès membre")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "baseline-main-title mobile-hidden" }, [
+              _vm._v(
+                "Entrez vos identifiants et poursuivez l’aventure parmi nous..."
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-form-main" }, [
+              _c("div", { staticClass: "wrap-field validate-field" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.trim",
+                      value: _vm.form.email,
+                      expression: "form.email",
+                      modifiers: { trim: true }
+                    }
+                  ],
+                  staticClass: "field ",
+                  class: { hasValue: _vm.form.email },
+                  attrs: {
+                    name: "email",
+                    type: "email",
+                    autofocus: "",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.email },
+                  on: {
+                    animationstart: _vm.checkAnimation,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "email", $event.target.value.trim())
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "focus-field" }),
+                _vm._v(" "),
+                _c("label", { staticClass: "label-field" }, [
+                  _vm._v("Adresse e-mail")
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "wrap-field" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass: "btn-right-field",
+                    on: { click: _vm.switchVisibility }
+                  },
+                  [
+                    _c("i", {
+                      class:
+                        this.passwordFieldType === "password"
+                          ? "far fa-eye"
+                          : "far fa-eye-slash"
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.trim",
+                      value: _vm.form.password,
+                      expression: "form.password",
+                      modifiers: { trim: true }
+                    }
+                  ],
+                  staticClass: "field",
+                  class: { hasValue: _vm.form.password },
+                  attrs: {
+                    name: "password",
+                    type: _vm.passwordFieldType,
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.password },
+                  on: {
+                    animationstart: _vm.checkAnimation,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "password", $event.target.value.trim())
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "focus-field" }),
+                _vm._v(" "),
+                _c("label", { staticClass: "label-field" }, [
+                  _vm._v("Mot de passe")
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
+              _vm._v(" "),
+              _vm.infoError
+                ? _c("div", { staticClass: "info info-error" }, [
+                    _vm._v("Mauvais identifiant et/ou mot de passe.")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "wrap-button-submit",
+                  attrs: { type: "submit" }
+                },
+                [
+                  _c("a", { staticClass: "cta", attrs: { href: "#" } }, [
+                    _c("span", [_vm._v("Connexion")]),
+                    _vm._v(" "),
+                    _c(
+                      "svg",
+                      {
+                        attrs: {
+                          width: "13px",
+                          height: "10px",
+                          viewBox: "0 0 13 10"
+                        }
+                      },
+                      [
+                        _c("path", { attrs: { d: "M1,5 L11,5" } }),
+                        _vm._v(" "),
+                        _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "wrap-illustration" }, [
+      _c("header", { staticClass: "wrap-main-header" }, [
+        _c("h2", { staticClass: "page-main-title" }, [_vm._v("Ethic Estibot")]),
+        _vm._v(" "),
+        _c("h1", { staticClass: "baseline-main-title" }, [
+          _vm._v("Solution de devis simple et rapide")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-image" }, [
+        _c("img", {
+          staticClass: "main-image",
+          attrs: {
+            src: "/assets/img/undraw_Artificial_intelligence_oyxx.svg",
+            alt: "Illustration de la page de connexion"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-at" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-lock" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6bdc8b8e", module.exports)
+  }
+}
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(81);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("69894571", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f2b6376c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f2b6376c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.options-toggler + label[data-v-f2b6376c] {\n  font-size: 2rem;\n  color: #C49998;\n  background-color: #fff;\n  border: 0.15rem solid #C49998;\n  border-radius: 50%;\n  position: relative;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  width: 3.5rem;\n  height: 3.5rem;\n  -webkit-transition: 0.4s;\n  transition: 0.4s;\n}\n.options-toggler ~ .list-actions[data-v-f2b6376c] {\n  position: relative;\n}\n.options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n    position: absolute;\n    display: block;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    margin: auto;\n    width: 3.5rem;\n    height: 3.5rem;\n    opacity: 0;\n    -webkit-transition: 0.5s;\n    transition: 0.5s;\n}\n.options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n      -webkit-transform: rotate(0deg);\n              transform: rotate(0deg);\n}\n.options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n      -webkit-transform: rotate(-60deg);\n              transform: rotate(-60deg);\n}\n.options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n      -webkit-transform: rotate(-120deg);\n              transform: rotate(-120deg);\n}\n.options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n      -webkit-transform: rotate(-180deg);\n              transform: rotate(-180deg);\n}\n.options-toggler ~ .list-actions a[data-v-f2b6376c] {\n    display: block;\n    width: inherit;\n    height: inherit;\n    line-height: 3.25rem;\n    color: #C49998;\n    background: #fff;\n    border: 0.15rem solid #C49998;\n    border-radius: 50%;\n    text-align: center;\n    text-decoration: none;\n    font-size: 2rem;\n    pointer-events: none;\n    -webkit-transition: 0.2s;\n    transition: 0.2s;\n}\n.options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n      -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n              box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n      color: white;\n      background: rgba(255, 255, 255, 0.3);\n      font-size: 44.44px;\n}\n.options-toggler:checked + label[data-v-f2b6376c] {\n  color: #FFFDFC;\n  background-color: #C49998;\n  border: 0.15rem solid #C49998;\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg);\n}\n.options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n  opacity: 1;\n}\n.options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n    -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n            transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n    -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n            transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n    -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n            transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n    -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n            transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n    pointer-events: auto;\n}\n.wrap-main-header[data-v-f2b6376c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: end;\n      -ms-flex-align: end;\n          align-items: end;\n}\n.wrap-filters[data-v-f2b6376c] {\n  margin-top: 3rem;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-filters .wrap-field[data-v-f2b6376c] {\n    margin-bottom: 0;\n}\n.wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n    font-size: 3rem;\n    color: #C49998;\n    margin-left: 2rem;\n}\n.wrap-list-quotations[data-v-f2b6376c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-top: 2rem;\n}\n.wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    width: 100%;\n    min-height: 16.5rem;\n    background-position: center right;\n    background-size: auto 13.5rem;\n    background-repeat: no-repeat;\n    background-color: #fff;\n    -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n            box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n    border-radius: 2rem 0 3rem 0;\n    padding: 1.5rem 2rem;\n}\n.wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n      width: 100%;\n      -webkit-box-flex: 1;\n          -ms-flex-positive: 1;\n              flex-grow: 1;\n}\n.wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: start;\n          -ms-flex-align: start;\n              align-items: flex-start;\n}\n.wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n      color: #62799F;\n      /*margin: 2rem 0;*/\n}\n.wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n      font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n      font-size: 1.8rem;\n      line-height: 2.2rem;\n      color: #91A8D0;\n      letter-spacing: 0.1em;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: end;\n          -ms-flex-align: end;\n              align-items: flex-end;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation [type=\"checkbox\"][data-v-f2b6376c]:not(:checked),\n      .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation [type=\"checkbox\"][data-v-f2b6376c]:checked {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .wrap-see-more[data-v-f2b6376c] {\n        font-size: 2rem;\n        color: #C49998;\n        background-color: #fff;\n        border: 0.15rem solid #C49998;\n        border-radius: 50%;\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 3.5rem;\n        height: 3.5rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("main", [
+      _c("div", { staticClass: "wrap-filters" }, [
+        _c("div", { staticClass: "wrap-field h-50" }, [
+          _vm.search
+            ? _c(
+                "span",
+                {
+                  staticClass: "btn-right-field",
+                  on: { click: _vm.clearSearch }
+                },
+                [_c("i", { staticClass: "fas fa-times" })]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.search,
+                expression: "search",
+                modifiers: { trim: true }
+              }
+            ],
+            staticClass: "field",
+            class: { hasValue: _vm.search },
+            attrs: { name: "search", type: "search", autocomplete: "off" },
+            domProps: { value: _vm.search },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value.trim()
+              },
+              blur: function($event) {
+                return _vm.$forceUpdate()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "focus-field" }),
+          _vm._v(" "),
+          _c("label", { staticClass: "label-field" }, [
+            _vm._v("Rechercher un client")
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ]),
+        _vm._v(" "),
+        _vm._m(2)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-list-quotations" }, [
+        _c(
+          "article",
+          {
+            staticClass: "wrap-quotation",
+            style: { backgroundImage: "url(" + _vm.randomBgImage() + ")" }
+          },
+          [
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _c("p", { staticClass: "third-quotation" }, [
+              _vm._v("M. Jean Durand")
+            ]),
+            _vm._v(" "),
+            _vm._m(5)
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "wrap-main-header" }, [
+      _c("h1", { staticClass: "page-main-title" }, [_vm._v("Devis")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tag tag-info" }, [_vm._v("14")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-search" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "wrap-icon-filter" }, [
+      _c("i", { staticClass: "fas fa-sliders-h" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "head-quotation" }, [
+      _c("h2", { staticClass: "page-subtitle" }, [
+        _vm._v("Devis "),
+        _c("span", { staticClass: "number-quotation" }, [_vm._v("#000021")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tag tag-info" }, [_vm._v("P")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "baseline-main-title" }, [
+      _c("time", { attrs: { datetime: "2019-07-02" } }, [_vm._v("12/07/2019")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "wrap-end-quotation" }, [
+      _c("p", { staticClass: "price-quotation" }, [
+        _vm._v("123.94"),
+        _c("span", { staticClass: "symbol-price" }, [_vm._v("€")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-actions-quotation" }, [
+        _c("input", {
+          staticClass: "options-toggler",
+          attrs: { id: "options-toggler", type: "checkbox" }
+        }),
+        _vm._v(" "),
+        _c("label", {
+          staticClass: "fas fa-cog",
+          attrs: { for: "options-toggler" }
+        }),
+        _vm._v(" "),
+        _c("ul", { staticClass: "list-actions" }, [
+          _c("li", { staticClass: "action-item" }, [
+            _c("a", { staticClass: "fas fa-print", attrs: { href: "#" } })
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "action-item" }, [
+            _c("a", { staticClass: "fas fa-edit", attrs: { href: "#" } })
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "action-item" }, [
+            _c("a", { staticClass: "fas fa-copy", attrs: { href: "#" } })
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "action-item" }, [
+            _c("a", { staticClass: "fas fa-trash-alt", attrs: { href: "#" } })
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f2b6376c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

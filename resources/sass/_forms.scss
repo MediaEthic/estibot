@@ -93,6 +93,10 @@ select:-webkit-autofill:focus {
     -moz-transition: all .4s;
     transition: all .4s;
 
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+
     &:focus {
       height: 3.5rem;
       color: $secondary-color-dark !important;
@@ -173,14 +177,18 @@ select:-webkit-autofill:focus {
 
   .field:focus + .focus-field + .label-field {
     top: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
     color: $secondary-color;
+    text-transform: uppercase;
   }
 
   .hasValue + .focus-field + .label-field {
     top: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
     color: $primary-color;
+    text-transform: uppercase;
   }
 
   .symbol-left-field {
@@ -207,7 +215,45 @@ select:-webkit-autofill:focus {
 
   .field:focus + .focus-field + .label-field + .symbol-left-field {
     color: $secondary-color-light;
-    padding-left: 23px;
+    padding-left: 2.3rem;
+  }
+
+  &.h-50 {
+    height: 5rem;
+
+    .field {
+      padding: 0 2.5rem 0 5rem;
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+
+      &:focus {
+        &+ .focus-field + .label-field {
+          top: .5rem;
+          font-size: 1rem;
+          line-height: 1.4rem;
+
+          &+ .symbol-left-field {
+            padding-left: 1.8rem;
+          }
+        }
+      }
+
+      &.hasValue + .focus-field + .label-field {
+        top: .5rem;
+      }
+    }
+
+    .label-field {
+      top: 1.5rem;
+      padding-left: 5rem;
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+    }
+
+    .symbol-left-field {
+      font-size: 2rem;
+      padding-left: 1.5rem;
+    }
   }
 }
 

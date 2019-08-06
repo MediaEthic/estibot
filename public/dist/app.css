@@ -246,6 +246,10 @@ select:-webkit-autofill:focus {
   transition: all .4s;
 }
 
+.wrap-field .field::-webkit-search-cancel-button {
+  display: none;
+}
+
 .wrap-field .field:focus {
   height: 3.5rem;
   color: #6D4C41 !important;
@@ -307,14 +311,18 @@ select:-webkit-autofill:focus {
 
 .wrap-field .field:focus + .focus-field + .label-field {
   top: 1rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
   color: #C49998;
+  text-transform: uppercase;
 }
 
 .wrap-field .hasValue + .focus-field + .label-field {
   top: 1rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
   color: #91A8D0;
+  text-transform: uppercase;
 }
 
 .wrap-field .symbol-left-field {
@@ -339,7 +347,43 @@ select:-webkit-autofill:focus {
 
 .wrap-field .field:focus + .focus-field + .label-field + .symbol-left-field {
   color: #F7CAC9;
-  padding-left: 23px;
+  padding-left: 2.3rem;
+}
+
+.wrap-field.h-50 {
+  height: 5rem;
+}
+
+.wrap-field.h-50 .field {
+  padding: 0 2.5rem 0 5rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+}
+
+.wrap-field.h-50 .field:focus + .focus-field + .label-field {
+  top: .5rem;
+  font-size: 1rem;
+  line-height: 1.4rem;
+}
+
+.wrap-field.h-50 .field:focus + .focus-field + .label-field + .symbol-left-field {
+  padding-left: 1.8rem;
+}
+
+.wrap-field.h-50 .field.hasValue + .focus-field + .label-field {
+  top: .5rem;
+}
+
+.wrap-field.h-50 .label-field {
+  top: 1.5rem;
+  padding-left: 5rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+}
+
+.wrap-field.h-50 .symbol-left-field {
+  font-size: 2rem;
+  padding-left: 1.5rem;
 }
 
 .cta {
