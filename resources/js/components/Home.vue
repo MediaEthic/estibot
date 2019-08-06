@@ -52,6 +52,27 @@
                         </div>
                     </div>
                 </article>
+
+                <nav v-if="pagination.last_page > 1"
+                     class="wrap-pagination">
+                    <ul class="list-paginate">
+                        <li class="paginate controls-paginate"
+                            :class="[{ disabled: !pagination.previous_page }]">
+                            <a href="#" @click="fetchQuotations(pagination.previous_page)">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        <li class="paginate">
+                            Page {{ pagination.current_page }} sur {{ pagination.last_page }}
+                        </li>
+                        <li class="paginate controls-paginate"
+                            :class="[{ disabled: !pagination.next_page }]">
+                            <a href="#" @click="fetchQuotations(pagination.next_page)">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <router-link v-else
                          :to="{ name: 'quotation' }"
@@ -103,20 +124,29 @@
             getHumanDate(date) {
                 return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             },
+            thirdType(thirdType) {
+                if (thirdType === "new") {
+                    return "P";
+                }
+            },
             makePagination(meta) {
                 let pagination = {
                     current_page: meta.current_page,
                     last_page: meta.last_page,
                     next_page: meta.next_page_url,
-                    previous_page_url: meta.prev_page_url,
+                    previous_page: meta.prev_page_url,
                 };
 
                 this.pagination = pagination;
             },
-            thirdType(thirdType) {
-                if (thirdType === "new") {
-                    return "P";
-                }
+            fetchQuotations(page_url) {
+                page_url = page_url || "/api/auth/quotations";
+                this.$store.dispatch("getQuotations", {
+                    url: page_url
+                }).then(res => {
+                    this.quotations = this.$store.state.quotations;
+                    this.makePagination(this.$store.state.quotations);
+                }).catch(err => console.log(err));
             }
         }
     }
@@ -313,6 +343,39 @@
                     }
                 }
             }
+        }
+
+        .wrap-pagination {
+            margin-top: 1rem;
+
+            .list-paginate {
+                display: flex;
+                align-items: center;
+
+                .controls-paginate {
+                    width: 3.5rem;
+                    height: 3.5rem;
+                    margin: 0 1rem;
+                    border: .15rem solid $primary-color;
+                    border-radius: 50%;
+                    font-size: 2rem;
+                    color: $primary-color;
+                    text-align: center;
+                    line-height: 3.25rem;
+
+                    a:active,
+                    a:focus {
+                        padding: 0;
+                        background: transparent;
+                        color: $primary-color;
+                    }
+
+                    &.disabled {
+                        display: none;
+                    }
+                }
+            }
+
         }
     }
 

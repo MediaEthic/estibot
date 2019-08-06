@@ -2,16 +2,18 @@
     <div class="wrap-padding">
         <router-view :user="user"></router-view>
         <footer class="wrap-main-footer">
-            <ul class="wrap-main-menu">
-                <li v-for="(route, key) in routes">
-                    <router-link :to="{ name : route.path }"
-                                 :key="key"
-                                 class="link-menu">
-                        <i :class="route.icon"></i>
-                        {{route.name}}
-                    </router-link>
-                </li>
-            </ul>
+            <nav>
+                <ul class="wrap-main-menu">
+                    <li v-for="(route, key) in routes">
+                        <router-link :to="{ name : route.path }"
+                                     :key="key"
+                                     class="link-menu">
+                            <i :class="route.icon"></i>
+                            {{route.name}}
+                        </router-link>
+                    </li>
+                </ul>
+            </nav>
         </footer>
     </div>
 </template>
@@ -165,6 +167,10 @@
         justify-content: center;
         align-items: center;
         z-index: 5;
+
+        > * {
+            width: 100%;
+        }
 
         .wrap-main-menu {
             display: flex;
