@@ -328,3 +328,17 @@ select:-webkit-autofill:focus {
     transition: all 0.3s ease;
   }
 }
+
+.button-submit-secondary {
+  cursor: pointer;
+  border: .1rem solid $primary-color;
+  padding: 1rem 2rem;
+  border-radius: 4rem;
+  color: $primary-color;
+  background-color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  font-weight: $bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

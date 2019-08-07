@@ -5,7 +5,7 @@
             <router-view :user="user"></router-view>
         </transition>
 
-        <footer class="wrap-main-footer">
+        <footer v-if="isMobile" class="wrap-main-mobile-footer">
             <nav>
                 <ul class="wrap-main-menu">
                     <li v-for="(route, key) in routes">
@@ -18,6 +18,10 @@
                     </li>
                 </ul>
             </nav>
+        </footer>
+
+        <footer v-else class="wrap-main-footer">
+            <p>Éthic Software - Copyright © Tous droits réservés</p>
         </footer>
     </div>
     <Spinner v-else :quote="quote" />
@@ -55,7 +59,7 @@
             }
         },
         created() {
-            this.loading = true;
+            // this.loading = true;
 
             this.$store.dispatch('getQuote').then(() => {
                 this.isViewed();
@@ -135,7 +139,7 @@
         display: none;
     }
 
-    .no-footer + .wrap-main-footer {
+    .no-footer + .wrap-main-mobile-footer {
         display: none;
     }
 
@@ -206,7 +210,7 @@
         opacity: 0
     }
 
-    .wrap-main-footer {
+    .wrap-main-mobile-footer {
         background-color: #fff;
         box-shadow: 0 0 .5rem rgba($grey-dark, 0.1);
         width: 100%;
@@ -247,6 +251,14 @@
                 }
             }
         }
+    }
+
+    .wrap-main-footer {
+        font-size: 1.4rem;
+        line-height: 1.8rem;
+        text-align: center;
+        border-top: .075rem solid $grey-dark;
+        padding: 1.5rem 4rem 0 4rem;
     }
 
     @media screen and (min-width: 680px) {

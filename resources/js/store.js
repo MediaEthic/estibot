@@ -40,13 +40,10 @@ export default new Vuex.Store({
                     email: credentials.email,
                     password: credentials.password
                 }).then(response => {
-                    const data = response.data;
-                    console.log("login");
-                    console.log(data);
-                    localStorage.setItem("token", data.token);
-                    context.commit("login", data.token);
-                    localStorage.setItem("user", data.user.name);
-                    context.commit("setUser", data.user.name);
+                    localStorage.setItem("token", response.data.token);
+                    context.commit("login", response.data.token);
+                    localStorage.setItem("user", response.data.user.name);
+                    context.commit("setUser", response.data.user.name);
                     resolve(response);
                 }).catch(error => {
                     localStorage.removeItem("token");
@@ -74,7 +71,6 @@ export default new Vuex.Store({
         },
         async getQuote(context, credentials) {
             let data = (await axios.get('/api/quote')).data;
-            console.log(data);
             context.commit("setQuote", data);
         },
         async getQuotations(context, credentials) {

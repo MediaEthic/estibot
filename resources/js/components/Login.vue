@@ -205,7 +205,7 @@
             .main-form {
                 margin-top: 3rem;
                 padding: 5rem 4.5rem;
-                border-radius: 2rem 0 3rem;
+                border-radius: 2rem 1rem 3rem 1rem;
                 box-shadow: 0 0 1rem rgba($secondary-color, 0.25);
 
                 .wrap-form-main {

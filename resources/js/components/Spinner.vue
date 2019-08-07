@@ -59,12 +59,10 @@
             }
 
             .author {
-                font-family: $font-family-secondary-light;
+                margin-top: 1rem;
+                margin-right: 2rem;
+                text-align: right;
             }
-        }
-
-        .author {
-            /*font-variant: ;*/
         }
     }
 

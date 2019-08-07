@@ -21318,6 +21318,27 @@ __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(197));
 
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.mixin({
+    data: function data() {
+        return {
+            isMobile: false
+        };
+    },
+    created: function created() {
+        this.mobile();
+    },
+
+    methods: {
+        mobile: function mobile() {
+            var check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            this.isMobile = check;
+        }
+    }
+});
+
 var app = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
     el: '#app',
     store: __WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */],
@@ -34877,7 +34898,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-full-content[data-v-6bdc8b8e] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration[data-v-6bdc8b8e] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n      max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image[data-v-6bdc8b8e] {\n        width: 100%;\n        max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    width: 100%;\n}\n[data-v-6bdc8b8e]:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart-data-v-6bdc8b8e;\n          animation-name: onAutoFillStart-data-v-6bdc8b8e;\n}\n[data-v-6bdc8b8e]:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n          animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n}\n@-webkit-keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    margin: 1rem 0 !important;\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title[data-v-6bdc8b8e] {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title[data-v-6bdc8b8e] {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 0 3rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main[data-v-6bdc8b8e] {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-full-content[data-v-6bdc8b8e] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration[data-v-6bdc8b8e] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n      max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image[data-v-6bdc8b8e] {\n        width: 100%;\n        max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    width: 100%;\n}\n[data-v-6bdc8b8e]:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart-data-v-6bdc8b8e;\n          animation-name: onAutoFillStart-data-v-6bdc8b8e;\n}\n[data-v-6bdc8b8e]:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n          animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n}\n@-webkit-keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    margin: 1rem 0 !important;\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title[data-v-6bdc8b8e] {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title[data-v-6bdc8b8e] {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 1rem 3rem 1rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main[data-v-6bdc8b8e] {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -35349,7 +35370,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-main-header[data-v-f2b6376c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: end;\n      -ms-flex-align: end;\n          align-items: end;\n}\n.wrap-filters[data-v-f2b6376c] {\n  margin-top: 3rem;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-filters .wrap-field[data-v-f2b6376c] {\n    margin-bottom: 0;\n}\n.wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n    font-size: 3rem;\n    color: #C49998;\n    margin-left: 2rem;\n}\n.wrap-list-quotations[data-v-f2b6376c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-top: 2rem;\n  margin-bottom: 8rem;\n}\n.wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    width: 100%;\n    min-height: 16.5rem;\n    background-position: center right;\n    background-size: auto 13.5rem;\n    background-repeat: no-repeat;\n    background-color: #fff;\n    -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n            box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n    border-radius: 2rem 1rem 3rem 1rem;\n    padding: 1.5rem 2rem;\n    margin-bottom: 1.5rem;\n}\n.wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n      width: 100%;\n      -webkit-box-flex: 1;\n          -ms-flex-positive: 1;\n              flex-grow: 1;\n}\n.wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: start;\n          -ms-flex-align: start;\n              align-items: flex-start;\n}\n.wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n      color: #62799F;\n}\n.wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n      font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n      font-size: 1.8rem;\n      line-height: 2.2rem;\n      color: #91A8D0;\n      letter-spacing: 0.1em;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: end;\n          -ms-flex-align: end;\n              align-items: flex-end;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n          position: relative;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n            position: absolute;\n            display: block;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n              -webkit-transform: rotate(0deg);\n                      transform: rotate(0deg);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n              -webkit-transform: rotate(-60deg);\n                      transform: rotate(-60deg);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n              -webkit-transform: rotate(-120deg);\n                      transform: rotate(-120deg);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n              -webkit-transform: rotate(-180deg);\n                      transform: rotate(-180deg);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n            display: block;\n            width: inherit;\n            height: inherit;\n            line-height: 3.25rem;\n            color: #C49998;\n            background: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            text-align: center;\n            text-decoration: none;\n            font-size: 2rem;\n            pointer-events: none;\n            -webkit-transition: 0.2s;\n            transition: 0.2s;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n              -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n              color: white;\n              background: rgba(255, 255, 255, 0.3);\n              font-size: 44.44px;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n          opacity: 1;\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n            -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                    transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n            -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                    transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n            -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                    transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n            -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                    transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n            pointer-events: auto;\n}\n.wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n    margin-top: 1rem;\n}\n.wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n}\n.wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n        width: 3.5rem;\n        height: 3.5rem;\n        margin: 0 1rem;\n        border: 0.15rem solid #91A8D0;\n        border-radius: 50%;\n        font-size: 2rem;\n        color: #91A8D0;\n        text-align: center;\n        line-height: 3.25rem;\n}\n.wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n        .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n          padding: 0;\n          background: transparent;\n          color: #91A8D0;\n}\n.wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n          display: none;\n}\n.wrap-empty-result[data-v-f2b6376c] {\n  margin-top: 2rem;\n  text-align: center;\n}\n.wrap-empty-result .image-empty-result[data-v-f2b6376c] {\n    width: 100%;\n    max-width: 10rem;\n    display: block;\n    margin: 0 auto;\n    margin-bottom: 2rem;\n}\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    padding: 2rem 3rem;\n    margin: 0 auto;\n    margin-top: 2rem;\n    max-width: 20rem;\n}\n.wrap-empty-result .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-empty-result .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      text-transform: uppercase;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-main-navigation[data-v-f2b6376c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-bottom: 3rem;\n}\n.wrap-main-navigation .main-logo[data-v-f2b6376c] {\n    width: 15rem;\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-head-page .wrap-filters[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-field[data-v-f2b6376c] {\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n      font-size: 3rem;\n      color: #C49998;\n      margin-left: 2rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n    margin-bottom: 8rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.5);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n        font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n        font-size: 1.8rem;\n        line-height: 2.2rem;\n        color: #91A8D0;\n        letter-spacing: 0.1em;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n                -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                color: white;\n                background: rgba(255, 255, 255, 0.3);\n                font-size: 44.44px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      width: 100%;\n      margin-top: 1rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 100%;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n          width: 3.5rem;\n          height: 3.5rem;\n          margin: 0 1rem;\n          border: 0.15rem solid #91A8D0;\n          border-radius: 50%;\n          font-size: 2rem;\n          color: #91A8D0;\n          text-align: center;\n          line-height: 3.25rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n            padding: 0;\n            background: transparent;\n            color: #91A8D0;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n            display: none;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    -webkit-transition: all time;\n    transition: all time;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      margin: 0;\n      width: 28rem;\n      min-height: 16.5rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -35362,6 +35383,32 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -35483,6 +35530,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        logout: function logout() {
+            var _this2 = this;
+
+            this.$store.dispatch('logout').then(function (resp) {
+                _this2.$router.push({ name: "login" });
+            }).catch(function (error) {
+                _this2.$router.push({ name: "login" });
+            });
+        },
         clearSearch: function clearSearch() {
             this.search = "";
         },
@@ -35505,14 +35561,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.pagination = pagination;
         },
         fetchQuotations: function fetchQuotations(page_url) {
-            var _this2 = this;
+            var _this3 = this;
 
             page_url = page_url || "/api/auth/quotations";
             this.$store.dispatch("getQuotations", {
                 url: page_url
             }).then(function (res) {
-                _this2.quotations = _this2.$store.state.quotations;
-                _this2.makePagination(_this2.$store.state.quotations);
+                _this3.quotations = _this3.$store.state.quotations;
+                _this3.makePagination(_this3.$store.state.quotations);
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -35833,67 +35889,104 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("header", { staticClass: "wrap-main-header" }, [
-      _c("h1", { staticClass: "page-main-title" }, [_vm._v("Devis")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "tag tag-info" }, [
-        _vm._v(_vm._s(_vm.quotations.total))
-      ])
-    ]),
+    !_vm.isMobile
+      ? _c("nav", { staticClass: "wrap-main-navigation" }, [
+          _c("img", {
+            staticClass: "main-logo",
+            attrs: {
+              src: "/assets/img/logo-ethic-software.png",
+              alt: "Logotype Ethic Software"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.logout($event)
+                }
+              }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "button-submit-secondary",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("\n                Déconnexion\n            ")]
+              )
+            ]
+          )
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "main",
+      { staticClass: "wrap-main-content" },
       [
-        _c("div", { staticClass: "wrap-filters" }, [
-          _c("div", { staticClass: "wrap-field h-50" }, [
-            _vm.search
-              ? _c(
-                  "span",
-                  {
-                    staticClass: "btn-right-field",
-                    on: { click: _vm.clearSearch }
-                  },
-                  [_c("i", { staticClass: "fas fa-times" })]
-                )
-              : _vm._e(),
+        _c("div", { staticClass: "wrap-head-page" }, [
+          _c("header", { staticClass: "wrap-main-header" }, [
+            _c("h1", { staticClass: "page-main-title" }, [_vm._v("Devis")]),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.trim",
-                  value: _vm.search,
-                  expression: "search",
-                  modifiers: { trim: true }
-                }
-              ],
-              staticClass: "field",
-              class: { hasValue: _vm.search },
-              attrs: { name: "search", type: "search", autocomplete: "off" },
-              domProps: { value: _vm.search },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.search = $event.target.value.trim()
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "focus-field" }),
-            _vm._v(" "),
-            _c("label", { staticClass: "label-field" }, [
-              _vm._v("Rechercher un client")
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "tag tag-info" }, [
+              _vm._v(_vm._s(_vm.quotations.total))
+            ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "wrap-filters" }, [
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _vm.search
+                ? _c(
+                    "span",
+                    {
+                      staticClass: "btn-right-field",
+                      on: { click: _vm.clearSearch }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.search,
+                    expression: "search",
+                    modifiers: { trim: true }
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.search },
+                attrs: { name: "search", type: "search", autocomplete: "off" },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value.trim()
+                  },
+                  blur: function($event) {
+                    return _vm.$forceUpdate()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "focus-field" }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [
+                _vm._v("Rechercher un client")
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
         ]),
         _vm._v(" "),
         _vm.quotations.data && _vm.quotations.data.length > 0
@@ -35901,6 +35994,14 @@ var render = function() {
               "div",
               { staticClass: "wrap-list-quotations" },
               [
+                !_vm.isMobile
+                  ? _c("div", { staticClass: "create-new-quotation" }, [
+                      _c("i", { staticClass: "far fa-plus-square" }),
+                      _vm._v(" "),
+                      _vm._m(2)
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _vm._l(_vm.quotations.data, function(quotation) {
                   return _c(
                     "article",
@@ -35913,58 +36014,60 @@ var render = function() {
                       }
                     },
                     [
-                      _c("div", { staticClass: "head-quotation" }, [
-                        _c("h2", { staticClass: "page-subtitle" }, [
-                          _vm._v("Devis "),
-                          _c("span", { staticClass: "number-quotation" }, [
-                            _vm._v("#" + _vm._s(quotation.id))
+                      _c("div", {}, [
+                        _c("div", { staticClass: "head-quotation" }, [
+                          _c("h2", { staticClass: "page-subtitle" }, [
+                            _vm._v("Devis "),
+                            _c("span", { staticClass: "number-quotation" }, [
+                              _vm._v("#" + _vm._s(quotation.id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "tag tag-info" }, [
+                            _vm._v(_vm._s(_vm.thirdType(quotation.third_type)))
                           ])
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "tag tag-info" }, [
-                          _vm._v(_vm._s(_vm.thirdType(quotation.third_type)))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "baseline-main-title" }, [
-                        _c(
-                          "time",
-                          { attrs: { datetime: quotation.created_at } },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.getHumanDate(quotation.created_at))
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "third-quotation" }, [
-                        _vm._v(_vm._s(quotation.third.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "wrap-end-quotation" }, [
-                        _c("p", { staticClass: "price-quotation" }, [
-                          _vm._v(_vm._s(quotation.price.toFixed(2))),
-                          _c("span", { staticClass: "symbol-price" }, [
-                            _vm._v("€")
-                          ])
+                        _c("p", { staticClass: "baseline-main-title" }, [
+                          _c(
+                            "time",
+                            { attrs: { datetime: quotation.created_at } },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.getHumanDate(quotation.created_at))
+                              )
+                            ]
+                          )
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "wrap-actions-quotation" }, [
-                          _c("input", {
-                            staticClass: "options-toggler",
-                            attrs: {
-                              id: "options-toggler" + quotation.id,
-                              type: "checkbox"
-                            }
-                          }),
+                        _c("p", { staticClass: "third-quotation" }, [
+                          _vm._v(_vm._s(quotation.third.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "wrap-end-quotation" }, [
+                          _c("p", { staticClass: "price-quotation" }, [
+                            _vm._v(_vm._s(quotation.price.toFixed(2))),
+                            _c("span", { staticClass: "symbol-price" }, [
+                              _vm._v("€")
+                            ])
+                          ]),
                           _vm._v(" "),
-                          _c("label", {
-                            staticClass: "fas fa-cog",
-                            attrs: { for: "options-toggler" + quotation.id }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(2, true)
+                          _c("div", { staticClass: "wrap-actions-quotation" }, [
+                            _c("input", {
+                              staticClass: "options-toggler",
+                              attrs: {
+                                id: "options-toggler" + quotation.id,
+                                type: "checkbox"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", {
+                              staticClass: "fas fa-cog",
+                              attrs: { for: "options-toggler" + quotation.id }
+                            }),
+                            _vm._v(" "),
+                            _vm._m(3, true)
+                          ])
                         ])
                       ])
                     ]
@@ -36044,23 +36147,25 @@ var render = function() {
                 attrs: { to: { name: "quotation" }, tag: "div" }
               },
               [
-                _c("img", {
-                  staticClass: "image-empty-result",
-                  attrs: {
-                    src: "/assets/img/undraw_welcome_3gvl.svg",
-                    alt:
-                      "Illustration montrant qu'il n'existe encore aucun devis"
-                  }
-                }),
-                _vm._v(" "),
-                _c("h2", { staticClass: "page-subtitle" }, [
-                  _vm._v("Bonjour " + _vm._s(_vm.user) + ", "),
-                  _c("br"),
-                  _vm._v("bienvenue sur Estibot")
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "baseline-main-title" }, [
-                  _vm._v("Commencez par créer un nouveau devis.")
+                _c("div", { staticClass: "wrap-image" }, [
+                  _c("img", {
+                    staticClass: "image-empty-result",
+                    attrs: {
+                      src: "/assets/img/undraw_welcome_3gvl.svg",
+                      alt:
+                        "Illustration montrant qu'il n'existe encore aucun devis"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("h2", { staticClass: "page-subtitle" }, [
+                    _vm._v("Bonjour " + _vm._s(_vm.user) + ", "),
+                    _c("br"),
+                    _vm._v("bienvenue sur Estibot")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "baseline-main-title" }, [
+                    _vm._v("Commencez par créer un nouveau devis.")
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "create-new-quotation" }, [
@@ -36094,6 +36199,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "wrap-icon-filter" }, [
       _c("i", { staticClass: "fas fa-sliders-h" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "text-new-quotation" }, [
+      _vm._v("Créer un"),
+      _c("br"),
+      _vm._v(" nouveau devis")
     ])
   },
   function() {
@@ -36445,13 +36560,10 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     email: credentials.email,
                     password: credentials.password
                 }).then(function (response) {
-                    var data = response.data;
-                    console.log("login");
-                    console.log(data);
-                    localStorage.setItem("token", data.token);
-                    context.commit("login", data.token);
-                    localStorage.setItem("user", data.user.name);
-                    context.commit("setUser", data.user.name);
+                    localStorage.setItem("token", response.data.token);
+                    context.commit("login", response.data.token);
+                    localStorage.setItem("user", response.data.user.name);
+                    context.commit("setUser", response.data.user.name);
                     resolve(response);
                 }).catch(function (error) {
                     localStorage.removeItem("token");
@@ -36490,10 +36602,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 2:
                                 data = _context.sent.data;
 
-                                console.log(data);
                                 context.commit("setQuote", data);
 
-                            case 5:
+                            case 4:
                             case 'end':
                                 return _context.stop();
                         }
@@ -39223,7 +39334,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n    padding: 1rem 1.5rem;\n    background-color: rgba(247, 202, 201, 0.25);\n    border-radius: 4rem;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.wrap-main-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-footer > * {\n    width: 100%;\n}\n.wrap-main-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n    padding: 1rem 1.5rem;\n    background-color: rgba(247, 202, 201, 0.25);\n    border-radius: 4rem;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
@@ -39236,6 +39347,10 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Spinner_vue__);
+//
+//
+//
+//
 //
 //
 //
@@ -39291,7 +39406,7 @@ var DEFAULT_TRANSITION = 'fade';
     created: function created() {
         var _this = this;
 
-        this.loading = true;
+        // this.loading = true;
 
         this.$store.dispatch('getQuote').then(function () {
             _this.isViewed();
@@ -39407,7 +39522,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-spinner .main-image[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n}\n.wrap-spinner .author[data-v-7ae326fe] {\n    /*font-variant: ;*/\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-spinner .main-image[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      margin-top: 1rem;\n      margin-right: 2rem;\n      text-align: right;\n}\n", ""]);
 
 // exports
 
@@ -39500,39 +39615,45 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("footer", { staticClass: "wrap-main-footer" }, [
-            _c("nav", [
-              _c(
-                "ul",
-                { staticClass: "wrap-main-menu" },
-                _vm._l(_vm.routes, function(route, key) {
-                  return _c(
-                    "li",
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          key: key,
-                          staticClass: "link-menu",
-                          attrs: { to: { name: route.path } }
-                        },
+          _vm.isMobile
+            ? _c("footer", { staticClass: "wrap-main-mobile-footer" }, [
+                _c("nav", [
+                  _c(
+                    "ul",
+                    { staticClass: "wrap-main-menu" },
+                    _vm._l(_vm.routes, function(route, key) {
+                      return _c(
+                        "li",
                         [
-                          _c("i", { class: route.icon }),
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(route.name) +
-                              "\n                    "
+                          _c(
+                            "router-link",
+                            {
+                              key: key,
+                              staticClass: "link-menu",
+                              attrs: { to: { name: route.path } }
+                            },
+                            [
+                              _c("i", { class: route.icon }),
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(route.name) +
+                                  "\n                    "
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
+                    }),
+                    0
                   )
-                }),
-                0
-              )
-            ])
-          ])
+                ])
+              ])
+            : _c("footer", { staticClass: "wrap-main-footer" }, [
+                _c("p", [
+                  _vm._v("Éthic Software - Copyright © Tous droits réservés")
+                ])
+              ])
         ],
         1
       )
