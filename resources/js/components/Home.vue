@@ -2,7 +2,7 @@
     <div>
         <header class="wrap-main-header">
             <h1 class="page-main-title">Devis</h1>
-            <div class="tag tag-info">14</div>
+            <div class="tag tag-info">{{ quotations.total }}</div>
         </header>
 
         <main>

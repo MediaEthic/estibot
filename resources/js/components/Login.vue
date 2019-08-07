@@ -138,13 +138,6 @@
 
         .main-form {
             width: 100%;
-
-            .wrap-button-submit {
-                display: block;
-                margin: 3rem auto 0 auto;
-                border: 0;
-                background: transparent;
-            }
         }
     }
 
