@@ -5017,33 +5017,6 @@ module.exports = {
 /* 2 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -5123,7 +5096,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -5351,7 +5324,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -5457,6 +5430,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -21217,7 +21217,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(145);
-module.exports = __webpack_require__(202);
+module.exports = __webpack_require__(207);
 
 
 /***/ }),
@@ -22514,7 +22514,7 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(5)))
 
 /***/ }),
 /* 148 */
@@ -34460,7 +34460,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(149).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(149).setImmediate))
 
 /***/ }),
 /* 149 */
@@ -34530,7 +34530,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 150 */
@@ -34723,7 +34723,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(6)))
 
 /***/ }),
 /* 151 */
@@ -34800,7 +34800,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(153)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(156)
 /* template */
@@ -34853,7 +34853,7 @@ var content = __webpack_require__(154);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("27b43fca", content, false, {});
+var update = __webpack_require__(3)("27b43fca", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -34872,12 +34872,12 @@ if(false) {
 /* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-full-content[data-v-6bdc8b8e] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration[data-v-6bdc8b8e] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n      max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image[data-v-6bdc8b8e] {\n        width: 100%;\n        max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    width: 100%;\n}\n.wrap-full-content .main-form .wrap-button-submit[data-v-6bdc8b8e] {\n      display: block;\n      margin: 3rem auto 0 auto;\n      border: 0;\n      background: transparent;\n}\n[data-v-6bdc8b8e]:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart-data-v-6bdc8b8e;\n          animation-name: onAutoFillStart-data-v-6bdc8b8e;\n}\n[data-v-6bdc8b8e]:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n          animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n}\n@-webkit-keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    margin: 1rem 0 !important;\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title[data-v-6bdc8b8e] {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title[data-v-6bdc8b8e] {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 0 3rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main[data-v-6bdc8b8e] {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-full-content[data-v-6bdc8b8e] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration[data-v-6bdc8b8e] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n      max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image[data-v-6bdc8b8e] {\n        width: 100%;\n        max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    width: 100%;\n}\n[data-v-6bdc8b8e]:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart-data-v-6bdc8b8e;\n          animation-name: onAutoFillStart-data-v-6bdc8b8e;\n}\n[data-v-6bdc8b8e]:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n          animation-name: onAutoFillCancel-data-v-6bdc8b8e;\n}\n@-webkit-keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel-data-v-6bdc8b8e {\nfrom {\n}\nto {\n}\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    margin: 1rem 0 !important;\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title[data-v-6bdc8b8e] {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title[data-v-6bdc8b8e] {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 0 3rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main[data-v-6bdc8b8e] {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -35272,7 +35272,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(159)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(161)
 /* template */
@@ -35325,7 +35325,7 @@ var content = __webpack_require__(160);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("69894571", content, false, {});
+var update = __webpack_require__(3)("69894571", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -35344,7 +35344,7 @@ if(false) {
 /* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -35833,7 +35833,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("header", { staticClass: "wrap-main-header" }, [
+      _c("h1", { staticClass: "page-main-title" }, [_vm._v("Devis")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tag tag-info" }, [
+        _vm._v(_vm._s(_vm.quotations.total))
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "main",
@@ -35884,10 +35890,10 @@ var render = function() {
               _vm._v("Rechercher un client")
             ]),
             _vm._v(" "),
-            _vm._m(1)
+            _vm._m(0)
           ]),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(1)
         ]),
         _vm._v(" "),
         _vm.quotations.data && _vm.quotations.data.length > 0
@@ -35958,7 +35964,7 @@ var render = function() {
                             attrs: { for: "options-toggler" + quotation.id }
                           }),
                           _vm._v(" "),
-                          _vm._m(3, true)
+                          _vm._m(2, true)
                         ])
                       ])
                     ]
@@ -36078,16 +36084,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "wrap-main-header" }, [
-      _c("h1", { staticClass: "page-main-title" }, [_vm._v("Devis")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "tag tag-info" }, [_vm._v("14")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("span", { staticClass: "symbol-left-field" }, [
       _c("i", { staticClass: "fas fa-search" })
     ])
@@ -36141,7 +36137,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(166)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(168)
 /* template */
@@ -36194,7 +36190,7 @@ var content = __webpack_require__(167);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("295bb86d", content, false, {});
+var update = __webpack_require__(3)("295bb86d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -36213,7 +36209,7 @@ if(false) {
 /* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -36271,19 +36267,19 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(171)
+  __webpack_require__(211)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(173)
 /* template */
-var __vue_template__ = __webpack_require__(174)
+var __vue_template__ = __webpack_require__(213)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-3bd692e4"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -36316,51 +36312,55 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 171 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(172);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("c6c56794", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bd692e4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bd692e4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 172 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 171 */,
+/* 172 */,
 /* 173 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -36387,37 +36387,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.logout($event)
-        }
-      }
-    },
-    [_c("button", { attrs: { type: "submit" } }, [_vm._v("Déconnexion")])]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3bd692e4", module.exports)
-  }
-}
-
-/***/ }),
+/* 174 */,
 /* 175 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38375,7 +38345,7 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
 /* 180 */
@@ -39176,11 +39146,11 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(198)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(200)
 /* template */
-var __vue_template__ = __webpack_require__(201)
+var __vue_template__ = __webpack_require__(206)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -39229,7 +39199,7 @@ var content = __webpack_require__(199);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("6bb3893f", content, false, {});
+var update = __webpack_require__(3)("6bb3893f", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -39248,12 +39218,12 @@ if(false) {
 /* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n    padding: 1rem 1.5rem;\n    background-color: rgba(247, 202, 201, 0.25);\n    border-radius: 4rem;\n}\n.wrap-padding {\n  width: 100%;\n  padding: 2rem;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.wrap-main-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-footer > * {\n    width: 100%;\n}\n.wrap-main-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n    padding: 1rem 1.5rem;\n    background-color: rgba(247, 202, 201, 0.25);\n    border-radius: 4rem;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.wrap-main-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-footer > * {\n    width: 100%;\n}\n.wrap-main-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
@@ -39264,7 +39234,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Spinner_vue__);
 //
 //
@@ -39355,6 +39325,165 @@ var DEFAULT_TRANSITION = 'fade';
 /* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(202)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(204)
+/* template */
+var __vue_template__ = __webpack_require__(205)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7ae326fe"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Spinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7ae326fe", Component.options)
+  } else {
+    hotAPI.reload("data-v-7ae326fe", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(203);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("a8c9b05e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-spinner .main-image[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n}\n.wrap-spinner .author[data-v-7ae326fe] {\n    /*font-variant: ;*/\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 204 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['quote']
+});
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "wrap-spinner" }, [
+    _c("img", {
+      staticClass: "main-image",
+      attrs: {
+        src: "/assets/img/undraw_printing_invoices_5r4r.svg",
+        alt: "Illustration de la page de connexion"
+      }
+    }),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-quote" }, [
+      _c("i", { staticClass: "fas fa-angle-double-left" }),
+      _vm._v(" "),
+      _c("p", { staticClass: "quote page-subtitle" }, [
+        _c("q", [_vm._v(_vm._s(_vm.quote.quote))])
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "author baseline-main-title" }, [
+        _vm._v(_vm._s(_vm.quote.author))
+      ]),
+      _vm._v(" "),
+      _c("i", { staticClass: "fas fa-angle-double-right" })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7ae326fe", module.exports)
+  }
+}
+
+/***/ }),
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -39420,106 +39549,14 @@ if (false) {
 }
 
 /***/ }),
-/* 202 */
+/* 207 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(211)
-}
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(209)
-/* template */
-var __vue_template__ = __webpack_require__(213)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-7ae326fe"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Spinner.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7ae326fe", Component.options)
-  } else {
-    hotAPI.reload("data-v-7ae326fe", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 207 */,
 /* 208 */,
-/* 209 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['quote'],
-    data: function data() {
-        return {};
-    },
-    created: function created() {
-        // this.$store.dispatch('getQuote');
-    },
-
-    computed: {
-        // quote() {
-        //     return this.$store.state.quote;
-        // }
-    }
-});
-
-/***/ }),
+/* 209 */,
 /* 210 */,
 /* 211 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -39531,13 +39568,13 @@ var content = __webpack_require__(212);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("a8c9b05e", content, false, {});
+var update = __webpack_require__(3)("554a547a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue");
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bd692e4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bd692e4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -39550,12 +39587,12 @@ if(false) {
 /* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: 4rem;\n}\n.wrap-spinner img[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n}\n.wrap-spinner .author[data-v-7ae326fe] {\n    /*font-variant: ;*/\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-component[data-v-3bd692e4] {\n  min-height: calc(100vh - 9rem);\n}\n.wrap-main-content[data-v-3bd692e4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -ms-flex-line-pack: distribute;\n      align-content: space-around;\n  min-height: calc(100vh - 12.4rem);\n}\n.wrap-main-content .wrap-image[data-v-3bd692e4] {\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-main-content .wrap-image .main-image[data-v-3bd692e4] {\n      width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -39568,37 +39605,85 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "wrap-spinner" }, [
-    _c("img", {
-      staticClass: "main-image",
-      attrs: {
-        src: "/assets/img/undraw_Artificial_intelligence_oyxx.svg",
-        alt: "Illustration de la page de connexion"
-      }
-    }),
+  return _c("div", { staticClass: "wrap-component" }, [
+    _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "wrap-quote" }, [
-      _c("i", { staticClass: "fas fa-angle-double-left" }),
+    _c("main", { staticClass: "wrap-main-content" }, [
+      _vm._m(1),
       _vm._v(" "),
-      _c("p", { staticClass: "quote page-subtitle" }, [
-        _c("q", [_vm._v(_vm._s(_vm.quote.quote))])
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "author baseline-main-title" }, [
-        _vm._v(_vm._s(_vm.quote.author))
-      ]),
-      _vm._v(" "),
-      _c("i", { staticClass: "fas fa-angle-double-right" })
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.logout($event)
+            }
+          }
+        },
+        [
+          _c(
+            "button",
+            { staticClass: "wrap-button-submit", attrs: { type: "submit" } },
+            [
+              _c("a", { staticClass: "cta", attrs: { href: "#" } }, [
+                _c("span", [_vm._v("Déconnexion")]),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    attrs: {
+                      width: "13px",
+                      height: "10px",
+                      viewBox: "0 0 13 10"
+                    }
+                  },
+                  [
+                    _c("path", { attrs: { d: "M1,5 L11,5" } }),
+                    _vm._v(" "),
+                    _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                  ]
+                )
+              ])
+            ]
+          )
+        ]
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "wrap-main-header" }, [
+      _c("h1", { staticClass: "page-main-title" }, [
+        _vm._v("Compte utilisateur")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "wrap-image" }, [
+      _c("img", {
+        staticClass: "main-image",
+        attrs: {
+          src: "/assets/img/undraw_profile_6l1l.svg",
+          alt: "Illustration de la page de connexion"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7ae326fe", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-3bd692e4", module.exports)
   }
 }
 

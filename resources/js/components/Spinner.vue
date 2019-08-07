@@ -1,7 +1,7 @@
 <template>
     <div class="wrap-spinner">
         <img class="main-image"
-             src="/assets/img/undraw_Artificial_intelligence_oyxx.svg"
+             src="/assets/img/undraw_printing_invoices_5r4r.svg"
              alt="Illustration de la page de connexion"/>
 
         <div class="wrap-quote">
@@ -17,20 +17,7 @@
     export default {
         props: [
             'quote',
-        ],
-        data() {
-            return {
-
-            }
-        },
-        created() {
-            // this.$store.dispatch('getQuote');
-        },
-        computed: {
-            // quote() {
-            //     return this.$store.state.quote;
-            // }
-        },
+        ]
     }
 </script>
 
@@ -43,9 +30,8 @@
         flex-flow: row wrap;
         justify-content: center;
         align-items: center;
-        padding: 4rem;
 
-        img {
+        .main-image {
             width: 100%;
             margin-bottom: 2rem;
         }
