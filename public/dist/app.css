@@ -472,15 +472,23 @@ select:-webkit-autofill:focus {
 
 .button-submit-secondary {
   cursor: pointer;
-  border: 0.1rem solid #91A8D0;
+  border: 0.1rem solid #62799F;
   padding: 1rem 2rem;
   border-radius: 4rem;
-  color: #91A8D0;
+  color: #62799F;
   background-color: #fff;
   font-size: 1.2rem;
   line-height: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.button-submit-secondary:hover {
+  border: 0.1rem solid #C49998;
+  background-color: #C49998;
+  color: #FFFDFC;
 }
 

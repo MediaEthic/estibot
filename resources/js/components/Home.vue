@@ -43,10 +43,13 @@
             </div>
 
             <div v-if="quotations.data && quotations.data.length > 0" class="wrap-list-quotations">
-                <div v-if="!isMobile" class="create-new-quotation">
+                <router-link v-if="!isMobile"
+                             class="create-new-quotation"
+                             tag="div"
+                             :to="{ name : 'quotation' }">
                     <i class="far fa-plus-square"></i>
                     <p class="text-new-quotation">Créer un<br> nouveau devis</p>
-                </div>
+                </router-link>
 
                 <article v-for="quotation in quotations.data"
                          :key="quotation.id"
@@ -109,10 +112,12 @@
                     <p class="baseline-main-title">Commencez par créer un nouveau devis.</p>
                 </div>
 
-                <div class="create-new-quotation">
+                <router-link class="create-new-quotation"
+                             tag="div"
+                             :to="{ name : 'quotation' }">
                     <i class="far fa-plus-square"></i>
                     <p class="text-new-quotation">Créer un<br> nouveau devis</p>
-                </div>
+                </router-link>
             </router-link>
         </main>
     </div>
@@ -139,8 +144,13 @@
             });
         },
         computed: {
-            quotations() {
-                return this.$store.state.quotations;
+            quotations: {
+                get() {
+                    return this.$store.state.quotations;
+                },
+                set() {
+                    return this.$store.state.quotations;
+                }
             }
         },
         methods: {
@@ -544,7 +554,13 @@
                 > .wrap-quotation {
                     max-width: 28rem;
                 }
-                .create-new-quotation {
+
+                > .wrap-quotation {
+                    > * {
+                        background-color: rgba(#fff, .75);
+                    }
+                }
+                > .create-new-quotation {
                     display: flex;
                     margin: 0;
                     width: 28rem;
