@@ -450,12 +450,24 @@
                         color: $primary-color;
                         text-align: center;
                         line-height: 3.25rem;
+                        transition: all .4s;
 
+                        &:hover {
+                            background-color: rgba($secondary-color, 0.25);
+                            border: .15rem solid $secondary-color;
+                            color: $secondary-color;
+
+                            a {
+                                color: $secondary-color;
+                            }
+                        }
+
+                        a:hover,
                         a:active,
                         a:focus {
                             padding: 0;
                             background: transparent;
-                            color: $primary-color;
+                            color: $secondary-color;
                         }
 
                         &.disabled {
