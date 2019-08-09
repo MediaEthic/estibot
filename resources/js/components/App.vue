@@ -1,5 +1,20 @@
 <template>
     <div v-if="!loading" class="wrap-padding">
+        <nav v-if="!isMobile" class="wrap-main-navigation">
+            <router-link :to="{ name : 'home' }"
+                         tag="a"
+                         title="Retour sur la page d'accueil">
+                <img src="/assets/img/logo-ethic-software.png"
+                 alt="Logotype Ethic Software"
+                 class="main-logo" />
+            </router-link>
+            <form @submit.prevent="logout">
+                <button type="submit" class="button-submit-secondary">
+                    Déconnexion
+                </button>
+            </form>
+        </nav>
+
         <transition :name="transitionName"
                 mode="out-in">
             <router-view :user="user"></router-view>
@@ -82,7 +97,14 @@
                 setTimeout(() => {
                     this.loading = false;
                 }, readTime);
-            }
+            },
+            logout () {
+                this.$store.dispatch('logout',).then(resp => {
+                    this.$router.push({ name: "login" });
+                }).catch(error => {
+                    this.$router.push({ name: "login" });
+                });
+            },
         }
     }
 </script>
@@ -119,9 +141,6 @@
         &:focus {
             font-weight: $bold;
             color: $secondary-color;
-            padding: 1rem 1.5rem;
-            background-color: rgba($secondary-color-light, 0.25);
-            border-radius: 4rem;
         }
     }
 
@@ -129,6 +148,17 @@
         width: 100%;
         min-height: 100%;
         padding: 2rem;
+
+        .wrap-main-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+
+            .main-logo {
+                width: 15rem;
+            }
+        }
 
         > div {
             min-height: 100%;
@@ -234,6 +264,14 @@
             padding: 0 1.5rem;
 
             .link-menu {
+                &:hover,
+                &:active,
+                &:focus {
+                    padding: 1rem 1.5rem;
+                    background-color: rgba($secondary-color-light, 0.25);
+                    border-radius: 4rem;
+                }
+
                 .fas {
                     margin-right: .5rem;
                 }
