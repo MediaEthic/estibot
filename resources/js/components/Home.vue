@@ -1,17 +1,5 @@
 <template>
     <div>
-        <nav v-if="!isMobile" class="wrap-main-navigation">
-            <img src="/assets/img/logo-ethic-software.png"
-                 alt="Logotype Ethic Software"
-                 class="main-logo" />
-
-            <form @submit.prevent="logout">
-                <button type="submit" class="button-submit-secondary">
-                    Déconnexion
-                </button>
-            </form>
-        </nav>
-
         <main class="wrap-main-content">
             <div class="wrap-head-page">
                 <header class="wrap-main-header">
@@ -42,7 +30,87 @@
                 </div>
             </div>
 
-            <div v-if="quotations.data && quotations.data.length > 0" class="wrap-list-quotations">
+            <div v-if="!loading">
+                <div v-if="quotations.data && quotations.data.length > 0" class="wrap-list-quotations">
+                    <router-link v-if="!isMobile"
+                                 class="create-new-quotation"
+                                 tag="div"
+                                 :to="{ name : 'quotation' }">
+                        <i class="far fa-plus-square"></i>
+                        <p class="text-new-quotation">Créer un<br> nouveau devis</p>
+                    </router-link>
+
+                    <article v-for="quotation in quotations.data"
+                             :key="quotation.id"
+                             class="wrap-quotation"
+                             :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
+                        <div class="">
+                            <div class="head-quotation">
+                                <h2 class="page-subtitle">Devis <span class="number-quotation">#{{ quotation.id }}</span></h2>
+                                <div class="tag tag-info">{{ thirdType(quotation.third_type) }}</div>
+                            </div>
+                            <p class="baseline-main-title"><time :datetime="quotation.created_at">{{ getHumanDate(quotation.created_at) }}</time></p>
+                            <p class="third-quotation">{{ quotation.third.name }}</p>
+                            <div class="wrap-end-quotation">
+                                <p class="price-quotation">{{ quotation.price.toFixed(2) }}<span class="symbol-price">€</span></p>
+                                <div class="wrap-actions-quotation">
+                                    <input :id="'options-toggler' + quotation.id" class="options-toggler" type="checkbox">
+                                    <label :for="'options-toggler' + quotation.id" class="fas fa-cog"></label>
+                                    <ul class="list-actions">
+                                        <li class="action-item"><a href="#" class="fas fa-print"></a></li>
+                                        <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
+                                        <li class="action-item"><a href="#" class="fas fa-copy"></a></li>
+                                        <li class="action-item"><a href="#" class="fas fa-trash-alt"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <nav v-if="pagination.last_page > 1"
+                         class="wrap-pagination">
+                        <ul class="list-paginate">
+                            <li class="paginate controls-paginate"
+                                :class="[{ disabled: !pagination.previous_page }]">
+                                <a href="#" @click="fetchQuotations(pagination.previous_page)">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li class="paginate">
+                                Page {{ pagination.current_page }} sur {{ pagination.last_page }}
+                            </li>
+                            <li class="paginate controls-paginate"
+                                :class="[{ disabled: !pagination.next_page }]">
+                                <a href="#" @click="fetchQuotations(pagination.next_page)">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <router-link v-else
+                             :to="{ name: 'quotation' }"
+                             tag="div"
+                             class="wrap-empty-result">
+                    <div class="wrap-image">
+                        <img class="image-empty-result"
+                             src="/assets/img/undraw_welcome_3gvl.svg"
+                             alt="Illustration montrant qu'il n'existe encore aucun devis"/>
+
+                        <h2 class="page-subtitle">Bonjour {{ user }}, <br>bienvenue sur Estibot</h2>
+                        <p class="baseline-main-title">Commencez par créer un nouveau devis.</p>
+                    </div>
+
+                    <router-link class="create-new-quotation"
+                                 tag="div"
+                                 :to="{ name : 'quotation' }">
+                        <i class="far fa-plus-square"></i>
+                        <p class="text-new-quotation">Créer un<br> nouveau devis</p>
+                    </router-link>
+                </router-link>
+            </div>
+
+            <div v-else class="wrap-list-quotations">
                 <router-link v-if="!isMobile"
                              class="create-new-quotation"
                              tag="div"
@@ -51,22 +119,22 @@
                     <p class="text-new-quotation">Créer un<br> nouveau devis</p>
                 </router-link>
 
-                <article v-for="quotation in quotations.data"
-                         :key="quotation.id"
+                <article v-for="index in 15"
+                         :key="index"
                          class="wrap-quotation"
-                         :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
+                         :style="{ backgroundImage: 'url(' + randomBgImage() + ')' }">
                     <div class="">
                         <div class="head-quotation">
-                            <h2 class="page-subtitle">Devis <span class="number-quotation">#{{ quotation.id }}</span></h2>
-                            <div class="tag tag-info">{{ thirdType(quotation.third_type) }}</div>
+                            <h2 class="page-subtitle">Devis <span class="number-quotation">#00000{{ index }}</span></h2>
+                            <div class="tag tag-info">P</div>
                         </div>
-                        <p class="baseline-main-title"><time :datetime="quotation.created_at">{{ getHumanDate(quotation.created_at) }}</time></p>
-                        <p class="third-quotation">{{ quotation.third.name }}</p>
+                        <p class="baseline-main-title"><time datetime="2019-08-08">08/08/2019</time></p>
+                        <p class="third-quotation">Nom du donneur d'ordre</p>
                         <div class="wrap-end-quotation">
-                            <p class="price-quotation">{{ quotation.price.toFixed(2) }}<span class="symbol-price">€</span></p>
+                            <p class="price-quotation">123.94<span class="symbol-price">€</span></p>
                             <div class="wrap-actions-quotation">
-                                <input :id="'options-toggler' + quotation.id" class="options-toggler" type="checkbox">
-                                <label :for="'options-toggler' + quotation.id" class="fas fa-cog"></label>
+                                <input :id="'options-toggler' + index" class="options-toggler" type="checkbox">
+                                <label :for="'options-toggler' + index" class="fas fa-cog"></label>
                                 <ul class="list-actions">
                                     <li class="action-item"><a href="#" class="fas fa-print"></a></li>
                                     <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
@@ -77,61 +145,27 @@
                         </div>
                     </div>
                 </article>
-
-                <nav v-if="pagination.last_page > 1"
-                     class="wrap-pagination">
-                    <ul class="list-paginate">
-                        <li class="paginate controls-paginate"
-                            :class="[{ disabled: !pagination.previous_page }]">
-                            <a href="#" @click="fetchQuotations(pagination.previous_page)">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                        </li>
-                        <li class="paginate">
-                            Page {{ pagination.current_page }} sur {{ pagination.last_page }}
-                        </li>
-                        <li class="paginate controls-paginate"
-                            :class="[{ disabled: !pagination.next_page }]">
-                            <a href="#" @click="fetchQuotations(pagination.next_page)">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
-            <router-link v-else
-                         :to="{ name: 'quotation' }"
-                         tag="div"
-                         class="wrap-empty-result">
-                <div class="wrap-image">
-                    <img class="image-empty-result"
-                         src="/assets/img/undraw_welcome_3gvl.svg"
-                         alt="Illustration montrant qu'il n'existe encore aucun devis"/>
 
-                    <h2 class="page-subtitle">Bonjour {{ user }}, <br>bienvenue sur Estibot</h2>
-                    <p class="baseline-main-title">Commencez par créer un nouveau devis.</p>
-                </div>
-
-                <router-link class="create-new-quotation"
-                             tag="div"
-                             :to="{ name : 'quotation' }">
-                    <i class="far fa-plus-square"></i>
-                    <p class="text-new-quotation">Créer un<br> nouveau devis</p>
-                </router-link>
-            </router-link>
+            <!--<Loader v-else />-->
         </main>
     </div>
 </template>
 
 <script>
+    import Loader from './Loader.vue';
     import moment from 'moment';
 
     export default {
         props: [
             'user',
         ],
+        components: {
+            Loader
+        },
         data() {
             return {
+                loading: true,
                 search: "",
                 pagination: {},
             }
@@ -154,13 +188,6 @@
             }
         },
         methods: {
-            logout () {
-                this.$store.dispatch('logout',).then(resp => {
-                    this.$router.push({ name: "login" });
-                }).catch(error => {
-                    this.$router.push({ name: "login" });
-                });
-            },
             clearSearch() {
                 this.search = "";
             },
@@ -181,15 +208,22 @@
                 };
 
                 this.pagination = pagination;
+                this.loading = false;
             },
             fetchQuotations(page_url) {
+                this.loading = true;
                 page_url = page_url || "/api/auth/quotations";
                 this.$store.dispatch("getQuotations", {
                     url: page_url
                 }).then(res => {
                     this.quotations = this.$store.state.quotations;
                     this.makePagination(this.$store.state.quotations);
+                    this.loading = false;
                 }).catch(err => console.log(err));
+            },
+            randomBgImage() {
+                let random_images_array = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
+                return "/assets/img/quotations/" + random_images_array[Math.floor(Math.random() * random_images_array.length)];
             }
         }
     }
@@ -197,17 +231,6 @@
 
 <style lang="scss" scoped>
     @import '~@/_variables.scss';
-
-    .wrap-main-navigation {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 3rem;
-
-        .main-logo {
-            width: 15rem;
-        }
-    }
 
     .wrap-main-content {
         max-width: 120rem;
@@ -266,7 +289,7 @@
                 background-position-x: 9rem;
                 box-shadow: 0 0 .5rem rgba($primary-color-dark, 0.2);
                 border-radius: 2rem 1rem 3rem 1rem;
-                margin: 1rem;
+                margin: 1rem 0;
                 transition: all .4s;
 
                 &:hover {
@@ -565,6 +588,7 @@
                 > .create-new-quotation,
                 > .wrap-quotation {
                     max-width: 28rem;
+                    margin: 1rem;
                 }
 
                 > .wrap-quotation {
@@ -574,10 +598,8 @@
                 }
                 > .create-new-quotation {
                     display: flex;
-                    margin: 0;
                     width: 28rem;
                     min-height: 16.5rem;
-                    margin: 1rem;
                 }
             }
 
