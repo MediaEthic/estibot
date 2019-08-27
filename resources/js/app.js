@@ -11,6 +11,28 @@ import store from './store';
 
 
 router.beforeEach((to, from, next) => {
+    // requiresAuth && requiresVisitor
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!store.getters.loggedIn) {
+            next({
+                name: 'login',
+            })
+        } else {
+            next()
+        }
+    } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+        if (store.getters.loggedIn) {
+            next({
+                name: 'home',
+            })
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
+
+
     // This goes through the matched routes from last to first, finding the closest route with a title.
     // eg. if we have /some/deep/nested/route and /some, /deep, and /nested have titles, nested's will be chosen.
     const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
@@ -45,27 +67,6 @@ router.beforeEach((to, from, next) => {
         .forEach(tag => document.head.appendChild(tag));
 
     next();
-
-    // requiresAuth && requiresVisitor
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!store.getters.loggedIn) {
-            next({
-                name: 'login',
-            })
-        } else {
-            next()
-        }
-    } else if (to.matched.some(record => record.meta.requiresVisitor)) {
-        if (store.getters.loggedIn) {
-            next({
-                name: 'home',
-            })
-        } else {
-            next()
-        }
-    } else {
-        next()
-    }
 });
 
 
