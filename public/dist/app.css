@@ -736,6 +736,7 @@ select:-webkit-autofill:focus {
 }
 
 .wrap-group-field > *[class^="wrap-field"]:not(:first-child) {
+  width: 100%;
   border-top: 0.1rem solid #62799F;
   border-radius: 0;
 }

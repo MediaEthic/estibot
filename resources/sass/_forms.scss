@@ -565,6 +565,7 @@ select:-webkit-autofill:focus {
 
   > *[class^="wrap-field"] {
     &:not(:first-child) {
+      width: 100%;
       border-top: .1rem solid $primary-color-dark;
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
