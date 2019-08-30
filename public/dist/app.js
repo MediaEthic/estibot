@@ -35370,7 +35370,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-f2b6376c], [class*=\" icon-\"][data-v-f2b6376c] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-f2b6376c]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-f2b6376c]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-f2b6376c]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-f2b6376c]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-f2b6376c]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-f2b6376c]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-head-page .wrap-filters[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-field[data-v-f2b6376c] {\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n      font-size: 3rem;\n      color: #C49998;\n      margin-left: 2rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n    margin-bottom: 8rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.5);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n        font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n        font-size: 1.8rem;\n        line-height: 2.2rem;\n        color: #91A8D0;\n        letter-spacing: 0.1em;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n                -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                color: white;\n                background: rgba(255, 255, 255, 0.3);\n                font-size: 44.44px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      width: 100%;\n      margin-top: 1rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 100%;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n          width: 3.5rem;\n          height: 3.5rem;\n          margin: 0 1rem;\n          border: 0.15rem solid #91A8D0;\n          border-radius: 50%;\n          font-size: 2rem;\n          color: #91A8D0;\n          text-align: center;\n          line-height: 3.25rem;\n          -webkit-transition: all .4s;\n          transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c]:hover {\n            background-color: rgba(196, 153, 152, 0.25);\n            border: 0.15rem solid #C49998;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate:hover a[data-v-f2b6376c] {\n              color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:hover,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n            padding: 0;\n            background: transparent;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n            display: none;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    -webkit-transition: all time;\n    transition: all time;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-f2b6376c], [class*=\" icon-\"][data-v-f2b6376c] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-f2b6376c]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-f2b6376c]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-f2b6376c]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-f2b6376c]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-f2b6376c]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-f2b6376c]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-head-page .wrap-filters[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-field[data-v-f2b6376c] {\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n      font-size: 3rem;\n      color: #C49998;\n      margin-left: 2rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.5);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n        font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n        font-size: 1.8rem;\n        line-height: 2.2rem;\n        color: #91A8D0;\n        letter-spacing: 0.1em;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n                -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                color: white;\n                background: rgba(255, 255, 255, 0.3);\n                font-size: 44.44px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      width: 100%;\n      margin-top: 1rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 100%;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n          width: 3.5rem;\n          height: 3.5rem;\n          margin: 0 1rem;\n          border: 0.15rem solid #91A8D0;\n          border-radius: 50%;\n          font-size: 2rem;\n          color: #91A8D0;\n          text-align: center;\n          line-height: 3.25rem;\n          -webkit-transition: all .4s;\n          transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c]:hover {\n            background-color: rgba(196, 153, 152, 0.25);\n            border: 0.15rem solid #C49998;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate:hover a[data-v-f2b6376c] {\n              color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:hover,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n            padding: 0;\n            background: transparent;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n            display: none;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -36639,7 +36639,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-summary {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: calc(100vh - 13.5rem);\n  background-color: #fff;\n  z-index: 1;\n  border-radius: 3rem 3rem 0 0;\n  margin: 0 -2rem;\n  padding: 1rem 2rem;\n  -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n          box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n}\n.wrap-summary.pull {\n    top: 8.4rem;\n}\n.wrap-summary .head-summary {\n    text-align: center;\n}\n.wrap-summary .head-summary .pull-summary {\n      position: absolute;\n      left: -9999px;\n}\n.wrap-summary .head-summary .pull-summary + label {\n        width: 100%;\n        -webkit-transition: 0.4s;\n        transition: 0.4s;\n}\n.wrap-summary .head-summary .pull-summary + label [class^=\"fa\"] {\n          display: block;\n          width: 100%;\n          color: #C49998;\n}\n.wrap-summary .head-summary .pull-summary:checked + label {\n        /*color: $white;\n                    background-color: $secondary-color;\n                    border: .15rem solid $secondary-color;\n                    transform: rotate(180deg);*/\n}\n.wrap-summary .wrap-content-summary {\n    margin-top: 2rem;\n}\n.wrap-summary .wrap-content-summary .image-no-data {\n      display: block;\n      width: 100%;\n      max-width: 41rem;\n      margin: 0 auto;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-form .wrap-buttons-controls-step .next-step {\n      margin-left: auto;\n}\n.wrap-summary {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: calc(100vh - 13.5rem);\n  background-color: #fff;\n  z-index: 1;\n  border-radius: 3rem 3rem 0 0;\n  margin: 0 -2rem;\n  padding: 1rem 2rem;\n  -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n          box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n}\n.wrap-summary.pull {\n    top: 8.4rem;\n}\n.wrap-summary .head-summary {\n    text-align: center;\n}\n.wrap-summary .head-summary .pull-summary {\n      position: absolute;\n      left: -9999px;\n}\n.wrap-summary .head-summary .pull-summary + label {\n        width: 100%;\n        -webkit-transition: 0.4s;\n        transition: 0.4s;\n}\n.wrap-summary .head-summary .pull-summary + label [class^=\"fa\"] {\n          display: block;\n          width: 100%;\n          color: #C49998;\n}\n.wrap-summary .head-summary .pull-summary:checked + label {\n        /*color: $white;\n                    background-color: $secondary-color;\n                    border: .15rem solid $secondary-color;\n                    transform: rotate(180deg);*/\n}\n.wrap-summary .wrap-content-summary {\n    margin-top: 2rem;\n}\n.wrap-summary .wrap-content-summary .image-no-data {\n      display: block;\n      width: 100%;\n      max-width: 41rem;\n      margin: 0 auto;\n}\n@media screen and (min-width: 680px) {\n.wrap-main-content .wrap-head-page .wrap-main-header {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .go-back {\n      margin-right: 2rem;\n      font-size: 2.5rem;\n}\n.wrap-central {\n    display: table;\n    width: 100%;\n    margin-top: 2rem;\n}\n.wrap-central > * {\n      display: table-cell;\n      width: 100%;\n}\n.wrap-central .wrap-main-form {\n      margin: 0;\n      padding-right: 2rem;\n}\n.wrap-central .wrap-main-form .wrap-step {\n        text-align: left;\n}\n.wrap-central .wrap-main-form .wrap-step .image-step {\n          margin-left: 0;\n}\n.wrap-central .wrap-summary {\n      position: initial;\n      margin: 0 0 0 2rem;\n      border-radius: 2rem 1rem 3rem 1rem;\n}\n.wrap-central .wrap-summary .head-summary label [class^=\"fa\"] {\n        display: none;\n}\n}\n@media screen and (min-width: 880px) {\n.wrap-central .wrap-main-form {\n    width: calc(100% - 45rem);\n    padding-right: 4rem;\n}\n.wrap-central .wrap-summary {\n    width: 45rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -36660,6 +36660,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -41113,202 +41121,225 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("main", { staticClass: "wrap-main-content" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "wrap-head-page" }, [
+        _c(
+          "header",
+          { staticClass: "wrap-main-header" },
+          [
+            !_vm.isMobile
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass: "go-back",
+                    attrs: { tag: "a", to: { name: "home" } }
+                  },
+                  [_c("i", { staticClass: "fas fa-arrow-left" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("h1", { staticClass: "page-main-title" }, [
+              _vm._v("Nouveau devis")
+            ])
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
-      _c("form", { staticClass: "wrap-main-form" }, [
-        _c("fieldset", { staticClass: "wrap-step" }, [
-          _c("img", {
-            staticClass: "image-step",
-            attrs: {
-              src: _vm.steps[_vm.step - 1].img,
-              alt: "Illustration d'un donneur d'ordre"
-            }
-          }),
-          _vm._v(" "),
-          _c("h2", { staticClass: "page-subtitle main-title-step" }, [
-            _vm._v(_vm._s(_vm.steps[_vm.step - 1].title))
+      _c("div", { staticClass: "wrap-central" }, [
+        _c("form", { staticClass: "wrap-main-form" }, [
+          _c("fieldset", { staticClass: "wrap-step" }, [
+            _c("img", {
+              staticClass: "image-step",
+              attrs: {
+                src: _vm.steps[_vm.step - 1].img,
+                alt: "Illustration d'un donneur d'ordre"
+              }
+            }),
+            _vm._v(" "),
+            _c("h2", { staticClass: "page-subtitle main-title-step" }, [
+              _vm._v(_vm._s(_vm.steps[_vm.step - 1].title))
+            ]),
+            _vm._v(" "),
+            _c(
+              "progress",
+              {
+                staticClass: "progress",
+                attrs: { max: "100" },
+                domProps: { value: _vm.progress }
+              },
+              [
+                _c("div", { staticClass: "progress-bar" }, [
+                  _c("span", { style: { width: _vm.progress + "%" } }, [
+                    _vm._v("Progress: " + _vm._s(_vm.progress) + "%")
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "section",
+              { staticClass: "wrap-content-step" },
+              [
+                _vm.step === 1 ? _c("Identification") : _vm._e(),
+                _vm._v(" "),
+                _vm.step === 2 ? _c("Description") : _vm._e(),
+                _vm._v(" "),
+                _vm.step === 3 ? _c("Printing") : _vm._e(),
+                _vm._v(" "),
+                _vm.step === 4 ? _c("Finishing") : _vm._e(),
+                _vm._v(" "),
+                _vm.step === 5 ? _c("Packing") : _vm._e()
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
-          _c(
-            "progress",
-            {
-              staticClass: "progress",
-              attrs: { max: "100" },
-              domProps: { value: _vm.progress }
-            },
-            [
-              _c("div", { staticClass: "progress-bar" }, [
-                _c("span", { style: { width: _vm.progress + "%" } }, [
-                  _vm._v("Progress: " + _vm._s(_vm.progress) + "%")
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "section",
-            { staticClass: "wrap-content-step" },
-            [
-              _vm.step === 1 ? _c("Identification") : _vm._e(),
-              _vm._v(" "),
-              _vm.step === 2 ? _c("Description") : _vm._e(),
-              _vm._v(" "),
-              _vm.step === 3 ? _c("Printing") : _vm._e(),
-              _vm._v(" "),
-              _vm.step === 4 ? _c("Finishing") : _vm._e(),
-              _vm._v(" "),
-              _vm.step === 5 ? _c("Packing") : _vm._e()
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "wrap-buttons-controls-step" }, [
-          _vm.step > 1
-            ? _c(
-                "button",
-                {
-                  staticClass: "button button-small button-secondary",
-                  attrs: { type: "button" },
-                  on: { click: _vm.prev }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-chevron-left" }),
-                  _vm._v("\n                    Précédent\n                ")
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.step < 6
-            ? _c(
-                "button",
-                {
-                  staticClass: "button button-small button-primary",
-                  attrs: { type: "button" },
-                  on: { click: _vm.next }
-                },
-                [
-                  _vm._v("\n                    Suivant\n                    "),
-                  _c("i", { staticClass: "fas fa-chevron-right" })
-                ]
-              )
-            : _vm._e()
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "aside",
-      { staticClass: "wrap-summary", class: { pull: _vm.summaryPulled } },
-      [
-        _c("div", { staticClass: "head-summary" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.summaryPulled,
-                expression: "summaryPulled"
-              }
-            ],
-            staticClass: "pull-summary",
-            attrs: { id: "pull-summary", type: "checkbox" },
-            domProps: {
-              checked: Array.isArray(_vm.summaryPulled)
-                ? _vm._i(_vm.summaryPulled, null) > -1
-                : _vm.summaryPulled
-            },
-            on: {
-              change: function($event) {
-                var $$a = _vm.summaryPulled,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      (_vm.summaryPulled = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
-                  }
-                } else {
-                  _vm.summaryPulled = $$c
-                }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "page-subtitle", attrs: { for: "pull-summary" } },
-            [
-              _c("i", {
-                class: this.summaryPulled
-                  ? "fas fa-chevron-up"
-                  : "fas fa-chevron-down"
-              }),
-              _vm._v("Récapitulatif")
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "wrap-content-summary" }, [
-          !_vm.form.description
-            ? _c("img", {
-                staticClass: "image-no-data",
-                attrs: {
-                  src: "/assets/img/undraw_no_data_qbuo.svg",
-                  alt:
-                    "Illustration montrant qu'aucune donnée n'a encore été saisie"
-                }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "wrap-button-submit" }, [
-            _c(
-              "button",
-              { staticClass: "cta", attrs: { type: "button", disabled: "" } },
-              [
-                _c("span", [_vm._v("Sauvegarder")]),
-                _vm._v(" "),
-                _c(
-                  "svg",
+          _c("div", { staticClass: "wrap-buttons-controls-step" }, [
+            _vm.step > 1
+              ? _c(
+                  "button",
                   {
-                    attrs: {
-                      width: "13px",
-                      height: "10px",
-                      viewBox: "0 0 13 10"
-                    }
+                    staticClass: "button button-small button-secondary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.prev }
                   },
                   [
-                    _c("path", { attrs: { d: "M1,5 L11,5" } }),
-                    _vm._v(" "),
-                    _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                    _c("i", { staticClass: "fas fa-chevron-left" }),
+                    _vm._v(
+                      "\n                        Précédent\n                    "
+                    )
                   ]
                 )
-              ]
-            )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.step < 6
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "button button-small button-primary next-step",
+                    attrs: { type: "button" },
+                    on: { click: _vm.next }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Suivant\n                        "
+                    ),
+                    _c("i", { staticClass: "fas fa-chevron-right" })
+                  ]
+                )
+              : _vm._e()
           ])
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "wrap-head-page" }, [
-      _c("header", { staticClass: "wrap-main-header" }, [
-        _c("h1", { staticClass: "page-main-title" }, [_vm._v("Nouveau devis")])
+        ]),
+        _vm._v(" "),
+        _c(
+          "aside",
+          { staticClass: "wrap-summary", class: { pull: _vm.summaryPulled } },
+          [
+            _c("div", { staticClass: "head-summary" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.summaryPulled,
+                    expression: "summaryPulled"
+                  }
+                ],
+                staticClass: "pull-summary",
+                attrs: { id: "pull-summary", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.summaryPulled)
+                    ? _vm._i(_vm.summaryPulled, null) > -1
+                    : _vm.summaryPulled
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.summaryPulled,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.summaryPulled = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.summaryPulled = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "page-subtitle",
+                  attrs: { for: "pull-summary" }
+                },
+                [
+                  _c("i", {
+                    class: this.summaryPulled
+                      ? "fas fa-chevron-up"
+                      : "fas fa-chevron-down"
+                  }),
+                  _vm._v("Récapitulatif")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-content-summary" }, [
+              !_vm.form.description
+                ? _c("img", {
+                    staticClass: "image-no-data",
+                    attrs: {
+                      src: "/assets/img/undraw_no_data_qbuo.svg",
+                      alt:
+                        "Illustration montrant qu'aucune donnée n'a encore été saisie"
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "wrap-button-submit" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "cta",
+                    attrs: { type: "button", disabled: "" }
+                  },
+                  [
+                    _c("span", [_vm._v("Sauvegarder")]),
+                    _vm._v(" "),
+                    _c(
+                      "svg",
+                      {
+                        attrs: {
+                          width: "13px",
+                          height: "10px",
+                          viewBox: "0 0 13 10"
+                        }
+                      },
+                      [
+                        _c("path", { attrs: { d: "M1,5 L11,5" } }),
+                        _vm._v(" "),
+                        _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -44536,7 +44567,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container {\n  width: 300px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 20px 0;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container {\n  width: 300px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 20px 0;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
@@ -44627,6 +44658,20 @@ var DEFAULT_TRANSITION = 'fade';
 
         this.$store.dispatch('getQuote').then(function () {
             _this.isViewed();
+        });
+
+        this.$router.beforeEach(function (to, from, next) {
+            var transitionName = to.meta.transitionName || from.meta.transitionName;
+
+            if (transitionName === 'slide') {
+                var toDepth = to.path.split('/').length;
+                var fromDepth = from.path.split('/').length;
+                transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+            }
+
+            _this.transitionName = transitionName || DEFAULT_TRANSITION;
+
+            next();
         });
     },
 

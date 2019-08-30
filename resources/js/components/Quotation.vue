@@ -3,72 +3,80 @@
         <main class="wrap-main-content">
             <div class="wrap-head-page">
                 <header class="wrap-main-header">
+                    <router-link v-if="!isMobile"
+                                 class="go-back"
+                                 tag="a"
+                                 :to="{ name : 'home' }">
+                        <i class="fas fa-arrow-left"></i>
+                    </router-link>
                     <h1 class="page-main-title">Nouveau devis</h1>
                 </header>
             </div>
 
-            <form class="wrap-main-form">
-                <fieldset class="wrap-step">
-                    <img class="image-step"
-                         :src="steps[step-1].img"
-                         alt="Illustration d'un donneur d'ordre"/>
-                    <h2 class="page-subtitle main-title-step">{{ steps[step-1].title }}</h2>
-                    <progress class="progress" :value="progress" max="100">
-                        <div class="progress-bar">
-                            <span :style="{ width: progress + '%' }">Progress: {{ progress }}%</span>
-                        </div>
-                    </progress>
-                    <section class="wrap-content-step">
-                        <Identification v-if="step === 1" />
-                        <Description v-if="step === 2" />
-                        <Printing v-if="step === 3" />
-                        <Finishing v-if="step === 4" />
-                        <Packing v-if="step === 5" />
-                    </section>
-                </fieldset>
-                <div class="wrap-buttons-controls-step">
-                    <button type="button"
-                            class="button button-small button-secondary"
-                            v-if="step > 1"
-                            @click="prev">
-                        <i class="fas fa-chevron-left"></i>
-                        Précédent
-                    </button>
-                    <button type="button"
-                            class="button button-small button-primary"
-                            v-if="step < 6"
-                            @click="next">
-                        Suivant
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </form>
-        </main>
-        <aside class="wrap-summary" :class="{ pull: summaryPulled }">
-            <div class="head-summary">
-                <input v-model="summaryPulled"
-                       id="pull-summary"
-                       class="pull-summary"
-                       type="checkbox">
-                <label for="pull-summary" class="page-subtitle"><i :class="this.summaryPulled ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>Récapitulatif</label>
-            </div>
-            <div class="wrap-content-summary">
-                <img v-if="!form.description"
-                     class="image-no-data"
-                     src="/assets/img/undraw_no_data_qbuo.svg"
-                     alt="Illustration montrant qu'aucune donnée n'a encore été saisie"/>
+            <div class="wrap-central">
+                <form class="wrap-main-form">
+                    <fieldset class="wrap-step">
+                        <img class="image-step"
+                             :src="steps[step-1].img"
+                             alt="Illustration d'un donneur d'ordre"/>
+                        <h2 class="page-subtitle main-title-step">{{ steps[step-1].title }}</h2>
+                        <progress class="progress" :value="progress" max="100">
+                            <div class="progress-bar">
+                                <span :style="{ width: progress + '%' }">Progress: {{ progress }}%</span>
+                            </div>
+                        </progress>
+                        <section class="wrap-content-step">
+                            <Identification v-if="step === 1" />
+                            <Description v-if="step === 2" />
+                            <Printing v-if="step === 3" />
+                            <Finishing v-if="step === 4" />
+                            <Packing v-if="step === 5" />
+                        </section>
+                    </fieldset>
+                    <div class="wrap-buttons-controls-step">
+                        <button type="button"
+                                class="button button-small button-secondary"
+                                v-if="step > 1"
+                                @click="prev">
+                            <i class="fas fa-chevron-left"></i>
+                            Précédent
+                        </button>
+                        <button type="button"
+                                class="button button-small button-primary next-step"
+                                v-if="step < 6"
+                                @click="next">
+                            Suivant
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </form>
+                <aside class="wrap-summary" :class="{ pull: summaryPulled }">
+                    <div class="head-summary">
+                        <input v-model="summaryPulled"
+                               id="pull-summary"
+                               class="pull-summary"
+                               type="checkbox">
+                        <label for="pull-summary" class="page-subtitle"><i :class="this.summaryPulled ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>Récapitulatif</label>
+                    </div>
+                    <div class="wrap-content-summary">
+                        <img v-if="!form.description"
+                             class="image-no-data"
+                             src="/assets/img/undraw_no_data_qbuo.svg"
+                             alt="Illustration montrant qu'aucune donnée n'a encore été saisie"/>
 
-                <div class="wrap-button-submit">
-                    <button type="button" class="cta" disabled>
-                        <span>Sauvegarder</span>
-                        <svg width="13px" height="10px" viewBox="0 0 13 10">
-                            <path d="M1,5 L11,5"></path>
-                            <polyline points="8 1 12 5 8 9"></polyline>
-                        </svg>
-                    </button>
-                </div>
+                        <div class="wrap-button-submit">
+                            <button type="button" class="cta" disabled>
+                                <span>Sauvegarder</span>
+                                <svg width="13px" height="10px" viewBox="0 0 13 10">
+                                    <path d="M1,5 L11,5"></path>
+                                    <polyline points="8 1 12 5 8 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
             </div>
-        </aside>
+        </main>
     </div>
 </template>
 
@@ -174,6 +182,10 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 2rem;
+
+            .next-step {
+                margin-left: auto;
+            }
         }
     }
 
@@ -231,6 +243,74 @@
                 width: 100%;
                 max-width: 41rem;
                 margin: 0 auto;
+            }
+        }
+    }
+
+    @media screen and (min-width: 680px) {
+        .wrap-main-content {
+            .wrap-head-page {
+                .wrap-main-header {
+                    display: flex;
+                    align-items: center;
+
+                    .go-back {
+                        margin-right: 2rem;
+                        font-size: 2.5rem;
+                    }
+                }
+            }
+        }
+
+        .wrap-central {
+            display: table;
+            width: 100%;
+            margin-top: 2rem;
+
+            > * {
+                display: table-cell;
+                width: 100%;
+            }
+
+            .wrap-main-form {
+                margin: 0;
+                padding-right: 2rem;
+
+                .wrap-step {
+                    text-align: left;
+                    
+                    .image-step {
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            .wrap-summary {
+                position: initial;
+                margin: 0 0 0 2rem;
+                border-radius: 2rem 1rem 3rem 1rem;
+
+                .head-summary {
+                    label {
+                        [class^="fa"] {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 880px) {
+        .wrap-central {
+
+            .wrap-main-form {
+                width: calc(100% - 45rem);
+                padding-right: 4rem;
+            }
+
+            .wrap-summary {
+                width: 45rem;
             }
         }
     }

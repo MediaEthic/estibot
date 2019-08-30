@@ -309,6 +309,7 @@ select:-webkit-autofill:focus {
 
 .wrap-radio .wrap-field label {
   display: block;
+  margin: 0 auto;
   background: white;
   border: 0.15rem solid #62799F;
   font-size: 1.2rem;

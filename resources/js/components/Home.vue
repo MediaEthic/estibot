@@ -272,7 +272,6 @@
             justify-content: center;
             align-items: center;
             margin-top: 2rem;
-            margin-bottom: 8rem;
 
             .create-new-quotation {
                 display: none;
@@ -538,10 +537,10 @@
             margin: 5rem auto 0 auto;
             max-width: 20rem;
             -webkit-transition: all .4s;
-            -moz-transition: all time;
-            -ms-transition: all time;
-            -o-transition: all time;
-            transition: all time;
+            -moz-transition: all .4s;
+            -ms-transition: all .4s;
+            -o-transition: all .4s;
+            transition: all .4s;
 
             &:hover {
                 transform: scale(1.1);
