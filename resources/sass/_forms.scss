@@ -35,21 +35,101 @@ select:-webkit-autofill:focus {
   border-radius: 0 0 1rem 1rem;
 }
 
-.wrap-field {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
+.wrap-radio {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  width: 100%;
-  height: 6.5rem;
-  position: relative;
-  border: .1rem solid $primary-color-dark;
-  border-radius: 1rem;
-  margin-bottom: 1.5rem;
 
+  .wrap-field {
+    border: 0;
+    height: 100%;
+
+    &:not(:last-child) {
+      margin-right: 1.5rem;
+    }
+
+    input[type="radio"] {
+      display: none;
+
+      &:not(:disabled) ~ label {
+        cursor: pointer;
+      }
+
+      &:checked + label {
+        background: $secondary-color;
+        border: .15rem solid $secondary-color;
+        color: $white;
+
+        &::after {
+          font-family: "FontAwesome";
+          content: "\f00c";
+          color: $secondary-color;
+          border: .15rem solid $secondary-color;
+          font-size: 1.6rem;
+          position: absolute;
+          top: -1rem;
+          right: -2rem;
+          transform: translateX(-50%);
+          height: 3rem;
+          width: 3rem;
+          line-height: 3rem;
+          text-align: center;
+          border-radius: 50%;
+          background: $white;
+        }
+
+        [class^='fa'] {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+
+        span {
+          transform: translateY(70px);
+        }
+      }
+    }
+
+    label {
+      display: block;
+      background: white;
+      border: .15rem solid $primary-color-dark;
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      font-weight: $bold;
+      letter-spacing: 0.1em;
+      color: $primary-color-dark;
+      border-radius: 2rem 1rem 3rem 1rem;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      text-transform: uppercase;
+      transition: all 250ms ease;
+      will-change: transition;
+
+      &:active{
+        transform: translateY(10px);
+      }
+
+
+      [class^="fa"] {
+        color: $white;
+        display: block;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+        transform: translateY(-80px);
+        opacity: 0;
+        transition: all 300ms ease-in-out;
+      }
+
+      span {
+        transform: translate(0, 60px);
+        transition: all 300ms ease;
+      }
+    }
+  }
+}
+
+
+.wrap-group-field,
+.wrap-field {
   .btn-right-field {
     font-size: 1.5rem;
     color: $primary-color-dark;
@@ -76,6 +156,22 @@ select:-webkit-autofill:focus {
       color: $secondary-color;
     }
   }
+}
+
+.wrap-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  width: 100%;
+  height: 6.5rem;
+  position: relative;
+  border: .1rem solid $primary-color-dark;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
 
   .field {
     display: block;
@@ -93,22 +189,58 @@ select:-webkit-autofill:focus {
     -moz-transition: all .4s;
     transition: all .4s;
 
+    &.select {
+      color: $primary-color-dark;
+    }
+
     &::-webkit-search-cancel-button {
       display: none;
     }
 
     &:focus {
-      height: 3.5rem;
+      height: 4rem;
       color: $secondary-color-dark !important;
+
+      &+ .focus-field {
+        visibility: visible;
+        opacity: 1;
+
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+
+        &+ .label-field {
+          top: 1rem;
+          font-size: 1.2rem;
+          line-height: 1.6rem;
+          color: $secondary-color;
+          text-transform: uppercase;
+
+          &+ .symbol-left-field {
+            color: $secondary-color-light;
+            padding-left: 2.3rem;
+          }
+        }
+      }
     }
 
     &.hasValue {
-      height: 3.5rem !important;
+      height: 4rem !important;
       color: $primary-color-dark;
+
+      &+ .focus-field + .label-field {
+        top: 1rem;
+        font-size: 1.2rem;
+        line-height: 1.6rem;
+        text-transform: uppercase;
+      }
     }
 
     &[required] {
-      & + .focus-field + .label-field {
+      & + .focus-field + .label-field,
+      & ~ .label-field {
         &:after {
           content: " *";
           color: $secondary-color-dark;
@@ -117,49 +249,13 @@ select:-webkit-autofill:focus {
     }
   }
 
-  .focus-field {
-    position: absolute;
-    display: block;
-    width: calc(100% + .2rem);
-    height: calc(100% + .2rem);
-    top: -.1rem;
-    left: -.1rem;
-    pointer-events: none;
-    border: .1rem solid $secondary-color;
-    border-radius: 1rem;
-    box-shadow: 0 0 .5rem $secondary-color-light;
-
-    visibility: hidden;
-    opacity: 0;
-
-    -webkit-transition: all .4s;
-    -o-transition: all .4s;
-    -moz-transition: all .4s;
-    transition: all .4s;
-    -webkit-transform: scaleX(1.1) scaleY(1.3);
-    -moz-transform: scaleX(1.1) scaleY(1.3);
-    -ms-transform: scaleX(1.1) scaleY(1.3);
-    -o-transform: scaleX(1.1) scaleY(1.3);
-    transform: scaleX(1.1) scaleY(1.3);
-  }
-
-  .field:focus + .focus-field {
-    visibility: visible;
-    opacity: 1;
-
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1);
-  }
-
   .label-field {
     font-family: $font-family-secondary-medium;
     font-size: 1.6rem;
     line-height: 2rem;
-    color: $primary-color-dark;
+    color: $primary-color;
     letter-spacing: 0.02em;
+    text-align: left;
 
     display: block;
     position: absolute;
@@ -175,49 +271,6 @@ select:-webkit-autofill:focus {
     transition: all .4s;
   }
 
-  .field:focus + .focus-field + .label-field {
-    top: 1rem;
-    font-size: 1.2rem;
-    line-height: 1.6rem;
-    color: $secondary-color;
-    text-transform: uppercase;
-  }
-
-  .hasValue + .focus-field + .label-field {
-    top: 1rem;
-    font-size: 1.2rem;
-    line-height: 1.6rem;
-    color: $primary-color;
-    text-transform: uppercase;
-  }
-
-  .symbol-left-field {
-    font-size: 2.5rem;
-    color: $primary-color;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding-left: 2rem;
-    pointer-events: none;
-    -webkit-transition: all .4s;
-    -o-transition: all .4s;
-    -moz-transition: all .4s;
-    transition: all .4s;
-  }
-
-  .field:focus + .focus-field + .label-field + .symbol-left-field {
-    color: $secondary-color-light;
-    padding-left: 2.3rem;
-  }
-
   &.h-50 {
     height: 5rem;
 
@@ -226,20 +279,21 @@ select:-webkit-autofill:focus {
       font-size: 1.4rem;
       line-height: 1.8rem;
 
-      &:focus {
-        &+ .focus-field + .label-field {
+      &:focus,
+      &.hasValue,
+      &.select {
+        height: 3.5rem !important;
+
+        & ~ .label-field {
           top: .5rem;
           font-size: 1rem;
           line-height: 1.4rem;
+          text-transform: uppercase;
 
           &+ .symbol-left-field {
             padding-left: 1.8rem;
           }
         }
-      }
-
-      &.hasValue + .focus-field + .label-field {
-        top: .5rem;
       }
     }
 
@@ -255,7 +309,421 @@ select:-webkit-autofill:focus {
       padding-left: 1.5rem;
     }
   }
+
+  &.switcher {
+    border: 0;
+
+    &.h-50 {
+      padding: 0 2.5rem 0 5rem;
+
+      .toggle {
+        display: none;
+
+        & + .toggle-btn {
+          font-size: 1.4rem;
+          line-height: 1.8rem;
+          color: $primary-color-dark;
+          border: .1rem solid $primary-color-dark;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 2.5rem;
+          position: relative;
+          text-align: center;
+          transition: background 600ms ease, color 600ms ease;
+          cursor: pointer;
+          min-width: 6rem;
+          margin-bottom: .5rem;
+
+          &:hover {
+            background: none;
+            color: $primary-color-dark;
+          }
+
+          &:after {
+            background: $primary-color-dark;
+            content: "";
+            height: 100%;
+            position: absolute;
+            top: 0;
+            transition: left 200ms cubic-bezier(0.77, 0, 0.175, 1);
+            width: 100%;
+            z-index: -1;
+          }
+
+          [class^="fa"] {
+            margin-right: .5rem;
+          }
+        }
+
+        &.toggle-left {
+          & + .toggle-btn {
+            border-radius: 1.1rem 0 0 1.1rem;
+
+            &:after {
+              left: 100%;
+              border-radius: 0 1rem 1rem 0;
+            }
+          }
+        }
+
+        &.toggle-right {
+          & + .toggle-btn {
+            border-radius: 0 1.1rem 1.1rem 0;
+
+            &:after {
+              left: -100%;
+              border-radius: 0 1rem 1rem 0;
+            }
+          }
+        }
+
+        &.toggle-left:checked {
+          ~ .toggle-right {
+            & + .toggle-btn {
+              &:after {
+                border-radius: 1rem 0 0 1rem;
+              }
+            }
+          }
+        }
+
+        &:checked {
+          &.toggle-left {
+            & + .toggle-btn {
+              &:after {
+                border-radius: 1rem 0 0 1rem;
+              }
+            }
+          }
+
+          &.toggle-right {
+            & + .toggle-btn {
+              &:after {
+                border-radius: 0 1rem 1rem 0;
+              }
+            }
+          }
+
+          & + .toggle-btn {
+            cursor: default;
+            color: #fff;
+            transition: color 200ms;
+
+            &:after {
+              left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
+.focus-field {
+  position: absolute;
+  display: block;
+  width: calc(100% + .2rem);
+  height: calc(100% + .2rem);
+  top: -.1rem;
+  left: -.1rem;
+  pointer-events: none;
+  border: .1rem solid $secondary-color;
+  border-radius: 1rem;
+  box-shadow: 0 0 .5rem $secondary-color-light;
+
+  visibility: hidden;
+  opacity: 0;
+
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  -moz-transition: all .4s;
+  transition: all .4s;
+  -webkit-transform: scaleX(1.1) scaleY(1.3);
+  -moz-transform: scaleX(1.1) scaleY(1.3);
+  -ms-transform: scaleX(1.1) scaleY(1.3);
+  -o-transform: scaleX(1.1) scaleY(1.3);
+  transform: scaleX(1.1) scaleY(1.3);
+}
+
+.symbol-left-field {
+  font-size: 2.5rem;
+  color: $primary-color;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 2rem;
+  pointer-events: none;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  -moz-transition: all .4s;
+  transition: all .4s;
+}
+
+.wrap-group-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  width: 100%;
+  position: relative;
+  border: .1rem solid $primary-color-dark;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+
+  &.hasFocus {
+    > *[class^="wrap-field"] {
+      &:not(:first-child) {
+        border-top-color: $secondary-color;
+      }
+
+      &.switcher {
+        .toggle {
+          &:checked {
+            & + .toggle-btn {
+              color: $white;
+            }
+          }
+          & + .toggle-btn {
+            border-color: $secondary-color-dark;
+            color: $secondary-color-dark;
+
+            &:after {
+              background-color: $secondary-color-dark;
+            }
+          }
+        }
+      }
+    }
+
+    > .wrap-field-inline {
+      > .legend-line {
+        color: $secondary-color-light;
+      }
+      > .wrap-field {
+        &:not(:last-child) {
+          border-right: .1rem solid $secondary-color;
+        }
+      }
+    }
+
+    .field {
+      color: $secondary-color-dark !important;
+    }
+
+    .label-field {
+      color: $secondary-color;
+
+    }
+
+    .symbol-left-field {
+      color: $secondary-color-light;
+      padding-left: 1.8rem;
+    }
+
+    .focus-field {
+      visibility: visible;
+      opacity: 1;
+
+      -webkit-transform: scale(1);
+      -moz-transform: scale(1);
+      -ms-transform: scale(1);
+      -o-transform: scale(1);
+      transform: scale(1);
+
+
+    }
+  }
+
+  .btn-right-field {
+    top: .1rem;
+    right: .025rem;
+    width: 4rem;
+    height: calc(100% - .2rem);
+    padding-right: 1.5rem;
+    z-index: 1;
+    background-color: #fff;
+    border: none;
+    border-radius: 0 1rem 1rem 0;
+
+    [class^="fa"] {
+      margin-left: auto;
+    }
+  }
+
+  > *[class^="wrap-field"] {
+    &:not(:first-child) {
+      border-top: .1rem solid $primary-color-dark;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+  }
+
+  > .btn-right-field + [class^="wrap-field"] {
+    border-top: 0;
+
+    .field,
+    .label-field {
+      padding-right: 4rem;
+    }
+  }
+
+  > .wrap-field-inline {
+    display: flex;
+    position: relative;
+
+    > .legend-line {
+      font-family: $font-family-secondary-medium;
+      font-size: 1rem;
+      line-height: 1.4rem;
+      text-transform: uppercase;
+      color: $primary-color;
+      letter-spacing: 0.02em;
+      text-align: left;
+      background-color: #fff;
+
+      display: block;
+      position: absolute;
+      pointer-events: none;
+      width: calc(100% - 5.1rem);
+      padding-top: .5rem;
+      margin-left: 5rem;
+      left: 0;
+      top: 0;
+      z-index: 1;
+
+      -webkit-transition: all .4s;
+      -o-transition: all .4s;
+      -moz-transition: all .4s;
+      transition: all .4s;
+
+      ~ .wrap-field {
+        &.h-50 {
+          height: 7rem;
+
+          .field {
+            padding: 0 2.5rem 0 5rem;
+
+            &:focus,
+            &.hasValue {
+              & + .label-field {
+                top: 2.5rem;
+              }
+            }
+
+            & + .label-field {
+              top: 3.5rem;
+              padding-left: 5rem !important;
+            }
+          }
+        }
+      }
+    }
+
+    > .wrap-field {
+      border: 0;
+
+      &:not(:first-child) {
+        .field {
+          padding: 0 2.5rem;
+
+          &+ .label-field {
+            padding: 0 2.5rem;
+          }
+        }
+      }
+
+      &:not(:last-child) {
+        border-right: .1rem solid $primary-color-dark;
+        border-radius: 0;
+      }
+    }
+  }
+
+  .wrap-field {
+    margin: 0;
+  }
+
+  > .wrap-field {
+    border: 0;
+    margin: 0;
+  }
+
+  .symbol-left-field {
+    font-size: 2rem;
+    padding-left: 1.5rem;
+    width: 5rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    height: calc(100% - .2rem);
+    top: .1rem;
+  }
+}
+
+
+progress::-webkit-progress-bar {
+  background-color: $primary-color-light;
+}
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border: none;
+
+  width: 100%;
+  height: .5rem;
+
+  color: $primary-color;
+  background-color: $primary-color-light;
+
+  border-radius: 290486rem;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: $secondary-color;
+}
+
+progress[value]::-moz-progress-bar {
+  background-color: $secondary-color;
+}
+
+
+.progress-bar {
+  background-color: $primary-color-light;
+  border-radius: 2px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;
+
+  width: 100%;
+  height: .5rem;
+
+  position: relative;
+  display: block;
+}
+
+.progress-bar > span {
+  background-color: $secondary-color;
+  border-radius: 5rem;
+  display: block;
+  text-indent: -9999rem;
+}
+
 
 .wrap-button-submit {
   display: block;
@@ -266,12 +734,14 @@ select:-webkit-autofill:focus {
 
 .cta {
   position: relative;
-  padding: 1.9rem 2.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
+  padding: 1.9rem 2.2rem;
   height: 5.6rem;
-
+  border: 0;
+  background: transparent;
   transition: all 0.2s ease;
 
   &:before {
@@ -304,6 +774,21 @@ select:-webkit-autofill:focus {
     transform: scale(0.96);
   }
 
+  &:disabled,
+  &[disabled] {
+    &:before {
+      background: rgba($primary-color-light, 0.5);
+    }
+
+    span {
+      color: $primary-color-light;
+    }
+
+    svg {
+      stroke: $primary-color-light;
+    }
+  }
+
   span {
     position: relative;
     font-size: 1.8rem;
@@ -326,6 +811,61 @@ select:-webkit-autofill:focus {
     stroke-width: 2;
     transform: translateX(-.5rem);
     transition: all 0.3s ease;
+  }
+}
+
+.button {
+  cursor: pointer;
+  display: block;
+  border: .1rem solid $grey-dark;
+  padding: .375rem .75rem;
+  border-radius: 4rem;
+  color: $grey-dark;
+  background-color: transparent;
+  font-size: 1rem;
+  line-height: 1.4rem;
+  font-weight: $bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: color .15s ease-in-out,
+  background-color .15s ease-in-out,
+  border-color .15s ease-in-out,
+  box-shadow .15s ease-in-out;
+
+  &.button-primary {
+    border-color: $secondary-color;
+    color: $secondary-color;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $secondary-color;
+      color: $white;
+    }
+  }
+
+  &.button-secondary {
+    border-color: $primary-color;
+    color: $primary-color;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $primary-color;
+      color: #fff;
+    }
+  }
+
+  &.button-dashed {
+    border-style: dashed;
+    border-radius: 2rem 1rem 3rem 1rem;
   }
 }
 
