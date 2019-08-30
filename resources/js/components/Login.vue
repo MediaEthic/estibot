@@ -20,7 +20,7 @@
                     <p class="baseline-main-title mobile-hidden">Entrez vos identifiants et poursuivez l’aventure parmi nous...</p>
 
                     <div class="wrap-form-main">
-                        <div class="wrap-field validate-field">
+                        <div class="wrap-field">
                             <input v-model.trim="form.email"
                                    class="field "
                                    :class="{ hasValue: form.email }"
@@ -138,25 +138,6 @@
 
         .main-form {
             width: 100%;
-        }
-    }
-
-    :-webkit-autofill {
-        animation-name: onAutoFillStart;
-    }
-    :not(:-webkit-autofill) {
-        animation-name: onAutoFillCancel;
-    }
-    @keyframes onAutoFillStart {
-        from {
-        }
-        to {
-        }
-    }
-    @keyframes onAutoFillCancel {
-        from {
-        }
-        to {
         }
     }
 
