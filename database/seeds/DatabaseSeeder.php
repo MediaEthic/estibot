@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
          $this->call('CountriesTableSeeder');
          $this->call('ThirdsTableSeeder');
          $this->call('ContactsTableSeeder');
+         $this->call('PrintingsTableSeeder');
+         $this->call('FinishingsTableSeeder');
 
         factory(App\Models\Substrate::class, 30)->create();
         factory(App\Models\Label::class, 30)->create();
