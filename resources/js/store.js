@@ -10,6 +10,10 @@ export default new Vuex.Store({
         user: localStorage.getItem('user') || null,
         quote: [],
         quotations: [],
+        printings: [],
+        substrates: [],
+        finishings: [],
+        cuttings: [],
     },
     getters: {
         loggedIn(state) {
@@ -31,6 +35,18 @@ export default new Vuex.Store({
         },
         setQuotations(state, data) {
             state.quotations = data;
+        },
+        setPrintings(state, data) {
+            state.printings = data;
+        },
+        setSubstrates(state, data) {
+            state.substrates = data;
+        },
+        setFinishings(state, data) {
+            state.finishings = data;
+        },
+        setCuttings(state, data) {
+            state.cuttings = data;
         }
     },
     actions: {
@@ -78,6 +94,22 @@ export default new Vuex.Store({
             const url = credentials.url;
             let data = (await axios.get(url)).data;
             context.commit("setQuotations", data);
+        },
+        async getPrintings(context) {
+            let data = (await axios.get('/api/auth/quotation/printings')).data;
+            context.commit("setPrintings", data);
+        },
+        async getSubstrates(context) {
+            let data = (await axios.get('/api/auth/quotation/substrates')).data;
+            context.commit("setSubstrates", data);
+        },
+        async getFinishings(context) {
+            let data = (await axios.get('/api/auth/quotation/finishings')).data;
+            context.commit("setFinishings", data);
+        },
+        async getCuttings(context) {
+            let data = (await axios.get('/api/auth/quotation/cuttings')).data;
+            context.commit("setCuttings", data);
         }
     },
 })

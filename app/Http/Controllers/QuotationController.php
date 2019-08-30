@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consumable;
+use App\Models\Cutting;
+use App\Models\Finishing;
+use App\Models\Label;
+use App\Models\Printing;
 use App\Models\Quote;
+use App\Models\Substrate;
+use App\Models\Third;
 use Illuminate\Http\Request;
 use App\Models\Quotation;
 
@@ -36,9 +43,61 @@ class QuotationController extends Controller
     public function index(Request $request)
     {
 
-        return Quotation::with('third')
+        $quotations = Quotation::with('third')
             ->latest()
             ->paginate(15);
+
+        return $quotations;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPrintings()
+    {
+        return Printing::get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSubstrates()
+    {
+        return Substrate::get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getFinishings()
+    {
+        return Finishing::get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getConsumables()
+    {
+        return Consumable::get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCuttings()
+    {
+        return Cutting::get();
     }
 
     /**

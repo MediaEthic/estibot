@@ -4680,7 +4680,7 @@
 
 
 var bind = __webpack_require__(136);
-var isBuffer = __webpack_require__(205);
+var isBuffer = __webpack_require__(210);
 
 /*global toString:true*/
 
@@ -20824,7 +20824,7 @@ module.exports = function isCancel(value) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(210);
+var normalizeHeaderName = __webpack_require__(215);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -20930,10 +20930,10 @@ module.exports = defaults;
 
 
 var utils = __webpack_require__(1);
-var settle = __webpack_require__(211);
+var settle = __webpack_require__(216);
 var buildURL = __webpack_require__(137);
-var parseHeaders = __webpack_require__(213);
-var isURLSameOrigin = __webpack_require__(214);
+var parseHeaders = __webpack_require__(218);
+var isURLSameOrigin = __webpack_require__(219);
 var createError = __webpack_require__(141);
 
 module.exports = function xhrAdapter(config) {
@@ -21026,7 +21026,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(215);
+      var cookies = __webpack_require__(220);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -21110,7 +21110,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(212);
+var enhanceError = __webpack_require__(217);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -21217,7 +21217,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(145);
-module.exports = __webpack_require__(230);
+module.exports = __webpack_require__(235);
 
 
 /***/ }),
@@ -21232,7 +21232,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(203);
 
 
  // Importing Vue Library
@@ -21316,7 +21316,7 @@ __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to
     next();
 });
 
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(220));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(225));
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.mixin({
     data: function data() {
@@ -34760,7 +34760,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Home__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Quotation__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Quotation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Quotation__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Profile__);
 
 
@@ -34898,7 +34898,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-full-content[data-v-6bdc8b8e] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration[data-v-6bdc8b8e] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n      max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image[data-v-6bdc8b8e] {\n        width: 100%;\n        max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    width: 100%;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    margin: 1rem 0 !important;\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title[data-v-6bdc8b8e] {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title[data-v-6bdc8b8e] {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 1rem 3rem 1rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main[data-v-6bdc8b8e] {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-6bdc8b8e], [class*=\" icon-\"][data-v-6bdc8b8e] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-6bdc8b8e]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-6bdc8b8e]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-6bdc8b8e]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-6bdc8b8e]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-6bdc8b8e]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-6bdc8b8e]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-6bdc8b8e]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-6bdc8b8e]:before {\n  content: \"\\E907\";\n}\n.wrap-full-content[data-v-6bdc8b8e] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: column wrap;\n          flex-flow: column wrap;\n}\n.wrap-full-content .wrap-illustration[data-v-6bdc8b8e] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 3;\n          -ms-flex-order: 2;\n              order: 2;\n      width: 100%;\n      margin: 3rem 0;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      -webkit-box-ordinal-group: 2;\n          -ms-flex-order: 1;\n              order: 1;\n      width: 100%;\n      max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .wrap-illustration .wrap-image .main-image[data-v-6bdc8b8e] {\n        width: 100%;\n        max-height: calc(100vh - 32.7rem);\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    width: 100%;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    margin: 1rem 0 !important;\n}\n}\n@media (min-width: 680px) {\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 2;\n        -ms-flex-order: 1;\n            order: 1;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .page-main-title[data-v-6bdc8b8e] {\n      font-size: 5rem;\n      line-height: 5.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header .baseline-main-title[data-v-6bdc8b8e] {\n      font-size: 2rem;\n      line-height: 2.4rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n    -webkit-box-ordinal-group: 3;\n        -ms-flex-order: 2;\n            order: 2;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n    margin-top: 3rem;\n    padding: 5rem 4.5rem;\n    border-radius: 2rem 1rem 3rem 1rem;\n    -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n            box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n}\n.wrap-full-content .main-form .wrap-form-main[data-v-6bdc8b8e] {\n      margin-top: 3rem;\n}\n}\n@media (min-width: 680px) and (orientation: portrait) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 3rem 5rem;\n}\n.wrap-full-content .wrap-illustration .wrap-main-header[data-v-6bdc8b8e] {\n      text-align: center;\n      margin-top: 0;\n}\n}\n@media (min-width: 680px) and (orientation: landscape) {\n.wrap-full-content[data-v-6bdc8b8e] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    padding: 5rem 7rem;\n}\n.wrap-full-content .wrap-illustration .wrap-image[data-v-6bdc8b8e] {\n      max-width: 50rem;\n}\n.wrap-full-content .main-form[data-v-6bdc8b8e] {\n      width: 45rem;\n      margin-left: 10rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -35370,7 +35370,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-head-page .wrap-filters[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-field[data-v-f2b6376c] {\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n      font-size: 3rem;\n      color: #C49998;\n      margin-left: 2rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n    margin-bottom: 8rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.5);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n        font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n        font-size: 1.8rem;\n        line-height: 2.2rem;\n        color: #91A8D0;\n        letter-spacing: 0.1em;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n                -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                color: white;\n                background: rgba(255, 255, 255, 0.3);\n                font-size: 44.44px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      width: 100%;\n      margin-top: 1rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 100%;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n          width: 3.5rem;\n          height: 3.5rem;\n          margin: 0 1rem;\n          border: 0.15rem solid #91A8D0;\n          border-radius: 50%;\n          font-size: 2rem;\n          color: #91A8D0;\n          text-align: center;\n          line-height: 3.25rem;\n          -webkit-transition: all .4s;\n          transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c]:hover {\n            background-color: rgba(196, 153, 152, 0.25);\n            border: 0.15rem solid #C49998;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate:hover a[data-v-f2b6376c] {\n              color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:hover,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n            padding: 0;\n            background: transparent;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n            display: none;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    -webkit-transition: all time;\n    transition: all time;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-f2b6376c], [class*=\" icon-\"][data-v-f2b6376c] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-f2b6376c]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-f2b6376c]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-f2b6376c]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-f2b6376c]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-f2b6376c]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-f2b6376c]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-head-page .wrap-filters[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-field[data-v-f2b6376c] {\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n      font-size: 3rem;\n      color: #C49998;\n      margin-left: 2rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n    margin-bottom: 8rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.5);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n        font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n        font-size: 1.8rem;\n        line-height: 2.2rem;\n        color: #91A8D0;\n        letter-spacing: 0.1em;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n                -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                color: white;\n                background: rgba(255, 255, 255, 0.3);\n                font-size: 44.44px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      width: 100%;\n      margin-top: 1rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 100%;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n          width: 3.5rem;\n          height: 3.5rem;\n          margin: 0 1rem;\n          border: 0.15rem solid #91A8D0;\n          border-radius: 50%;\n          font-size: 2rem;\n          color: #91A8D0;\n          text-align: center;\n          line-height: 3.25rem;\n          -webkit-transition: all .4s;\n          transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c]:hover {\n            background-color: rgba(196, 153, 152, 0.25);\n            border: 0.15rem solid #C49998;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate:hover a[data-v-f2b6376c] {\n              color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:hover,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n            padding: 0;\n            background: transparent;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n            display: none;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    -webkit-transition: all time;\n    transition: all time;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -35706,7 +35706,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.image-loading[data-v-e79ec684] {\n  display: block;\n  width: 100%;\n  max-width: 32rem;\n  margin: 0 auto;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-e79ec684], [class*=\" icon-\"][data-v-e79ec684] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-e79ec684]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-e79ec684]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-e79ec684]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-e79ec684]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-e79ec684]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-e79ec684]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-e79ec684]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-e79ec684]:before {\n  content: \"\\E907\";\n}\n.image-loading[data-v-e79ec684] {\n  display: block;\n  width: 100%;\n  max-width: 32rem;\n  margin: 0 auto;\n}\n", ""]);
 
 // exports
 
@@ -36566,7 +36566,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(173)
 /* template */
-var __vue_template__ = __webpack_require__(192)
+var __vue_template__ = __webpack_require__(197)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -36639,7 +36639,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-summary {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: calc(100vh - 13.5rem);\n  background-color: #fff;\n  z-index: 1;\n  border-radius: 3rem 3rem 0 0;\n  margin: 0 -2rem;\n  padding: 1rem 2rem;\n  -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n          box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n}\n.wrap-summary.pull {\n    top: 8.4rem;\n}\n.wrap-summary .head-summary {\n    text-align: center;\n}\n.wrap-summary .head-summary .pull-summary {\n      position: absolute;\n      left: -9999px;\n}\n.wrap-summary .head-summary .pull-summary + label {\n        width: 100%;\n        -webkit-transition: 0.4s;\n        transition: 0.4s;\n}\n.wrap-summary .head-summary .pull-summary + label [class^=\"fa\"] {\n          display: block;\n          width: 100%;\n          color: #C49998;\n}\n.wrap-summary .head-summary .pull-summary:checked + label {\n        /*color: $white;\n                    background-color: $secondary-color;\n                    border: .15rem solid $secondary-color;\n                    transform: rotate(180deg);*/\n}\n.wrap-summary .wrap-content-summary {\n    margin-top: 2rem;\n}\n.wrap-summary .wrap-content-summary .image-no-data {\n      display: block;\n      width: 100%;\n      max-width: 41rem;\n      margin: 0 auto;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-summary {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: calc(100vh - 13.5rem);\n  background-color: #fff;\n  z-index: 1;\n  border-radius: 3rem 3rem 0 0;\n  margin: 0 -2rem;\n  padding: 1rem 2rem;\n  -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n          box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n}\n.wrap-summary.pull {\n    top: 8.4rem;\n}\n.wrap-summary .head-summary {\n    text-align: center;\n}\n.wrap-summary .head-summary .pull-summary {\n      position: absolute;\n      left: -9999px;\n}\n.wrap-summary .head-summary .pull-summary + label {\n        width: 100%;\n        -webkit-transition: 0.4s;\n        transition: 0.4s;\n}\n.wrap-summary .head-summary .pull-summary + label [class^=\"fa\"] {\n          display: block;\n          width: 100%;\n          color: #C49998;\n}\n.wrap-summary .head-summary .pull-summary:checked + label {\n        /*color: $white;\n                    background-color: $secondary-color;\n                    border: .15rem solid $secondary-color;\n                    transform: rotate(180deg);*/\n}\n.wrap-summary .wrap-content-summary {\n    margin-top: 2rem;\n}\n.wrap-summary .wrap-content-summary .image-no-data {\n      display: block;\n      width: 100%;\n      max-width: 41rem;\n      margin: 0 auto;\n}\n", ""]);
 
 // exports
 
@@ -36656,6 +36656,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Quotation_Description___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Quotation_Description__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quotation_Printing__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quotation_Printing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Quotation_Printing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__);
 //
 //
 //
@@ -36730,11 +36734,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
+
+
 
 
 
@@ -36744,11 +36745,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         Identification: __WEBPACK_IMPORTED_MODULE_0__Quotation_Identification___default.a,
         Description: __WEBPACK_IMPORTED_MODULE_1__Quotation_Description___default.a,
-        Printing: __WEBPACK_IMPORTED_MODULE_2__Quotation_Printing___default.a
+        Printing: __WEBPACK_IMPORTED_MODULE_2__Quotation_Printing___default.a,
+        Finishing: __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing___default.a,
+        Packing: __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default.a
     },
     data: function data() {
         return {
-            step: 3,
+            step: 1,
             steps: [{
                 img: "/assets/img/workflow/undraw_man_eiev.svg",
                 title: "Identité du donneur d'ordre"
@@ -36875,7 +36878,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-029ebf48], [class*=\" icon-\"][data-v-029ebf48] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-029ebf48]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-029ebf48]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-029ebf48]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-029ebf48]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-029ebf48]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-029ebf48]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-029ebf48]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-029ebf48]:before {\n  content: \"\\E907\";\n}\n", ""]);
 
 // exports
 
@@ -38379,7 +38382,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-af555404], [class*=\" icon-\"][data-v-af555404] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-af555404]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-af555404]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-af555404]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-af555404]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-af555404]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-af555404]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-af555404]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-af555404]:before {\n  content: \"\\E907\";\n}\n", ""]);
 
 // exports
 
@@ -39064,7 +39067,7 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.button-switch[data-v-604315fa] {\n  cursor: pointer;\n  position: relative;\n  display: block;\n  height: 3.4rem;\n}\n.button-switch input[data-v-604315fa] {\n    display: none;\n}\n.button-switch[data-v-604315fa],\n.switch[data-v-604315fa] {\n  cursor: pointer;\n  position: relative;\n  display: block;\n  height: 3.4rem;\n}\n.button-switch input[data-v-604315fa],\n  .switch input[data-v-604315fa] {\n    display: none;\n}\n.button-switch input + span[data-v-604315fa],\n    .button-switch input + .label-field + span[data-v-604315fa],\n    .switch input + span[data-v-604315fa],\n    .switch input + .label-field + span[data-v-604315fa] {\n      padding-left: 50px;\n      min-height: 24px;\n      line-height: 24px;\n      display: block;\n      color: #99A3BA;\n      position: relative;\n      vertical-align: middle;\n      white-space: nowrap;\n      -webkit-transition: color .3s ease;\n      transition: color .3s ease;\n}\n.button-switch input + span[data-v-604315fa]:before, .button-switch input + span[data-v-604315fa]:after,\n      .button-switch input + .label-field + span[data-v-604315fa]:before,\n      .button-switch input + .label-field + span[data-v-604315fa]:after,\n      .switch input + span[data-v-604315fa]:before,\n      .switch input + span[data-v-604315fa]:after,\n      .switch input + .label-field + span[data-v-604315fa]:before,\n      .switch input + .label-field + span[data-v-604315fa]:after {\n        content: '';\n        display: block;\n        position: absolute;\n        border-radius: 12px;\n}\n.button-switch input + span[data-v-604315fa]:before,\n      .button-switch input + .label-field + span[data-v-604315fa]:before,\n      .switch input + span[data-v-604315fa]:before,\n      .switch input + .label-field + span[data-v-604315fa]:before {\n        top: 0;\n        left: 0;\n        width: 42px;\n        height: 24px;\n        background: #E4ECFA;\n        -webkit-transition: all .3s ease;\n        transition: all .3s ease;\n}\n.button-switch input + span[data-v-604315fa]:after,\n      .button-switch input + .label-field + span[data-v-604315fa]:after,\n      .switch input + span[data-v-604315fa]:after,\n      .switch input + .label-field + span[data-v-604315fa]:after {\n        width: 18px;\n        height: 18px;\n        background: #fff;\n        top: 3px;\n        left: 3px;\n        -webkit-box-shadow: 0 1px 3px rgba(18, 22, 33, 0.1);\n                box-shadow: 0 1px 3px rgba(18, 22, 33, 0.1);\n        -webkit-transition: all .45s ease;\n        transition: all .45s ease;\n}\n.button-switch input + span em[data-v-604315fa],\n      .button-switch input + .label-field + span em[data-v-604315fa],\n      .switch input + span em[data-v-604315fa],\n      .switch input + .label-field + span em[data-v-604315fa] {\n        width: 8px;\n        height: 7px;\n        background: #99A3BA;\n        position: absolute;\n        left: 8px;\n        bottom: 7px;\n        border-radius: 2px;\n        display: block;\n        z-index: 1;\n        -webkit-transition: all .45s ease;\n        transition: all .45s ease;\n}\n.button-switch input + span em[data-v-604315fa]:before,\n        .button-switch input + .label-field + span em[data-v-604315fa]:before,\n        .switch input + span em[data-v-604315fa]:before,\n        .switch input + .label-field + span em[data-v-604315fa]:before {\n          content: '';\n          width: 2px;\n          height: 2px;\n          border-radius: 1px;\n          background: #fff;\n          position: absolute;\n          display: block;\n          left: 50%;\n          top: 50%;\n          margin: -1px 0 0 -1px;\n}\n.button-switch input + span em[data-v-604315fa]:after,\n        .button-switch input + .label-field + span em[data-v-604315fa]:after,\n        .switch input + span em[data-v-604315fa]:after,\n        .switch input + .label-field + span em[data-v-604315fa]:after {\n          content: '';\n          display: block;\n          border-top-left-radius: 4px;\n          border-top-right-radius: 4px;\n          border: 1px solid #99A3BA;\n          border-bottom: 0;\n          width: 6px;\n          height: 4px;\n          left: 1px;\n          bottom: 6px;\n          position: absolute;\n          z-index: 1;\n          -webkit-transform-origin: 0 100%;\n                  transform-origin: 0 100%;\n          -webkit-transition: all .45s ease;\n          transition: all .45s ease;\n          -webkit-transform: rotate(-35deg) translate(0, 1px);\n                  transform: rotate(-35deg) translate(0, 1px);\n}\n.button-switch input + span strong[data-v-604315fa],\n      .button-switch input + .label-field + span strong[data-v-604315fa],\n      .switch input + span strong[data-v-604315fa],\n      .switch input + .label-field + span strong[data-v-604315fa] {\n        font-weight: normal;\n        position: relative;\n        display: block;\n        top: 1px;\n}\n.button-switch input + span strong[data-v-604315fa]:before, .button-switch input + span strong[data-v-604315fa]:after,\n        .button-switch input + .label-field + span strong[data-v-604315fa]:before,\n        .button-switch input + .label-field + span strong[data-v-604315fa]:after,\n        .switch input + span strong[data-v-604315fa]:before,\n        .switch input + span strong[data-v-604315fa]:after,\n        .switch input + .label-field + span strong[data-v-604315fa]:before,\n        .switch input + .label-field + span strong[data-v-604315fa]:after {\n          font-size: 14px;\n          font-weight: 500;\n          display: block;\n          font-family: 'Mukta Malar', Arial;\n          -webkit-backface-visibility: hidden;\n}\n.button-switch input + span strong[data-v-604315fa]:before,\n        .button-switch input + .label-field + span strong[data-v-604315fa]:before,\n        .switch input + span strong[data-v-604315fa]:before,\n        .switch input + .label-field + span strong[data-v-604315fa]:before {\n          content: 'Unlocked';\n          -webkit-transition: all .3s ease .2s;\n          transition: all .3s ease .2s;\n}\n.button-switch input + span strong[data-v-604315fa]:after,\n        .button-switch input + .label-field + span strong[data-v-604315fa]:after,\n        .switch input + span strong[data-v-604315fa]:after,\n        .switch input + .label-field + span strong[data-v-604315fa]:after {\n          content: 'Locked';\n          opacity: 0;\n          visibility: hidden;\n          position: absolute;\n          left: 0;\n          top: 0;\n          color: #5628EE;\n          -webkit-transition: all .3s ease;\n          transition: all .3s ease;\n          -webkit-transform: translate(2px, 0);\n                  transform: translate(2px, 0);\n}\n.button-switch input:checked + span[data-v-604315fa]:before,\n    .switch input:checked + span[data-v-604315fa]:before {\n      background: rgba(86, 40, 238, 0.35);\n}\n.button-switch input:checked + span[data-v-604315fa]:after,\n    .switch input:checked + span[data-v-604315fa]:after {\n      background: #fff;\n      -webkit-transform: translate(18px, 0);\n              transform: translate(18px, 0);\n}\n.button-switch input:checked + span em[data-v-604315fa],\n    .switch input:checked + span em[data-v-604315fa] {\n      -webkit-transform: translate(18px, 0);\n              transform: translate(18px, 0);\n      background: #5628EE;\n}\n.button-switch input:checked + span em[data-v-604315fa]:after,\n      .switch input:checked + span em[data-v-604315fa]:after {\n        border-color: #5628EE;\n        -webkit-transform: rotate(0deg) translate(0, 0);\n                transform: rotate(0deg) translate(0, 0);\n}\n.button-switch input:checked + span strong[data-v-604315fa]:before,\n    .switch input:checked + span strong[data-v-604315fa]:before {\n      opacity: 0;\n      visibility: hidden;\n      -webkit-transition: all .3s ease;\n      transition: all .3s ease;\n      -webkit-transform: translate(-2px, 0);\n              transform: translate(-2px, 0);\n}\n.button-switch input:checked + span strong[data-v-604315fa]:after,\n    .switch input:checked + span strong[data-v-604315fa]:after {\n      opacity: 1;\n      visibility: visible;\n      -webkit-transform: translate(0, 0);\n              transform: translate(0, 0);\n      -webkit-transition: all .3s ease .2s;\n      transition: all .3s ease .2s;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-604315fa], [class*=\" icon-\"][data-v-604315fa] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-604315fa]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-604315fa]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-604315fa]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-604315fa]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-604315fa]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-604315fa]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-604315fa]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-604315fa]:before {\n  content: \"\\E907\";\n}\n", ""]);
 
 // exports
 
@@ -39206,18 +39209,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            showModal: false,
             form: {
                 printing: {
                     press: "",
@@ -39236,8 +39232,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         };
     },
-    mounted: function mounted() {},
+    created: function created() {
+        this.$store.dispatch('getPrintings');
+        this.$store.dispatch('getSubstrates');
+    },
 
+    computed: {
+        printings: function printings() {
+            return this.$store.state.printings;
+        },
+        substrates: function substrates() {
+            return this.$store.state.substrates;
+        }
+    },
     methods: {
         checkAnimation: function checkAnimation(_ref) {
             var target = _ref.target,
@@ -39259,8 +39266,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
     _c(
       "div",
       {
@@ -39316,8 +39321,19 @@ var render = function() {
             [
               _c("option", { attrs: { disabled: "", value: "" } }, [
                 _vm._v("Choisir")
-              ])
-            ]
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.printings, function(printing) {
+                return _c("option", { domProps: { value: printing.id } }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(printing.name) +
+                      "\n                "
+                  )
+                ])
+              })
+            ],
+            2
           ),
           _vm._v(" "),
           _c("label", { staticClass: "label-field" }, [
@@ -39360,9 +39376,65 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "wrap-field h-50 switcher" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.printing.quadri,
+                expression: "form.printing.quadri"
+              }
+            ],
+            staticClass: "field toggle toggle-left hasValue",
+            attrs: {
+              type: "radio",
+              id: "toggle-on",
+              value: "true",
+              required: ""
+            },
+            domProps: { checked: _vm._q(_vm.form.printing.quadri, "true") },
+            on: {
+              change: function($event) {
+                return _vm.$set(_vm.form.printing, "quadri", "true")
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.printing.quadri,
+                expression: "form.printing.quadri"
+              }
+            ],
+            staticClass: "field toggle toggle-right hasValue",
+            attrs: {
+              type: "radio",
+              id: "toggle-off",
+              name: "toggle",
+              value: "false"
+            },
+            domProps: { checked: _vm._q(_vm.form.printing.quadri, "false") },
+            on: {
+              change: function($event) {
+                return _vm.$set(_vm.form.printing, "quadri", "false")
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("label", { staticClass: "label-field" }, [_vm._v("Quadrichromie")])
+        ]),
+        _vm._v(" "),
         _c("span", { staticClass: "focus-field" }),
         _vm._v(" "),
-        _vm._m(1)
+        _vm._m(2)
       ]
     ),
     _vm._v(" "),
@@ -39377,7 +39449,7 @@ var render = function() {
               expression: "form.printing.substrate.type"
             }
           ],
-          attrs: { type: "radio", id: "label_old", value: "old" },
+          attrs: { type: "radio", id: "substrate_old", value: "old" },
           domProps: {
             checked: _vm._q(_vm.form.printing.substrate.type, "old")
           },
@@ -39388,7 +39460,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm._m(2)
+        _vm._m(3)
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "wrap-field" }, [
@@ -39401,7 +39473,7 @@ var render = function() {
               expression: "form.printing.substrate.type"
             }
           ],
-          attrs: { type: "radio", id: "label_new", value: "new" },
+          attrs: { type: "radio", id: "substrate_new", value: "new" },
           domProps: {
             checked: _vm._q(_vm.form.printing.substrate.type, "new")
           },
@@ -39412,7 +39484,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(4)
       ])
     ]),
     _vm._v(" "),
@@ -39431,10 +39503,10 @@ var render = function() {
         _c("div", { staticClass: "wrap-field h-50" }, [
           _vm.form.printing.substrate.type === "old"
             ? _c(
-                "span",
+                "button",
                 {
                   staticClass: "btn-right-field",
-                  on: { click: function($event) {} }
+                  attrs: { type: "button", id: "show-modal" }
                 },
                 [_c("i", { staticClass: "fas fa-search" })]
               )
@@ -39604,7 +39676,7 @@ var render = function() {
         _vm._v(" "),
         _c("span", { staticClass: "focus-field" }),
         _vm._v(" "),
-        _vm._m(4)
+        _vm._m(5)
       ]
     )
   ])
@@ -39614,36 +39686,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "wrap-field h-50 hasValue" }, [
-        _c("div", { staticClass: "button-switch" }, [
-          _c("input", {
-            staticClass: "field",
-            attrs: { type: "checkbox", id: "checkbox" }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "label-field", attrs: { for: "checkbox" } },
-            [_vm._v("Quadrichromie")]
-          ),
-          _vm._v(" "),
-          _c("span", [_c("em"), _vm._v(" "), _c("strong")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "switch" }, [
-        _c("input", { attrs: { type: "checkbox" } }),
-        _vm._v(" "),
-        _c("span", [_c("em"), _vm._v(" "), _c("strong")])
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "switch" }, [
-        _c("input", { attrs: { type: "checkbox", checked: "" } }),
-        _vm._v(" "),
-        _c("span", [_c("em"), _vm._v(" "), _c("strong")])
-      ])
-    ])
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-on" } },
+      [_c("i", { staticClass: "far fa-check-circle" }), _vm._v("Oui")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-off" } },
+      [_c("i", { staticClass: "far fa-times-circle" }), _vm._v("Non")]
+    )
   },
   function() {
     var _vm = this
@@ -39657,7 +39714,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "label_old" } }, [
+    return _c("label", { attrs: { for: "substrate_old" } }, [
       _c("i", { staticClass: "fas fa-search" }),
       _vm._v(" "),
       _c("span", [_vm._v("Rechercher un support")])
@@ -39667,7 +39724,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "label_new" } }, [
+    return _c("label", { attrs: { for: "substrate_new" } }, [
       _c("i", { staticClass: "fas fa-file-medical" }),
       _vm._v(" "),
       _c("span", [_vm._v("Créer un support")])
@@ -39693,6 +39750,1361 @@ if (false) {
 
 /***/ }),
 /* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(193)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(195)
+/* template */
+var __vue_template__ = __webpack_require__(196)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7a29dd1e"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Quotation/Finishing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7a29dd1e", Component.options)
+  } else {
+    hotAPI.reload("data-v-7a29dd1e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(194);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("0eb5fbaf", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7a29dd1e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Finishing.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7a29dd1e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Finishing.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 194 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7a29dd1e], [class*=\" icon-\"][data-v-7a29dd1e] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7a29dd1e]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7a29dd1e]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7a29dd1e]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7a29dd1e]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7a29dd1e]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7a29dd1e]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7a29dd1e]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7a29dd1e]:before {\n  content: \"\\E907\";\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 195 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: {
+                finishing: {
+                    finishings: [{
+                        type: "",
+                        number: 1,
+                        shape: false,
+                        reworking: false,
+                        presence_consumable: false,
+                        hasFocus: false,
+                        consumable: ""
+                    }],
+                    cutting: {
+                        type: "old",
+                        id: "",
+                        name: "",
+                        dimension_width: "",
+                        dimension_length: "",
+                        bleed_width: "",
+                        bleed_length: "",
+                        pose_width: "",
+                        pose_length: "",
+                        hasFocus: false
+                    }
+                }
+            }
+        };
+    },
+    created: function created() {
+        this.$store.dispatch('getFinishings');
+        // this.$store.dispatch('getConsumables');
+    },
+
+    computed: {
+        finishings: function finishings() {
+            return this.$store.state.finishings;
+        }
+    },
+    methods: {
+        checkAnimation: function checkAnimation(_ref) {
+            var target = _ref.target,
+                animationName = _ref.animationName;
+
+            if (animationName.startsWith("onAutoFillStart")) {
+                target.classList.add("hasValue");
+            }
+        },
+        addFinishing: function addFinishing() {
+            this.form.finishing.finishings.push({
+                type: "",
+                number: 1,
+                shape: false,
+                reworking: false,
+                presence_consumable: false,
+                hasFocus: false
+            });
+        },
+        deleteFinishing: function deleteFinishing(index) {
+            this.form.finishing.finishings.splice(index, 1);
+        },
+        handleFinishingChanging: function handleFinishingChanging(index) {
+            var finishingID = this.form.finishing.finishings[index].type;
+            var finishingConsumable = this.finishings.find(function (finishing) {
+                return finishing.id === finishingID;
+            });
+
+            if (finishingConsumable.consumable) {
+                var newConsumable = {
+                    name: "",
+                    width: "",
+                    price: "",
+                    hasFocus: false
+                };
+                this.form.finishing.finishings[index].consumable = newConsumable;
+                this.form.finishing.finishings[index].presence_consumable = true;
+            } else {
+                this.form.finishing.finishings[index].presence_consumable = false;
+                this.form.finishing.finishings[index].consumable = "";
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm._l(_vm.form.finishing.finishings, function(item, index) {
+        return _c(
+          "div",
+          [
+            _c(
+              "div",
+              {
+                staticClass: "wrap-group-field",
+                class: [
+                  { hasValue: item.type },
+                  { hasValue: item.shape },
+                  { hasFocus: item.hasFocus }
+                ]
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass: "btn-right-field",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteFinishing(index)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-times" })]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "wrap-field h-50" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: item.type,
+                          expression: "item.type"
+                        }
+                      ],
+                      staticClass: "field select",
+                      class: { hasValue: item.type },
+                      attrs: { required: "" },
+                      on: {
+                        focus: function($event) {
+                          item.hasFocus = true
+                        },
+                        blur: function($event) {
+                          item.hasFocus = false
+                        },
+                        animationstart: _vm.checkAnimation,
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              item,
+                              "type",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            return _vm.handleFinishingChanging(index)
+                          }
+                        ]
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { disabled: "", value: "" } }, [
+                        _vm._v("Choisir")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.finishings, function(finishing) {
+                        return _c(
+                          "option",
+                          { domProps: { value: finishing.id } },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(finishing.name) +
+                                "\n                    "
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "label-field" }, [
+                    _vm._v("Type de finition")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "wrap-field h-50" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: item.number,
+                        expression: "item.number"
+                      }
+                    ],
+                    staticClass: "field",
+                    class: { hasValue: item.number },
+                    attrs: {
+                      type: "number",
+                      autocomplete: "off",
+                      required: ""
+                    },
+                    domProps: { value: item.number },
+                    on: {
+                      focus: function($event) {
+                        item.hasFocus = true
+                      },
+                      blur: function($event) {
+                        item.hasFocus = false
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(item, "number", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "label-field" }, [
+                    _vm._v("Nombre de finition")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "wrap-field h-50 switcher" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: item.shape,
+                        expression: "item.shape"
+                      }
+                    ],
+                    staticClass: "field toggle toggle-left hasValue",
+                    attrs: {
+                      type: "radio",
+                      id: "toggle-on-shape",
+                      value: "true",
+                      required: ""
+                    },
+                    domProps: { checked: _vm._q(item.shape, "true") },
+                    on: {
+                      change: function($event) {
+                        return _vm.$set(item, "shape", "true")
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: item.shape,
+                        expression: "item.shape"
+                      }
+                    ],
+                    staticClass: "field toggle toggle-right hasValue",
+                    attrs: {
+                      type: "radio",
+                      id: "toggle-off-shape",
+                      value: "false"
+                    },
+                    domProps: { checked: _vm._q(item.shape, "false") },
+                    on: {
+                      change: function($event) {
+                        return _vm.$set(item, "shape", "false")
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "label-field" }, [
+                    _vm._v("Outil à commander")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "wrap-field h-50 switcher" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: item.reworking,
+                        expression: "item.reworking"
+                      }
+                    ],
+                    staticClass: "field toggle toggle-left hasValue",
+                    attrs: {
+                      type: "radio",
+                      id: "toggle-on-reworking",
+                      value: "true",
+                      required: ""
+                    },
+                    domProps: { checked: _vm._q(item.reworking, "true") },
+                    on: {
+                      change: function($event) {
+                        return _vm.$set(item, "reworking", "true")
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(2, true),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: item.reworking,
+                        expression: "item.reworking"
+                      }
+                    ],
+                    staticClass: "field toggle toggle-right hasValue",
+                    attrs: {
+                      type: "radio",
+                      id: "toggle-off-reworking",
+                      value: "false"
+                    },
+                    domProps: { checked: _vm._q(item.reworking, "false") },
+                    on: {
+                      change: function($event) {
+                        return _vm.$set(item, "reworking", "false")
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(3, true),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "label-field" }, [
+                    _vm._v("Reprise")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "focus-field" }),
+                _vm._v(" "),
+                _vm._m(4, true)
+              ]
+            ),
+            _vm._v(" "),
+            _c("transition", { attrs: { name: "fade", tag: "div" } }, [
+              item.presence_consumable === true
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "wrap-group-field",
+                      class: [
+                        { hasValue: item.consumable.name },
+                        { hasValue: item.consumable.width },
+                        { hasValue: item.consumable.price },
+                        { hasFocus: item.consumable.hasFocus }
+                      ]
+                    },
+                    [
+                      _c("div", { staticClass: "wrap-field h-50" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model.trim",
+                              value: item.consumable.name,
+                              expression: "item.consumable.name",
+                              modifiers: { trim: true }
+                            }
+                          ],
+                          staticClass: "field",
+                          class: { hasValue: item.consumable.name },
+                          attrs: {
+                            type: "text",
+                            autocomplete: "off",
+                            required: ""
+                          },
+                          domProps: { value: item.consumable.name },
+                          on: {
+                            focus: function($event) {
+                              item.consumable.hasFocus = true
+                            },
+                            blur: [
+                              function($event) {
+                                item.consumable.hasFocus = false
+                              },
+                              function($event) {
+                                return _vm.$forceUpdate()
+                              }
+                            ],
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                item.consumable,
+                                "name",
+                                $event.target.value.trim()
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "label-field" }, [
+                          _vm._v("Désignation du consommable")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "wrap-field h-50" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: item.consumable.width,
+                              expression: "item.consumable.width"
+                            }
+                          ],
+                          staticClass: "field",
+                          class: { hasValue: item.consumable.width },
+                          attrs: {
+                            type: "number",
+                            autocomplete: "off",
+                            required: ""
+                          },
+                          domProps: { value: item.consumable.width },
+                          on: {
+                            focus: function($event) {
+                              item.consumable.hasFocus = true
+                            },
+                            blur: function($event) {
+                              item.consumable.hasFocus = false
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                item.consumable,
+                                "width",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "label-field" }, [
+                          _vm._v("Laize (mm)")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "wrap-field h-50" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: item.consumable.price,
+                              expression: "item.consumable.price"
+                            }
+                          ],
+                          staticClass: "field",
+                          class: { hasValue: item.consumable.price },
+                          attrs: {
+                            type: "number",
+                            autocomplete: "off",
+                            required: ""
+                          },
+                          domProps: { value: item.consumable.price },
+                          on: {
+                            focus: function($event) {
+                              item.consumable.hasFocus = true
+                            },
+                            blur: function($event) {
+                              item.consumable.hasFocus = false
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                item.consumable,
+                                "price",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "label-field" }, [
+                          _vm._v("Prix (mL)")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "focus-field" }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "symbol-left-field" }, [
+                        _c("i", { staticClass: "fab fa-confluence" })
+                      ])
+                    ]
+                  )
+                : _vm._e()
+            ])
+          ],
+          1
+        )
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "button button-small button-secondary button-dashed",
+          staticStyle: { "margin-bottom": "2.5rem" },
+          attrs: { type: "button" },
+          on: { click: _vm.addFinishing }
+        },
+        [
+          _c("i", { staticClass: "fas fa-plus" }),
+          _vm._v("\n        Ajouter une finition\n    ")
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-radio" }, [
+        _c("div", { staticClass: "wrap-field" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.finishing.cutting.type,
+                expression: "form.finishing.cutting.type"
+              }
+            ],
+            attrs: { type: "radio", id: "cutting_old", value: "old" },
+            domProps: {
+              checked: _vm._q(_vm.form.finishing.cutting.type, "old")
+            },
+            on: {
+              change: function($event) {
+                return _vm.$set(_vm.form.finishing.cutting, "type", "old")
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(5)
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "wrap-field" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.finishing.cutting.type,
+                expression: "form.finishing.cutting.type"
+              }
+            ],
+            attrs: { type: "radio", id: "cutting_new", value: "new" },
+            domProps: {
+              checked: _vm._q(_vm.form.finishing.cutting.type, "new")
+            },
+            on: {
+              change: function($event) {
+                return _vm.$set(_vm.form.finishing.cutting, "type", "new")
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(6)
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "wrap-group-field",
+          class: [
+            { hasValue: _vm.form.finishing.cutting.name },
+            { hasValue: _vm.form.finishing.cutting.dimension_width },
+            { hasValue: _vm.form.finishing.cutting.dimension_length },
+            { hasValue: _vm.form.finishing.cutting.bleed_width },
+            { hasValue: _vm.form.finishing.cutting.bleed_length },
+            { hasValue: _vm.form.finishing.cutting.pose_width },
+            { hasValue: _vm.form.finishing.cutting.pose_length },
+            { hasFocus: _vm.form.finishing.cutting.hasFocus }
+          ]
+        },
+        [
+          _c("div", { staticClass: "wrap-field h-50" }, [
+            _vm.form.finishing.cutting.type === "old"
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn-right-field",
+                    attrs: { type: "button", id: "show-modal" }
+                  },
+                  [_c("i", { staticClass: "fas fa-search" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.trim",
+                  value: _vm.form.finishing.cutting.name,
+                  expression: "form.finishing.cutting.name",
+                  modifiers: { trim: true }
+                }
+              ],
+              staticClass: "field",
+              class: { hasValue: _vm.form.finishing.cutting.name },
+              attrs: { type: "text", autocomplete: "off", required: "" },
+              domProps: { value: _vm.form.finishing.cutting.name },
+              on: {
+                focus: function($event) {
+                  _vm.form.finishing.cutting.hasFocus = true
+                },
+                blur: [
+                  function($event) {
+                    _vm.form.finishing.cutting.hasFocus = false
+                  },
+                  function($event) {
+                    return _vm.$forceUpdate()
+                  }
+                ],
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.form.finishing.cutting,
+                    "name",
+                    $event.target.value.trim()
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "label-field" }, [
+              _vm._v("Désignation de l'outil")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "wrap-field-inline" }, [
+            _c("span", { staticClass: "legend-line" }, [
+              _vm._v("Dimensions (mm)")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.finishing.cutting.dimension_width,
+                    expression: "form.finishing.cutting.dimension_width"
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.finishing.cutting.dimension_width },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.finishing.cutting.dimension_width },
+                on: {
+                  focus: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.finishing.cutting,
+                      "dimension_width",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Laize")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.finishing.cutting.dimension_length,
+                    expression: "form.finishing.cutting.dimension_length"
+                  }
+                ],
+                staticClass: "field",
+                class: {
+                  hasValue: _vm.form.finishing.cutting.dimension_length
+                },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: {
+                  value: _vm.form.finishing.cutting.dimension_length
+                },
+                on: {
+                  focus: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.finishing.cutting,
+                      "dimension_length",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Avance")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "wrap-field-inline" }, [
+            _c("span", { staticClass: "legend-line" }, [
+              _vm._v("Entreproses (mm)")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.finishing.cutting.bleed_width,
+                    expression: "form.finishing.cutting.bleed_width"
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.finishing.cutting.bleed_width },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.finishing.cutting.bleed_width },
+                on: {
+                  focus: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.finishing.cutting,
+                      "bleed_width",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Laize")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.finishing.cutting.bleed_length,
+                    expression: "form.finishing.cutting.bleed_length"
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.finishing.cutting.bleed_length },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.finishing.cutting.bleed_length },
+                on: {
+                  focus: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.finishing.cutting,
+                      "bleed_length",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Avance")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "wrap-field-inline" }, [
+            _c("span", { staticClass: "legend-line" }, [_vm._v("Poses (mm)")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.finishing.cutting.pose_width,
+                    expression: "form.finishing.cutting.pose_width"
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.finishing.cutting.pose_width },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.finishing.cutting.pose_width },
+                on: {
+                  focus: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.finishing.cutting,
+                      "pose_width",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Laize")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.finishing.cutting.pose_length,
+                    expression: "form.finishing.cutting.pose_length"
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.finishing.cutting.pose_length },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.finishing.cutting.pose_length },
+                on: {
+                  focus: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.finishing.cutting.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.finishing.cutting,
+                      "pose_length",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Avance")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "focus-field" }),
+          _vm._v(" "),
+          _vm._m(7)
+        ]
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-on-shape" } },
+      [_c("i", { staticClass: "far fa-check-circle" }), _vm._v("Oui")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-off-shape" } },
+      [_c("i", { staticClass: "far fa-times-circle" }), _vm._v("Non")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-on-reworking" } },
+      [_c("i", { staticClass: "far fa-check-circle" }), _vm._v("Oui")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-off-reworking" } },
+      [_c("i", { staticClass: "far fa-times-circle" }), _vm._v("Non")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-cut" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "cutting_old" } }, [
+      _c("i", { staticClass: "fas fa-search" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Rechercher un outil")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "cutting_new" } }, [
+      _c("i", { staticClass: "fas fa-file-medical" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Créer un outil")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-crop-alt" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7a29dd1e", module.exports)
+  }
+}
+
+/***/ }),
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -39733,32 +41145,22 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm.step === 1
-            ? _c(
-                "section",
-                { staticClass: "wrap-content-step" },
-                [_c("Identification")],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.step === 2
-            ? _c(
-                "section",
-                { staticClass: "wrap-content-step" },
-                [_c("Description")],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.step === 3
-            ? _c(
-                "section",
-                { staticClass: "wrap-content-step" },
-                [_c("Printing")],
-                1
-              )
-            : _vm._e()
+          _c(
+            "section",
+            { staticClass: "wrap-content-step" },
+            [
+              _vm.step === 1 ? _c("Identification") : _vm._e(),
+              _vm._v(" "),
+              _vm.step === 2 ? _c("Description") : _vm._e(),
+              _vm._v(" "),
+              _vm.step === 3 ? _c("Printing") : _vm._e(),
+              _vm._v(" "),
+              _vm.step === 4 ? _c("Finishing") : _vm._e(),
+              _vm._v(" "),
+              _vm.step === 5 ? _c("Packing") : _vm._e()
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "wrap-buttons-controls-step" }, [
@@ -39917,19 +41319,19 @@ if (false) {
 }
 
 /***/ }),
-/* 193 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(194)
+  __webpack_require__(199)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(196)
+var __vue_script__ = __webpack_require__(201)
 /* template */
-var __vue_template__ = __webpack_require__(197)
+var __vue_template__ = __webpack_require__(202)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -39968,13 +41370,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 194 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(195);
+var content = __webpack_require__(200);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -39994,7 +41396,7 @@ if(false) {
 }
 
 /***/ }),
-/* 195 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -40002,13 +41404,13 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-component[data-v-3bd692e4] {\n  min-height: calc(100vh - 9rem);\n}\n.wrap-main-content[data-v-3bd692e4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -ms-flex-line-pack: distribute;\n      align-content: space-around;\n  min-height: calc(100vh - 12.4rem);\n}\n.wrap-main-content .wrap-image[data-v-3bd692e4] {\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-main-content .wrap-image .main-image[data-v-3bd692e4] {\n      width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-3bd692e4], [class*=\" icon-\"][data-v-3bd692e4] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-3bd692e4]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-3bd692e4]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-3bd692e4]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-3bd692e4]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-3bd692e4]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-3bd692e4]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-3bd692e4]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-3bd692e4]:before {\n  content: \"\\E907\";\n}\n.wrap-component[data-v-3bd692e4] {\n  min-height: calc(100vh - 9rem);\n}\n.wrap-main-content[data-v-3bd692e4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -ms-flex-line-pack: distribute;\n      align-content: space-around;\n  min-height: calc(100vh - 12.4rem);\n}\n.wrap-main-content .wrap-image[data-v-3bd692e4] {\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-main-content .wrap-image .main-image[data-v-3bd692e4] {\n      width: 100%;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 196 */
+/* 201 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40081,7 +41483,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 197 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -40171,16 +41573,16 @@ if (false) {
 }
 
 /***/ }),
-/* 198 */
+/* 203 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(204);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 
 
@@ -40197,7 +41599,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         token: localStorage.getItem('token') || null,
         user: localStorage.getItem('user') || null,
         quote: [],
-        quotations: []
+        quotations: [],
+        printings: [],
+        substrates: [],
+        finishings: [],
+        cuttings: []
     },
     getters: {
         loggedIn: function loggedIn(state) {
@@ -40219,6 +41625,18 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         },
         setQuotations: function setQuotations(state, data) {
             state.quotations = data;
+        },
+        setPrintings: function setPrintings(state, data) {
+            state.printings = data;
+        },
+        setSubstrates: function setSubstrates(state, data) {
+            state.substrates = data;
+        },
+        setFinishings: function setFinishings(state, data) {
+            state.finishings = data;
+        },
+        setCuttings: function setCuttings(state, data) {
+            state.cuttings = data;
         }
     },
     actions: {
@@ -40316,19 +41734,135 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             }
 
             return getQuotations;
+        }(),
+        getPrintings: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(context) {
+                var data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                _context3.next = 2;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/printings');
+
+                            case 2:
+                                data = _context3.sent.data;
+
+                                context.commit("setPrintings", data);
+
+                            case 4:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function getPrintings(_x5) {
+                return _ref3.apply(this, arguments);
+            }
+
+            return getPrintings;
+        }(),
+        getSubstrates: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(context) {
+                var data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.next = 2;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/substrates');
+
+                            case 2:
+                                data = _context4.sent.data;
+
+                                context.commit("setSubstrates", data);
+
+                            case 4:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function getSubstrates(_x6) {
+                return _ref4.apply(this, arguments);
+            }
+
+            return getSubstrates;
+        }(),
+        getFinishings: function () {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(context) {
+                var data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+                    while (1) {
+                        switch (_context5.prev = _context5.next) {
+                            case 0:
+                                _context5.next = 2;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/finishings');
+
+                            case 2:
+                                data = _context5.sent.data;
+
+                                context.commit("setFinishings", data);
+
+                            case 4:
+                            case 'end':
+                                return _context5.stop();
+                        }
+                    }
+                }, _callee5, this);
+            }));
+
+            function getFinishings(_x7) {
+                return _ref5.apply(this, arguments);
+            }
+
+            return getFinishings;
+        }(),
+        getCuttings: function () {
+            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(context) {
+                var data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
+                    while (1) {
+                        switch (_context6.prev = _context6.next) {
+                            case 0:
+                                _context6.next = 2;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/cuttings');
+
+                            case 2:
+                                data = _context6.sent.data;
+
+                                context.commit("setCuttings", data);
+
+                            case 4:
+                            case 'end':
+                                return _context6.stop();
+                        }
+                    }
+                }, _callee6, this);
+            }));
+
+            function getCuttings(_x8) {
+                return _ref6.apply(this, arguments);
+            }
+
+            return getCuttings;
         }()
     }
 }));
 
 /***/ }),
-/* 199 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(200);
+module.exports = __webpack_require__(205);
 
 
 /***/ }),
-/* 200 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -40353,7 +41887,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(201);
+module.exports = __webpack_require__(206);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -40369,7 +41903,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 201 */
+/* 206 */
 /***/ (function(module, exports) {
 
 /**
@@ -41102,7 +42636,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 202 */
+/* 207 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42127,13 +43661,13 @@ var index_esm = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
-/* 203 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(204);
+module.exports = __webpack_require__(209);
 
 /***/ }),
-/* 204 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42141,7 +43675,7 @@ module.exports = __webpack_require__(204);
 
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(136);
-var Axios = __webpack_require__(206);
+var Axios = __webpack_require__(211);
 var mergeConfig = __webpack_require__(142);
 var defaults = __webpack_require__(139);
 
@@ -42177,14 +43711,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(143);
-axios.CancelToken = __webpack_require__(218);
+axios.CancelToken = __webpack_require__(223);
 axios.isCancel = __webpack_require__(138);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(219);
+axios.spread = __webpack_require__(224);
 
 module.exports = axios;
 
@@ -42193,7 +43727,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 205 */
+/* 210 */
 /***/ (function(module, exports) {
 
 /*!
@@ -42210,7 +43744,7 @@ module.exports = function isBuffer (obj) {
 
 
 /***/ }),
-/* 206 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42218,8 +43752,8 @@ module.exports = function isBuffer (obj) {
 
 var utils = __webpack_require__(1);
 var buildURL = __webpack_require__(137);
-var InterceptorManager = __webpack_require__(207);
-var dispatchRequest = __webpack_require__(208);
+var InterceptorManager = __webpack_require__(212);
+var dispatchRequest = __webpack_require__(213);
 var mergeConfig = __webpack_require__(142);
 
 /**
@@ -42303,7 +43837,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 207 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42362,18 +43896,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 208 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var transformData = __webpack_require__(209);
+var transformData = __webpack_require__(214);
 var isCancel = __webpack_require__(138);
 var defaults = __webpack_require__(139);
-var isAbsoluteURL = __webpack_require__(216);
-var combineURLs = __webpack_require__(217);
+var isAbsoluteURL = __webpack_require__(221);
+var combineURLs = __webpack_require__(222);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -42455,7 +43989,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 209 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42482,7 +44016,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 210 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42501,7 +44035,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 211 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42533,7 +44067,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 212 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42582,7 +44116,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 213 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42642,7 +44176,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 214 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42717,7 +44251,7 @@ module.exports = (
 
 
 /***/ }),
-/* 215 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42777,7 +44311,7 @@ module.exports = (
 
 
 /***/ }),
-/* 216 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42798,7 +44332,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 217 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42819,7 +44353,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 218 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42883,7 +44417,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 219 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42917,19 +44451,19 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 220 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(221)
+  __webpack_require__(226)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(223)
+var __vue_script__ = __webpack_require__(228)
 /* template */
-var __vue_template__ = __webpack_require__(229)
+var __vue_template__ = __webpack_require__(234)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -42968,13 +44502,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 221 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(222);
+var content = __webpack_require__(227);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -42994,7 +44528,7 @@ if(false) {
 }
 
 /***/ }),
-/* 222 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -43002,18 +44536,18 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container {\n  width: 300px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 20px 0;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 223 */
+/* 228 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Spinner_vue__);
 //
 //
@@ -43129,19 +44663,19 @@ var DEFAULT_TRANSITION = 'fade';
 });
 
 /***/ }),
-/* 224 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(225)
+  __webpack_require__(230)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(227)
+var __vue_script__ = __webpack_require__(232)
 /* template */
-var __vue_template__ = __webpack_require__(228)
+var __vue_template__ = __webpack_require__(233)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43180,13 +44714,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 225 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(226);
+var content = __webpack_require__(231);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -43206,7 +44740,7 @@ if(false) {
 }
 
 /***/ }),
-/* 226 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -43214,13 +44748,13 @@ exports = module.exports = __webpack_require__(3)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-spinner .main-image[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      margin-top: 1rem;\n      margin-right: 2rem;\n      text-align: right;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7ae326fe], [class*=\" icon-\"][data-v-7ae326fe] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7ae326fe]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7ae326fe]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7ae326fe]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7ae326fe]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7ae326fe]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7ae326fe]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7ae326fe]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7ae326fe]:before {\n  content: \"\\E907\";\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-spinner .main-image[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      margin-top: 1rem;\n      margin-right: 2rem;\n      text-align: right;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 227 */
+/* 232 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43246,7 +44780,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 228 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43288,7 +44822,7 @@ if (false) {
 }
 
 /***/ }),
-/* 229 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43414,10 +44948,565 @@ if (false) {
 }
 
 /***/ }),
-/* 230 */
+/* 235 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(240)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(242)
+/* template */
+var __vue_template__ = __webpack_require__(243)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-525b0bab"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Quotation/Packing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-525b0bab", Component.options)
+  } else {
+    hotAPI.reload("data-v-525b0bab", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(241);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("9b9776ea", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-525b0bab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Packing.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-525b0bab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Packing.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-525b0bab], [class*=\" icon-\"][data-v-525b0bab] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-525b0bab]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-525b0bab]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-525b0bab]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-525b0bab]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-525b0bab]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-525b0bab]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-525b0bab]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-525b0bab]:before {\n  content: \"\\E907\";\n}\n.title-radio[data-v-525b0bab] {\n  border: none;\n  margin-bottom: 0;\n}\n.legend-radio[data-v-525b0bab] {\n  margin-bottom: 1rem;\n  text-align: center;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 242 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: {
+                packing: {
+                    packing: "",
+                    direction: "ehead"
+                }
+            }
+        };
+    },
+    created: function created() {},
+
+    computed: {},
+    methods: {}
+});
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("h3", { staticClass: "legend-radio" }, [
+      _vm._v("Enroulement extérieur")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ehead", value: "ehead" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ehead") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ehead")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(1)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "efoot", value: "efoot" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "efoot") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "efoot")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(2)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "eright", value: "eright" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "eright") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "eright")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(3)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "eleft", value: "eleft" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "eleft") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "eleft")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(4)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("h3", { staticClass: "legend-radio" }, [
+      _vm._v("Enroulement intérieur")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ihead", value: "ihead" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ihead") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ihead")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(5)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ifoot", value: "ifoot" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ifoot") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ifoot")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(6)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "iright", value: "iright" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "iright") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "iright")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(7)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ileft", value: "ileft" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ileft") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ileft")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(8)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-field h-50" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.packing.packing,
+            expression: "form.packing.packing"
+          }
+        ],
+        staticClass: "field",
+        class: { hasValue: _vm.form.packing.packing },
+        attrs: { type: "number", required: "" },
+        domProps: { value: _vm.form.packing.packing },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form.packing, "packing", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "focus-field" }),
+      _vm._v(" "),
+      _c("label", { staticClass: "label-field" }, [_vm._v("Confitionnement")]),
+      _vm._v(" "),
+      _vm._m(9)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "wrap-field h-50 title-radio" }, [
+      _c("label", { staticClass: "label-field" }, [
+        _vm._v("Sens d'enroulement")
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "symbol-left-field" }, [
+        _c("i", { staticClass: "fas fa-text-width" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ehead" } }, [
+      _c("i", { staticClass: "fa icon-exterior-top" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Tête en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "efoot" } }, [
+      _c("i", { staticClass: "fa icon-exterior-bottom" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Pied en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "eright" } }, [
+      _c("i", { staticClass: "fa icon-exterior-right" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Droite en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "eleft" } }, [
+      _c("i", { staticClass: "fa icon-exterior-left" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Gauche en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ihead" } }, [
+      _c("i", { staticClass: "fa icon-interior-top" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Tête en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ifoot" } }, [
+      _c("i", { staticClass: "fa icon-interior-bottom" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Pied en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "iright" } }, [
+      _c("i", { staticClass: "fa icon-interior-right" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Droite en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ileft" } }, [
+      _c("i", { staticClass: "fa icon-interior-left" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Gauche en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-tape" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-525b0bab", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
