@@ -1,5 +1,38 @@
 <template>
     <div>
+        <div class="wrap-group-field"
+             :class="[{ hasValue: form.prepress.hour },
+                      { hasValue: form.prepress.minute },
+                      { hasFocus: form.prepress.hasFocus }]">
+            <div class="wrap-field-inline">
+                <span class="legend-line">Temps prépresse</span>
+                <div class="wrap-field h-50">
+                    <input v-model="form.prepress.hour"
+                           @focus="form.prepress.hasFocus = true"
+                           @blur="form.prepress.hasFocus = false"
+                           class="field"
+                           :class="{ hasValue: form.prepress.hour }"
+                           type="number"
+                           autocomplete="off"
+                           required>
+                    <label class="label-field">Heure(s)</label>
+                </div>
+                <div class="wrap-field h-50">
+                    <input v-model="form.prepress.minute"
+                           @focus="form.prepress.hasFocus = true"
+                           @blur="form.prepress.hasFocus = false"
+                           class="field"
+                           :class="{ hasValue: form.prepress.minute }"
+                           type="number"
+                           autocomplete="off"
+                           required>
+                    <label class="label-field">Minute(s)</label>
+                </div>
+            </div>
+            <span class="focus-field"></span>
+            <span class="symbol-left-field"><i class="fas fa-pen-nib"></i></span>
+        </div>
+
         <div class="wrap-radio">
             <div class="wrap-field">
                 <input type="radio" id="label_old" v-model="form.description.label.type" value="old">
@@ -126,6 +159,11 @@
         data() {
             return {
                 form: {
+                    prepress: {
+                        hour: "",
+                        minute: "",
+                        hasFocus: false,
+                    },
                     description: {
                         label: {
                             type: "old",

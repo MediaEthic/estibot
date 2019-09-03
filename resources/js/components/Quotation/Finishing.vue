@@ -39,23 +39,16 @@
                     <label class="label-field">Nombre de finition</label>
                 </div>
 
-                <div class="wrap-field h-50 switcher">
-                    <input type="radio"
-                           v-model="item.shape"
-                           id="toggle-on-shape"
-                           class="field toggle toggle-left hasValue"
-                           value="true"
+                <div class="wrap-field h-50">
+                    <input v-model="item.shape"
+                           @focus="item.hasFocus = true"
+                           @blur="item.hasFocus = false"
+                           class="field"
+                           :class="{ hasValue: item.shape }"
+                           type="number"
+                           autocomplete="off"
                            required>
-                    <label for="toggle-on-shape" class="toggle-btn"><i class="far fa-check-circle"></i>Oui</label>
-
-                    <input type="radio"
-                           v-model="item.shape"
-                           id="toggle-off-shape"
-                           class="field toggle toggle-right hasValue"
-                           value="false">
-                    <label for="toggle-off-shape" class="toggle-btn"><i class="far fa-times-circle"></i>Non</label>
-
-                    <label class="label-field">Outil à commander</label>
+                    <label class="label-field">Prix de l'outil à commander (si besoin)</label>
                 </div>
 
                 <div class="wrap-field h-50 switcher">
@@ -206,7 +199,7 @@
                 </div>
             </div>
             <div class="wrap-field-inline">
-                <span class="legend-line">Entreproses (mm)</span>
+                <span class="legend-line">Entreposes (mm)</span>
                 <div class="wrap-field h-50">
                     <input v-model="form.finishing.cutting.bleed_width"
                            @focus="form.finishing.cutting.hasFocus = true"

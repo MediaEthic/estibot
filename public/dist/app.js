@@ -38524,11 +38524,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             form: {
+                prepress: {
+                    hour: "",
+                    minute: "",
+                    hasFocus: false
+                },
                 description: {
                     label: {
                         type: "old",
@@ -38584,6 +38622,95 @@ var render = function() {
   return _c(
     "div",
     [
+      _c(
+        "div",
+        {
+          staticClass: "wrap-group-field",
+          class: [
+            { hasValue: _vm.form.prepress.hour },
+            { hasValue: _vm.form.prepress.minute },
+            { hasFocus: _vm.form.prepress.hasFocus }
+          ]
+        },
+        [
+          _c("div", { staticClass: "wrap-field-inline" }, [
+            _c("span", { staticClass: "legend-line" }, [
+              _vm._v("Temps prépresse")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.prepress.hour,
+                    expression: "form.prepress.hour"
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.prepress.hour },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.prepress.hour },
+                on: {
+                  focus: function($event) {
+                    _vm.form.prepress.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.prepress.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form.prepress, "hour", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Heure(s)")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.prepress.minute,
+                    expression: "form.prepress.minute"
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.prepress.minute },
+                attrs: { type: "number", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.prepress.minute },
+                on: {
+                  focus: function($event) {
+                    _vm.form.prepress.hasFocus = true
+                  },
+                  blur: function($event) {
+                    _vm.form.prepress.hasFocus = false
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form.prepress, "minute", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Minute(s)")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "focus-field" }),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      ),
+      _vm._v(" "),
       _c("div", { staticClass: "wrap-radio" }, [
         _c("div", { staticClass: "wrap-field" }, [
           _c("input", {
@@ -38606,7 +38733,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(1)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "wrap-field" }, [
@@ -38630,7 +38757,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(2)
         ])
       ]),
       _vm._v(" "),
@@ -38784,7 +38911,7 @@ var render = function() {
           _vm._v(" "),
           _c("span", { staticClass: "focus-field" }),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(3)
         ]
       ),
       _vm._v(" "),
@@ -38921,7 +39048,7 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "focus-field" }),
             _vm._v(" "),
-            _vm._m(3, true)
+            _vm._m(4, true)
           ]
         )
       }),
@@ -38943,6 +39070,14 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-pen-nib" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -40109,13 +40244,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -40354,7 +40482,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "wrap-field h-50 switcher" }, [
+                _c("div", { staticClass: "wrap-field h-50" }, [
                   _c("input", {
                     directives: [
                       {
@@ -40364,50 +40492,32 @@ var render = function() {
                         expression: "item.shape"
                       }
                     ],
-                    staticClass: "field toggle toggle-left hasValue",
+                    staticClass: "field",
+                    class: { hasValue: item.shape },
                     attrs: {
-                      type: "radio",
-                      id: "toggle-on-shape",
-                      value: "true",
+                      type: "number",
+                      autocomplete: "off",
                       required: ""
                     },
-                    domProps: { checked: _vm._q(item.shape, "true") },
+                    domProps: { value: item.shape },
                     on: {
-                      change: function($event) {
-                        return _vm.$set(item, "shape", "true")
+                      focus: function($event) {
+                        item.hasFocus = true
+                      },
+                      blur: function($event) {
+                        item.hasFocus = false
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(item, "shape", $event.target.value)
                       }
                     }
                   }),
-                  _vm._v(" "),
-                  _vm._m(0, true),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: item.shape,
-                        expression: "item.shape"
-                      }
-                    ],
-                    staticClass: "field toggle toggle-right hasValue",
-                    attrs: {
-                      type: "radio",
-                      id: "toggle-off-shape",
-                      value: "false"
-                    },
-                    domProps: { checked: _vm._q(item.shape, "false") },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(item, "shape", "false")
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(1, true),
                   _vm._v(" "),
                   _c("label", { staticClass: "label-field" }, [
-                    _vm._v("Outil à commander")
+                    _vm._v("Prix de l'outil à commander (si besoin)")
                   ])
                 ]),
                 _vm._v(" "),
@@ -40436,7 +40546,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._m(2, true),
+                  _vm._m(0, true),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -40461,7 +40571,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._m(3, true),
+                  _vm._m(1, true),
                   _vm._v(" "),
                   _c("label", { staticClass: "label-field" }, [
                     _vm._v("Reprise")
@@ -40470,7 +40580,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("span", { staticClass: "focus-field" }),
                 _vm._v(" "),
-                _vm._m(4, true)
+                _vm._m(2, true)
               ]
             ),
             _vm._v(" "),
@@ -40673,7 +40783,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(3)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "wrap-field" }, [
@@ -40697,7 +40807,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(6)
+          _vm._m(4)
         ])
       ]),
       _vm._v(" "),
@@ -40859,7 +40969,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "wrap-field-inline" }, [
             _c("span", { staticClass: "legend-line" }, [
-              _vm._v("Entreproses (mm)")
+              _vm._v("Entreposes (mm)")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "wrap-field h-50" }, [
@@ -41017,7 +41127,7 @@ var render = function() {
           _vm._v(" "),
           _c("span", { staticClass: "focus-field" }),
           _vm._v(" "),
-          _vm._m(7)
+          _vm._m(5)
         ]
       )
     ],
@@ -41025,26 +41135,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "toggle-btn", attrs: { for: "toggle-on-shape" } },
-      [_c("i", { staticClass: "far fa-check-circle" }), _vm._v("Oui")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "toggle-btn", attrs: { for: "toggle-off-shape" } },
-      [_c("i", { staticClass: "far fa-times-circle" }), _vm._v("Non")]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
