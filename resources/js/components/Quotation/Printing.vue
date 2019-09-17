@@ -12,9 +12,12 @@
                         @animationstart="checkAnimation"
                         class="field select"
                         :class="{ hasValue: form.printing.press }"
+                        @change="handlePressChange($event)"
                         required>
                     <option disabled value="">Choisir</option>
-                    <option v-for="printing in printings" v-bind:value="printing.id">
+                    <option v-for="printing in printings"
+                            v-bind:value="printing.id"
+                            :data-name="printing.name">
                         {{ printing.name }}
                     </option>
                 </select>
@@ -101,15 +104,15 @@
                 <label class="label-field">Laize (mm)</label>
             </div>
             <div class="wrap-field h-50">
-                <input v-model="form.printing.substrate.length"
+                <input v-model="form.printing.substrate.weight"
                        @focus="form.printing.substrate.hasFocus = true"
                        @blur="form.printing.substrate.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.printing.substrate.length }"
+                       :class="{ hasValue: form.printing.substrate.weight }"
                        type="number"
                        autocomplete="off"
                        required>
-                <label class="label-field">Grammage (g/m2)</label>
+                <label class="label-field">Grammage (g/m&#xB2;)</label>
             </div>
             <div class="wrap-field h-50">
                 <input v-model="form.printing.substrate.price"
@@ -121,7 +124,7 @@
                        step="0.0001"
                        autocomplete="off"
                        required>
-                <label class="label-field">Prix (mL)</label>
+                <label class="label-field">Prix (€/m&#xB2;)</label>
             </div>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-scroll"></i></span>
@@ -134,22 +137,6 @@
         data() {
             return {
                 showModal: false,
-                form: {
-                    printing: {
-                        press: "",
-                        colors: "",
-                        quadri: false,
-                        hasFocus: false,
-                        substrate: {
-                            type: "old",
-                            id: "",
-                            name: "",
-                            width: "",
-                            price: "",
-                            hasFocus: false,
-                        },
-                    }
-                }
             }
         },
         created() {
@@ -157,6 +144,9 @@
             this.$store.dispatch('getSubstrates');
         },
         computed: {
+            form() {
+                return this.$store.state.workflow;
+            },
             printings() {
                 return this.$store.state.printings;
             },
@@ -168,6 +158,11 @@
             checkAnimation({ target, animationName }) {
                 if(animationName.startsWith("onAutoFillStart")) {
                     target.classList.add("hasValue");
+                }
+            },
+            handlePressChange(event) {
+                if (event.target.options.selectedIndex > 0) {
+                    this.form.printing.name = event.target.options[event.target.options.selectedIndex].dataset.name;
                 }
             }
         }

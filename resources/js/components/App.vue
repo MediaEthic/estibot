@@ -214,6 +214,14 @@
         color: $primary-color-dark;
     }
 
+    .price-quotation {
+        font-family: $font-family-secondary-medium;
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        color: $primary-color;
+        letter-spacing: 0.1em;
+    }
+
     .tag {
         display: flex;
         justify-content: center;
@@ -258,6 +266,19 @@
     .fade-enter,
     .fade-leave-active {
         opacity: 0
+    }
+
+
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
     }
 
 

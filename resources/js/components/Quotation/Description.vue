@@ -1,38 +1,5 @@
 <template>
     <div>
-        <div class="wrap-group-field"
-             :class="[{ hasValue: form.prepress.hour },
-                      { hasValue: form.prepress.minute },
-                      { hasFocus: form.prepress.hasFocus }]">
-            <div class="wrap-field-inline">
-                <span class="legend-line">Temps prépresse</span>
-                <div class="wrap-field h-50">
-                    <input v-model="form.prepress.hour"
-                           @focus="form.prepress.hasFocus = true"
-                           @blur="form.prepress.hasFocus = false"
-                           class="field"
-                           :class="{ hasValue: form.prepress.hour }"
-                           type="number"
-                           autocomplete="off"
-                           required>
-                    <label class="label-field">Heure(s)</label>
-                </div>
-                <div class="wrap-field h-50">
-                    <input v-model="form.prepress.minute"
-                           @focus="form.prepress.hasFocus = true"
-                           @blur="form.prepress.hasFocus = false"
-                           class="field"
-                           :class="{ hasValue: form.prepress.minute }"
-                           type="number"
-                           autocomplete="off"
-                           required>
-                    <label class="label-field">Minute(s)</label>
-                </div>
-            </div>
-            <span class="focus-field"></span>
-            <span class="symbol-left-field"><i class="fas fa-pen-nib"></i></span>
-        </div>
-
         <div class="wrap-radio">
             <div class="wrap-field">
                 <input type="radio" id="label_old" v-model="form.description.label.type" value="old">
@@ -119,28 +86,53 @@
                        required>
                 <label class="label-field">Nombre d'exemplaires</label>
             </div>
+            <div class="wrap-field h-50">
+                <input v-model="item.model"
+                       @focus="item.hasFocus = true"
+                       @blur="item.hasFocus = false"
+                       class="field"
+                       :class="{ hasValue: item.model }"
+                       type="number"
+                       autocomplete="off"
+                       required>
+                <label class="label-field">Nombre de modèles</label>
+            </div>
+            <div class="wrap-field h-50">
+                <input v-model="item.plate"
+                       @focus="item.hasFocus = true"
+                       @blur="item.hasFocus = false"
+                       class="field"
+                       :class="{ hasValue: item.plate }"
+                       type="number"
+                       autocomplete="off"
+                       required>
+                <label class="label-field">Nombre de clichés</label>
+            </div>
+            <div class="wrap-field-inline">
+                <span class="legend-line">Temps prépresse</span>
                 <div class="wrap-field h-50">
-                    <input v-model="item.model"
+                    <input v-model="item.hour"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: item.model }"
+                           :class="{ hasValue: item.hour }"
                            type="number"
                            autocomplete="off"
                            required>
-                    <label class="label-field">Nombre de modèles</label>
+                    <label class="label-field">Heure(s)</label>
                 </div>
                 <div class="wrap-field h-50">
-                    <input v-model="item.plate"
+                    <input v-model="item.minute"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: item.plate }"
+                           :class="{ hasValue: item.minute }"
                            type="number"
                            autocomplete="off"
                            required>
-                    <label class="label-field">Nombre de clichés</label>
+                    <label class="label-field">Minute(s)</label>
                 </div>
+            </div>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-copy"></i></span>
         </div>
@@ -158,35 +150,16 @@
     export default {
         data() {
             return {
-                form: {
-                    prepress: {
-                        hour: "",
-                        minute: "",
-                        hasFocus: false,
-                    },
-                    description: {
-                        label: {
-                            type: "old",
-                            id: "",
-                            name: "",
-                            width: "",
-                            length: "",
-                            hasFocus: false,
-                        },
-                        quantities: [
-                            {
-                                quantity: "",
-                                model: "",
-                                plate: "",
-                                hasFocus: false,
-                            }
-                        ]
-                    }
-                }
+
             }
         },
-        mounted() {
+        created() {
 
+        },
+        computed: {
+            form() {
+                return this.$store.state.workflow;
+            },
         },
         methods: {
             checkAnimation({ target, animationName }) {
@@ -199,6 +172,8 @@
                     quantity: "",
                     model: "",
                     plate: "",
+                    hour: "",
+                    minute: "",
                     hasFocus: false,
                 });
             },

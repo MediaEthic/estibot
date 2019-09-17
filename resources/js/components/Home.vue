@@ -223,7 +223,7 @@
             },
             randomBgImage() {
                 let random_images_array = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
-                return "/assets/img/quotations/" + random_images_array[Math.floor(Math.random() * random_images_array.length)];
+                return "/assets/img/quotations/" . random_images_array[Math.floor(Math.random() * random_images_array.length)];
             }
         }
     }
@@ -318,14 +318,6 @@
                 }
                 .third-quotation {
                     color: $primary-color-dark;
-                }
-
-                .price-quotation {
-                    font-family: $font-family-secondary-medium;
-                    font-size: 1.8rem;
-                    line-height: 2.2rem;
-                    color: $primary-color;
-                    letter-spacing: 0.1em;
                 }
 
                 .wrap-end-quotation {

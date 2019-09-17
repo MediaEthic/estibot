@@ -16,27 +16,16 @@
                             @animationstart="checkAnimation"
                             class="field select"
                             :class="{ hasValue: item.type }"
-                            @change="handleFinishingChanging(index)"
+                            @change="handleFinishingChanging($event, index)"
                             required>
                         <option disabled value="">Choisir</option>
                         <option v-for="finishing in finishings"
-                                v-bind:value="finishing.id">
+                                v-bind:value="finishing.id"
+                                :data-name="finishing.name">
                             {{ finishing.name }}
                         </option>
                     </select>
                     <label class="label-field">Type de finition</label>
-                </div>
-
-                <div class="wrap-field h-50">
-                    <input v-model="item.number"
-                           @focus="item.hasFocus = true"
-                           @blur="item.hasFocus = false"
-                           class="field"
-                           :class="{ hasValue: item.number }"
-                           type="number"
-                           autocomplete="off"
-                           required>
-                    <label class="label-field">Nombre de finition</label>
                 </div>
 
                 <div class="wrap-field h-50">
@@ -46,6 +35,7 @@
                            class="field"
                            :class="{ hasValue: item.shape }"
                            type="number"
+                           step="0.0001"
                            autocomplete="off"
                            required>
                     <label class="label-field">Prix de l'outil à commander (si besoin)</label>
@@ -74,7 +64,7 @@
             </div>
 
             <transition name="fade" tag="div">
-                <div v-if="item.presence_consumable === true"
+                <div v-if="item.presence_consumable === true && item.type !== ''"
                     class="wrap-group-field"
                      :class="[{ hasValue: item.consumable.name },
                               { hasValue: item.consumable.width },
@@ -111,9 +101,10 @@
                                class="field"
                                :class="{ hasValue: item.consumable.price }"
                                type="number"
+                               step="0.0001"
                                autocomplete="off"
                                required>
-                        <label class="label-field">Prix (mL)</label>
+                        <label class="label-field">Prix (€/m&#xB2;)</label>
                     </div>
                     <span class="focus-field"></span>
                     <span class="symbol-left-field"><i class="fab fa-confluence"></i></span>
@@ -248,6 +239,18 @@
                     <label class="label-field">Avance</label>
                 </div>
             </div>
+
+            <div v-if="form.finishing.cutting.type === 'new'" class="wrap-field h-50">
+                <input v-model="form.finishing.cutting.shape"
+                       @focus="form.finishing.cutting.hasFocus = true"
+                       @blur="form.finishing.cutting.hasFocus = false"
+                       class="field"
+                       :class="{ hasValue: form.finishing.cutting.shape }"
+                       type="number"
+                       step="0.0001"
+                       autocomplete="off">
+                <label class="label-field">Prix de l'outil à commander</label>
+            </div>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-crop-alt"></i></span>
         </div>
@@ -258,40 +261,20 @@
     export default {
         data() {
             return {
-                form: {
-                    finishing: {
-                        finishings: [
-                            {
-                                type: "",
-                                number: 1,
-                                shape: false,
-                                reworking: false,
-                                presence_consumable: false,
-                                hasFocus: false,
-                                consumable: ""
-                            }
-                        ],
-                        cutting: {
-                            type: "old",
-                            id: "",
-                            name: "",
-                            dimension_width: "",
-                            dimension_length: "",
-                            bleed_width: "",
-                            bleed_length: "",
-                            pose_width: "",
-                            pose_length: "",
-                            hasFocus: false,
-                        }
-                    },
-                }
+
             }
         },
         created() {
+            this.form.finishing.cutting.dimension_width = this.form.description.label.width;
+            this.form.finishing.cutting.dimension_length = this.form.description.label.length;
+            // this.$store.dispatch('getWorkflow');
             this.$store.dispatch('getFinishings');
             // this.$store.dispatch('getConsumables');
         },
         computed: {
+            form() {
+                return this.$store.state.workflow;
+            },
             finishings() {
                 return this.$store.state.finishings;
             },
@@ -308,7 +291,7 @@
             addFinishing() {
                 this.form.finishing.finishings.push({
                     type: "",
-                    number: 1,
+                    name: "",
                     shape: false,
                     reworking: false,
                     presence_consumable: false,
@@ -318,7 +301,10 @@
             deleteFinishing(index) {
                 this.form.finishing.finishings.splice(index, 1);
             },
-            handleFinishingChanging(index) {
+            handleFinishingChanging(event, index) {
+                if (event.target.options.selectedIndex > 0) {
+                    this.form.finishing.finishings[index].name = event.target.options[event.target.options.selectedIndex].dataset.name;
+                }
                 let finishingID = this.form.finishing.finishings[index].type;
                 let finishingConsumable = this.finishings.find(finishing => finishing.id === finishingID);
 

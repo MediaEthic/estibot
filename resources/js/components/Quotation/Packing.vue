@@ -81,7 +81,7 @@
                    type="number"
                    required>
             <span class="focus-field"></span>
-            <label class="label-field">Confitionnement</label>
+            <label class="label-field">Conditionnement</label>
             <span class="symbol-left-field"><i class="fas fa-tape"></i></span>
         </div>
     </div>
@@ -91,19 +91,16 @@
     export default {
         data() {
             return {
-                form: {
-                    packing: {
-                        packing: "",
-                        direction: "ehead",
-                    }
-                }
+
             }
         },
         created() {
-
+            // this.$store.dispatch('getWorkflow');
         },
         computed: {
-
+            form() {
+                return this.$store.state.workflow;
+            },
         },
         methods: {
 
