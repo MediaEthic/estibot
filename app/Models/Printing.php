@@ -26,11 +26,22 @@ class Printing extends Model
         'weight_maximum',
         'thickness_minimum',
         'thickness_maximum',
+        'plate',
         'makeready_times',
+        'unit_cadence',
         'cadence',
         'hourly_rate',
         'overlay_sheet',
         'wastage',
         'active',
     ];
+
+
+    /**
+     * Get all of the finishings for the printing.
+     */
+    public function finishings()
+    {
+        return $this->hasMany(Finishing::class);
+    }
 }

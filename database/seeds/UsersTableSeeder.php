@@ -20,6 +20,14 @@ class UsersTableSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
+        DB::table('users')->insert([
+            'name' => 'Gilles',
+            'surname' =>'BONIN',
+            'email' => 'gilles.bonin@erp-ethic.com',
+            'password' => app('hash')->make('lompks'),
+            'remember_token' => Str::random(10),
+        ]);
+
         factory(App\Models\User::class, 14)->create();
     }
 }

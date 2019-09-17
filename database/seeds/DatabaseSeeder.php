@@ -11,13 +11,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call('QuotesTableSeeder');
-         $this->call('UsersTableSeeder');
-         $this->call('CountriesTableSeeder');
-         $this->call('ThirdsTableSeeder');
-         $this->call('ContactsTableSeeder');
-         $this->call('PrintingsTableSeeder');
-         $this->call('FinishingsTableSeeder');
+        $this->call('QuotesTableSeeder');
+        $this->call('UsersTableSeeder');
+        $this->call('CountriesTableSeeder');
+        $this->call('ThirdsTableSeeder');
+        $this->call('ContactsTableSeeder');
+        $this->call('PrepressesTableSeeder');
+        $this->call('PrintingsTableSeeder');
+        $this->call('FinishingsTableSeeder');
+        $this->call('PackingsTableSeeder');
 
         factory(App\Models\Substrate::class, 30)->create();
         factory(App\Models\Label::class, 30)->create();
