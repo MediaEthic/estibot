@@ -14,10 +14,102 @@ export default new Vuex.Store({
         substrates: [],
         finishings: [],
         cuttings: [],
+        workflow: {
+            summary: "",
+            identification: {
+                third: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    address: "",
+                    zipcode: "",
+                    city: "",
+                    hasFocus: false,
+                },
+                contact: {
+                    id: "",
+                    civility: "",
+                    name: "",
+                    surname: "",
+                    email: "",
+                    hasFocus: false,
+                }
+            },
+            description: {
+                label: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    width: "",
+                    length: "",
+                    hasFocus: false,
+                },
+                quantities: [
+                    {
+                        quantity: "",
+                        model: "",
+                        plate: "",
+                        hour: "",
+                        minute: "",
+                        hasFocus: false,
+                    }
+                ]
+            },
+            printing: {
+                press: "",
+                name: "",
+                colors: "",
+                quadri: false,
+                hasFocus: false,
+                substrate: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    width: "",
+                    weight: "",
+                    price: "",
+                    hasFocus: false,
+                },
+            },
+            finishing: {
+                finishings: [
+                    {
+                        type: "",
+                        name: "",
+                        shape: false,
+                        reworking: false,
+                        presence_consumable: false,
+                        hasFocus: false,
+                        consumable: ""
+                    }
+                ],
+                cutting: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    dimension_width: "",
+                    dimension_length: "",
+                    bleed_width: "",
+                    bleed_length: "",
+                    pose_width: "",
+                    pose_length: "",
+                    shape: "",
+                    hasFocus: false,
+                }
+            },
+            packing: {
+                packing: "",
+                direction: "ehead",
+            },
+        },
+        price: [],
     },
     getters: {
         loggedIn(state) {
             return state.token !== null;
+        },
+        workflow(state) {
+            return state.workflow;
         },
     },
     mutations: {
@@ -47,6 +139,12 @@ export default new Vuex.Store({
         },
         setCuttings(state, data) {
             state.cuttings = data;
+        },
+        setQuotationSummary(state, data) {
+            state.workflow.summary = data;
+        },
+        setQuotationPrice(state, data) {
+            state.price = data;
         }
     },
     actions: {
@@ -85,7 +183,7 @@ export default new Vuex.Store({
                 });
             }
         },
-        async getQuote(context, credentials) {
+        async getQuote(context) {
             let data = (await axios.get('/api/quote')).data;
             context.commit("setQuote", data);
         },
@@ -110,6 +208,17 @@ export default new Vuex.Store({
         async getCuttings(context) {
             let data = (await axios.get('/api/auth/quotation/cuttings')).data;
             context.commit("setCuttings", data);
-        }
+        },
+        updateQuotationSummary(context, credentials) {
+            const summary = credentials.summary;
+            context.commit("setQuotationSummary", summary);
+        },
+        async getQuotationPrice(context) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            let data = (await axios.post('/api/auth/quotation/price', {
+                workflow: context.getters.workflow,
+            })).data;
+            context.commit("setQuotationPrice", data);
+        },
     },
 })

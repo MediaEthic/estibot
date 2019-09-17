@@ -25,6 +25,7 @@ $router->group(['prefix' => 'api'], function ($router) {
             $router->get('/finishings', 'QuotationController@getFinishings');
             $router->get('/consumables', 'QuotationController@getConsumables');
             $router->get('/cuttings', 'QuotationController@getCuttings');
+            $router->post('/price', 'QuotationController@getPrice');
         });
 
         $router->group(['middleware' => 'jwt.auth'], function ($router) {

@@ -26,11 +26,10 @@
                             </div>
                         </progress>
                         <section class="wrap-content-step">
-                            <Identification v-if="step === 1" />
-                            <Description v-if="step === 2" />
-                            <Printing v-if="step === 3" />
-                            <Finishing v-if="step === 4" />
-                            <Packing v-if="step === 5" />
+                            <transition name="fade"
+                                        mode="out-in">
+                                <component :is="steps[step-1].component"></component>
+                            </transition>
                         </section>
                     </fieldset>
                     <div class="wrap-buttons-controls-step">
@@ -59,10 +58,15 @@
                         <label for="pull-summary" class="page-subtitle"><i :class="this.summaryPulled ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>Récapitulatif</label>
                     </div>
                     <div class="wrap-content-summary">
-                        <img v-if="!form.description"
+                        <img v-if="summary === ''"
                              class="image-no-data"
                              src="/assets/img/undraw_no_data_qbuo.svg"
                              alt="Illustration montrant qu'aucune donnée n'a encore été saisie"/>
+
+                        <textarea v-else
+                                  v-model="summary"
+                                  rows="15">
+                        </textarea>
 
                         <div class="wrap-button-submit">
                             <button type="button" class="cta" disabled>
@@ -86,6 +90,7 @@
     import Printing from './Quotation/Printing';
     import Finishing from './Quotation/Finishing';
     import Packing from './Quotation/Packing';
+    import Result from './Quotation/Result';
 
     export default {
         components: {
@@ -94,6 +99,7 @@
             Printing,
             Finishing,
             Packing,
+            Result,
         },
         data() {
             return {
@@ -102,47 +108,124 @@
                     {
                         img: "/assets/img/workflow/undraw_man_eiev.svg",
                         title: "Identité du donneur d'ordre",
+                        component: "Identification",
                     },
                     {
                         img: "/assets/img/workflow/undraw_to_do_list_a49b.svg",
                         title: "Descriptif du produit",
+                        component: "Description",
                     },
                     {
                         img: "/assets/img/workflow/undraw_printing_invoices_5r4r.svg",
                         title: "Impression et support",
+                        component: "Printing",
                     },
                     {
                         img: "/assets/img/workflow/undraw_files1_9ool.svg",
                         title: "Finition",
+                        component: "Finishing",
                     },
                     {
                         img: "/assets/img/workflow/undraw_collecting_fjjl.svg",
                         title: "Conditionnement et expédition",
+                        component: "Packing",
                     },
                     {
                         img: "/assets/img/workflow/undraw_empty_cart_co35.svg",
                         title: "Bilan",
+                        component: "Result",
                     }
                 ],
                 progress: 16.666,
                 summaryPulled: false,
-                form: {
-                    description: "",
-                }
+                summary: "",
             }
         },
-        mounted() {
+        created() {
 
+        },
+        computed: {
+            form() {
+                return this.$store.state.workflow;
+            },
         },
         methods: {
             prev() {
                 this.step--;
                 this.progress = (this.step * 100) / 6;
+                this.updateSummary();
             },
             next() {
                 this.step++;
                 this.progress = (this.step * 100) / 6;
+
+                this.updateSummary();
             },
+            updateSummary() {
+                this.summary = "";
+                if (this.form.description.label.name !== "") {
+                    if (this.form.description.label.type === "old") this.summary += `Étiquette existante : ` + this.form.description.label.name;
+                    if (this.form.description.label.type === "new") this.summary += `Nouvelle étiquette : ` + this.form.description.label.name;
+                }
+                if (this.form.description.label.width > 0 && this.form.description.label.length > 0) this.summary += `\nFormat : ` + this.form.description.label.width + ` mm (laize) x ` + this.form.description.label.length + `mm (avance)`;
+                if (this.form.printing.press !== "") this.summary += `\nMachine : ` + this.form.printing.press;
+                if (this.form.printing.colors > 0) this.summary += `\nImpression : ` + this.form.printing.colors + ` couleurs`;
+                if (this.form.printing.quadri) this.summary += `en quadrichromie`;
+                if (this.form.printing.substrate.name !== "") {
+                    if (this.form.printing.substrate.type === "old") this.summary += `\nPapier existant : ` + this.form.description.label.name;
+                    if (this.form.printing.substrate.type === "new") this.summary += `\nNouveau papier : ` + this.form.description.label.name;
+                    this.summary += ` (` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²)`;
+                }
+                if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
+                    if (this.form.finishing.finishings.length > 1) {
+                        this.summary += `\nFinitions :`;
+                    } else {
+                        this.summary += `\nFinition :`;
+                    }
+
+                    this.form.finishing.finishings.forEach(el => {
+                        let $consumable = "";
+                        if (el.presence_consumable) $consumable = ` + consommable`;
+                        let $shape = "";
+                        if (el.shape > 0) $shape = ` (outil : ` + el.shape + `€)`;
+                        this.summary += `\n` + el.name + $consumable + $shape;
+                    });
+
+                    if (this.form.finishing.cutting.name !== "") {
+                        let $shape = "";
+                        if (this.form.finishing.cutting.shape > 0) $shape = ` (prix : ` + this.form.finishing.cutting.shape + `€)`;
+                        if (this.form.finishing.cutting.type === "old") this.summary += `\nOutil de découpe existant : ` + this.form.finishing.cutting.name;
+                        if (this.form.finishing.cutting.type === "new") this.summary += `\nNouvel outil de découpe : ` + this.form.finishing.cutting.name + $shape;
+                    }
+
+                    let $direction = "";
+                    if (this.form.packing.direction === "ehead") {
+                        $direction = "extérieur tête en avant";
+                    } else if (this.form.packing.direction === "efoot") {
+                        $direction = "extérieur pied en avant";
+                    } else if (this.form.packing.direction === "eright") {
+                        $direction = "extérieur droite en avant";
+                    } else if (this.form.packing.direction === "eleft") {
+                        $direction = "extérieur droite en avant";
+                    } else if (this.form.packing.direction === "ihead") {
+                        $direction = "intérieur tête en avant";
+                    } else if (this.form.packing.direction === "ifoot") {
+                        $direction = "intérieur pied en avant";
+                    } else if (this.form.packing.direction === "iright") {
+                        $direction = "intérieur droite en avant";
+                    } else if (this.form.packing.direction === "ileft") {
+                        $direction = "intérieur gauche en avant";
+                    }
+
+                    if ($direction !== "") this.summary += `\nSens d'enroulement : ` + $direction;
+
+                    if (this.form.packing.packing > 0) this.summary += `\nConditionnement : ` + this.form.packing.packing + ` étiquettes par bobine`;
+
+                    this.$store.dispatch('updateQuotationSummary', {
+                        summary: this.summary,
+                    });
+                }
+            }
         }
     }
 </script>
@@ -244,6 +327,17 @@
                 max-width: 41rem;
                 margin: 0 auto;
             }
+
+            textarea {
+                resize: none;
+                border: 0;
+                padding: 0;
+                width: 100%;
+                font-family: $font-family-primary;
+                font-size: 1.4rem;
+                line-height: 1.8rem;
+                color: $grey-dark;
+            }
         }
     }
 
@@ -278,7 +372,7 @@
 
                 .wrap-step {
                     text-align: left;
-                    
+
                     .image-step {
                         margin-left: 0;
                     }

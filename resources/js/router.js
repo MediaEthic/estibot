@@ -36,7 +36,7 @@ const routes = [
         meta: {
             title: 'Création d\'un nouveau devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true
-        }
+        },
     },
     {
         path: '/profile',

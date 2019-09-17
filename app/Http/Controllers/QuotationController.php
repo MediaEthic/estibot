@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Consumable;
-use App\Models\Cutting;
-use App\Models\Finishing;
-use App\Models\Label;
-use App\Models\Printing;
-use App\Models\Quote;
-use App\Models\Substrate;
-use App\Models\Third;
+use App\Repositories\QuotationRepository;
+use App\Models\ {
+    Consumable,
+    Cutting,
+    Finishing,
+    Label,
+    Printing,
+    Quote,
+    Substrate,
+    Third,
+    Quotation
+};
+
 use Illuminate\Http\Request;
-use App\Models\Quotation;
 
 class QuotationController extends Controller
 {
@@ -20,10 +24,13 @@ class QuotationController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected $repository;
+
+    public function __construct(QuotationRepository $repository)
     {
-        //
+        $this->repository = $repository;
     }
+
 
     /**
      * Show the quote.
@@ -42,12 +49,7 @@ class QuotationController extends Controller
      */
     public function index(Request $request)
     {
-
-        $quotations = Quotation::with('third')
-            ->latest()
-            ->paginate(15);
-
-        return $quotations;
+        return $this->repository->getPaginate();
     }
 
     /**
@@ -101,6 +103,17 @@ class QuotationController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPrice(Request $request)
+    {
+//        return $request;
+        return $this->repository->getPrice($request->all());
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -118,9 +131,9 @@ class QuotationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EstablishmentRequest $request)
+    public function store(Request $request)
     {
-//        $establishment = $this->repository->store($request->all());
+        return $this->repository->store($request->all());
 //
 //        return redirect('parameters/corporation/establishments')->withOk("L'établissement " . $establishment->name . " a bien été créé.");
     }
