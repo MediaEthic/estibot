@@ -35,6 +35,13 @@ select:-webkit-autofill:focus {
   border-radius: 0 0 1rem 1rem;
 }
 
+button {
+    border: 0;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
 .wrap-radio {
   display: flex;
   margin-top: 1rem;
@@ -887,7 +894,7 @@ progress[value]::-moz-progress-bar {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transition: all .3s;
-  
+
   &:hover {
     border: .1rem solid $secondary-color;
     background-color: $secondary-color;

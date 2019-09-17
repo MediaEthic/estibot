@@ -4674,13 +4674,432 @@
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(155)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var bind = __webpack_require__(136);
-var isBuffer = __webpack_require__(210);
+var isBuffer = __webpack_require__(225);
 
 /*global toString:true*/
 
@@ -5011,425 +5430,6 @@ module.exports = {
   extend: extend,
   trim: trim
 };
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(155)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-var options = null
-var ssrIdKey = 'data-vue-ssr-id'
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction, _options) {
-  isProduction = _isProduction
-
-  options = _options || {}
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-  if (options.ssrId) {
-    styleElement.setAttribute(ssrIdKey, obj.id)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
 
 
 /***/ }),
@@ -20733,7 +20733,7 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -20823,8 +20823,8 @@ module.exports = function isCancel(value) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(215);
+var utils = __webpack_require__(4);
+var normalizeHeaderName = __webpack_require__(230);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -20929,11 +20929,11 @@ module.exports = defaults;
 "use strict";
 
 
-var utils = __webpack_require__(1);
-var settle = __webpack_require__(216);
+var utils = __webpack_require__(4);
+var settle = __webpack_require__(231);
 var buildURL = __webpack_require__(137);
-var parseHeaders = __webpack_require__(218);
-var isURLSameOrigin = __webpack_require__(219);
+var parseHeaders = __webpack_require__(233);
+var isURLSameOrigin = __webpack_require__(234);
 var createError = __webpack_require__(141);
 
 module.exports = function xhrAdapter(config) {
@@ -21026,7 +21026,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(220);
+      var cookies = __webpack_require__(235);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -21110,7 +21110,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(217);
+var enhanceError = __webpack_require__(232);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -21135,7 +21135,7 @@ module.exports = function createError(message, config, code, request, response) 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -21217,7 +21217,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(145);
-module.exports = __webpack_require__(235);
+module.exports = __webpack_require__(250);
 
 
 /***/ }),
@@ -21232,7 +21232,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(218);
 
 
  // Importing Vue Library
@@ -21316,7 +21316,7 @@ __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to
     next();
 });
 
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(225));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(240));
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.mixin({
     data: function data() {
@@ -34760,7 +34760,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Home__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Quotation__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Quotation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Quotation__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile__ = __webpack_require__(213);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Profile__);
 
 
@@ -34821,7 +34821,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(153)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(156)
 /* template */
@@ -34874,7 +34874,7 @@ var content = __webpack_require__(154);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("27b43fca", content, false, {});
+var update = __webpack_require__(3)("27b43fca", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -34893,7 +34893,7 @@ if(false) {
 /* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -35293,7 +35293,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(159)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(161)
 /* template */
@@ -35346,7 +35346,7 @@ var content = __webpack_require__(160);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("69894571", content, false, {});
+var update = __webpack_require__(3)("69894571", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -35365,12 +35365,12 @@ if(false) {
 /* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-f2b6376c], [class*=\" icon-\"][data-v-f2b6376c] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-f2b6376c]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-f2b6376c]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-f2b6376c]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-f2b6376c]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-f2b6376c]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-f2b6376c]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-head-page .wrap-filters[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-field[data-v-f2b6376c] {\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n      font-size: 3rem;\n      color: #C49998;\n      margin-left: 2rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.5);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .price-quotation[data-v-f2b6376c] {\n        font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n        font-size: 1.8rem;\n        line-height: 2.2rem;\n        color: #91A8D0;\n        letter-spacing: 0.1em;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n                -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                color: white;\n                background: rgba(255, 255, 255, 0.3);\n                font-size: 44.44px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      width: 100%;\n      margin-top: 1rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 100%;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n          width: 3.5rem;\n          height: 3.5rem;\n          margin: 0 1rem;\n          border: 0.15rem solid #91A8D0;\n          border-radius: 50%;\n          font-size: 2rem;\n          color: #91A8D0;\n          text-align: center;\n          line-height: 3.25rem;\n          -webkit-transition: all .4s;\n          transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c]:hover {\n            background-color: rgba(196, 153, 152, 0.25);\n            border: 0.15rem solid #C49998;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate:hover a[data-v-f2b6376c] {\n              color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:hover,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n            padding: 0;\n            background: transparent;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n            display: none;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-f2b6376c], [class*=\" icon-\"][data-v-f2b6376c] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-f2b6376c]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-f2b6376c]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-f2b6376c]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-f2b6376c]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-f2b6376c]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-f2b6376c]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-head-page .wrap-filters[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-field[data-v-f2b6376c] {\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-head-page .wrap-filters .wrap-icon-filter[data-v-f2b6376c] {\n      font-size: 3rem;\n      color: #C49998;\n      margin-left: 2rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.5);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) a[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions a[data-v-f2b6376c]:hover {\n                -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);\n                color: white;\n                background: rgba(255, 255, 255, 0.3);\n                font-size: 44.44px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item a[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      width: 100%;\n      margin-top: 1rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        width: 100%;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c] {\n          width: 3.5rem;\n          height: 3.5rem;\n          margin: 0 1rem;\n          border: 0.15rem solid #91A8D0;\n          border-radius: 50%;\n          font-size: 2rem;\n          color: #91A8D0;\n          text-align: center;\n          line-height: 3.25rem;\n          -webkit-transition: all .4s;\n          transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate[data-v-f2b6376c]:hover {\n            background-color: rgba(196, 153, 152, 0.25);\n            border: 0.15rem solid #C49998;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate:hover a[data-v-f2b6376c] {\n              color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:hover,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:active,\n          .wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate a[data-v-f2b6376c]:focus {\n            padding: 0;\n            background: transparent;\n            color: #C49998;\n}\n.wrap-main-content .wrap-list-quotations .wrap-pagination .list-paginate .controls-paginate.disabled[data-v-f2b6376c] {\n            display: none;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -35615,7 +35615,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         randomBgImage: function randomBgImage() {
             var random_images_array = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
-            return "/assets/img/quotations/" + random_images_array[Math.floor(Math.random() * random_images_array.length)];
+            return "/assets/img/quotations/".random_images_array[Math.floor(Math.random() * random_images_array.length)];
         }
     }
 });
@@ -35629,7 +35629,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(163)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(165)
 /* template */
@@ -35682,7 +35682,7 @@ var content = __webpack_require__(164);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("44304016", content, false, {});
+var update = __webpack_require__(3)("44304016", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -35701,7 +35701,7 @@ if(false) {
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -36562,11 +36562,11 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(171)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(173)
 /* template */
-var __vue_template__ = __webpack_require__(197)
+var __vue_template__ = __webpack_require__(207)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -36615,7 +36615,7 @@ var content = __webpack_require__(172);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("295bb86d", content, false, {});
+var update = __webpack_require__(3)("295bb86d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -36634,12 +36634,12 @@ if(false) {
 /* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-form .wrap-buttons-controls-step .next-step {\n      margin-left: auto;\n}\n.wrap-summary {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: calc(100vh - 13.5rem);\n  background-color: #fff;\n  z-index: 1;\n  border-radius: 3rem 3rem 0 0;\n  margin: 0 -2rem;\n  padding: 1rem 2rem;\n  -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n          box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n}\n.wrap-summary.pull {\n    top: 8.4rem;\n}\n.wrap-summary .head-summary {\n    text-align: center;\n}\n.wrap-summary .head-summary .pull-summary {\n      position: absolute;\n      left: -9999px;\n}\n.wrap-summary .head-summary .pull-summary + label {\n        width: 100%;\n        -webkit-transition: 0.4s;\n        transition: 0.4s;\n}\n.wrap-summary .head-summary .pull-summary + label [class^=\"fa\"] {\n          display: block;\n          width: 100%;\n          color: #C49998;\n}\n.wrap-summary .head-summary .pull-summary:checked + label {\n        /*color: $white;\n                    background-color: $secondary-color;\n                    border: .15rem solid $secondary-color;\n                    transform: rotate(180deg);*/\n}\n.wrap-summary .wrap-content-summary {\n    margin-top: 2rem;\n}\n.wrap-summary .wrap-content-summary .image-no-data {\n      display: block;\n      width: 100%;\n      max-width: 41rem;\n      margin: 0 auto;\n}\n@media screen and (min-width: 680px) {\n.wrap-main-content .wrap-head-page .wrap-main-header {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .go-back {\n      margin-right: 2rem;\n      font-size: 2.5rem;\n}\n.wrap-central {\n    display: table;\n    width: 100%;\n    margin-top: 2rem;\n}\n.wrap-central > * {\n      display: table-cell;\n      width: 100%;\n}\n.wrap-central .wrap-main-form {\n      margin: 0;\n      padding-right: 2rem;\n}\n.wrap-central .wrap-main-form .wrap-step {\n        text-align: left;\n}\n.wrap-central .wrap-main-form .wrap-step .image-step {\n          margin-left: 0;\n}\n.wrap-central .wrap-summary {\n      position: initial;\n      margin: 0 0 0 2rem;\n      border-radius: 2rem 1rem 3rem 1rem;\n}\n.wrap-central .wrap-summary .head-summary label [class^=\"fa\"] {\n        display: none;\n}\n}\n@media screen and (min-width: 880px) {\n.wrap-central .wrap-main-form {\n    width: calc(100% - 45rem);\n    padding-right: 4rem;\n}\n.wrap-central .wrap-summary {\n    width: 45rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-form .wrap-buttons-controls-step .next-step {\n      margin-left: auto;\n}\n.wrap-summary {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: calc(100vh - 13.5rem);\n  background-color: #fff;\n  z-index: 1;\n  border-radius: 3rem 3rem 0 0;\n  margin: 0 -2rem;\n  padding: 1rem 2rem;\n  -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n          box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n}\n.wrap-summary.pull {\n    top: 8.4rem;\n}\n.wrap-summary .head-summary {\n    text-align: center;\n}\n.wrap-summary .head-summary .pull-summary {\n      position: absolute;\n      left: -9999px;\n}\n.wrap-summary .head-summary .pull-summary + label {\n        width: 100%;\n        -webkit-transition: 0.4s;\n        transition: 0.4s;\n}\n.wrap-summary .head-summary .pull-summary + label [class^=\"fa\"] {\n          display: block;\n          width: 100%;\n          color: #C49998;\n}\n.wrap-summary .head-summary .pull-summary:checked + label {\n        /*color: $white;\n                    background-color: $secondary-color;\n                    border: .15rem solid $secondary-color;\n                    transform: rotate(180deg);*/\n}\n.wrap-summary .wrap-content-summary {\n    margin-top: 2rem;\n}\n.wrap-summary .wrap-content-summary .image-no-data {\n      display: block;\n      width: 100%;\n      max-width: 41rem;\n      margin: 0 auto;\n}\n.wrap-summary .wrap-content-summary textarea {\n      resize: none;\n      border: 0;\n      padding: 0;\n      width: 100%;\n      font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n      font-size: 1.4rem;\n      line-height: 1.8rem;\n      color: #263238;\n}\n@media screen and (min-width: 680px) {\n.wrap-main-content .wrap-head-page .wrap-main-header {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .go-back {\n      margin-right: 2rem;\n      font-size: 2.5rem;\n}\n.wrap-central {\n    display: table;\n    width: 100%;\n    margin-top: 2rem;\n}\n.wrap-central > * {\n      display: table-cell;\n      width: 100%;\n}\n.wrap-central .wrap-main-form {\n      margin: 0;\n      padding-right: 2rem;\n}\n.wrap-central .wrap-main-form .wrap-step {\n        text-align: left;\n}\n.wrap-central .wrap-main-form .wrap-step .image-step {\n          margin-left: 0;\n}\n.wrap-central .wrap-summary {\n      position: initial;\n      margin: 0 0 0 2rem;\n      border-radius: 2rem 1rem 3rem 1rem;\n}\n.wrap-central .wrap-summary .head-summary label [class^=\"fa\"] {\n        display: none;\n}\n}\n@media screen and (min-width: 880px) {\n.wrap-central .wrap-main-form {\n    width: calc(100% - 45rem);\n    padding-right: 4rem;\n}\n.wrap-central .wrap-summary {\n    width: 45rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -36658,8 +36658,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Quotation_Printing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Quotation_Printing__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing__ = __webpack_require__(192);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Quotation_Result__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Quotation_Result___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Quotation_Result__);
 //
 //
 //
@@ -36742,6 +36744,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -36755,47 +36762,127 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Description: __WEBPACK_IMPORTED_MODULE_1__Quotation_Description___default.a,
         Printing: __WEBPACK_IMPORTED_MODULE_2__Quotation_Printing___default.a,
         Finishing: __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing___default.a,
-        Packing: __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default.a
+        Packing: __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default.a,
+        Result: __WEBPACK_IMPORTED_MODULE_5__Quotation_Result___default.a
     },
     data: function data() {
         return {
             step: 1,
             steps: [{
                 img: "/assets/img/workflow/undraw_man_eiev.svg",
-                title: "Identité du donneur d'ordre"
+                title: "Identité du donneur d'ordre",
+                component: "Identification"
             }, {
                 img: "/assets/img/workflow/undraw_to_do_list_a49b.svg",
-                title: "Descriptif du produit"
+                title: "Descriptif du produit",
+                component: "Description"
             }, {
                 img: "/assets/img/workflow/undraw_printing_invoices_5r4r.svg",
-                title: "Impression et support"
+                title: "Impression et support",
+                component: "Printing"
             }, {
                 img: "/assets/img/workflow/undraw_files1_9ool.svg",
-                title: "Finition"
+                title: "Finition",
+                component: "Finishing"
             }, {
                 img: "/assets/img/workflow/undraw_collecting_fjjl.svg",
-                title: "Conditionnement et expédition"
+                title: "Conditionnement et expédition",
+                component: "Packing"
             }, {
                 img: "/assets/img/workflow/undraw_empty_cart_co35.svg",
-                title: "Bilan"
+                title: "Bilan",
+                component: "Result"
             }],
             progress: 16.666,
             summaryPulled: false,
-            form: {
-                description: ""
-            }
+            summary: ""
         };
     },
-    mounted: function mounted() {},
+    created: function created() {},
 
+    computed: {
+        form: function form() {
+            return this.$store.state.workflow;
+        }
+    },
     methods: {
         prev: function prev() {
             this.step--;
             this.progress = this.step * 100 / 6;
+            this.updateSummary();
         },
         next: function next() {
             this.step++;
             this.progress = this.step * 100 / 6;
+
+            this.updateSummary();
+        },
+        updateSummary: function updateSummary() {
+            var _this = this;
+
+            this.summary = "";
+            if (this.form.description.label.name !== "") {
+                if (this.form.description.label.type === "old") this.summary += '\xC9tiquette existante : ' + this.form.description.label.name;
+                if (this.form.description.label.type === "new") this.summary += 'Nouvelle \xE9tiquette : ' + this.form.description.label.name;
+            }
+            if (this.form.description.label.width > 0 && this.form.description.label.length > 0) this.summary += '\nFormat : ' + this.form.description.label.width + ' mm (laize) x ' + this.form.description.label.length + 'mm (avance)';
+            if (this.form.printing.press !== "") this.summary += '\nMachine : ' + this.form.printing.press;
+            if (this.form.printing.colors > 0) this.summary += '\nImpression : ' + this.form.printing.colors + ' couleurs';
+            if (this.form.printing.quadri) this.summary += 'en quadrichromie';
+            if (this.form.printing.substrate.name !== "") {
+                if (this.form.printing.substrate.type === "old") this.summary += '\nPapier existant : ' + this.form.description.label.name;
+                if (this.form.printing.substrate.type === "new") this.summary += '\nNouveau papier : ' + this.form.description.label.name;
+                this.summary += ' (' + this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2 - ' + this.form.printing.substrate.price + '\u20AC/m\xB2)';
+            }
+            if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
+                if (this.form.finishing.finishings.length > 1) {
+                    this.summary += '\nFinitions :';
+                } else {
+                    this.summary += '\nFinition :';
+                }
+
+                this.form.finishing.finishings.forEach(function (el) {
+                    var $consumable = "";
+                    if (el.presence_consumable) $consumable = ' + consommable';
+                    var $shape = "";
+                    if (el.shape > 0) $shape = ' (outil : ' + el.shape + '\u20AC)';
+                    _this.summary += '\n' + el.name + $consumable + $shape;
+                });
+
+                if (this.form.finishing.cutting.name !== "") {
+                    var $shape = "";
+                    if (this.form.finishing.cutting.shape > 0) $shape = ' (prix : ' + this.form.finishing.cutting.shape + '\u20AC)';
+                    if (this.form.finishing.cutting.type === "old") this.summary += '\nOutil de d\xE9coupe existant : ' + this.form.finishing.cutting.name;
+                    if (this.form.finishing.cutting.type === "new") this.summary += '\nNouvel outil de d\xE9coupe : ' + this.form.finishing.cutting.name + $shape;
+                }
+
+                var $direction = "";
+                if (this.form.packing.direction === "ehead") {
+                    $direction = "extérieur tête en avant";
+                } else if (this.form.packing.direction === "efoot") {
+                    $direction = "extérieur pied en avant";
+                } else if (this.form.packing.direction === "eright") {
+                    $direction = "extérieur droite en avant";
+                } else if (this.form.packing.direction === "eleft") {
+                    $direction = "extérieur droite en avant";
+                } else if (this.form.packing.direction === "ihead") {
+                    $direction = "intérieur tête en avant";
+                } else if (this.form.packing.direction === "ifoot") {
+                    $direction = "intérieur pied en avant";
+                } else if (this.form.packing.direction === "iright") {
+                    $direction = "intérieur droite en avant";
+                } else if (this.form.packing.direction === "ileft") {
+                    $direction = "intérieur gauche en avant";
+                }
+
+                if ($direction !== "") this.summary += '\nSens d\'enroulement : ' + $direction;
+
+                if (this.form.packing.packing > 0) this.summary += '\nConditionnement : ' + this.form.packing.packing + ' \xE9tiquettes par bobine';
+
+                this.$store.dispatch('updateQuotationSummary', {
+                    summary: this.summary
+                });
+            }
         }
     }
 });
@@ -36809,7 +36896,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(175)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(177)
 /* template */
@@ -36862,7 +36949,7 @@ var content = __webpack_require__(176);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("92f0f770", content, false, {});
+var update = __webpack_require__(3)("92f0f770", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -36881,7 +36968,7 @@ if(false) {
 /* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -37081,9 +37168,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -37092,29 +37176,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         VueGoogleAutocomplete: __WEBPACK_IMPORTED_MODULE_0_vue_google_autocomplete___default.a
     },
     data: function data() {
-        return {
-            form: {
-                third: {
-                    type: "old",
-                    id: "",
-                    name: "",
-                    address: "",
-                    zipcode: "",
-                    city: "",
-                    hasFocus: false
-                },
-                contact: {
-                    id: "",
-                    civility: "",
-                    name: "",
-                    surname: "",
-                    email: "",
-                    hasFocus: false
-                }
-            }
-        };
+        return {};
     },
+    created: function created() {},
 
+    computed: {
+        form: function form() {
+            return this.$store.state.workflow;
+        }
+    },
     methods: {
         checkAnimation: function checkAnimation(_ref) {
             var target = _ref.target,
@@ -37132,7 +37202,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(179)
 /* template */
@@ -37658,15 +37728,17 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.third.type,
-              expression: "form.third.type"
+              value: _vm.form.identification.third.type,
+              expression: "form.identification.third.type"
             }
           ],
           attrs: { type: "radio", id: "third_old", value: "old" },
-          domProps: { checked: _vm._q(_vm.form.third.type, "old") },
+          domProps: {
+            checked: _vm._q(_vm.form.identification.third.type, "old")
+          },
           on: {
             change: function($event) {
-              return _vm.$set(_vm.form.third, "type", "old")
+              return _vm.$set(_vm.form.identification.third, "type", "old")
             }
           }
         }),
@@ -37680,15 +37752,17 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.third.type,
-              expression: "form.third.type"
+              value: _vm.form.identification.third.type,
+              expression: "form.identification.third.type"
             }
           ],
           attrs: { type: "radio", id: "third_new", value: "new" },
-          domProps: { checked: _vm._q(_vm.form.third.type, "new") },
+          domProps: {
+            checked: _vm._q(_vm.form.identification.third.type, "new")
+          },
           on: {
             change: function($event) {
-              return _vm.$set(_vm.form.third, "type", "new")
+              return _vm.$set(_vm.form.identification.third, "type", "new")
             }
           }
         }),
@@ -37698,7 +37772,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "wrap-field h-50" }, [
-      _vm.form.third.type === "old"
+      _vm.form.identification.third.type === "old"
         ? _c(
             "span",
             {
@@ -37714,21 +37788,25 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model.trim",
-            value: _vm.form.third.name,
-            expression: "form.third.name",
+            value: _vm.form.identification.third.name,
+            expression: "form.identification.third.name",
             modifiers: { trim: true }
           }
         ],
         staticClass: "field ",
-        class: { hasValue: _vm.form.third.name },
+        class: { hasValue: _vm.form.identification.third.name },
         attrs: { type: "text", required: "" },
-        domProps: { value: _vm.form.third.name },
+        domProps: { value: _vm.form.identification.third.name },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.$set(_vm.form.third, "name", $event.target.value.trim())
+            _vm.$set(
+              _vm.form.identification.third,
+              "name",
+              $event.target.value.trim()
+            )
           },
           blur: function($event) {
             return _vm.$forceUpdate()
@@ -37738,7 +37816,11 @@ var render = function() {
       _vm._v(" "),
       _c("span", { staticClass: "focus-field" }),
       _vm._v(" "),
-      _c("label", { staticClass: "label-field" }, [_vm._v("Nom du prospect")]),
+      _vm.form.identification.third.type === "old"
+        ? _c("label", { staticClass: "label-field" }, [_vm._v("Nom du client")])
+        : _c("label", { staticClass: "label-field" }, [
+            _vm._v("Nom du prospect")
+          ]),
       _vm._v(" "),
       _vm._m(2)
     ]),
@@ -37748,74 +37830,96 @@ var render = function() {
       {
         staticClass: "wrap-group-field",
         class: [
-          { hasValue: _vm.form.third.address },
-          { hasValue: _vm.form.third.zipcode },
-          { hasValue: _vm.form.third.city },
-          { hasFocus: _vm.form.third.hasFocus }
+          { hasValue: _vm.form.identification.third.address },
+          { hasValue: _vm.form.identification.third.zipcode },
+          { hasValue: _vm.form.identification.third.city },
+          { hasFocus: _vm.form.identification.third.hasFocus }
         ]
       },
       [
-        _c(
-          "div",
-          { staticClass: "wrap-field h-50" },
-          [
-            _vm.form.third.type === "old"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.trim",
-                      value: _vm.form.third.address,
-                      expression: "form.third.address",
-                      modifiers: { trim: true }
+        _c("div", { staticClass: "wrap-field h-50" }, [
+          _vm.form.identification.third.type === "old"
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.form.identification.third.address,
+                    expression: "form.identification.third.address",
+                    modifiers: { trim: true }
+                  }
+                ],
+                staticClass: "field",
+                class: [{ hasValue: _vm.form.identification.third.address }],
+                attrs: { type: "text", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.identification.third.address },
+                on: {
+                  focus: function($event) {
+                    _vm.form.identification.third.hasFocus = true
+                  },
+                  blur: [
+                    function($event) {
+                      _vm.form.identification.third.hasFocus = false
+                    },
+                    function($event) {
+                      return _vm.$forceUpdate()
                     }
                   ],
-                  staticClass: "field",
-                  class: [{ hasValue: _vm.form.third.address }],
-                  attrs: { type: "text", autocomplete: "off", required: "" },
-                  domProps: { value: _vm.form.third.address },
-                  on: {
-                    focus: function($event) {
-                      _vm.form.third.hasFocus = true
-                    },
-                    blur: [
-                      function($event) {
-                        _vm.form.third.hasFocus = false
-                      },
-                      function($event) {
-                        return _vm.$forceUpdate()
-                      }
-                    ],
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.form.third,
-                        "address",
-                        $event.target.value.trim()
-                      )
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
+                    _vm.$set(
+                      _vm.form.identification.third,
+                      "address",
+                      $event.target.value.trim()
+                    )
                   }
-                })
-              : _c("vue-google-autocomplete", {
-                  ref: "form.third.address",
-                  class: [{ hasValue: _vm.form.third.address }],
-                  attrs: { id: "map", classname: "field", required: "" },
-                  on: {
-                    focus: function($event) {
-                      _vm.form.third.hasFocus = true
-                    },
-                    blur: function($event) {
-                      _vm.form.third.hasFocus = false
-                    }
-                  }
-                }),
-            _vm._v(" "),
-            _c("label", { staticClass: "label-field" }, [_vm._v("Adresse")])
-          ],
-          1
-        ),
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.form.identification.third.address,
+                expression: "form.identification.third.address",
+                modifiers: { trim: true }
+              }
+            ],
+            staticClass: "field",
+            class: { hasValue: _vm.form.identification.third.address },
+            attrs: { type: "text", autocomplete: "off", required: "" },
+            domProps: { value: _vm.form.identification.third.address },
+            on: {
+              focus: function($event) {
+                _vm.form.identification.third.hasFocus = true
+              },
+              blur: [
+                function($event) {
+                  _vm.form.identification.third.hasFocus = false
+                },
+                function($event) {
+                  return _vm.$forceUpdate()
+                }
+              ],
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.form.identification.third,
+                  "address",
+                  $event.target.value.trim()
+                )
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { staticClass: "label-field" }, [_vm._v("Adresse")])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "wrap-field-inline" }, [
           _c("div", { staticClass: "wrap-field h-50" }, [
@@ -37824,22 +37928,22 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model.trim",
-                  value: _vm.form.third.zipcode,
-                  expression: "form.third.zipcode",
+                  value: _vm.form.identification.third.zipcode,
+                  expression: "form.identification.third.zipcode",
                   modifiers: { trim: true }
                 }
               ],
               staticClass: "field",
-              class: { hasValue: _vm.form.third.zipcode },
+              class: { hasValue: _vm.form.identification.third.zipcode },
               attrs: { type: "text", autocomplete: "off", required: "" },
-              domProps: { value: _vm.form.third.zipcode },
+              domProps: { value: _vm.form.identification.third.zipcode },
               on: {
                 focus: function($event) {
-                  _vm.form.third.hasFocus = true
+                  _vm.form.identification.third.hasFocus = true
                 },
                 blur: [
                   function($event) {
-                    _vm.form.third.hasFocus = false
+                    _vm.form.identification.third.hasFocus = false
                   },
                   function($event) {
                     return _vm.$forceUpdate()
@@ -37850,7 +37954,7 @@ var render = function() {
                     return
                   }
                   _vm.$set(
-                    _vm.form.third,
+                    _vm.form.identification.third,
                     "zipcode",
                     $event.target.value.trim()
                   )
@@ -37867,22 +37971,22 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model.trim",
-                  value: _vm.form.third.city,
-                  expression: "form.third.city",
+                  value: _vm.form.identification.third.city,
+                  expression: "form.identification.third.city",
                   modifiers: { trim: true }
                 }
               ],
               staticClass: "field",
-              class: { hasValue: _vm.form.third.city },
-              attrs: { type: "text", autocomplete: "off", required: "" },
-              domProps: { value: _vm.form.third.city },
+              class: { hasValue: _vm.form.identification.third.city },
+              attrs: { type: "text", autocomplete: "off" },
+              domProps: { value: _vm.form.identification.third.city },
               on: {
                 focus: function($event) {
-                  _vm.form.third.hasFocus = true
+                  _vm.form.identification.third.hasFocus = true
                 },
                 blur: [
                   function($event) {
-                    _vm.form.third.hasFocus = false
+                    _vm.form.identification.third.hasFocus = false
                   },
                   function($event) {
                     return _vm.$forceUpdate()
@@ -37892,7 +37996,11 @@ var render = function() {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.form.third, "city", $event.target.value.trim())
+                  _vm.$set(
+                    _vm.form.identification.third,
+                    "city",
+                    $event.target.value.trim()
+                  )
                 }
               }
             }),
@@ -37907,17 +38015,17 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm.form.third.type === "old"
+    _vm.form.identification.third.type === "old"
       ? _c(
           "div",
           {
             staticClass: "wrap-group-field",
             class: [
-              { hasValue: _vm.form.contact.civility },
-              { hasValue: _vm.form.contact.name },
-              { hasValue: _vm.form.contact.surname },
-              { hasValue: _vm.form.contact.email },
-              { hasFocus: _vm.form.contact.hasFocus }
+              { hasValue: _vm.form.identification.contact.civility },
+              { hasValue: _vm.form.identification.contact.name },
+              { hasValue: _vm.form.identification.contact.surname },
+              { hasValue: _vm.form.identification.contact.email },
+              { hasFocus: _vm.form.identification.contact.hasFocus }
             ]
           },
           [
@@ -37929,19 +38037,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.form.contact.id,
-                      expression: "form.contact.id"
+                      value: _vm.form.identification.contact.id,
+                      expression: "form.identification.contact.id"
                     }
                   ],
                   staticClass: "field select",
-                  class: { hasValue: _vm.form.contact.id },
+                  class: { hasValue: _vm.form.identification.contact.id },
                   attrs: { required: "" },
                   on: {
                     focus: function($event) {
-                      _vm.form.contact.hasFocus = true
+                      _vm.form.identification.contact.hasFocus = true
                     },
                     blur: function($event) {
-                      _vm.form.contact.hasFocus = false
+                      _vm.form.identification.contact.hasFocus = false
                     },
                     animationstart: _vm.checkAnimation,
                     change: function($event) {
@@ -37954,7 +38062,7 @@ var render = function() {
                           return val
                         })
                       _vm.$set(
-                        _vm.form.contact,
+                        _vm.form.identification.contact,
                         "id",
                         $event.target.multiple
                           ? $$selectedVal
@@ -37979,22 +38087,22 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model.trim",
-                    value: _vm.form.contact.email,
-                    expression: "form.contact.email",
+                    value: _vm.form.identification.contact.email,
+                    expression: "form.identification.contact.email",
                     modifiers: { trim: true }
                   }
                 ],
                 staticClass: "field",
-                class: [{ hasValue: _vm.form.contact.email }],
+                class: [{ hasValue: _vm.form.identification.contact.email }],
                 attrs: { type: "text", autocomplete: "off", required: "" },
-                domProps: { value: _vm.form.contact.email },
+                domProps: { value: _vm.form.identification.contact.email },
                 on: {
                   focus: function($event) {
-                    _vm.form.contact.hasFocus = true
+                    _vm.form.identification.contact.hasFocus = true
                   },
                   blur: [
                     function($event) {
-                      _vm.form.contact.hasFocus = false
+                      _vm.form.identification.contact.hasFocus = false
                     },
                     function($event) {
                       return _vm.$forceUpdate()
@@ -38005,7 +38113,7 @@ var render = function() {
                       return
                     }
                     _vm.$set(
-                      _vm.form.contact,
+                      _vm.form.identification.contact,
                       "email",
                       $event.target.value.trim()
                     )
@@ -38026,11 +38134,11 @@ var render = function() {
           {
             staticClass: "wrap-group-field",
             class: [
-              { hasValue: _vm.form.contact.civility },
-              { hasValue: _vm.form.contact.name },
-              { hasValue: _vm.form.contact.surname },
-              { hasValue: _vm.form.contact.email },
-              { hasFocus: _vm.form.contact.hasFocus }
+              { hasValue: _vm.form.identification.contact.civility },
+              { hasValue: _vm.form.identification.contact.name },
+              { hasValue: _vm.form.identification.contact.surname },
+              { hasValue: _vm.form.identification.contact.email },
+              { hasFocus: _vm.form.identification.contact.hasFocus }
             ]
           },
           [
@@ -38049,19 +38157,20 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.form.contact.civility,
-                          expression: "form.contact.civility"
+                          value: _vm.form.identification.contact.civility,
+                          expression: "form.identification.contact.civility"
                         }
                       ],
                       staticClass: "field select",
-                      class: { hasValue: _vm.form.contact.civility },
-                      attrs: { required: "" },
+                      class: {
+                        hasValue: _vm.form.identification.contact.civility
+                      },
                       on: {
                         focus: function($event) {
-                          _vm.form.contact.hasFocus = true
+                          _vm.form.identification.contact.hasFocus = true
                         },
                         blur: function($event) {
-                          _vm.form.contact.hasFocus = false
+                          _vm.form.identification.contact.hasFocus = false
                         },
                         animationstart: _vm.checkAnimation,
                         change: function($event) {
@@ -38074,7 +38183,7 @@ var render = function() {
                               return val
                             })
                           _vm.$set(
-                            _vm.form.contact,
+                            _vm.form.identification.contact,
                             "civility",
                             $event.target.multiple
                               ? $$selectedVal
@@ -38106,22 +38215,22 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model.trim",
-                      value: _vm.form.contact.surname,
-                      expression: "form.contact.surname",
+                      value: _vm.form.identification.contact.surname,
+                      expression: "form.identification.contact.surname",
                       modifiers: { trim: true }
                     }
                   ],
                   staticClass: "field",
-                  class: { hasValue: _vm.form.contact.surname },
+                  class: { hasValue: _vm.form.identification.contact.surname },
                   attrs: { type: "text", autocomplete: "off" },
-                  domProps: { value: _vm.form.contact.surname },
+                  domProps: { value: _vm.form.identification.contact.surname },
                   on: {
                     focus: function($event) {
-                      _vm.form.contact.hasFocus = true
+                      _vm.form.identification.contact.hasFocus = true
                     },
                     blur: [
                       function($event) {
-                        _vm.form.contact.hasFocus = false
+                        _vm.form.identification.contact.hasFocus = false
                       },
                       function($event) {
                         return _vm.$forceUpdate()
@@ -38132,7 +38241,7 @@ var render = function() {
                         return
                       }
                       _vm.$set(
-                        _vm.form.contact,
+                        _vm.form.identification.contact,
                         "surname",
                         $event.target.value.trim()
                       )
@@ -38152,22 +38261,22 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model.trim",
-                    value: _vm.form.contact.name,
-                    expression: "form.contact.name",
+                    value: _vm.form.identification.contact.name,
+                    expression: "form.identification.contact.name",
                     modifiers: { trim: true }
                   }
                 ],
                 staticClass: "field",
-                class: { hasValue: _vm.form.contact.name },
+                class: { hasValue: _vm.form.identification.contact.name },
                 attrs: { type: "text", autocomplete: "off" },
-                domProps: { value: _vm.form.contact.name },
+                domProps: { value: _vm.form.identification.contact.name },
                 on: {
                   focus: function($event) {
-                    _vm.form.contact.hasFocus = true
+                    _vm.form.identification.contact.hasFocus = true
                   },
                   blur: [
                     function($event) {
-                      _vm.form.contact.hasFocus = false
+                      _vm.form.identification.contact.hasFocus = false
                     },
                     function($event) {
                       return _vm.$forceUpdate()
@@ -38178,7 +38287,7 @@ var render = function() {
                       return
                     }
                     _vm.$set(
-                      _vm.form.contact,
+                      _vm.form.identification.contact,
                       "name",
                       $event.target.value.trim()
                     )
@@ -38197,22 +38306,22 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model.trim",
-                    value: _vm.form.contact.email,
-                    expression: "form.contact.email",
+                    value: _vm.form.identification.contact.email,
+                    expression: "form.identification.contact.email",
                     modifiers: { trim: true }
                   }
                 ],
                 staticClass: "field",
-                class: [{ hasValue: _vm.form.contact.email }],
+                class: [{ hasValue: _vm.form.identification.contact.email }],
                 attrs: { type: "text", autocomplete: "off", required: "" },
-                domProps: { value: _vm.form.contact.email },
+                domProps: { value: _vm.form.identification.contact.email },
                 on: {
                   focus: function($event) {
-                    _vm.form.contact.hasFocus = true
+                    _vm.form.identification.contact.hasFocus = true
                   },
                   blur: [
                     function($event) {
-                      _vm.form.contact.hasFocus = false
+                      _vm.form.identification.contact.hasFocus = false
                     },
                     function($event) {
                       return _vm.$forceUpdate()
@@ -38223,7 +38332,7 @@ var render = function() {
                       return
                     }
                     _vm.$set(
-                      _vm.form.contact,
+                      _vm.form.identification.contact,
                       "email",
                       $event.target.value.trim()
                     )
@@ -38313,7 +38422,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(183)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(185)
 /* template */
@@ -38366,7 +38475,7 @@ var content = __webpack_require__(184);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("4b808526", content, false, {});
+var update = __webpack_require__(3)("4b808526", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -38385,7 +38494,7 @@ if(false) {
 /* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -38549,45 +38658,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
-            form: {
-                prepress: {
-                    hour: "",
-                    minute: "",
-                    hasFocus: false
-                },
-                description: {
-                    label: {
-                        type: "old",
-                        id: "",
-                        name: "",
-                        width: "",
-                        length: "",
-                        hasFocus: false
-                    },
-                    quantities: [{
-                        quantity: "",
-                        model: "",
-                        plate: "",
-                        hasFocus: false
-                    }]
-                }
-            }
-        };
+        return {};
     },
-    mounted: function mounted() {},
+    created: function created() {},
 
+    computed: {
+        form: function form() {
+            return this.$store.state.workflow;
+        }
+    },
     methods: {
         checkAnimation: function checkAnimation(_ref) {
             var target = _ref.target,
@@ -38602,6 +38684,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 quantity: "",
                 model: "",
                 plate: "",
+                hour: "",
+                minute: "",
                 hasFocus: false
             });
         },
@@ -38622,95 +38706,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "div",
-        {
-          staticClass: "wrap-group-field",
-          class: [
-            { hasValue: _vm.form.prepress.hour },
-            { hasValue: _vm.form.prepress.minute },
-            { hasFocus: _vm.form.prepress.hasFocus }
-          ]
-        },
-        [
-          _c("div", { staticClass: "wrap-field-inline" }, [
-            _c("span", { staticClass: "legend-line" }, [
-              _vm._v("Temps prépresse")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "wrap-field h-50" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.prepress.hour,
-                    expression: "form.prepress.hour"
-                  }
-                ],
-                staticClass: "field",
-                class: { hasValue: _vm.form.prepress.hour },
-                attrs: { type: "number", autocomplete: "off", required: "" },
-                domProps: { value: _vm.form.prepress.hour },
-                on: {
-                  focus: function($event) {
-                    _vm.form.prepress.hasFocus = true
-                  },
-                  blur: function($event) {
-                    _vm.form.prepress.hasFocus = false
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form.prepress, "hour", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { staticClass: "label-field" }, [_vm._v("Heure(s)")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "wrap-field h-50" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.prepress.minute,
-                    expression: "form.prepress.minute"
-                  }
-                ],
-                staticClass: "field",
-                class: { hasValue: _vm.form.prepress.minute },
-                attrs: { type: "number", autocomplete: "off", required: "" },
-                domProps: { value: _vm.form.prepress.minute },
-                on: {
-                  focus: function($event) {
-                    _vm.form.prepress.hasFocus = true
-                  },
-                  blur: function($event) {
-                    _vm.form.prepress.hasFocus = false
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form.prepress, "minute", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { staticClass: "label-field" }, [_vm._v("Minute(s)")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "focus-field" }),
-          _vm._v(" "),
-          _vm._m(0)
-        ]
-      ),
-      _vm._v(" "),
       _c("div", { staticClass: "wrap-radio" }, [
         _c("div", { staticClass: "wrap-field" }, [
           _c("input", {
@@ -38733,7 +38728,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(0)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "wrap-field" }, [
@@ -38757,7 +38752,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(1)
         ])
       ]),
       _vm._v(" "),
@@ -38911,7 +38906,7 @@ var render = function() {
           _vm._v(" "),
           _c("span", { staticClass: "focus-field" }),
           _vm._v(" "),
-          _vm._m(3)
+          _vm._m(2)
         ]
       ),
       _vm._v(" "),
@@ -39046,9 +39041,85 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "wrap-field-inline" }, [
+              _c("span", { staticClass: "legend-line" }, [
+                _vm._v("Temps prépresse")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "wrap-field h-50" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: item.hour,
+                      expression: "item.hour"
+                    }
+                  ],
+                  staticClass: "field",
+                  class: { hasValue: item.hour },
+                  attrs: { type: "number", autocomplete: "off", required: "" },
+                  domProps: { value: item.hour },
+                  on: {
+                    focus: function($event) {
+                      item.hasFocus = true
+                    },
+                    blur: function($event) {
+                      item.hasFocus = false
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(item, "hour", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { staticClass: "label-field" }, [
+                  _vm._v("Heure(s)")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "wrap-field h-50" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: item.minute,
+                      expression: "item.minute"
+                    }
+                  ],
+                  staticClass: "field",
+                  class: { hasValue: item.minute },
+                  attrs: { type: "number", autocomplete: "off", required: "" },
+                  domProps: { value: item.minute },
+                  on: {
+                    focus: function($event) {
+                      item.hasFocus = true
+                    },
+                    blur: function($event) {
+                      item.hasFocus = false
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(item, "minute", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { staticClass: "label-field" }, [
+                  _vm._v("Minute(s)")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _c("span", { staticClass: "focus-field" }),
             _vm._v(" "),
-            _vm._m(4, true)
+            _vm._m(3, true)
           ]
         )
       }),
@@ -39070,14 +39141,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "symbol-left-field" }, [
-      _c("i", { staticClass: "fas fa-pen-nib" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39133,7 +39196,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(188)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(190)
 /* template */
@@ -39186,7 +39249,7 @@ var content = __webpack_require__(189);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("22761766", content, false, {});
+var update = __webpack_require__(3)("22761766", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -39205,7 +39268,7 @@ if(false) {
 /* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -39352,27 +39415,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            showModal: false,
-            form: {
-                printing: {
-                    press: "",
-                    colors: "",
-                    quadri: false,
-                    hasFocus: false,
-                    substrate: {
-                        type: "old",
-                        id: "",
-                        name: "",
-                        width: "",
-                        price: "",
-                        hasFocus: false
-                    }
-                }
-            }
+            showModal: false
         };
     },
     created: function created() {
@@ -39381,6 +39431,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     computed: {
+        form: function form() {
+            return this.$store.state.workflow;
+        },
         printings: function printings() {
             return this.$store.state.printings;
         },
@@ -39395,6 +39448,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (animationName.startsWith("onAutoFillStart")) {
                 target.classList.add("hasValue");
+            }
+        },
+        handlePressChange: function handlePressChange(event) {
+            if (event.target.options.selectedIndex > 0) {
+                this.form.printing.name = event.target.options[event.target.options.selectedIndex].dataset.name;
             }
         }
     }
@@ -39444,21 +39502,26 @@ var render = function() {
                   _vm.form.printing.hasFocus = false
                 },
                 animationstart: _vm.checkAnimation,
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.form.printing,
-                    "press",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                }
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form.printing,
+                      "press",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  function($event) {
+                    return _vm.handlePressChange($event)
+                  }
+                ]
               }
             },
             [
@@ -39467,13 +39530,20 @@ var render = function() {
               ]),
               _vm._v(" "),
               _vm._l(_vm.printings, function(printing) {
-                return _c("option", { domProps: { value: printing.id } }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(printing.name) +
-                      "\n                "
-                  )
-                ])
+                return _c(
+                  "option",
+                  {
+                    attrs: { "data-name": printing.name },
+                    domProps: { value: printing.id }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(printing.name) +
+                        "\n                "
+                    )
+                  ]
+                )
               })
             ],
             2
@@ -39742,14 +39812,14 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.form.printing.substrate.length,
-                expression: "form.printing.substrate.length"
+                value: _vm.form.printing.substrate.weight,
+                expression: "form.printing.substrate.weight"
               }
             ],
             staticClass: "field",
-            class: { hasValue: _vm.form.printing.substrate.length },
+            class: { hasValue: _vm.form.printing.substrate.weight },
             attrs: { type: "number", autocomplete: "off", required: "" },
-            domProps: { value: _vm.form.printing.substrate.length },
+            domProps: { value: _vm.form.printing.substrate.weight },
             on: {
               focus: function($event) {
                 _vm.form.printing.substrate.hasFocus = true
@@ -39763,7 +39833,7 @@ var render = function() {
                 }
                 _vm.$set(
                   _vm.form.printing.substrate,
-                  "length",
+                  "weight",
                   $event.target.value
                 )
               }
@@ -39771,7 +39841,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("label", { staticClass: "label-field" }, [
-            _vm._v("Grammage (g/m2)")
+            _vm._v("Grammage (g/m²)")
           ])
         ]),
         _vm._v(" "),
@@ -39814,7 +39884,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "label-field" }, [_vm._v("Prix (mL)")])
+          _c("label", { staticClass: "label-field" }, [_vm._v("Prix (€/m²)")])
         ]),
         _vm._v(" "),
         _c("span", { staticClass: "focus-field" }),
@@ -39900,7 +39970,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(193)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(195)
 /* template */
@@ -39953,7 +40023,7 @@ var content = __webpack_require__(194);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("0eb5fbaf", content, false, {});
+var update = __webpack_require__(3)("0eb5fbaf", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -39972,7 +40042,7 @@ if(false) {
 /* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -40244,43 +40314,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
-            form: {
-                finishing: {
-                    finishings: [{
-                        type: "",
-                        number: 1,
-                        shape: false,
-                        reworking: false,
-                        presence_consumable: false,
-                        hasFocus: false,
-                        consumable: ""
-                    }],
-                    cutting: {
-                        type: "old",
-                        id: "",
-                        name: "",
-                        dimension_width: "",
-                        dimension_length: "",
-                        bleed_width: "",
-                        bleed_length: "",
-                        pose_width: "",
-                        pose_length: "",
-                        hasFocus: false
-                    }
-                }
-            }
-        };
+        return {};
     },
     created: function created() {
+        this.form.finishing.cutting.dimension_width = this.form.description.label.width;
+        this.form.finishing.cutting.dimension_length = this.form.description.label.length;
+        // this.$store.dispatch('getWorkflow');
         this.$store.dispatch('getFinishings');
         // this.$store.dispatch('getConsumables');
     },
 
     computed: {
+        form: function form() {
+            return this.$store.state.workflow;
+        },
         finishings: function finishings() {
             return this.$store.state.finishings;
         }
@@ -40297,7 +40350,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addFinishing: function addFinishing() {
             this.form.finishing.finishings.push({
                 type: "",
-                number: 1,
+                name: "",
                 shape: false,
                 reworking: false,
                 presence_consumable: false,
@@ -40307,7 +40360,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteFinishing: function deleteFinishing(index) {
             this.form.finishing.finishings.splice(index, 1);
         },
-        handleFinishingChanging: function handleFinishingChanging(index) {
+        handleFinishingChanging: function handleFinishingChanging(event, index) {
+            if (event.target.options.selectedIndex > 0) {
+                this.form.finishing.finishings[index].name = event.target.options[event.target.options.selectedIndex].dataset.name;
+            }
             var finishingID = this.form.finishing.finishings[index].type;
             var finishingConsumable = this.finishings.find(function (finishing) {
                 return finishing.id === finishingID;
@@ -40411,7 +40467,7 @@ var render = function() {
                             )
                           },
                           function($event) {
-                            return _vm.handleFinishingChanging(index)
+                            return _vm.handleFinishingChanging($event, index)
                           }
                         ]
                       }
@@ -40424,7 +40480,10 @@ var render = function() {
                       _vm._l(_vm.finishings, function(finishing) {
                         return _c(
                           "option",
-                          { domProps: { value: finishing.id } },
+                          {
+                            attrs: { "data-name": finishing.name },
+                            domProps: { value: finishing.id }
+                          },
                           [
                             _vm._v(
                               "\n                        " +
@@ -40449,45 +40508,6 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: item.number,
-                        expression: "item.number"
-                      }
-                    ],
-                    staticClass: "field",
-                    class: { hasValue: item.number },
-                    attrs: {
-                      type: "number",
-                      autocomplete: "off",
-                      required: ""
-                    },
-                    domProps: { value: item.number },
-                    on: {
-                      focus: function($event) {
-                        item.hasFocus = true
-                      },
-                      blur: function($event) {
-                        item.hasFocus = false
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(item, "number", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("label", { staticClass: "label-field" }, [
-                    _vm._v("Nombre de finition")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "wrap-field h-50" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
                         value: item.shape,
                         expression: "item.shape"
                       }
@@ -40496,6 +40516,7 @@ var render = function() {
                     class: { hasValue: item.shape },
                     attrs: {
                       type: "number",
+                      step: "0.0001",
                       autocomplete: "off",
                       required: ""
                     },
@@ -40585,7 +40606,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("transition", { attrs: { name: "fade", tag: "div" } }, [
-              item.presence_consumable === true
+              item.presence_consumable === true && item.type !== ""
                 ? _c(
                     "div",
                     {
@@ -40704,6 +40725,7 @@ var render = function() {
                           class: { hasValue: item.consumable.price },
                           attrs: {
                             type: "number",
+                            step: "0.0001",
                             autocomplete: "off",
                             required: ""
                           },
@@ -40729,7 +40751,7 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { staticClass: "label-field" }, [
-                          _vm._v("Prix (mL)")
+                          _vm._v("Prix (€/m²)")
                         ])
                       ]),
                       _vm._v(" "),
@@ -41125,6 +41147,51 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
+          _vm.form.finishing.cutting.type === "new"
+            ? _c("div", { staticClass: "wrap-field h-50" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.finishing.cutting.shape,
+                      expression: "form.finishing.cutting.shape"
+                    }
+                  ],
+                  staticClass: "field",
+                  class: { hasValue: _vm.form.finishing.cutting.shape },
+                  attrs: {
+                    type: "number",
+                    step: "0.0001",
+                    autocomplete: "off"
+                  },
+                  domProps: { value: _vm.form.finishing.cutting.shape },
+                  on: {
+                    focus: function($event) {
+                      _vm.form.finishing.cutting.hasFocus = true
+                    },
+                    blur: function($event) {
+                      _vm.form.finishing.cutting.hasFocus = false
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form.finishing.cutting,
+                        "shape",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { staticClass: "label-field" }, [
+                  _vm._v("Prix de l'outil à commander")
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("span", { staticClass: "focus-field" }),
           _vm._v(" "),
           _vm._m(5)
@@ -41205,6 +41272,736 @@ if (false) {
 /* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(198)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(200)
+/* template */
+var __vue_template__ = __webpack_require__(201)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-525b0bab"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Quotation/Packing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-525b0bab", Component.options)
+  } else {
+    hotAPI.reload("data-v-525b0bab", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 198 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(199);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("9b9776ea", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-525b0bab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Packing.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-525b0bab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Packing.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-525b0bab], [class*=\" icon-\"][data-v-525b0bab] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-525b0bab]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-525b0bab]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-525b0bab]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-525b0bab]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-525b0bab]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-525b0bab]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-525b0bab]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-525b0bab]:before {\n  content: \"\\E907\";\n}\n.title-radio[data-v-525b0bab] {\n  border: none;\n  margin-bottom: 0;\n}\n.legend-radio[data-v-525b0bab] {\n  margin-bottom: 1rem;\n  text-align: center;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 200 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+    created: function created() {
+        // this.$store.dispatch('getWorkflow');
+    },
+
+    computed: {
+        form: function form() {
+            return this.$store.state.workflow;
+        }
+    },
+    methods: {}
+});
+
+/***/ }),
+/* 201 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("h3", { staticClass: "legend-radio" }, [
+      _vm._v("Enroulement extérieur")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ehead", value: "ehead" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ehead") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ehead")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(1)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "efoot", value: "efoot" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "efoot") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "efoot")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(2)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "eright", value: "eright" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "eright") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "eright")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(3)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "eleft", value: "eleft" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "eleft") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "eleft")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(4)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("h3", { staticClass: "legend-radio" }, [
+      _vm._v("Enroulement intérieur")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ihead", value: "ihead" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ihead") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ihead")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(5)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ifoot", value: "ifoot" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ifoot") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ifoot")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(6)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-radio" }, [
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "iright", value: "iright" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "iright") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "iright")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(7)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrap-field" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.packing.direction,
+              expression: "form.packing.direction"
+            }
+          ],
+          attrs: { type: "radio", id: "ileft", value: "ileft" },
+          domProps: { checked: _vm._q(_vm.form.packing.direction, "ileft") },
+          on: {
+            change: function($event) {
+              return _vm.$set(_vm.form.packing, "direction", "ileft")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(8)
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "wrap-field h-50" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.packing.packing,
+            expression: "form.packing.packing"
+          }
+        ],
+        staticClass: "field",
+        class: { hasValue: _vm.form.packing.packing },
+        attrs: { type: "number", required: "" },
+        domProps: { value: _vm.form.packing.packing },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form.packing, "packing", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "focus-field" }),
+      _vm._v(" "),
+      _c("label", { staticClass: "label-field" }, [_vm._v("Conditionnement")]),
+      _vm._v(" "),
+      _vm._m(9)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "wrap-field h-50 title-radio" }, [
+      _c("label", { staticClass: "label-field" }, [
+        _vm._v("Sens d'enroulement")
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "symbol-left-field" }, [
+        _c("i", { staticClass: "fas fa-text-width" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ehead" } }, [
+      _c("i", { staticClass: "fa icon-exterior-top" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Tête en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "efoot" } }, [
+      _c("i", { staticClass: "fa icon-exterior-bottom" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Pied en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "eright" } }, [
+      _c("i", { staticClass: "fa icon-exterior-right" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Droite en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "eleft" } }, [
+      _c("i", { staticClass: "fa icon-exterior-left" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Gauche en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ihead" } }, [
+      _c("i", { staticClass: "fa icon-interior-top" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Tête en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ifoot" } }, [
+      _c("i", { staticClass: "fa icon-interior-bottom" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Pied en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "iright" } }, [
+      _c("i", { staticClass: "fa icon-interior-right" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Droite en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "ileft" } }, [
+      _c("i", { staticClass: "fa icon-interior-left" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Gauche en avant")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-tape" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-525b0bab", module.exports)
+  }
+}
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(259)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(205)
+/* template */
+var __vue_template__ = __webpack_require__(261)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7e236c8b"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Quotation/Result.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7e236c8b", Component.options)
+  } else {
+    hotAPI.reload("data-v-7e236c8b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 203 */,
+/* 204 */,
+/* 205 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quantity__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quantity___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Quantity__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Quantity: __WEBPACK_IMPORTED_MODULE_0__Quantity___default.a
+    },
+    data: function data() {
+        return {
+            errors: [],
+            quantity: false,
+            copies: ""
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        this.$store.dispatch("getQuotationPrice").then(function (res) {
+            _this.result = _this.$store.state.price;
+
+            if (_this.result.errors !== undefined) {
+                _this.errors = _this.result.errors;
+                console.log("this.errors");
+                console.log(_this.errors);
+            } else {
+                _this.errors = [];
+                console.log("this.result");
+                console.log(_this.result);
+            }
+        });
+    },
+
+    computed: {
+        result: {
+            get: function get() {
+                return this.$store.state.price;
+            },
+            set: function set() {
+                return this.$store.state.price;
+            }
+        }
+    },
+    methods: {
+        objectSize: function objectSize(obj) {
+            var size = 0,
+                key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            console.log("obj");
+            console.log(obj);
+            console.log(size);
+            // this.copies = Object.keys(obj[0]);
+            // console.log(this.copies);
+            return size;
+        },
+        displayQuantityDetail: function displayQuantityDetail(index) {
+            this.quantity = true;
+            this.copies = index;
+        },
+        hideQuantityDetail: function hideQuantityDetail(value) {
+            this.quantity = false;
+            this.copies = "";
+        }
+    }
+});
+
+/***/ }),
+/* 206 */,
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -41270,15 +42067,12 @@ var render = function() {
               "section",
               { staticClass: "wrap-content-step" },
               [
-                _vm.step === 1 ? _c("Identification") : _vm._e(),
-                _vm._v(" "),
-                _vm.step === 2 ? _c("Description") : _vm._e(),
-                _vm._v(" "),
-                _vm.step === 3 ? _c("Printing") : _vm._e(),
-                _vm._v(" "),
-                _vm.step === 4 ? _c("Finishing") : _vm._e(),
-                _vm._v(" "),
-                _vm.step === 5 ? _c("Packing") : _vm._e()
+                _c(
+                  "transition",
+                  { attrs: { name: "fade", mode: "out-in" } },
+                  [_c(_vm.steps[_vm.step - 1].component, { tag: "component" })],
+                  1
+                )
               ],
               1
             )
@@ -41383,7 +42177,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "wrap-content-summary" }, [
-              !_vm.form.description
+              _vm.summary === ""
                 ? _c("img", {
                     staticClass: "image-no-data",
                     attrs: {
@@ -41392,7 +42186,26 @@ var render = function() {
                         "Illustration montrant qu'aucune donnée n'a encore été saisie"
                     }
                   })
-                : _vm._e(),
+                : _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.summary,
+                        expression: "summary"
+                      }
+                    ],
+                    attrs: { rows: "15" },
+                    domProps: { value: _vm.summary },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.summary = $event.target.value
+                      }
+                    }
+                  }),
               _vm._v(" "),
               _c("div", { staticClass: "wrap-button-submit" }, [
                 _c(
@@ -41440,19 +42253,263 @@ if (false) {
 }
 
 /***/ }),
-/* 198 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(199)
+  __webpack_require__(209)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(201)
+var __vue_script__ = __webpack_require__(211)
 /* template */
-var __vue_template__ = __webpack_require__(202)
+var __vue_template__ = __webpack_require__(212)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-01a5370e"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Quotation/Quantity.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-01a5370e", Component.options)
+  } else {
+    hotAPI.reload("data-v-01a5370e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(210);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("272e34b0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01a5370e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Quantity.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01a5370e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Quantity.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 210 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-01a5370e], [class*=\" icon-\"][data-v-01a5370e] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-01a5370e]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-01a5370e]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-01a5370e]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-01a5370e]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-01a5370e]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-01a5370e]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-01a5370e]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-01a5370e]:before {\n  content: \"\\E907\";\n}\n.arrow-return[data-v-01a5370e] {\n  display: block;\n  margin-right: auto;\n  font-size: 1.2rem;\n  line-height: 1.4rem;\n  font-weight: 700;\n  color: #C49998;\n  text-transform: uppercase;\n}\n.arrow-return [class^=\"fa\"][data-v-01a5370e] {\n    font-size: 1.5rem;\n    margin-right: .5rem;\n}\ntable[data-v-01a5370e] {\n  border-collapse: collapse;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  table-layout: fixed;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n}\ntable tr[data-v-01a5370e] {\n    padding: .35em;\n}\ntable tr[data-v-01a5370e]:not(:last-child) {\n      border-bottom: 0.05rem solid #62799F;\n}\ntable th[data-v-01a5370e],\n  table td[data-v-01a5370e] {\n    padding: .625em;\n    text-align: center;\n}\ntable th[data-v-01a5370e] {\n    font-size: .85em;\n    letter-spacing: .1em;\n    text-transform: uppercase;\n}\n@media screen and (max-width: 600px) {\ntable[data-v-01a5370e] {\n    border: 0;\n}\ntable caption[data-v-01a5370e] {\n      color: #62799F;\n      font-size: 1.8rem;\n      line-height: 2.2rem;\n      margin-bottom: 1rem;\n}\ntable thead[data-v-01a5370e] {\n      border: none;\n      clip: rect(0 0 0 0);\n      height: .1rem;\n      margin: -.1rem;\n      overflow: hidden;\n      padding: 0;\n      position: absolute;\n      width: .1rem;\n}\ntable tr[data-v-01a5370e] {\n      display: block;\n}\ntable tr[data-v-01a5370e]:first-child {\n        border-radius: 1rem 1rem 0 0;\n}\ntable tr[data-v-01a5370e]:last-child {\n        border-radius: 0 0 1rem 1rem;\n}\ntable td[data-v-01a5370e] {\n      display: block;\n      font-size: 1.4rem;\n      line-height: 1.8rem;\n      text-align: right;\n      color: #62799F;\n}\ntable td[data-v-01a5370e]:before {\n        content: attr(data-label);\n        float: left;\n        font-weight: 700;\n        text-transform: uppercase;\n        color: #C2D9FF;\n}\ntable td[data-v-01a5370e]:last-child {\n        border-bottom: 0;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 211 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        quantities: Object,
+        copies: Number
+    },
+    data: function data() {
+        return {
+            operation: false,
+            index: ""
+        };
+    },
+    created: function created() {},
+
+    computed: {},
+    methods: {
+        displayOperationDetail: function displayOperationDetail(index) {
+            this.operation = true;
+            this.index = index;
+        }
+    }
+});
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "arrow-return",
+        attrs: { type: "button" },
+        on: {
+          click: function($event) {
+            return _vm.$emit("goBack")
+          }
+        }
+      },
+      [_c("i", { staticClass: "fas fa-arrow-left" }), _vm._v("Retour")]
+    ),
+    _vm._v(" "),
+    _c("table", [
+      _c("caption", [_vm._v(_vm._s(_vm.copies) + " exemplaires")]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.quantities[_vm.copies].operations, function(
+          operation,
+          index
+        ) {
+          return _c("tr", [
+            _c("td", { attrs: { "data-label": "Opération" } }, [
+              _vm._v(_vm._s(operation.name))
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { "data-label": "Temps (h)" } }, [
+              _vm._v(_vm._s(operation.time))
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { "data-label": "Marge (%)" } }, [
+              _vm._v(_vm._s(operation.margin))
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { "data-label": "Prix (€)" } }, [
+              _vm._v(_vm._s(operation.price))
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Opération")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Temps (h)")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Marge (%)")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prix (€)")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-01a5370e", module.exports)
+  }
+}
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(214)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(216)
+/* template */
+var __vue_template__ = __webpack_require__(217)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -41491,17 +42548,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 199 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(200);
+var content = __webpack_require__(215);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("554a547a", content, false, {});
+var update = __webpack_require__(3)("554a547a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -41517,10 +42574,10 @@ if(false) {
 }
 
 /***/ }),
-/* 200 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -41531,7 +42588,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 
 /***/ }),
-/* 201 */
+/* 216 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41604,7 +42661,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 202 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -41694,16 +42751,16 @@ if (false) {
 }
 
 /***/ }),
-/* 203 */
+/* 218 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(223);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 
 
@@ -41724,11 +42781,99 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         printings: [],
         substrates: [],
         finishings: [],
-        cuttings: []
+        cuttings: [],
+        workflow: {
+            summary: "",
+            identification: {
+                third: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    address: "",
+                    zipcode: "",
+                    city: "",
+                    hasFocus: false
+                },
+                contact: {
+                    id: "",
+                    civility: "",
+                    name: "",
+                    surname: "",
+                    email: "",
+                    hasFocus: false
+                }
+            },
+            description: {
+                label: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    width: "",
+                    length: "",
+                    hasFocus: false
+                },
+                quantities: [{
+                    quantity: "",
+                    model: "",
+                    plate: "",
+                    hour: "",
+                    minute: "",
+                    hasFocus: false
+                }]
+            },
+            printing: {
+                press: "",
+                name: "",
+                colors: "",
+                quadri: false,
+                hasFocus: false,
+                substrate: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    width: "",
+                    weight: "",
+                    price: "",
+                    hasFocus: false
+                }
+            },
+            finishing: {
+                finishings: [{
+                    type: "",
+                    name: "",
+                    shape: false,
+                    reworking: false,
+                    presence_consumable: false,
+                    hasFocus: false,
+                    consumable: ""
+                }],
+                cutting: {
+                    type: "old",
+                    id: "",
+                    name: "",
+                    dimension_width: "",
+                    dimension_length: "",
+                    bleed_width: "",
+                    bleed_length: "",
+                    pose_width: "",
+                    pose_length: "",
+                    shape: "",
+                    hasFocus: false
+                }
+            },
+            packing: {
+                packing: "",
+                direction: "ehead"
+            }
+        },
+        price: []
     },
     getters: {
         loggedIn: function loggedIn(state) {
             return state.token !== null;
+        },
+        workflow: function workflow(state) {
+            return state.workflow;
         }
     },
     mutations: {
@@ -41758,6 +42903,12 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         },
         setCuttings: function setCuttings(state, data) {
             state.cuttings = data;
+        },
+        setQuotationSummary: function setQuotationSummary(state, data) {
+            state.workflow.summary = data;
+        },
+        setQuotationPrice: function setQuotationPrice(state, data) {
+            state.price = data;
         }
     },
     actions: {
@@ -41797,7 +42948,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             }
         },
         getQuote: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(context, credentials) {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(context) {
                 var data;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
@@ -41819,7 +42970,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee, this);
             }));
 
-            function getQuote(_x, _x2) {
+            function getQuote(_x) {
                 return _ref.apply(this, arguments);
             }
 
@@ -41850,7 +43001,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee2, this);
             }));
 
-            function getQuotations(_x3, _x4) {
+            function getQuotations(_x2, _x3) {
                 return _ref2.apply(this, arguments);
             }
 
@@ -41879,7 +43030,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee3, this);
             }));
 
-            function getPrintings(_x5) {
+            function getPrintings(_x4) {
                 return _ref3.apply(this, arguments);
             }
 
@@ -41908,7 +43059,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee4, this);
             }));
 
-            function getSubstrates(_x6) {
+            function getSubstrates(_x5) {
                 return _ref4.apply(this, arguments);
             }
 
@@ -41937,7 +43088,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee5, this);
             }));
 
-            function getFinishings(_x7) {
+            function getFinishings(_x6) {
                 return _ref5.apply(this, arguments);
             }
 
@@ -41966,24 +43117,60 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee6, this);
             }));
 
-            function getCuttings(_x8) {
+            function getCuttings(_x7) {
                 return _ref6.apply(this, arguments);
             }
 
             return getCuttings;
+        }(),
+        updateQuotationSummary: function updateQuotationSummary(context, credentials) {
+            var summary = credentials.summary;
+            context.commit("setQuotationSummary", summary);
+        },
+        getQuotationPrice: function () {
+            var _ref7 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7(context) {
+                var data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
+                    while (1) {
+                        switch (_context7.prev = _context7.next) {
+                            case 0:
+                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                                _context7.next = 3;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation/price', {
+                                    workflow: context.getters.workflow
+                                });
+
+                            case 3:
+                                data = _context7.sent.data;
+
+                                context.commit("setQuotationPrice", data);
+
+                            case 5:
+                            case 'end':
+                                return _context7.stop();
+                        }
+                    }
+                }, _callee7, this);
+            }));
+
+            function getQuotationPrice(_x8) {
+                return _ref7.apply(this, arguments);
+            }
+
+            return getQuotationPrice;
         }()
     }
 }));
 
 /***/ }),
-/* 204 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(205);
+module.exports = __webpack_require__(220);
 
 
 /***/ }),
-/* 205 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -42008,7 +43195,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(206);
+module.exports = __webpack_require__(221);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -42024,7 +43211,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 206 */
+/* 221 */
 /***/ (function(module, exports) {
 
 /**
@@ -42757,7 +43944,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 207 */
+/* 222 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43782,21 +44969,21 @@ var index_esm = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
-/* 208 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(209);
+module.exports = __webpack_require__(224);
 
 /***/ }),
-/* 209 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 var bind = __webpack_require__(136);
-var Axios = __webpack_require__(211);
+var Axios = __webpack_require__(226);
 var mergeConfig = __webpack_require__(142);
 var defaults = __webpack_require__(139);
 
@@ -43832,14 +45019,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(143);
-axios.CancelToken = __webpack_require__(223);
+axios.CancelToken = __webpack_require__(238);
 axios.isCancel = __webpack_require__(138);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(224);
+axios.spread = __webpack_require__(239);
 
 module.exports = axios;
 
@@ -43848,7 +45035,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 210 */
+/* 225 */
 /***/ (function(module, exports) {
 
 /*!
@@ -43865,16 +45052,16 @@ module.exports = function isBuffer (obj) {
 
 
 /***/ }),
-/* 211 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 var buildURL = __webpack_require__(137);
-var InterceptorManager = __webpack_require__(212);
-var dispatchRequest = __webpack_require__(213);
+var InterceptorManager = __webpack_require__(227);
+var dispatchRequest = __webpack_require__(228);
 var mergeConfig = __webpack_require__(142);
 
 /**
@@ -43958,13 +45145,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 212 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -44017,18 +45204,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 213 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
-var transformData = __webpack_require__(214);
+var utils = __webpack_require__(4);
+var transformData = __webpack_require__(229);
 var isCancel = __webpack_require__(138);
 var defaults = __webpack_require__(139);
-var isAbsoluteURL = __webpack_require__(221);
-var combineURLs = __webpack_require__(222);
+var isAbsoluteURL = __webpack_require__(236);
+var combineURLs = __webpack_require__(237);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -44110,13 +45297,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 214 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 /**
  * Transform the data for a request or a response
@@ -44137,13 +45324,13 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 215 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -44156,7 +45343,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 216 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44188,7 +45375,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 217 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44237,13 +45424,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 218 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -44297,13 +45484,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 219 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -44372,13 +45559,13 @@ module.exports = (
 
 
 /***/ }),
-/* 220 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(4);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -44432,7 +45619,7 @@ module.exports = (
 
 
 /***/ }),
-/* 221 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44453,7 +45640,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 222 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44474,7 +45661,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 223 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44538,7 +45725,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 224 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44572,19 +45759,19 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 225 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(226)
+  __webpack_require__(241)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(228)
+var __vue_script__ = __webpack_require__(243)
 /* template */
-var __vue_template__ = __webpack_require__(234)
+var __vue_template__ = __webpack_require__(249)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44623,17 +45810,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 226 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(227);
+var content = __webpack_require__(242);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("6bb3893f", content, false, {});
+var update = __webpack_require__(3)("6bb3893f", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -44649,26 +45836,26 @@ if(false) {
 }
 
 /***/ }),
-/* 227 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container {\n  width: 300px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 20px 0;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.price-quotation {\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.8rem;\n  line-height: 2.2rem;\n  color: #91A8D0;\n  letter-spacing: 0.1em;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-fade-enter-active {\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container {\n  width: 300px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 20px 0;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 228 */
+/* 243 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(244);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Spinner_vue__);
 //
 //
@@ -44798,19 +45985,19 @@ var DEFAULT_TRANSITION = 'fade';
 });
 
 /***/ }),
-/* 229 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(230)
+  __webpack_require__(245)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(232)
+var __vue_script__ = __webpack_require__(247)
 /* template */
-var __vue_template__ = __webpack_require__(233)
+var __vue_template__ = __webpack_require__(248)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44849,17 +46036,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 230 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(231);
+var content = __webpack_require__(246);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("a8c9b05e", content, false, {});
+var update = __webpack_require__(3)("a8c9b05e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -44875,10 +46062,10 @@ if(false) {
 }
 
 /***/ }),
-/* 231 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
@@ -44889,7 +46076,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 
 /***/ }),
-/* 232 */
+/* 247 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44915,7 +46102,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 233 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44957,7 +46144,7 @@ if (false) {
 }
 
 /***/ }),
-/* 234 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45083,83 +46270,37 @@ if (false) {
 }
 
 /***/ }),
-/* 235 */
+/* 250 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(240)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(242)
-/* template */
-var __vue_template__ = __webpack_require__(243)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-525b0bab"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Quotation/Packing.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-525b0bab", Component.options)
-  } else {
-    hotAPI.reload("data-v-525b0bab", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 240 */
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(241);
+var content = __webpack_require__(260);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("9b9776ea", content, false, {});
+var update = __webpack_require__(3)("ef312350", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-525b0bab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Packing.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-525b0bab\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Packing.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7e236c8b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Result.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7e236c8b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Result.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -45169,134 +46310,21 @@ if(false) {
 }
 
 /***/ }),
-/* 241 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-525b0bab], [class*=\" icon-\"][data-v-525b0bab] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-525b0bab]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-525b0bab]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-525b0bab]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-525b0bab]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-525b0bab]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-525b0bab]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-525b0bab]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-525b0bab]:before {\n  content: \"\\E907\";\n}\n.title-radio[data-v-525b0bab] {\n  border: none;\n  margin-bottom: 0;\n}\n.legend-radio[data-v-525b0bab] {\n  margin-bottom: 1rem;\n  text-align: center;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7e236c8b], [class*=\" icon-\"][data-v-7e236c8b] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7e236c8b]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7e236c8b]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7e236c8b]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7e236c8b]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7e236c8b]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7e236c8b]:before {\n  content: \"\\E907\";\n}\n.wrap-list-errors[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b] {\n    font-size: 1.3rem;\n    line-height: 1.7rem;\n    padding: .75rem 1.5rem;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b]:not(:last-child) {\n      border-bottom: 0.05rem solid #62799F;\n}\n.wrap-success .list-results[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    cursor: pointer;\n    padding: 1.5rem 2rem;\n    -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n            box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n    border-radius: 2rem 1rem 3rem 1rem;\n    margin: 1rem 0;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b]:hover {\n      background-position-x: 7rem;\n      border-left: 1.5rem solid #91A8D0;\n      -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n              box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-success .list-results .item-list .detail-result[data-v-7e236c8b] {\n      border: 0;\n      background: transparent;\n      font-size: 2.5rem;\n      color: #C49998;\n}\n.wrap-success .list-results .item-list .detail-quantity[data-v-7e236c8b] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-flow: row wrap;\n              flex-flow: row wrap;\n      margin-top: .5rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail[data-v-7e236c8b] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        margin: .5rem;\n        font-size: 1.3rem;\n        line-height: 1.7rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail [class^=\"fa\"][data-v-7e236c8b] {\n          font-size: 1.5srem;\n          color: #C2D9FF;\n          margin-right: .5rem;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 242 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            form: {
-                packing: {
-                    packing: "",
-                    direction: "ehead"
-                }
-            }
-        };
-    },
-    created: function created() {},
-
-    computed: {},
-    methods: {}
-});
-
-/***/ }),
-/* 243 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45304,342 +46332,146 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("h3", { staticClass: "legend-radio" }, [
-      _vm._v("Enroulement extérieur")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "wrap-radio" }, [
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
+    _vm.errors.length > 0
+      ? _c(
+          "ul",
+          { staticClass: "wrap-list-errors" },
+          _vm._l(_vm.errors, function(error) {
+            return _c("li", { staticClass: "item-list" }, [
+              _vm._v("\n                " + _vm._s(error) + "\n            ")
+            ])
+          }),
+          0
+        )
+      : _vm.quantity
+      ? _c(
+          "div",
+          [
+            _c(
+              "transition",
+              { attrs: { name: "fade", mode: "out-in" } },
+              [
+                _c("Quantity", {
+                  attrs: {
+                    quantities: _vm.result.quantities,
+                    copies: _vm.copies
+                  },
+                  on: { goBack: _vm.hideQuantityDetail }
+                })
+              ],
+              1
+            )
           ],
-          attrs: { type: "radio", id: "ehead", value: "ehead" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "ehead") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "ehead")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(1)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
+          1
+        )
+      : _c(
+          "div",
+          { staticClass: "wrap-success" },
+          [
+            _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+              _c(
+                "div",
+                { staticClass: "list-results" },
+                _vm._l(_vm.result.quantities, function(quantity, index) {
+                  return _c(
+                    "div",
+                    {
+                      staticClass: "item-list",
+                      on: {
+                        click: function($event) {
+                          return _vm.displayQuantityDetail(index)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "left-part" }, [
+                        _c("p", { staticClass: "page-subtitle" }, [
+                          _vm._v(_vm._s(index) + " exemplaires")
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            _vm._s(quantity.datas.models) +
+                              " modèle(s) - " +
+                              _vm._s(quantity.datas.plates) +
+                              " cliché(s)"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "price-quotation" }, [
+                          _vm._v(_vm._s(quantity.totals.totalCosts)),
+                          _c("span", { staticClass: "symbol-price" }, [
+                            _vm._v("€")
+                          ]),
+                          _vm._v(" HT")
+                        ]),
+                        _vm._v(" "),
+                        _c("ul", { staticClass: "detail-quantity" }, [
+                          _c("li", { staticClass: "item-detail" }, [
+                            _c("i", { staticClass: "far fa-clock" }),
+                            _vm._v(_vm._s(quantity.totals.totalTimes) + "h")
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "item-detail" }, [
+                            _c("i", { staticClass: "fas fa-weight-hanging" }),
+                            _vm._v(_vm._s(quantity.totals.weight) + "kg")
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "item-detail" }, [
+                            _c("i", { staticClass: "fas fa-layer-group" }),
+                            _vm._v(
+                              _vm._s(
+                                quantity.totals.totalFixedCosts.toFixed(2)
+                              ) + "€"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "item-detail" }, [
+                            _c("i", { staticClass: "fas fa-percentage" }),
+                            _vm._v(
+                              _vm._s(quantity.totals.totalVariableCosts) + "€"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "item-detail" }, [
+                            _c("i", { staticClass: "fas fa-tag" }),
+                            _vm._v(
+                              _vm._s(
+                                (quantity.totals.totalCosts / index).toFixed(2)
+                              ) + "€"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "item-detail" }, [
+                            _c("i", { staticClass: "fas fa-tags" }),
+                            _vm._v(
+                              _vm._s(quantity.totals.totalCosts / 1000) + "€"
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("button", { staticClass: "detail-result" }, [
+                        _c("i", { staticClass: "fas fa-chevron-right" })
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
           ],
-          attrs: { type: "radio", id: "efoot", value: "efoot" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "efoot") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "efoot")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(2)
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "wrap-radio" }, [
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
-          ],
-          attrs: { type: "radio", id: "eright", value: "eright" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "eright") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "eright")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(3)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
-          ],
-          attrs: { type: "radio", id: "eleft", value: "eleft" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "eleft") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "eleft")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(4)
-      ])
-    ]),
-    _vm._v(" "),
-    _c("h3", { staticClass: "legend-radio" }, [
-      _vm._v("Enroulement intérieur")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "wrap-radio" }, [
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
-          ],
-          attrs: { type: "radio", id: "ihead", value: "ihead" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "ihead") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "ihead")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(5)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
-          ],
-          attrs: { type: "radio", id: "ifoot", value: "ifoot" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "ifoot") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "ifoot")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(6)
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "wrap-radio" }, [
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
-          ],
-          attrs: { type: "radio", id: "iright", value: "iright" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "iright") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "iright")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(7)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.packing.direction,
-              expression: "form.packing.direction"
-            }
-          ],
-          attrs: { type: "radio", id: "ileft", value: "ileft" },
-          domProps: { checked: _vm._q(_vm.form.packing.direction, "ileft") },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.packing, "direction", "ileft")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(8)
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "wrap-field h-50" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.form.packing.packing,
-            expression: "form.packing.packing"
-          }
-        ],
-        staticClass: "field",
-        class: { hasValue: _vm.form.packing.packing },
-        attrs: { type: "number", required: "" },
-        domProps: { value: _vm.form.packing.packing },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.form.packing, "packing", $event.target.value)
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "focus-field" }),
-      _vm._v(" "),
-      _c("label", { staticClass: "label-field" }, [_vm._v("Confitionnement")]),
-      _vm._v(" "),
-      _vm._m(9)
-    ])
+          1
+        )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "wrap-field h-50 title-radio" }, [
-      _c("label", { staticClass: "label-field" }, [
-        _vm._v("Sens d'enroulement")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "symbol-left-field" }, [
-        _c("i", { staticClass: "fas fa-text-width" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "ehead" } }, [
-      _c("i", { staticClass: "fa icon-exterior-top" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Tête en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "efoot" } }, [
-      _c("i", { staticClass: "fa icon-exterior-bottom" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Pied en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "eright" } }, [
-      _c("i", { staticClass: "fa icon-exterior-right" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Droite en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "eleft" } }, [
-      _c("i", { staticClass: "fa icon-exterior-left" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Gauche en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "ihead" } }, [
-      _c("i", { staticClass: "fa icon-interior-top" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Tête en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "ifoot" } }, [
-      _c("i", { staticClass: "fa icon-interior-bottom" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Pied en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "iright" } }, [
-      _c("i", { staticClass: "fa icon-interior-right" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Droite en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "ileft" } }, [
-      _c("i", { staticClass: "fa icon-interior-left" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Gauche en avant")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "symbol-left-field" }, [
-      _c("i", { staticClass: "fas fa-tape" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-525b0bab", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7e236c8b", module.exports)
   }
 }
 
