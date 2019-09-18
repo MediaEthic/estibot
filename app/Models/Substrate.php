@@ -20,4 +20,12 @@ class Substrate extends Model
         'price',
         'active',
     ];
+
+    /**
+     * Get all of the labels for the substrate.
+     */
+    public function labels()
+    {
+        return $this->hasMany(Label::class);
+    }
 }

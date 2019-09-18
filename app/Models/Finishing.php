@@ -28,4 +28,12 @@ class Finishing extends Model
     {
         return $this->belongsTo(Printing::class);
     }
+
+    /**
+     * The labels that belong to the finishing.
+     */
+    public function labels()
+    {
+        return $this->belongsToMany(Label::class);
+    }
 }

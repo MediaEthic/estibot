@@ -19,11 +19,13 @@ class PrintingsTableSeeder extends Seeder
             'size_papermaxx' => '254',
             'printable_areax' => '250',
             'plate' => '78',
-            'makeready_times' => '0.55',
+            'makeready_times' => '0.3',
+            'makeready_times_color' => '0.55',
             'unit_cadence' => 'striking',
             'cadence' => '3400',
             'hourly_rate' => '220',
             'overlay_sheet' => '100',
+            'overlay_sheet_color' => '100',
             'wastage' => '2',
         ]);
 
@@ -35,11 +37,13 @@ class PrintingsTableSeeder extends Seeder
             'size_papermaxx' => '254',
             'printable_areax' => '250',
             'plate' => '78',
-            'makeready_times' => '0.55',
+            'makeready_times' => '0.3',
+            'makeready_times_color' => '0.55',
             'unit_cadence' => 'striking',
             'cadence' => '3400',
             'hourly_rate' => '220',
             'overlay_sheet' => '100',
+            'overlay_sheet_color' => '100',
             'wastage' => '2',
         ]);
 
@@ -51,11 +55,13 @@ class PrintingsTableSeeder extends Seeder
             'size_papermaxx' => '254',
             'printable_areax' => '250',
             'plate' => '78',
-            'makeready_times' => '0.55',
+            'makeready_times' => '0.3',
+            'makeready_times_color' => '0.55',
             'unit_cadence' => 'striking',
             'cadence' => '3400',
             'hourly_rate' => '220',
             'overlay_sheet' => '100',
+            'overlay_sheet_color' => '100',
             'wastage' => '2',
         ]);
 
@@ -67,11 +73,13 @@ class PrintingsTableSeeder extends Seeder
             'size_papermaxx' => '254',
             'printable_areax' => '250',
             'plate' => '78',
-            'makeready_times' => '0.55',
+            'makeready_times' => '0.3',
+            'makeready_times_color' => '0.55',
             'unit_cadence' => 'striking',
             'cadence' => '3400',
             'hourly_rate' => '220',
             'overlay_sheet' => '100',
+            'overlay_sheet_color' => '100',
             'wastage' => '2',
         ]);
     }

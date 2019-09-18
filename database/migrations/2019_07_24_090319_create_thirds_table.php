@@ -18,9 +18,9 @@ class CreateThirdsTable extends Migration
             $table->nullableTimestamps();
             $table->string('alias', 50)->nullable()->default(null);
             $table->string('name', 100);
-            $table->string('address');
-            $table->string('zipcode', 15)->nullable();
-            $table->string('city', 50)->nullable();
+            $table->string('address')->nullable()->default(null);
+            $table->string('zipcode', 15)->nullable()->default(null);
+            $table->string('city', 50)->nullable()->default(null);
             $table->unsignedInteger('country_id')->nullable()->default('74');
             $table->boolean('active')->default(true);
 

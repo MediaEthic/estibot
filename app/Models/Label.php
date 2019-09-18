@@ -39,8 +39,16 @@ class Label extends Model
     /**
      * Get all of the quotations for the label.
      */
-    public function labels()
+    public function quotations()
     {
         return $this->hasMany(Quotation::class);
+    }
+
+    /**
+     * The finishings that belong to the label.
+     */
+    public function finishings()
+    {
+        return $this->belongsToMany(Finishing::class);
     }
 }

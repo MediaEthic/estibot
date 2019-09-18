@@ -32,10 +32,12 @@ class CreatePrintingsTable extends Migration
             $table->float('thickness_maximum', 10, 6)->nullable()->default(null);
             $table->float('plate', 10, 6)->nullable()->default(null);
             $table->float('makeready_times', 10, 6)->nullable()->default(null);
+            $table->float('makeready_times_color', 10, 6)->nullable()->default(null);
             $table->enum('unit_cadence', ['striking', 'linear'])->default('striking');
             $table->unsignedInteger('cadence')->nullable()->default(null);
             $table->float('hourly_rate', 10, 6)->nullable()->default(null);
             $table->unsignedInteger('overlay_sheet')->nullable()->default(null);
+            $table->unsignedInteger('overlay_sheet_color')->nullable()->default(null);
             $table->float('wastage', 10, 6)->nullable()->default(null);
             $table->tinyInteger('active')->default(true);
         });

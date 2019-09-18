@@ -28,10 +28,12 @@ class Printing extends Model
         'thickness_maximum',
         'plate',
         'makeready_times',
+        'makeready_times_color',
         'unit_cadence',
         'cadence',
         'hourly_rate',
         'overlay_sheet',
+        'overlay_sheet_color',
         'wastage',
         'active',
     ];

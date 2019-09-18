@@ -16,11 +16,11 @@ class CreateSubstratesTable extends Migration
         Schema::create('substrates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->nullableTimestamps();
-            $table->string('name', 200);
+            $table->string('name', 200)->nullable()->default(null);
             $table->unsignedSmallInteger('weight')->nullable()->default(null);
             $table->float('thickness', 10, 6)->nullable()->default(null);
             $table->unsignedInteger('width');
-            $table->unsignedInteger('length');
+            $table->unsignedInteger('length')->nullable()->default(null);
             $table->float('price', 10, 6);
             $table->boolean('active')->default(true);
         });
