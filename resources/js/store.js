@@ -11,14 +11,14 @@ export default new Vuex.Store({
         quote: [],
         quotations: [],
         printings: [],
-        substrates: [],
+        // substrates: [],
         finishings: [],
-        cuttings: [],
+        // cuttings: [],
         workflow: {
             summary: "",
             identification: {
                 third: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     address: "",
@@ -37,7 +37,7 @@ export default new Vuex.Store({
             },
             description: {
                 label: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     width: "",
@@ -62,7 +62,7 @@ export default new Vuex.Store({
                 quadri: false,
                 hasFocus: false,
                 substrate: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     width: "",
@@ -84,7 +84,7 @@ export default new Vuex.Store({
                     }
                 ],
                 cutting: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     dimension_width: "",
@@ -103,6 +103,7 @@ export default new Vuex.Store({
             },
         },
         price: [],
+        quotation: [],
     },
     getters: {
         loggedIn(state) {
@@ -131,20 +132,23 @@ export default new Vuex.Store({
         setPrintings(state, data) {
             state.printings = data;
         },
-        setSubstrates(state, data) {
-            state.substrates = data;
-        },
+        // setSubstrates(state, data) {
+        //     state.substrates = data;
+        // },
         setFinishings(state, data) {
             state.finishings = data;
         },
-        setCuttings(state, data) {
-            state.cuttings = data;
-        },
+        // setCuttings(state, data) {
+        //     state.cuttings = data;
+        // },
         setQuotationSummary(state, data) {
             state.workflow.summary = data;
         },
         setQuotationPrice(state, data) {
             state.price = data;
+        },
+        setQuotation(state, data) {
+            state.quotation = data;
         }
     },
     actions: {
@@ -197,18 +201,18 @@ export default new Vuex.Store({
             let data = (await axios.get('/api/auth/quotation/printings')).data;
             context.commit("setPrintings", data);
         },
-        async getSubstrates(context) {
-            let data = (await axios.get('/api/auth/quotation/substrates')).data;
-            context.commit("setSubstrates", data);
-        },
+        // async getSubstrates(context) {
+        //     let data = (await axios.get('/api/auth/quotation/substrates')).data;
+        //     context.commit("setSubstrates", data);
+        // },
         async getFinishings(context) {
             let data = (await axios.get('/api/auth/quotation/finishings')).data;
             context.commit("setFinishings", data);
         },
-        async getCuttings(context) {
-            let data = (await axios.get('/api/auth/quotation/cuttings')).data;
-            context.commit("setCuttings", data);
-        },
+        // async getCuttings(context) {
+        //     let data = (await axios.get('/api/auth/quotation/cuttings')).data;
+        //     context.commit("setCuttings", data);
+        // },
         updateQuotationSummary(context, credentials) {
             const summary = credentials.summary;
             context.commit("setQuotationSummary", summary);
@@ -219,6 +223,27 @@ export default new Vuex.Store({
                 workflow: context.getters.workflow,
             })).data;
             context.commit("setQuotationPrice", data);
+        },
+        saveQuotation(context, credentials) {
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+                axios.post('/api/auth/quotation', {
+                    price: context.state.price,
+                    workflow: context.state.workflow
+                }).then(response => {
+                    console.log(response.data);
+                    context.commit("setQuotation", response.data);
+                    resolve(response);
+                }).catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });
+        },
+        async getQuotation(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            let data = (await axios.post('/api/auth/quotation/' + credentials.id + '/edit')).data;
+            context.commit("setQuotation", data);
         },
     },
 })

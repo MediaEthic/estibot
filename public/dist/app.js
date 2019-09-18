@@ -34760,12 +34760,15 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Home__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Quotation__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Quotation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Quotation__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Profile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Profile__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SingleQuotation__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SingleQuotation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_SingleQuotation__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Profile__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Profile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Profile__);
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
+
 
 
 
@@ -34797,9 +34800,18 @@ var routes = [{
         requiresAuth: true
     }
 }, {
+    path: '/quotation/:id',
+    name: 'single-quotation',
+    component: __WEBPACK_IMPORTED_MODULE_5__components_SingleQuotation___default.a,
+    meta: {
+        title: 'Devis Estibot - Application de devis simple et rapide pour les imprimeurs',
+        requiresAuth: true,
+        transitionName: 'slide'
+    }
+}, {
     path: '/profile',
     name: 'profile',
-    component: __WEBPACK_IMPORTED_MODULE_5__components_Profile___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_6__components_Profile___default.a,
     meta: {
         title: 'Compte utilisateur Estibot - Application de devis simple et rapide pour les imprimeurs',
         requiresAuth: true
@@ -36219,7 +36231,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("div", { staticClass: "wrap-end-quotation" }, [
                                 _c("p", { staticClass: "price-quotation" }, [
-                                  _vm._v(_vm._s(quotation.price.toFixed(2))),
+                                  _vm._v(_vm._s(quotation.thousand.toFixed(2))),
                                   _c("span", { staticClass: "symbol-price" }, [
                                     _vm._v("€")
                                   ])
@@ -36809,6 +36821,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prev: function prev() {
             this.step--;
             this.progress = this.step * 100 / 6;
+            document.getElementById('save-quotation').disabled = true;
             this.updateSummary();
         },
         next: function next() {
@@ -36826,19 +36839,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (this.form.description.label.type === "new") this.summary += 'Nouvelle \xE9tiquette : ' + this.form.description.label.name;
             }
             if (this.form.description.label.width > 0 && this.form.description.label.length > 0) this.summary += '\nFormat : ' + this.form.description.label.width + ' mm (laize) x ' + this.form.description.label.length + 'mm (avance)';
-            if (this.form.printing.press !== "") this.summary += '\nMachine : ' + this.form.printing.press;
+            if (this.form.printing.press !== "") this.summary += '\nMachine : ' + this.form.printing.name;
             if (this.form.printing.colors > 0) this.summary += '\nImpression : ' + this.form.printing.colors + ' couleurs';
             if (this.form.printing.quadri) this.summary += 'en quadrichromie';
             if (this.form.printing.substrate.name !== "") {
-                if (this.form.printing.substrate.type === "old") this.summary += '\nPapier existant : ' + this.form.description.label.name;
-                if (this.form.printing.substrate.type === "new") this.summary += '\nNouveau papier : ' + this.form.description.label.name;
+                if (this.form.printing.substrate.type === "old") this.summary += '\nPapier existant : ' + this.form.printing.substrate.name;
+                if (this.form.printing.substrate.type === "new") this.summary += '\nNouveau papier : ' + this.form.printing.substrate.name;
                 this.summary += ' (' + this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2 - ' + this.form.printing.substrate.price + '\u20AC/m\xB2)';
             }
             if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
                 if (this.form.finishing.finishings.length > 1) {
                     this.summary += '\nFinitions :';
                 } else {
-                    this.summary += '\nFinition :';
+                    this.summary += '\nFinition : ';
                 }
 
                 this.form.finishing.finishings.forEach(function (el) {
@@ -36846,7 +36859,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (el.presence_consumable) $consumable = ' + consommable';
                     var $shape = "";
                     if (el.shape > 0) $shape = ' (outil : ' + el.shape + '\u20AC)';
-                    _this.summary += '\n' + el.name + $consumable + $shape;
+
+                    if (_this.form.finishing.finishings.length > 1) {
+                        _this.summary += '\n - ' + el.name + $consumable + $shape;
+                    } else {
+                        _this.summary += el.name + $consumable + $shape;
+                    }
                 });
 
                 if (this.form.finishing.cutting.name !== "") {
@@ -36883,6 +36901,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     summary: this.summary
                 });
             }
+        },
+        saveQuotation: function saveQuotation() {
+            var _this2 = this;
+
+            this.$store.dispatch('saveQuotation').then(function (resp) {
+                _this2.$router.push({ name: "single-quotation", params: { id: resp.data.id } });
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 });
@@ -36986,6 +37013,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_google_autocomplete__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_google_autocomplete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_google_autocomplete__);
+//
 //
 //
 //
@@ -37732,30 +37760,6 @@ var render = function() {
               expression: "form.identification.third.type"
             }
           ],
-          attrs: { type: "radio", id: "third_old", value: "old" },
-          domProps: {
-            checked: _vm._q(_vm.form.identification.third.type, "old")
-          },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.identification.third, "type", "old")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(0)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.identification.third.type,
-              expression: "form.identification.third.type"
-            }
-          ],
           attrs: { type: "radio", id: "third_new", value: "new" },
           domProps: {
             checked: _vm._q(_vm.form.identification.third.type, "new")
@@ -37767,7 +37771,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm._m(1)
+        _vm._m(0)
       ])
     ]),
     _vm._v(" "),
@@ -37822,7 +37826,7 @@ var render = function() {
             _vm._v("Nom du prospect")
           ]),
       _vm._v(" "),
-      _vm._m(2)
+      _vm._m(1)
     ]),
     _vm._v(" "),
     _c(
@@ -37877,46 +37881,44 @@ var render = function() {
                   }
                 }
               })
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.trim",
-                value: _vm.form.identification.third.address,
-                expression: "form.identification.third.address",
-                modifiers: { trim: true }
-              }
-            ],
-            staticClass: "field",
-            class: { hasValue: _vm.form.identification.third.address },
-            attrs: { type: "text", autocomplete: "off", required: "" },
-            domProps: { value: _vm.form.identification.third.address },
-            on: {
-              focus: function($event) {
-                _vm.form.identification.third.hasFocus = true
-              },
-              blur: [
-                function($event) {
-                  _vm.form.identification.third.hasFocus = false
-                },
-                function($event) {
-                  return _vm.$forceUpdate()
+            : _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.form.identification.third.address,
+                    expression: "form.identification.third.address",
+                    modifiers: { trim: true }
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.identification.third.address },
+                attrs: { type: "text", autocomplete: "off", required: "" },
+                domProps: { value: _vm.form.identification.third.address },
+                on: {
+                  focus: function($event) {
+                    _vm.form.identification.third.hasFocus = true
+                  },
+                  blur: [
+                    function($event) {
+                      _vm.form.identification.third.hasFocus = false
+                    },
+                    function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  ],
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.identification.third,
+                      "address",
+                      $event.target.value.trim()
+                    )
+                  }
                 }
-              ],
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.form.identification.third,
-                  "address",
-                  $event.target.value.trim()
-                )
-              }
-            }
-          }),
+              }),
           _vm._v(" "),
           _c("label", { staticClass: "label-field" }, [_vm._v("Adresse")])
         ]),
@@ -38011,7 +38013,7 @@ var render = function() {
         _vm._v(" "),
         _c("span", { staticClass: "focus-field" }),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(2)
       ]
     ),
     _vm._v(" "),
@@ -38126,7 +38128,7 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "focus-field" }),
             _vm._v(" "),
-            _vm._m(4)
+            _vm._m(3)
           ]
         )
       : _c(
@@ -38345,22 +38347,12 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "focus-field" }),
             _vm._v(" "),
-            _vm._m(5)
+            _vm._m(4)
           ]
         )
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "third_old" } }, [
-      _c("i", { staticClass: "fas fa-user-secret" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Rechercher un client")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -38717,30 +38709,6 @@ var render = function() {
                 expression: "form.description.label.type"
               }
             ],
-            attrs: { type: "radio", id: "label_old", value: "old" },
-            domProps: {
-              checked: _vm._q(_vm.form.description.label.type, "old")
-            },
-            on: {
-              change: function($event) {
-                return _vm.$set(_vm.form.description.label, "type", "old")
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm._m(0)
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "wrap-field" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.description.label.type,
-                expression: "form.description.label.type"
-              }
-            ],
             attrs: { type: "radio", id: "label_new", value: "new" },
             domProps: {
               checked: _vm._q(_vm.form.description.label.type, "new")
@@ -38752,7 +38720,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(0)
         ])
       ]),
       _vm._v(" "),
@@ -38906,7 +38874,7 @@ var render = function() {
           _vm._v(" "),
           _c("span", { staticClass: "focus-field" }),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(1)
         ]
       ),
       _vm._v(" "),
@@ -39119,7 +39087,7 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "focus-field" }),
             _vm._v(" "),
-            _vm._m(3, true)
+            _vm._m(2, true)
           ]
         )
       }),
@@ -39133,7 +39101,7 @@ var render = function() {
         },
         [
           _c("i", { staticClass: "fas fa-plus" }),
-          _vm._v("\n        Ajouter une quantité\n    ")
+          _vm._v("\n            Ajouter une quantité\n        ")
         ]
       )
     ],
@@ -39141,16 +39109,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "label_old" } }, [
-      _c("i", { staticClass: "fas fa-search" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Rechercher une étiquette")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39427,7 +39385,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         this.$store.dispatch('getPrintings');
-        this.$store.dispatch('getSubstrates');
+        // this.$store.dispatch('getSubstrates');
     },
 
     computed: {
@@ -39436,9 +39394,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         printings: function printings() {
             return this.$store.state.printings;
-        },
-        substrates: function substrates() {
-            return this.$store.state.substrates;
         }
     },
     methods: {
@@ -39538,9 +39493,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                    " +
+                      "\n                        " +
                         _vm._s(printing.name) +
-                        "\n                "
+                        "\n                    "
                     )
                   ]
                 )
@@ -39662,30 +39617,6 @@ var render = function() {
               expression: "form.printing.substrate.type"
             }
           ],
-          attrs: { type: "radio", id: "substrate_old", value: "old" },
-          domProps: {
-            checked: _vm._q(_vm.form.printing.substrate.type, "old")
-          },
-          on: {
-            change: function($event) {
-              return _vm.$set(_vm.form.printing.substrate, "type", "old")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(3)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.printing.substrate.type,
-              expression: "form.printing.substrate.type"
-            }
-          ],
           attrs: { type: "radio", id: "substrate_new", value: "new" },
           domProps: {
             checked: _vm._q(_vm.form.printing.substrate.type, "new")
@@ -39697,7 +39628,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm._m(4)
+        _vm._m(3)
       ])
     ]),
     _vm._v(" "),
@@ -39889,7 +39820,7 @@ var render = function() {
         _vm._v(" "),
         _c("span", { staticClass: "focus-field" }),
         _vm._v(" "),
-        _vm._m(5)
+        _vm._m(4)
       ]
     )
   ])
@@ -39921,16 +39852,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "symbol-left-field" }, [
       _c("i", { staticClass: "fas fa-print" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "substrate_old" } }, [
-      _c("i", { staticClass: "fas fa-search" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Rechercher un support")])
     ])
   },
   function() {
@@ -40325,9 +40246,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         this.form.finishing.cutting.dimension_width = this.form.description.label.width;
         this.form.finishing.cutting.dimension_length = this.form.description.label.length;
-        // this.$store.dispatch('getWorkflow');
         this.$store.dispatch('getFinishings');
-        // this.$store.dispatch('getConsumables');
     },
 
     computed: {
@@ -40486,9 +40405,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        " +
+                              "\n                            " +
                                 _vm._s(finishing.name) +
-                                "\n                    "
+                                "\n                        "
                             )
                           ]
                         )
@@ -40605,165 +40524,169 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("transition", { attrs: { name: "fade", tag: "div" } }, [
-              item.presence_consumable === true && item.type !== ""
-                ? _c(
-                    "div",
-                    {
-                      staticClass: "wrap-group-field",
-                      class: [
-                        { hasValue: item.consumable.name },
-                        { hasValue: item.consumable.width },
-                        { hasValue: item.consumable.price },
-                        { hasFocus: item.consumable.hasFocus }
-                      ]
-                    },
-                    [
-                      _c("div", { staticClass: "wrap-field h-50" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model.trim",
-                              value: item.consumable.name,
-                              expression: "item.consumable.name",
-                              modifiers: { trim: true }
-                            }
-                          ],
-                          staticClass: "field",
-                          class: { hasValue: item.consumable.name },
-                          attrs: {
-                            type: "text",
-                            autocomplete: "off",
-                            required: ""
-                          },
-                          domProps: { value: item.consumable.name },
-                          on: {
-                            focus: function($event) {
-                              item.consumable.hasFocus = true
-                            },
-                            blur: [
-                              function($event) {
-                                item.consumable.hasFocus = false
-                              },
-                              function($event) {
-                                return _vm.$forceUpdate()
+            _c(
+              "transition",
+              { attrs: { name: "fade", tag: "div", mode: "out-in" } },
+              [
+                item.presence_consumable === true && item.type !== ""
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "wrap-group-field",
+                        class: [
+                          { hasValue: item.consumable.name },
+                          { hasValue: item.consumable.width },
+                          { hasValue: item.consumable.price },
+                          { hasFocus: item.consumable.hasFocus }
+                        ]
+                      },
+                      [
+                        _c("div", { staticClass: "wrap-field h-50" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model.trim",
+                                value: item.consumable.name,
+                                expression: "item.consumable.name",
+                                modifiers: { trim: true }
                               }
                             ],
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                            staticClass: "field",
+                            class: { hasValue: item.consumable.name },
+                            attrs: {
+                              type: "text",
+                              autocomplete: "off",
+                              required: ""
+                            },
+                            domProps: { value: item.consumable.name },
+                            on: {
+                              focus: function($event) {
+                                item.consumable.hasFocus = true
+                              },
+                              blur: [
+                                function($event) {
+                                  item.consumable.hasFocus = false
+                                },
+                                function($event) {
+                                  return _vm.$forceUpdate()
+                                }
+                              ],
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  item.consumable,
+                                  "name",
+                                  $event.target.value.trim()
+                                )
                               }
-                              _vm.$set(
-                                item.consumable,
-                                "name",
-                                $event.target.value.trim()
-                              )
                             }
-                          }
-                        }),
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "label-field" }, [
+                            _vm._v("Désignation du consommable")
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c("label", { staticClass: "label-field" }, [
-                          _vm._v("Désignation du consommable")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "wrap-field h-50" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: item.consumable.width,
-                              expression: "item.consumable.width"
-                            }
-                          ],
-                          staticClass: "field",
-                          class: { hasValue: item.consumable.width },
-                          attrs: {
-                            type: "number",
-                            autocomplete: "off",
-                            required: ""
-                          },
-                          domProps: { value: item.consumable.width },
-                          on: {
-                            focus: function($event) {
-                              item.consumable.hasFocus = true
-                            },
-                            blur: function($event) {
-                              item.consumable.hasFocus = false
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _c("div", { staticClass: "wrap-field h-50" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: item.consumable.width,
+                                expression: "item.consumable.width"
                               }
-                              _vm.$set(
-                                item.consumable,
-                                "width",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "label-field" }, [
-                          _vm._v("Laize (mm)")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "wrap-field h-50" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: item.consumable.price,
-                              expression: "item.consumable.price"
-                            }
-                          ],
-                          staticClass: "field",
-                          class: { hasValue: item.consumable.price },
-                          attrs: {
-                            type: "number",
-                            step: "0.0001",
-                            autocomplete: "off",
-                            required: ""
-                          },
-                          domProps: { value: item.consumable.price },
-                          on: {
-                            focus: function($event) {
-                              item.consumable.hasFocus = true
+                            ],
+                            staticClass: "field",
+                            class: { hasValue: item.consumable.width },
+                            attrs: {
+                              type: "number",
+                              autocomplete: "off",
+                              required: ""
                             },
-                            blur: function($event) {
-                              item.consumable.hasFocus = false
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                            domProps: { value: item.consumable.width },
+                            on: {
+                              focus: function($event) {
+                                item.consumable.hasFocus = true
+                              },
+                              blur: function($event) {
+                                item.consumable.hasFocus = false
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  item.consumable,
+                                  "width",
+                                  $event.target.value
+                                )
                               }
-                              _vm.$set(
-                                item.consumable,
-                                "price",
-                                $event.target.value
-                              )
                             }
-                          }
-                        }),
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "label-field" }, [
+                            _vm._v("Laize (mm)")
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c("label", { staticClass: "label-field" }, [
-                          _vm._v("Prix (€/m²)")
+                        _c("div", { staticClass: "wrap-field h-50" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: item.consumable.price,
+                                expression: "item.consumable.price"
+                              }
+                            ],
+                            staticClass: "field",
+                            class: { hasValue: item.consumable.price },
+                            attrs: {
+                              type: "number",
+                              step: "0.0001",
+                              autocomplete: "off",
+                              required: ""
+                            },
+                            domProps: { value: item.consumable.price },
+                            on: {
+                              focus: function($event) {
+                                item.consumable.hasFocus = true
+                              },
+                              blur: function($event) {
+                                item.consumable.hasFocus = false
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  item.consumable,
+                                  "price",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "label-field" }, [
+                            _vm._v("Prix (€/m²)")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "focus-field" }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "symbol-left-field" }, [
+                          _c("i", { staticClass: "fab fa-confluence" })
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "focus-field" }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "symbol-left-field" }, [
-                        _c("i", { staticClass: "fab fa-confluence" })
-                      ])
-                    ]
-                  )
-                : _vm._e()
-            ])
+                      ]
+                    )
+                  : _vm._e()
+              ]
+            )
           ],
           1
         )
@@ -40779,35 +40702,11 @@ var render = function() {
         },
         [
           _c("i", { staticClass: "fas fa-plus" }),
-          _vm._v("\n        Ajouter une finition\n    ")
+          _vm._v("\n            Ajouter une finition\n        ")
         ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "wrap-radio" }, [
-        _c("div", { staticClass: "wrap-field" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.finishing.cutting.type,
-                expression: "form.finishing.cutting.type"
-              }
-            ],
-            attrs: { type: "radio", id: "cutting_old", value: "old" },
-            domProps: {
-              checked: _vm._q(_vm.form.finishing.cutting.type, "old")
-            },
-            on: {
-              change: function($event) {
-                return _vm.$set(_vm.form.finishing.cutting, "type", "old")
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm._m(3)
-        ]),
-        _vm._v(" "),
         _c("div", { staticClass: "wrap-field" }, [
           _c("input", {
             directives: [
@@ -40829,7 +40728,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(3)
         ])
       ]),
       _vm._v(" "),
@@ -41194,7 +41093,7 @@ var render = function() {
           _vm._v(" "),
           _c("span", { staticClass: "focus-field" }),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(4)
         ]
       )
     ],
@@ -41228,16 +41127,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "symbol-left-field" }, [
       _c("i", { staticClass: "fas fa-cut" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "cutting_old" } }, [
-      _c("i", { staticClass: "fas fa-search" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Rechercher un outil")])
     ])
   },
   function() {
@@ -41951,13 +41840,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.result = _this.$store.state.price;
 
             if (_this.result.errors !== undefined) {
+                document.getElementById('save-quotation').disabled = true;
                 _this.errors = _this.result.errors;
-                console.log("this.errors");
-                console.log(_this.errors);
             } else {
                 _this.errors = [];
-                console.log("this.result");
-                console.log(_this.result);
+                document.getElementById('save-quotation').disabled = false;
             }
         });
     },
@@ -41979,16 +41866,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             for (key in obj) {
                 if (obj.hasOwnProperty(key)) size++;
             }
-            console.log("obj");
-            console.log(obj);
-            console.log(size);
-            // this.copies = Object.keys(obj[0]);
-            // console.log(this.copies);
             return size;
         },
         displayQuantityDetail: function displayQuantityDetail(index) {
             this.quantity = true;
-            this.copies = index;
+            this.copies = Number(index);
         },
         hideQuantityDetail: function hideQuantityDetail(value) {
             this.quantity = false;
@@ -42212,7 +42094,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "cta",
-                    attrs: { type: "button", disabled: "" }
+                    attrs: {
+                      type: "submit",
+                      id: "save-quotation",
+                      disabled: ""
+                    },
+                    on: { click: _vm.saveQuotation }
                   },
                   [
                     _c("span", [_vm._v("Sauvegarder")]),
@@ -42779,14 +42666,14 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         quote: [],
         quotations: [],
         printings: [],
-        substrates: [],
+        // substrates: [],
         finishings: [],
-        cuttings: [],
+        // cuttings: [],
         workflow: {
             summary: "",
             identification: {
                 third: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     address: "",
@@ -42805,7 +42692,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             },
             description: {
                 label: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     width: "",
@@ -42828,7 +42715,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 quadri: false,
                 hasFocus: false,
                 substrate: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     width: "",
@@ -42848,7 +42735,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     consumable: ""
                 }],
                 cutting: {
-                    type: "old",
+                    type: "new",
                     id: "",
                     name: "",
                     dimension_width: "",
@@ -42866,7 +42753,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 direction: "ehead"
             }
         },
-        price: []
+        price: [],
+        quotation: []
     },
     getters: {
         loggedIn: function loggedIn(state) {
@@ -42895,20 +42783,25 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         setPrintings: function setPrintings(state, data) {
             state.printings = data;
         },
-        setSubstrates: function setSubstrates(state, data) {
-            state.substrates = data;
-        },
+
+        // setSubstrates(state, data) {
+        //     state.substrates = data;
+        // },
         setFinishings: function setFinishings(state, data) {
             state.finishings = data;
         },
-        setCuttings: function setCuttings(state, data) {
-            state.cuttings = data;
-        },
+
+        // setCuttings(state, data) {
+        //     state.cuttings = data;
+        // },
         setQuotationSummary: function setQuotationSummary(state, data) {
             state.workflow.summary = data;
         },
         setQuotationPrice: function setQuotationPrice(state, data) {
             state.price = data;
+        },
+        setQuotation: function setQuotation(state, data) {
+            state.quotation = data;
         }
     },
     actions: {
@@ -43036,7 +42929,12 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
             return getPrintings;
         }(),
-        getSubstrates: function () {
+
+        // async getSubstrates(context) {
+        //     let data = (await axios.get('/api/auth/quotation/substrates')).data;
+        //     context.commit("setSubstrates", data);
+        // },
+        getFinishings: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(context) {
                 var data;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
@@ -43044,12 +42942,12 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                         switch (_context4.prev = _context4.next) {
                             case 0:
                                 _context4.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/substrates');
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/finishings');
 
                             case 2:
                                 data = _context4.sent.data;
 
-                                context.commit("setSubstrates", data);
+                                context.commit("setFinishings", data);
 
                             case 4:
                             case 'end':
@@ -43059,28 +42957,40 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee4, this);
             }));
 
-            function getSubstrates(_x5) {
+            function getFinishings(_x5) {
                 return _ref4.apply(this, arguments);
             }
 
-            return getSubstrates;
+            return getFinishings;
         }(),
-        getFinishings: function () {
+
+        // async getCuttings(context) {
+        //     let data = (await axios.get('/api/auth/quotation/cuttings')).data;
+        //     context.commit("setCuttings", data);
+        // },
+        updateQuotationSummary: function updateQuotationSummary(context, credentials) {
+            var summary = credentials.summary;
+            context.commit("setQuotationSummary", summary);
+        },
+        getQuotationPrice: function () {
             var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(context) {
                 var data;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
                     while (1) {
                         switch (_context5.prev = _context5.next) {
                             case 0:
-                                _context5.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/finishings');
+                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                                _context5.next = 3;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation/price', {
+                                    workflow: context.getters.workflow
+                                });
 
-                            case 2:
+                            case 3:
                                 data = _context5.sent.data;
 
-                                context.commit("setFinishings", data);
+                                context.commit("setQuotationPrice", data);
 
-                            case 4:
+                            case 5:
                             case 'end':
                                 return _context5.stop();
                         }
@@ -43088,28 +42998,45 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee5, this);
             }));
 
-            function getFinishings(_x6) {
+            function getQuotationPrice(_x6) {
                 return _ref5.apply(this, arguments);
             }
 
-            return getFinishings;
+            return getQuotationPrice;
         }(),
-        getCuttings: function () {
-            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(context) {
+        saveQuotation: function saveQuotation(context, credentials) {
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation', {
+                    price: context.state.price,
+                    workflow: context.state.workflow
+                }).then(function (response) {
+                    console.log(response.data);
+                    context.commit("setQuotation", response.data);
+                    resolve(response);
+                }).catch(function (error) {
+                    console.log(error);
+                    reject(error);
+                });
+            });
+        },
+        getQuotation: function () {
+            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(context, credentials) {
                 var data;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
                     while (1) {
                         switch (_context6.prev = _context6.next) {
                             case 0:
-                                _context6.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/cuttings');
+                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                                _context6.next = 3;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation/' + credentials.id + '/edit');
 
-                            case 2:
+                            case 3:
                                 data = _context6.sent.data;
 
-                                context.commit("setCuttings", data);
+                                context.commit("setQuotation", data);
 
-                            case 4:
+                            case 5:
                             case 'end':
                                 return _context6.stop();
                         }
@@ -43117,47 +43044,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee6, this);
             }));
 
-            function getCuttings(_x7) {
+            function getQuotation(_x7, _x8) {
                 return _ref6.apply(this, arguments);
             }
 
-            return getCuttings;
-        }(),
-        updateQuotationSummary: function updateQuotationSummary(context, credentials) {
-            var summary = credentials.summary;
-            context.commit("setQuotationSummary", summary);
-        },
-        getQuotationPrice: function () {
-            var _ref7 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7(context) {
-                var data;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
-                    while (1) {
-                        switch (_context7.prev = _context7.next) {
-                            case 0:
-                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-                                _context7.next = 3;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation/price', {
-                                    workflow: context.getters.workflow
-                                });
-
-                            case 3:
-                                data = _context7.sent.data;
-
-                                context.commit("setQuotationPrice", data);
-
-                            case 5:
-                            case 'end':
-                                return _context7.stop();
-                        }
-                    }
-                }, _callee7, this);
-            }));
-
-            function getQuotationPrice(_x8) {
-                return _ref7.apply(this, arguments);
-            }
-
-            return getQuotationPrice;
+            return getQuotation;
         }()
     }
 }));
@@ -46318,7 +46209,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7e236c8b], [class*=\" icon-\"][data-v-7e236c8b] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7e236c8b]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7e236c8b]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7e236c8b]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7e236c8b]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7e236c8b]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7e236c8b]:before {\n  content: \"\\E907\";\n}\n.wrap-list-errors[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b] {\n    font-size: 1.3rem;\n    line-height: 1.7rem;\n    padding: .75rem 1.5rem;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b]:not(:last-child) {\n      border-bottom: 0.05rem solid #62799F;\n}\n.wrap-success .list-results[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    cursor: pointer;\n    padding: 1.5rem 2rem;\n    -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n            box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n    border-radius: 2rem 1rem 3rem 1rem;\n    margin: 1rem 0;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b]:hover {\n      background-position-x: 7rem;\n      border-left: 1.5rem solid #91A8D0;\n      -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n              box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-success .list-results .item-list .detail-result[data-v-7e236c8b] {\n      border: 0;\n      background: transparent;\n      font-size: 2.5rem;\n      color: #C49998;\n}\n.wrap-success .list-results .item-list .detail-quantity[data-v-7e236c8b] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-flow: row wrap;\n              flex-flow: row wrap;\n      margin-top: .5rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail[data-v-7e236c8b] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        margin: .5rem;\n        font-size: 1.3rem;\n        line-height: 1.7rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail [class^=\"fa\"][data-v-7e236c8b] {\n          font-size: 1.5srem;\n          color: #C2D9FF;\n          margin-right: .5rem;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7e236c8b], [class*=\" icon-\"][data-v-7e236c8b] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7e236c8b]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7e236c8b]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7e236c8b]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7e236c8b]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7e236c8b]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7e236c8b]:before {\n  content: \"\\E907\";\n}\n.wrap-list-errors[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b] {\n    font-size: 1.3rem;\n    line-height: 1.7rem;\n    padding: .75rem 1.5rem;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b]:not(:last-child) {\n      border-bottom: 0.05rem solid #62799F;\n}\n.wrap-success .list-results[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    cursor: pointer;\n    padding: 1.5rem 2rem;\n    -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n            box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n    border-radius: 2rem 1rem 3rem 1rem;\n    margin: 1rem 0;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b]:hover {\n      background-position-x: 7rem;\n      border-left: 1.5rem solid #91A8D0;\n      -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n              box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-success .list-results .item-list .detail-result[data-v-7e236c8b] {\n      border: 0;\n      background: transparent;\n      font-size: 2.5rem;\n      color: #C49998;\n}\n.wrap-success .list-results .item-list .detail-quantity[data-v-7e236c8b] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-flow: row wrap;\n              flex-flow: row wrap;\n      margin-top: .5rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail[data-v-7e236c8b] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        margin: .5rem;\n        font-size: 1.3rem;\n        line-height: 1.7rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail [class^=\"fa\"][data-v-7e236c8b] {\n          font-size: 1.5rem;\n          color: #C2D9FF;\n          margin-right: .5rem;\n}\n", ""]);
 
 // exports
 
@@ -46429,7 +46320,9 @@ var render = function() {
                           _c("li", { staticClass: "item-detail" }, [
                             _c("i", { staticClass: "fas fa-percentage" }),
                             _vm._v(
-                              _vm._s(quantity.totals.totalVariableCosts) + "€"
+                              _vm._s(
+                                quantity.totals.totalVariableCosts.toFixed(2)
+                              ) + "€"
                             )
                           ]),
                           _vm._v(" "),
@@ -46445,7 +46338,9 @@ var render = function() {
                           _c("li", { staticClass: "item-detail" }, [
                             _c("i", { staticClass: "fas fa-tags" }),
                             _vm._v(
-                              _vm._s(quantity.totals.totalCosts / 1000) + "€"
+                              _vm._s(
+                                (quantity.totals.totalCosts / 1000).toFixed(2)
+                              ) + "€"
                             )
                           ])
                         ])
@@ -46472,6 +46367,157 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-7e236c8b", module.exports)
+  }
+}
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(263)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(265)
+/* template */
+var __vue_template__ = __webpack_require__(266)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-14addc89"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/SingleQuotation.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-14addc89", Component.options)
+  } else {
+    hotAPI.reload("data-v-14addc89", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(264);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("5f401e3c", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-14addc89\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SingleQuotation.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-14addc89\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SingleQuotation.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 265 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+    created: function created() {
+        console.log(this.$route.params.id);
+        this.$store.dispatch('getQuotation', {
+            id: this.$route.params.id
+        });
+    },
+
+    computed: {
+        quotation: function quotation() {
+            console.log(this.$store.state.quotation);
+            return this.$store.state.quotation;
+        }
+    },
+    methods: {
+        clearSearch: function clearSearch() {
+            this.search = "";
+        },
+        getHumanDate: function getHumanDate(date) {
+            return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+        }
+    }
+});
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n    " + _vm._s(_vm.quotation) + "}\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-14addc89", module.exports)
   }
 }
 

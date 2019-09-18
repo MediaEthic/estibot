@@ -69,7 +69,7 @@
                         </textarea>
 
                         <div class="wrap-button-submit">
-                            <button type="button" class="cta" disabled>
+                            <button type="submit" @click="saveQuotation" class="cta" id="save-quotation" disabled>
                                 <span>Sauvegarder</span>
                                 <svg width="13px" height="10px" viewBox="0 0 13 10">
                                     <path d="M1,5 L11,5"></path>
@@ -153,6 +153,7 @@
             prev() {
                 this.step--;
                 this.progress = (this.step * 100) / 6;
+                document.getElementById('save-quotation').disabled = true;
                 this.updateSummary();
             },
             next() {
@@ -168,19 +169,19 @@
                     if (this.form.description.label.type === "new") this.summary += `Nouvelle étiquette : ` + this.form.description.label.name;
                 }
                 if (this.form.description.label.width > 0 && this.form.description.label.length > 0) this.summary += `\nFormat : ` + this.form.description.label.width + ` mm (laize) x ` + this.form.description.label.length + `mm (avance)`;
-                if (this.form.printing.press !== "") this.summary += `\nMachine : ` + this.form.printing.press;
+                if (this.form.printing.press !== "") this.summary += `\nMachine : ` + this.form.printing.name;
                 if (this.form.printing.colors > 0) this.summary += `\nImpression : ` + this.form.printing.colors + ` couleurs`;
                 if (this.form.printing.quadri) this.summary += `en quadrichromie`;
                 if (this.form.printing.substrate.name !== "") {
-                    if (this.form.printing.substrate.type === "old") this.summary += `\nPapier existant : ` + this.form.description.label.name;
-                    if (this.form.printing.substrate.type === "new") this.summary += `\nNouveau papier : ` + this.form.description.label.name;
+                    if (this.form.printing.substrate.type === "old") this.summary += `\nPapier existant : ` + this.form.printing.substrate.name;
+                    if (this.form.printing.substrate.type === "new") this.summary += `\nNouveau papier : ` + this.form.printing.substrate.name;
                     this.summary += ` (` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²)`;
                 }
                 if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
                     if (this.form.finishing.finishings.length > 1) {
                         this.summary += `\nFinitions :`;
                     } else {
-                        this.summary += `\nFinition :`;
+                        this.summary += `\nFinition : `;
                     }
 
                     this.form.finishing.finishings.forEach(el => {
@@ -188,7 +189,12 @@
                         if (el.presence_consumable) $consumable = ` + consommable`;
                         let $shape = "";
                         if (el.shape > 0) $shape = ` (outil : ` + el.shape + `€)`;
-                        this.summary += `\n` + el.name + $consumable + $shape;
+
+                        if (this.form.finishing.finishings.length > 1) {
+                            this.summary += `\n - ` + el.name + $consumable + $shape;
+                        } else {
+                            this.summary += el.name + $consumable + $shape;
+                        }
                     });
 
                     if (this.form.finishing.cutting.name !== "") {
@@ -225,6 +231,13 @@
                         summary: this.summary,
                     });
                 }
+            },
+            saveQuotation() {
+                this.$store.dispatch('saveQuotation').then(resp => {
+                    this.$router.push({name: "single-quotation", params: { id: resp.data.id }})
+                }).catch(error => {
+                    console.log(error);
+                });
             }
         }
     }

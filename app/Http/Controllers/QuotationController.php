@@ -67,10 +67,10 @@ class QuotationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getSubstrates()
-    {
-        return Substrate::get();
-    }
+//    public function getSubstrates()
+//    {
+//        return Substrate::get();
+//    }
 
     /**
      * Display a listing of the resource.
@@ -87,20 +87,20 @@ class QuotationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getConsumables()
-    {
-        return Consumable::get();
-    }
+//    public function getConsumables()
+//    {
+//        return Consumable::get();
+//    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getCuttings()
-    {
-        return Cutting::get();
-    }
+//    public function getCuttings()
+//    {
+//        return Cutting::get();
+//    }
 
     /**
      * Display a listing of the resource.
@@ -134,8 +134,6 @@ class QuotationController extends Controller
     public function store(Request $request)
     {
         return $this->repository->store($request->all());
-//
-//        return redirect('parameters/corporation/establishments')->withOk("L'établissement " . $establishment->name . " a bien été créé.");
     }
 
     /**
@@ -146,10 +144,7 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
-//        $establishment = $this->repository->getById($id);
-//        $corporations = DB::table('corporations')->select('id', 'name')->get();
-//
-//        return view('parameters.corporation.establishments.edit',  compact('establishment', 'corporations'));
+        return $this->repository->getById($id);
     }
 
     /**

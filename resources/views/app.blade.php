@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Estibot - Application web de devis simple et rapide</title>
         <link rel="stylesheet" href="dist/app.css" />
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYypfwfQ1jmY90EMBdo4WUgXfO7rFd9eE&libraries=places"></script>
+{{--        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYypfwfQ1jmY90EMBdo4WUgXfO7rFd9eE&libraries=places"></script>--}}
     </head>
 
     <body>

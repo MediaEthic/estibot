@@ -2,13 +2,19 @@
 
 namespace App\Repositories;
 
-use App\Models\Cutting;
-use App\Models\Finishing;
-use App\Models\Label;
-use App\Models\Packing;
-use App\Models\Printing;
-use App\Models\Quotation;
-use App\Models\Third;
+use App\Models\ {
+    Consumable,
+    Contact,
+    Cutting,
+    Finishing,
+    FinishingLabel,
+    Label,
+    Packing,
+    Printing,
+    Quotation,
+    Substrate,
+    Third
+};
 
 class QuotationRepository
 {
@@ -28,53 +34,162 @@ class QuotationRepository
 
     public function getById($id)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->findOrFail($id)->with('third');
     }
 
-    private function save(Substrate $model, Array $inputs)
+    private function saveProspect(Third $model, Array $inputs)
     {
-        $model->name = $inputs['name'];
-        $model->supplier_id = $inputs['supplier_id'];
-        $model->type_id = $inputs['type_id'];
-        $model->color = $inputs['color'];
-
-        $weight = $inputs['weight'];
-        $thickness = $inputs['thickness'];
-
-        if (empty($weight) && !empty($thickness)) {
-            $model->weight = $thickness * 1000;
-            $model->thickness = $thickness;
-        } else if ($thickness === null && $weight != null) {
-            $model->thickness = $weight / 1000;
-            $model->weight = $weight;
-        } else {
-            $model->weight = $weight;
-            $model->thickness = $thickness;
-        }
-
-        $model->width = $inputs['width'];
-        $model->length = $inputs['length'];
-        $model->fibre = $inputs['fibre'];
-        $model->conditioning = $inputs['conditioning'];
-        $model->price = $inputs['price'];
-        $model->stiffness_id = $inputs['stiffness_id'];
-        $model->duplex = $inputs['duplex'];
-        $model->film = $inputs['film'];
-        $model->lamination = $inputs['lamination'];
-        $model->adhesive = $inputs['adhesive'];
-        $model->active = $inputs['active'];
-
-        // Save in base
+        if (!empty($inputs['name'])) $model->name = $inputs['name'];
+        if (!empty($inputs['address'])) $model->address = $inputs['address'];
+        if (!empty($inputs['zipcode'])) $model->zipcode = $inputs['zipcode'];
+        if (!empty($inputs['city'])) $model->city = $inputs['city'];
         $model->save();
+
+        return $model;
+    }
+
+    private function saveContact(Contact $model, Array $inputs, $third)
+    {
+        $model->third_id = $third;
+        if (!empty($inputs['civility'])) $model->civility = $inputs['civility'];
+        if (!empty($inputs['name'])) $model->name = $inputs['name'];
+        if (!empty($inputs['surname'])) $model->surname = $inputs['surname'];
+        if (!empty($inputs['email'])) $model->email = $inputs['email'];
+        $model->save();
+
+        return $model;
+    }
+
+    private function saveSubstrate(Substrate $model, Array $inputs)
+    {
+        if (!empty($inputs['name'])) $model->name = $inputs['name'];
+        if (!empty($inputs['width'])) $model->width = $inputs['width'];
+        if (!empty($inputs['weight'])) $model->weight = $inputs['weight'];
+        if (!empty($inputs['price'])) $model->price = $inputs['price'];
+        $model->save();
+
+        return $model;
+    }
+
+    private function saveCutting(Cutting $model, Array $inputs)
+    {
+        if (!empty($inputs['name'])) $model->name = $inputs['name'];
+        if (!empty($inputs['dimension_width'])) $model->dimension_width = $inputs['dimension_width'];
+        if (!empty($inputs['dimension_length'])) $model->dimension_length = $inputs['dimension_length'];
+        if (!empty($inputs['bleed_width'])) $model->bleed_width = $inputs['bleed_width'];
+        if (!empty($inputs['bleed_length'])) $model->bleed_length = $inputs['bleed_length'];
+        if (!empty($inputs['pose_width'])) $model->pose_width = $inputs['pose_width'];
+        if (!empty($inputs['pose_length'])) $model->pose_length = $inputs['pose_length'];
+        $model->save();
+
+        return $model;
+    }
+
+    private function saveLabel(Label $model, Array $inputs, $printing, $substrate, $cutting, $packing)
+    {
+        if (!empty($inputs['name'])) $model->name = $inputs['name'];
+        if (!empty($inputs['width'])) $model->width = $inputs['width'];
+        if (!empty($inputs['length'])) $model->length = $inputs['length'];
+        if (!empty($printing['press'])) $model->printing_id = $printing['press'];
+        if (!empty($printing['colors'])) $model->number_colors = $printing['colors'];
+        if (!empty($printing['quadri'])) $model->quadri = $printing['quadri'];
+        if (!empty($substrate)) $model->substrate_id = $substrate;
+        if (!empty($cutting)) $model->cutting_id = $cutting;
+        if (!empty($packing['direction'])) $model->winding = $packing['direction'];
+        if (!empty($packing['packing'])) $model->packing = $packing['packing'];
+        $model->save();
+
+        return $model;
+    }
+
+    private function saveFinishingLabel(FinishingLabel $model, Array $inputs, $label)
+    {
+        if (!empty($inputs['type'])) $model->finishing_id = $inputs['type'];
+        if (!empty($label)) $model->label_id = $label;
+        if (!empty($inputs['shape'])) $model->shape = $inputs['shape'];
+        if (!empty($inputs['reworking'])) $model->reworking = $inputs['reworking'];
+        return $model;
+    }
+
+    private function saveConsumable(Consumable $model, Array $inputs, $finishingLabel)
+    {
+        if (!empty($finishingLabel)) $model->finishing_label = $finishingLabel;
+        if (!empty($inputs['name'])) $model->name = $inputs['name'];
+        if (!empty($inputs['width'])) $model->width = $inputs['width'];
+        if (!empty($inputs['price'])) $model->price = $inputs['price'];
+        return $model;
+    }
+
+    private function saveQuotation(Quotation $model, Array $inputs, $price, $third, $contact, $label)
+    {
+        if (!empty($inputs['summary'])) $model->description = $inputs['summary'];
+        $images = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
+        $model->image = $images[array_rand($images)];
+        $model->third_type = $inputs['identification']['third']['type'];
+        if (!empty($third)) $model->third_id = $third;
+        if (!empty($contact)) $model->contact_id = $contact;
+        $model->label_type = $inputs['description']['label']['type'];
+        if (!empty($label)) $model->label_id = $label;
+        $validityDate = date('Y-m-d', strtotime("+3 months"));
+        $model->validity = $validityDate;
+
+        $totalUnitPrice = 0;
+        foreach ($price['quantities'] as $key => $quantity) {
+            $totalUnitPrice += $quantity['totals']['totalCosts'] / $key;
+        }
+        $thousandPrice = ($totalUnitPrice / 3) * 1000;
+        $model->thousand = $thousandPrice;
+        $model->vat = 20;
+        $model->workflow = serialize($inputs);
+        $model->price = serialize($price);
+        $model->save();
+        return $model;
     }
 
     public function store(Array $inputs)
     {
-//        $model = new Substrate();
+        $workflow = $inputs['workflow'];
+        $identification = $workflow['identification'];
+        $description = $workflow['description'];
+        $printing = $workflow['printing'];
+        $finishing = $workflow['finishing'];
+        $packing = $workflow['packing'];
 
-//        $this->save($model, $inputs);
-//
-//        return $model;
+        $third = null;
+        $contact = null;
+        if ($identification['third']['type'] === "new") {
+            $third = $this->saveProspect(new Third(), $identification['third']);
+            $contact = $this->saveContact(new Contact(), $identification['contact'], $third['id']);
+        }
+
+        $substrate = null;
+        if ($printing['substrate']['type'] === "new") {
+            $substrate = $this->saveSubstrate(new Substrate(), $printing['substrate']);
+        }
+
+        $cutting = null;
+        if ($finishing['cutting']['type'] === "new") {
+            $cutting = $this->saveCutting(new Cutting(), $finishing['cutting']);
+        }
+
+        $label = null;
+        if ($description['label']['type'] === "new") {
+            $label = $this->saveLabel(new Label(), $description['label'], $printing, $substrate['id'], $cutting['id'], $packing);
+        }
+
+        foreach ($finishing['finishings'] as $finishing) {
+            $finishingID = $finishing['type'];
+            $finishingLabel = $this->saveFinishingLabel(new FinishingLabel(), $finishing, $label['id']);
+            if ($finishing['presence_consumable']) {
+                $consumable = $this->saveConsumable(new Consumable(), $finishing['consumable'], $finishingLabel['id']);
+            }
+        }
+
+        $quotation = $this->saveQuotation(new Quotation(), $workflow, $inputs['price'], $third['id'], $contact['id'], $label['id']);
+
+        return $quotation;
+
+
     }
 
     public function getPrice($inputs) {
@@ -271,7 +386,7 @@ class QuotationRepository
 
         $quantities = $description['quantities'];
         if (empty($errors)) {
-            $substratePriceLinearMeter = $substratePrice / (1000000 / $substrateWidth);
+            $substratePriceLinearMeter = $substrateWidth / 1000 * $substratePrice;
 
             foreach ($quantities as $quantity) {
                 if (!empty($quantity['quantity']) && !empty($quantity['model']) && !empty($quantity['plate'])) {
@@ -339,12 +454,12 @@ class QuotationRepository
                     }
 
                     // Métrage de calage impression
-                    $meterMakereadyPrinting = $press->overlay_sheet * $plates;
+                    $meterMakereadyPrinting = $press->overlay_sheet + ($press->overlay_sheet_color * $plates);
                     $meterMakereadyPress = $meterMakereadyPrinting;
                     $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour l'impression : " . $meterMakereadyPrinting;
 
                     // Temps de calage impression
-                    $timeMakereadyPrinting = $press->makeready_times * $plates;
+                    $timeMakereadyPrinting = $press->makeready_times + ($press->makeready_times_color * $plates);
                     $results['quantities'][$copies]['time'][] = "Calage de l'impression : " . $timeMakereadyPrinting . "h";
 
 
@@ -575,12 +690,6 @@ class QuotationRepository
                 }
             }
         }
-
-//        if (empty($errors)) {
-//            if ($third['type'] === "new") { $this->saveProspect($third, $contact); }
-//            if ($label['type'] === "new") { $this->saveLabel($label); }
-//            if ($label['type'] === "new") { $this->saveLabel($label); }
-//        }
 
         if (empty($errors)) {
             return $results;

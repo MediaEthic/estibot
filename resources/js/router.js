@@ -7,6 +7,7 @@ Vue.use(VueRouter);
 import Login from './components/Login';
 import Home from './components/Home';
 import Quotation from './components/Quotation';
+import SingleQuotation from './components/SingleQuotation';
 import Profile from './components/Profile';
 
 
@@ -36,6 +37,16 @@ const routes = [
         meta: {
             title: 'Création d\'un nouveau devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true
+        },
+    },
+    {
+        path: '/quotation/:id',
+        name: 'single-quotation',
+        component: SingleQuotation,
+        meta: {
+            title: 'Devis Estibot - Application de devis simple et rapide pour les imprimeurs',
+            requiresAuth: true,
+            transitionName: 'slide'
         },
     },
     {

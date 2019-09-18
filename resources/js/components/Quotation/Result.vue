@@ -34,10 +34,10 @@
                             <li class="item-detail"><i class="far fa-clock"></i>{{ quantity.totals.totalTimes }}h</li>
                             <li class="item-detail"><i class="fas fa-weight-hanging"></i>{{ quantity.totals.weight }}kg</li>
                             <li class="item-detail"><i class="fas fa-layer-group"></i>{{ (quantity.totals.totalFixedCosts).toFixed(2) }}€</li>
-                            <li class="item-detail"><i class="fas fa-percentage"></i>{{ quantity.totals.totalVariableCosts }}€</li>
+                            <li class="item-detail"><i class="fas fa-percentage"></i>{{ (quantity.totals.totalVariableCosts).toFixed(2) }}€</li>
                             <li class="item-detail"><i class="fas fa-tag"></i>{{ (quantity.totals.totalCosts / index).toFixed(2) }}€</li>
     <!--                        <li class="item-detail"><i class="fas fa-weight-hanging"></i>{{ (quantity.totals.totalVariableCosts / copies) * 1000 }}</li>-->
-                            <li class="item-detail"><i class="fas fa-tags"></i>{{ quantity.totals.totalCosts / 1000 }}€</li>
+                            <li class="item-detail"><i class="fas fa-tags"></i>{{ (quantity.totals.totalCosts / 1000).toFixed(2) }}€</li>
                         </ul>
                     </div>
                     <button class="detail-result"><i class="fas fa-chevron-right"></i></button>
@@ -67,13 +67,11 @@
                 this.result = this.$store.state.price;
 
                 if (this.result.errors !== undefined) {
+                    document.getElementById('save-quotation').disabled = true;
                     this.errors = this.result.errors;
-                    console.log("this.errors");
-                    console.log(this.errors);
                 } else {
                     this.errors = [];
-                    console.log("this.result");
-                    console.log(this.result);
+                    document.getElementById('save-quotation').disabled = false;
                 }
             });
         },
@@ -93,16 +91,11 @@
                 for (key in obj) {
                     if (obj.hasOwnProperty(key)) size++;
                 }
-                console.log("obj");
-                console.log(obj);
-                console.log(size);
-                // this.copies = Object.keys(obj[0]);
-                // console.log(this.copies);
                 return size;
             },
             displayQuantityDetail(index) {
                 this.quantity = true;
-                this.copies = index;
+                this.copies = Number(index);
             },
             hideQuantityDetail (value) {
                 this.quantity = false;
@@ -171,7 +164,7 @@
                         line-height: 1.7rem;
 
                         [class^="fa"] {
-                            font-size: 1.5srem;
+                            font-size: 1.5rem;
                             color: $primary-color-light;
                             margin-right: .5rem;
                         }

@@ -54,13 +54,13 @@
         </div>
 
         <div class="wrap-radio">
-            <div class="wrap-field">
-                <input type="radio" id="substrate_old" v-model="form.printing.substrate.type" value="old">
-                <label for="substrate_old">
-                    <i class="fas fa-search"></i>
-                    <span>Rechercher un support</span>
-                </label>
-            </div>
+<!--            <div class="wrap-field">-->
+<!--                <input type="radio" id="substrate_old" v-model="form.printing.substrate.type" value="old">-->
+<!--                <label for="substrate_old">-->
+<!--                    <i class="fas fa-search"></i>-->
+<!--                    <span>Rechercher un support</span>-->
+<!--                </label>-->
+<!--            </div>-->
             <div class="wrap-field">
                 <input type="radio" id="substrate_new" v-model="form.printing.substrate.type" value="new">
                 <label for="substrate_new">
@@ -141,7 +141,7 @@
         },
         created() {
             this.$store.dispatch('getPrintings');
-            this.$store.dispatch('getSubstrates');
+            // this.$store.dispatch('getSubstrates');
         },
         computed: {
             form() {
@@ -150,9 +150,9 @@
             printings() {
                 return this.$store.state.printings;
             },
-            substrates() {
-                return this.$store.state.substrates;
-            }
+            // substrates() {
+            //     return this.$store.state.substrates;
+            // }
         },
         methods: {
             checkAnimation({ target, animationName }) {

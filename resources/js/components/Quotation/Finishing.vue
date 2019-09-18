@@ -63,7 +63,7 @@
                 <span class="symbol-left-field"><i class="fas fa-cut"></i></span>
             </div>
 
-            <transition name="fade" tag="div">
+            <transition name="fade" tag="div" mode="out-in">
                 <div v-if="item.presence_consumable === true && item.type !== ''"
                     class="wrap-group-field"
                      :class="[{ hasValue: item.consumable.name },
@@ -122,13 +122,13 @@
 
 
         <div class="wrap-radio">
-            <div class="wrap-field">
-                <input type="radio" id="cutting_old" v-model="form.finishing.cutting.type" value="old">
-                <label for="cutting_old">
-                    <i class="fas fa-search"></i>
-                    <span>Rechercher un outil</span>
-                </label>
-            </div>
+<!--            <div class="wrap-field">-->
+<!--                <input type="radio" id="cutting_old" v-model="form.finishing.cutting.type" value="old">-->
+<!--                <label for="cutting_old">-->
+<!--                    <i class="fas fa-search"></i>-->
+<!--                    <span>Rechercher un outil</span>-->
+<!--                </label>-->
+<!--            </div>-->
             <div class="wrap-field">
                 <input type="radio" id="cutting_new" v-model="form.finishing.cutting.type" value="new">
                 <label for="cutting_new">
@@ -267,9 +267,7 @@
         created() {
             this.form.finishing.cutting.dimension_width = this.form.description.label.width;
             this.form.finishing.cutting.dimension_length = this.form.description.label.length;
-            // this.$store.dispatch('getWorkflow');
             this.$store.dispatch('getFinishings');
-            // this.$store.dispatch('getConsumables');
         },
         computed: {
             form() {
@@ -278,9 +276,6 @@
             finishings() {
                 return this.$store.state.finishings;
             },
-            // consumables() {
-            //     return this.$store.state.consumables;
-            // }
         },
         methods: {
             checkAnimation({ target, animationName }) {

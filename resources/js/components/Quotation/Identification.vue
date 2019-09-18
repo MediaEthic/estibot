@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="wrap-radio">
-            <div class="wrap-field">
-                <input type="radio" id="third_old" v-model="form.identification.third.type" value="old">
-                <label for="third_old">
-                    <i class="fas fa-user-secret"></i>
-                    <span>Rechercher un client</span>
-                </label>
-            </div>
+<!--            <div class="wrap-field">-->
+<!--                <input type="radio" id="third_old" v-model="form.identification.third.type" value="old">-->
+<!--                <label for="third_old">-->
+<!--                    <i class="fas fa-user-secret"></i>-->
+<!--                    <span>Rechercher un client</span>-->
+<!--                </label>-->
+<!--            </div>-->
             <div class="wrap-field">
                 <input type="radio" id="third_new" v-model="form.identification.third.type" value="new">
                 <label for="third_new">
@@ -48,7 +48,8 @@
                        autocomplete="off"
                        required>
 
-                <input v-model.trim="form.identification.third.address"
+                <input v-else
+                       v-model.trim="form.identification.third.address"
                        @focus="form.identification.third.hasFocus = true"
                        @blur="form.identification.third.hasFocus = false"
                        class="field"
