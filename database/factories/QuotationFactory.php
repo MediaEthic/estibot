@@ -23,7 +23,7 @@ $factory->define(App\Models\Quotation::class, function (Faker $faker) {
         'label_id' => App\Models\Label::all()->random()->id,
         'delivery_date' => $faker->dateTimeThisYear('+1 month'),
         'validity' => $faker->dateTimeThisYear('+1 month'),
-        'price' => $faker->randomFloat($nbMaxDecimals = 4, $min = 100, $max = 10000),
+        'thousand' => $faker->randomFloat($nbMaxDecimals = 4, $min = 100, $max = 10000),
         'shipping' => $faker->randomFloat($nbMaxDecimals = 4, $min = 0, $max = 60),
         'vat' => $faker->randomFloat($nbMaxDecimals = 4, $min = 10, $max = 10000),
     ];

@@ -20,10 +20,11 @@ class DatabaseSeeder extends Seeder
         $this->call('PrintingsTableSeeder');
         $this->call('FinishingsTableSeeder');
         $this->call('PackingsTableSeeder');
+        $this->call('SubstratesTableSeeder');
+        $this->call('LabelsTableSeeder');
+        $this->call('QuotationsTableSeeder');
 
-        factory(App\Models\Substrate::class, 30)->create();
-        factory(App\Models\Label::class, 30)->create();
-        factory(App\Models\Copy::class, 40)->create();
-        factory(App\Models\Quotation::class, 50)->create();
+
+//        factory(App\Models\Copy::class, 40)->create();
     }
 }

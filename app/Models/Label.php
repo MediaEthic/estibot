@@ -15,10 +15,23 @@ class Label extends Model
         'name',
         'width',
         'length',
+        'printing_id',
+        'number_colors',
+        'quadri',
         'substrate_id',
+        'cutting_id',
         'winding',
+        'packing',
     ];
 
+
+    /**
+     * Get the printing of the label.
+     */
+    public function printing()
+    {
+        return $this->belongsTo(Printing::class);
+    }
 
     /**
      * Get the substrate of the label.
@@ -29,12 +42,13 @@ class Label extends Model
     }
 
     /**
-     * Get all of the models for the label.
+     * Get the cutting of the label.
      */
-    public function models()
+    public function cutting()
     {
-        return $this->hasMany(Copy::class);
+        return $this->belongsTo(Cutting::class);
     }
+
 
     /**
      * Get all of the quotations for the label.

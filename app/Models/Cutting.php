@@ -20,4 +20,12 @@ class Cutting extends Model
         'pose_width',
         'pose_length',
     ];
+
+    /**
+     * Get all of the labels for the cutting.
+     */
+    public function labels()
+    {
+        return $this->hasMany(Label::class);
+    }
 }

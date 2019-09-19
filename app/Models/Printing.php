@@ -38,6 +38,13 @@ class Printing extends Model
         'active',
     ];
 
+    /**
+     * Get all of the labels for the printing.
+     */
+    public function labels()
+    {
+        return $this->hasMany(Label::class);
+    }
 
     /**
      * Get all of the finishings for the printing.
