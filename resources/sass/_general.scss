@@ -1,0 +1,170 @@
+.wrap-summary {
+    //overflow-y:scroll;
+    //overflow-x:hidden;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: calc(100vh - 13.5rem);
+    background-color: #fff;
+    z-index: 1;
+    border-radius: 3rem 3rem 0 0 ;
+    margin: 0 -2rem;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 .5rem rgba($primary-color-dark, 0.2);
+    transition: 0.5s;
+
+    &.pull {
+        top: 8.4rem;
+    }
+
+    .head-summary {
+        text-align: center;
+
+        .pull-summary {
+            position: absolute;
+            left: -9999px;
+
+            & + label {
+                width: 100%;
+                transition: 0.4s;
+
+                [class^="fa"] {
+                    display: block;
+                    width: 100%;
+                    color: $secondary-color;
+                }
+            }
+
+            &:checked {
+                & + label {
+                    /*color: $white;
+                    background-color: $secondary-color;
+                    border: .15rem solid $secondary-color;
+                    transform: rotate(180deg);*/
+                }
+            }
+        }
+    }
+
+    .wrap-content-summary {
+        margin-top: 2rem;
+
+        .image-no-data {
+            display: block;
+            width: 100%;
+            max-width: 41rem;
+            margin: 0 auto;
+        }
+    }
+}
+
+
+@media screen and (min-width: 680px) {
+    .wrap-summary {
+        position: initial;
+        margin: 0 0 0 2rem;
+        border-radius: 2rem 1rem 3rem 1rem;
+
+        .head-summary {
+            label {
+                [class^="fa"] {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 880px) {
+    .wrap-summary {
+        width: 45rem;
+    }
+}
+
+
+.responsive-table {
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+    box-shadow: 0 0 .5rem rgba($grey-dark, 0.1);
+
+    tr {
+        padding: .35em;
+
+        &:not(:last-child) {
+            border-bottom: .05rem solid $primary-color-dark;
+        }
+    }
+
+    th,
+    td {
+        padding: .625em;
+        text-align: center;
+    }
+
+    th {
+        font-size: .85em;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .responsive-table {
+        border: 0;
+        border-radius: 1rem;
+
+        caption {
+            color: $primary-color-dark;
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: .1rem;
+            margin: -.1rem;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: .1rem;
+        }
+
+        tr {
+            display: block;
+
+            &:first-child {
+                border-radius: 1rem 1rem 0 0;
+            }
+
+            &:last-child {
+                border-radius: 0 0 1rem 1rem;
+            }
+        }
+
+        td {
+            display: block;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            text-align: right !important;
+            color: $primary-color-dark;
+
+            &:before {
+                content: attr(data-label);
+                float: left;
+                font-weight: $bold;
+                text-transform: uppercase;
+                color: $primary-color-light;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+
+    }
+}

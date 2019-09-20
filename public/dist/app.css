@@ -235,6 +235,43 @@ body {
   content: "\E907";
 }
 
+textarea:focus,
+input:focus {
+  border-color: transparent !important;
+}
+
+textarea:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+textarea:focus:-moz-placeholder {
+  color: transparent;
+}
+
+textarea:focus::-moz-placeholder {
+  color: transparent;
+}
+
+textarea:focus:-ms-input-placeholder {
+  color: transparent;
+}
+
+textarea::-webkit-input-placeholder {
+  color: #999999;
+}
+
+textarea:-moz-placeholder {
+  color: #999999;
+}
+
+textarea::-moz-placeholder {
+  color: #999999;
+}
+
+textarea:-ms-input-placeholder {
+  color: #999999;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -253,6 +290,20 @@ button {
   background: transparent;
   margin: 0;
   padding: 0;
+}
+
+textarea {
+  display: block;
+  resize: none;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  width: 100%;
+  font-family: "Ubuntu", Arial, Verdana, "Trebuchet MS", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  color: #263238;
+  background: transparent;
 }
 
 .wrap-radio {
@@ -1065,5 +1116,169 @@ progress[value]::-moz-progress-bar {
   border: 0.1rem solid #C49998;
   background-color: #C49998;
   color: #FFFDFC;
+}
+
+.wrap-summary {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: calc(100vh - 13.5rem);
+  background-color: #fff;
+  z-index: 1;
+  border-radius: 3rem 3rem 0 0;
+  margin: 0 -2rem;
+  padding: 1rem 2rem;
+  -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);
+          box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.wrap-summary.pull {
+  top: 8.4rem;
+}
+
+.wrap-summary .head-summary {
+  text-align: center;
+}
+
+.wrap-summary .head-summary .pull-summary {
+  position: absolute;
+  left: -9999px;
+}
+
+.wrap-summary .head-summary .pull-summary + label {
+  width: 100%;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.wrap-summary .head-summary .pull-summary + label [class^="fa"] {
+  display: block;
+  width: 100%;
+  color: #C49998;
+}
+
+.wrap-summary .head-summary .pull-summary:checked + label {
+  /*color: $white;
+                    background-color: $secondary-color;
+                    border: .15rem solid $secondary-color;
+                    transform: rotate(180deg);*/
+}
+
+.wrap-summary .wrap-content-summary {
+  margin-top: 2rem;
+}
+
+.wrap-summary .wrap-content-summary .image-no-data {
+  display: block;
+  width: 100%;
+  max-width: 41rem;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 680px) {
+  .wrap-summary {
+    position: initial;
+    margin: 0 0 0 2rem;
+    border-radius: 2rem 1rem 3rem 1rem;
+  }
+
+  .wrap-summary .head-summary label [class^="fa"] {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 880px) {
+  .wrap-summary {
+    width: 45rem;
+  }
+}
+
+.responsive-table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);
+          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);
+}
+
+.responsive-table tr {
+  padding: .35em;
+}
+
+.responsive-table tr:not(:last-child) {
+  border-bottom: 0.05rem solid #62799F;
+}
+
+.responsive-table th,
+.responsive-table td {
+  padding: .625em;
+  text-align: center;
+}
+
+.responsive-table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  .responsive-table {
+    border: 0;
+    border-radius: 1rem;
+  }
+
+  .responsive-table caption {
+    color: #62799F;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .responsive-table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: .1rem;
+    margin: -.1rem;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: .1rem;
+  }
+
+  .responsive-table tr {
+    display: block;
+  }
+
+  .responsive-table tr:first-child {
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  .responsive-table tr:last-child {
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  .responsive-table td {
+    display: block;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    text-align: right !important;
+    color: #62799F;
+  }
+
+  .responsive-table td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #C2D9FF;
+  }
+
+  .responsive-table td:last-child {
+    border-bottom: 0;
+  }
 }
 
