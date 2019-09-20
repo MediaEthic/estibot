@@ -16,7 +16,7 @@ class CreateCuttingsTable extends Migration
         Schema::create('cuttings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->nullableTimestamps();
-            $table->string('name', 200);
+            $table->string('name', 200)->nullable()->default(null);
             $table->unsignedInteger('dimension_width');
             $table->unsignedInteger('dimension_length');
             $table->unsignedInteger('bleed_width');

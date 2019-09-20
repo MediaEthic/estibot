@@ -22,9 +22,13 @@ class Quotation extends Model
         'label_id',
         'delivery_date',
         'validity',
-        'price',
+        'cost',
+        'thousand',
+        'quantity',
         'shipping',
         'vat',
+        'workflow',
+        'price',
     ];
 
 
@@ -50,5 +54,13 @@ class Quotation extends Model
     public function label()
     {
         return $this->belongsTo(Label::class);
+    }
+
+    /**
+     * Get all of the quantities for the quotation.
+     */
+    public function quantities()
+    {
+        return $this->hasMany(Quantity::class);
     }
 }

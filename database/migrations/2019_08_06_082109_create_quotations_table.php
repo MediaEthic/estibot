@@ -26,8 +26,9 @@ class CreateQuotationsTable extends Migration
             $table->unsignedBigInteger('label_id')->nullable()->default(null);
             $table->dateTime('delivery_date')->nullable()->default(null);
             $table->dateTime('validity')->nullable()->default(null);
+            $table->float('cost', 10, 6)->nullable()->default(null);
             $table->float('thousand', 10, 6)->nullable()->default(null);
-            $table->unsignedInteger('quantity')->nullable()->default(null);
+            $table->unsignedBigInteger('quantity')->nullable()->default(null);
             $table->float('shipping', 10, 6)->nullable()->default(null);
             $table->float('vat', 10, 6)->nullable()->default(null);
             $table->text('workflow')->nullable()->default(null);
