@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\ {
-    Consumable,
+use App\Models\{Consumable,
     Contact,
     Cutting,
     Finishing,
@@ -11,10 +10,10 @@ use App\Models\ {
     Label,
     Packing,
     Printing,
+    Quantity,
     Quotation,
     Substrate,
-    Third
-};
+    Third};
 
 class QuotationRepository
 {
@@ -34,7 +33,9 @@ class QuotationRepository
 
     public function getById($id)
     {
-        return $this->model->findOrFail($id)->with('third');
+        return $this->model->with('third')
+            ->with('quantities')
+            ->findOrFail($id);
     }
 
     private function saveProspect(Third $model, Array $inputs)
@@ -133,15 +134,40 @@ class QuotationRepository
         $validityDate = date('Y-m-d', strtotime("+3 months"));
         $model->validity = $validityDate;
 
-        $totalUnitPrice = 0;
+        $allTotalCosts = array();
+        $allQuantities = array();
         foreach ($price['quantities'] as $key => $quantity) {
-            $totalUnitPrice += $quantity['totals']['totalCosts'] / $key;
+            $allTotalCosts[] = $quantity['totals']['totalCosts'];
+            $allQuantities[] = $key;
         }
-        $thousandPrice = ($totalUnitPrice / 3) * 1000;
+        $minQuantity = min($allQuantities);
+
+        $model->cost = $price['quantities'][$minQuantity]['totals']['totalCosts'];
+        $thousandPrice = ($price['quantities'][$minQuantity]['totals']['totalCosts'] / $minQuantity) * 1000;
         $model->thousand = $thousandPrice;
+        $model->quantity = $minQuantity;
+        $model->shipping = $price['quantities'][$minQuantity]['totals']['expedition'];
         $model->vat = 20;
         $model->workflow = serialize($inputs);
         $model->price = serialize($price);
+        $model->save();
+        return $model;
+    }
+
+    private function saveQuantities(Quantity $model, Array $inputs, $quotation)
+    {
+        $model->quotation_id = $quotation['id'];
+        $model->quantity = $inputs['datas']['copies'];
+        $model->time = $inputs['totals']['totalTimes'];
+        $model->weight = $inputs['totals']['weight'];
+        $model->margin = 20;
+        $model->cost = $inputs['totals']['totalCosts'];
+        $model->thousand = ($inputs['totals']['totalCosts'] / $inputs['datas']['copies']) * 1000;
+        $model->shipping = $inputs['totals']['expedition'];
+        $subtotal = $inputs['totals']['totalCosts'] + $inputs['totals']['expedition'];
+        $vat_price = $subtotal * ($quotation['vat'] / 100);
+        $model->vat_price = $subtotal * ($quotation['vat'] / 100);
+        $model->price = $subtotal + $vat_price;
         $model->save();
         return $model;
     }
@@ -187,9 +213,11 @@ class QuotationRepository
 
         $quotation = $this->saveQuotation(new Quotation(), $workflow, $inputs['price'], $third['id'], $contact['id'], $label['id']);
 
+        foreach ($inputs['price']['quantities'] as $workflowQuantity) {
+            $quantities = $this->saveQuantities(new Quantity(), $workflowQuantity, $quotation);
+        }
+
         return $quotation;
-
-
     }
 
     public function getPrice($inputs) {
@@ -197,11 +225,6 @@ class QuotationRepository
         $errors = array();
 
         $results['workflow'] = $inputs['workflow'];
-
-        $totalFixedCosts = 0;
-        $totalVariableCosts = 0;
-        $totalCosts = 0;
-        $totalTimes = 0;
 
         $margin = 20;
 
@@ -233,7 +256,6 @@ class QuotationRepository
             $substratePrice = $substrate['price'];
         }
 
-        if (empty($substrateName)) { $errors['errors'][] = "Vous devez saisir le nom du support d'impression"; }
         if (empty($substrateWidth)) { $errors['errors'][] = "Vous devez saisir la laize du support d'impression"; }
         if (empty($substrateWeight)) { $errors['errors'][] = "Vous devez saisir le grammage du support d'impression"; }
         if (empty($substratePrice)) { $errors['errors'][] = "Vous devez saisir le prix au mètre linéaire du support d'impression"; }
@@ -280,7 +302,6 @@ class QuotationRepository
             $labelLength = $label['length'];
         }
 
-        if (empty($labelName)) { $errors['errors'][] = "Vous devez saisir un nom pour l'étiquette"; }
         if (empty($labelWidth)) { $errors['errors'][] = "Vous devez saisir la laize de l'étiquette"; }
         if (empty($labelLength)) { $errors['errors'][] = "Vous devez saisir l'avance de l'étiquette"; }
 
@@ -325,7 +346,6 @@ class QuotationRepository
             $cuttingPoseLength = $cutting['pose_length'];
         }
 
-        if (empty($cuttingName)) { $errors['errors'][] = "Vous devez saisir un nom pour l'outil de découpe"; }
         if (empty($cuttingDimensionWidth) || empty($cuttingDimensionLength)) { $errors['errors'][] = "Vous devez saisir une dimension en laize et en avance pour l'outil de découpe"; }
         if (empty($cuttingBleedWidth) || empty($cuttingBleedLength)) { $errors['errors'][] = "Vous devez saisir l'entrepose en laize et en avance pour l'outil de découpe"; }
         if (empty($cuttingPoseWidth) || empty($cuttingPoseLength)) { $errors['errors'][] = "Vous devez saisir le nombre de poses en laize et en avance pour l'outil de découpe"; }
@@ -335,9 +355,6 @@ class QuotationRepository
         */
         $packing = $workflow['packing'];
         $direction = $packing['direction'];
-        if (empty($direction)) {
-            $errors['errors'][] = "Vous devez choisir un sens d'enroulement";
-        }
 
         if (empty($errors)) {
 //            if ($direction === "ehead" || $direction === "efoot" || $direction === "ihead" || $direction === "ifoot") {
@@ -390,6 +407,11 @@ class QuotationRepository
 
             foreach ($quantities as $quantity) {
                 if (!empty($quantity['quantity']) && !empty($quantity['model']) && !empty($quantity['plate'])) {
+                    $totalFixedCosts = 0;
+                    $totalVariableCosts = 0;
+                    $totalCosts = 0;
+                    $totalTimes = 0;
+
                     $copies = intval($quantity['quantity']);
                     $models = intval($quantity['model']);
                     $plates = intval($quantity['plate']);
@@ -518,6 +540,7 @@ class QuotationRepository
 
                     $marginFinishing = $margin;
                     foreach ($finishings as $finishing) {
+//                        TODO : reworking reprise sur machine
                         $finishingID = intval($finishing['type']);
                         $finishingPress = Finishing::find($finishingID);
                         $meterMakereadyFinishing = $finishingPress->overlay_sheet;
@@ -539,53 +562,51 @@ class QuotationRepository
                         $totalFixedCostFinishing = $costFinishingShape + ($totalTimeFinishing * $press->hourly_rate);
                         $results['quantities'][$copies]['cost'][] = "Calage pour " . $finishingPress->name . " : " . $totalFixedCostFinishing . "€";
 
+                        $totalCostConsumable = 0;
                         if ($finishing['presence_consumable']) {
                             $consumable = $finishing['consumable'];
-
                             if (!empty($consumable)) {
-                                if (!empty($consumable['name']) && !empty($consumable['width']) && !empty($consumable['price'])) {
+                                if (!empty($consumable['width']) && !empty($consumable['price'])) {
                                     $consumableWidth = intval($consumable['width']);
                                     $consumablePrice = floatval($consumable['price']);
                                     if ($consumableWidth >= $press->size_paperminx && $consumableWidth <= $press->size_papermaxx) {
                                         $totalCostConsumable = $substrateLinear * ($consumableWidth / 1000 * $consumablePrice);
                                         $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishingPress->name . " : " . $totalCostConsumable . "€";
-
-                                        $totalVariableCostFinishing = $totalCostConsumable;
-                                        $totalCostFinishing = $totalFixedCostFinishing + $totalVariableCostFinishing;
-
-
-                                        $costWithMarginReturned = $this->handleMargin($marginFinishing, $totalCostFinishing, $totalFixedCostFinishing, $totalVariableCostFinishing);
-                                        if (!empty($costWithMarginReturned)) {
-                                            $lastElement = end($costWithMarginReturned);
-                                            foreach ($costWithMarginReturned as $result) {
-                                                if ($result === $lastElement) {
-                                                    $totalCosts += $result[0];
-                                                    $totalFixedCosts += $result[1];
-                                                    $totalVariableCosts += $result[2];
-                                                    $totalTimes += $totalTimeFinishing;
-
-                                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishingPress->name;
-                                                    $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeFinishing;
-                                                    $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostFinishing;
-                                                    $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
-                                                    $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
-                                                    $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginFinishing;
-                                                    $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
-
-                                                    $operationId++;
-                                                }
-                                            }
-                                        }
                                     } else {
                                         $errors['errors'][] = "La laize du consommable n'est pas en corrélation avec celle de la machine";
                                     }
                                 } else {
-                                    if (empty($consumable['name'])) { $errors['errors'][] = "Vous devez saisir le nom du consommable pour la finition " . $finishingPress->name; }
                                     if (empty($consumable['width'])) { $errors['errors'][] = "Vous devez saisir la laize du consommable " . $consumable['name']; }
                                     if (empty($consumable['price'])) { $errors['errors'][] = "Vous devez saisir le prix du consommable " . $consumable['name']; }
                                 }
                             } else {
                                 $errors['errors'][] = "Vous devez saisir les données relatives au consommable pour la finition " . $finishingPress->name;
+                            }
+                        }
+
+                        $totalVariableCostFinishing = $totalCostConsumable;
+                        $totalCostFinishing = $totalFixedCostFinishing + $totalVariableCostFinishing;
+
+                        $costWithMarginReturned = $this->handleMargin($marginFinishing, $totalCostFinishing, $totalFixedCostFinishing, $totalVariableCostFinishing);
+                        if (!empty($costWithMarginReturned)) {
+                            $lastElement = end($costWithMarginReturned);
+                            foreach ($costWithMarginReturned as $result) {
+                                if ($result === $lastElement) {
+                                    $totalCosts += $result[0];
+                                    $totalFixedCosts += $result[1];
+                                    $totalVariableCosts += $result[2];
+                                    $totalTimes += $totalTimeFinishing;
+
+                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishingPress->name;
+                                    $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeFinishing;
+                                    $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostFinishing;
+                                    $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
+                                    $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
+                                    $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginFinishing;
+                                    $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
+
+                                    $operationId++;
+                                }
                             }
                         }
                     }
@@ -673,13 +694,14 @@ class QuotationRepository
                     }
 
                     $weight = $copies * $labelWidth / 1000 * $labelLength / 1000 * $substrateWeight / 1000;
+                    $expedition = round($totalCosts * (5/100), 2);
 
                     $results['quantities'][$copies]['totals']['weight'] = $weight;
                     $results['quantities'][$copies]['totals']['totalTimes'] = round($totalTimes, 2);
                     $results['quantities'][$copies]['totals']['totalCosts'] = round($totalCosts, 2);
                     $results['quantities'][$copies]['totals']['totalFixedCosts'] = $totalFixedCosts;
                     $results['quantities'][$copies]['totals']['totalVariableCosts'] = $totalVariableCosts;
-                    $results['quantities'][$copies]['totals']['expedition'] = 0;
+                    $results['quantities'][$copies]['totals']['expedition'] = $expedition;
 
                     // TODO : transport (expedition)
 
