@@ -32,8 +32,7 @@
                        class="field"
                        :class="{ hasValue: form.description.label.name }"
                        type="text"
-                       autocomplete="off"
-                       required>
+                       autocomplete="off">
                 <label class="label-field">Désignation de l'étiquette</label>
             </div>
             <div class="wrap-field-inline">

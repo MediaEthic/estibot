@@ -7,14 +7,14 @@
         <h3 class="legend-radio">Enroulement extérieur</h3>
         <div class="wrap-radio">
             <div class="wrap-field">
-                <input type="radio" id="ehead" v-model="form.packing.direction" value="ehead">
+                <input type="radio" id="ehead" v-model="form.packing.direction" value="ehead" @click="changeRadio(form.packing.direction)">
                 <label for="ehead">
                     <i class="fa icon-exterior-top"></i>
                     <span>Tête en avant</span>
                 </label>
             </div>
             <div class="wrap-field">
-                <input type="radio" id="efoot" v-model="form.packing.direction" value="efoot">
+                <input type="radio" id="efoot" v-model="form.packing.direction" value="efoot" @click="changeRadio(form.packing.direction)">
                 <label for="efoot">
                     <i class="fa icon-exterior-bottom"></i>
                     <span>Pied en avant</span>
@@ -24,14 +24,14 @@
 
         <div class="wrap-radio">
             <div class="wrap-field">
-                <input type="radio" id="eright" v-model="form.packing.direction" value="eright">
+                <input type="radio" id="eright" v-model="form.packing.direction" value="eright" @click="changeRadio(form.packing.direction)">
                 <label for="eright">
                     <i class="fa icon-exterior-right"></i>
                     <span>Droite en avant</span>
                 </label>
             </div>
             <div class="wrap-field">
-                <input type="radio" id="eleft" v-model="form.packing.direction" value="eleft">
+                <input type="radio" id="eleft" v-model="form.packing.direction" value="eleft" @click="changeRadio(form.packing.direction)">
                 <label for="eleft">
                     <i class="fa icon-exterior-left"></i>
                     <span>Gauche en avant</span>
@@ -42,14 +42,14 @@
         <h3 class="legend-radio">Enroulement intérieur</h3>
         <div class="wrap-radio">
             <div class="wrap-field">
-                <input type="radio" id="ihead" v-model="form.packing.direction" value="ihead">
+                <input type="radio" id="ihead" v-model="form.packing.direction" value="ihead" @click="changeRadio(form.packing.direction)">
                 <label for="ihead">
                     <i class="fa icon-interior-top"></i>
                     <span>Tête en avant</span>
                 </label>
             </div>
             <div class="wrap-field">
-                <input type="radio" id="ifoot" v-model="form.packing.direction" value="ifoot">
+                <input type="radio" id="ifoot" v-model="form.packing.direction" value="ifoot" @click="changeRadio(form.packing.direction)">
                 <label for="ifoot">
                     <i class="fa icon-interior-bottom"></i>
                     <span>Pied en avant</span>
@@ -59,14 +59,14 @@
 
         <div class="wrap-radio">
             <div class="wrap-field">
-                <input type="radio" id="iright" v-model="form.packing.direction" value="iright">
+                <input type="radio" id="iright" v-model="form.packing.direction" value="iright" @click="changeRadio(form.packing.direction)">
                 <label for="iright">
                     <i class="fa icon-interior-right"></i>
                     <span>Droite en avant</span>
                 </label>
             </div>
             <div class="wrap-field">
-                <input type="radio" id="ileft" v-model="form.packing.direction" value="ileft">
+                <input type="radio" id="ileft" v-model="form.packing.direction" value="ileft" @click="changeRadio(form.packing.direction)">
                 <label for="ileft">
                     <i class="fa icon-interior-left"></i>
                     <span>Gauche en avant</span>
@@ -103,7 +103,11 @@
             },
         },
         methods: {
-
+            changeRadio(value) {
+                if (value === this.form.packing.direction) {
+                    this.form.packing.direction = "";
+                }
+            }
         }
     }
 </script>

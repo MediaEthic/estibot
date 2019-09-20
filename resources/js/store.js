@@ -77,7 +77,7 @@ export default new Vuex.Store({
                         type: "",
                         name: "",
                         shape: false,
-                        reworking: false,
+                        reworking: "",
                         presence_consumable: false,
                         hasFocus: false,
                         consumable: ""
@@ -99,7 +99,7 @@ export default new Vuex.Store({
             },
             packing: {
                 packing: "",
-                direction: "ehead",
+                direction: "",
             },
         },
         price: [],
@@ -242,7 +242,7 @@ export default new Vuex.Store({
         },
         async getQuotation(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.post('/api/auth/quotation/' + credentials.id + '/edit')).data;
+            let data = (await axios.get('/api/auth/quotation/' + credentials.id + '/edit')).data;
             context.commit("setQuotation", data);
         },
     },

@@ -63,10 +63,17 @@
                              src="/assets/img/undraw_no_data_qbuo.svg"
                              alt="Illustration montrant qu'aucune donnée n'a encore été saisie"/>
 
-                        <textarea v-else
-                                  v-model="summary"
-                                  rows="15">
-                        </textarea>
+                        <div v-else>
+                            <textarea v-model="summary"
+                                      rows="15">
+                            </textarea>
+
+                            <div class="wrap-total-quotation">
+                                <div class="wrap-subtotal">
+
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="wrap-button-submit">
                             <button type="submit" @click="saveQuotation" class="cta" id="save-quotation" disabled>
@@ -151,6 +158,7 @@
         },
         methods: {
             prev() {
+                // $router.go(-1);
                 this.step--;
                 this.progress = (this.step * 100) / 6;
                 document.getElementById('save-quotation').disabled = true;
@@ -164,11 +172,27 @@
             },
             updateSummary() {
                 this.summary = "";
+
+                let labelName = ``;
                 if (this.form.description.label.name !== "") {
-                    if (this.form.description.label.type === "old") this.summary += `Étiquette existante : ` + this.form.description.label.name;
-                    if (this.form.description.label.type === "new") this.summary += `Nouvelle étiquette : ` + this.form.description.label.name;
+                    labelName = ` : ` + this.form.description.label.name;
                 }
-                if (this.form.description.label.width > 0 && this.form.description.label.length > 0) this.summary += `\nFormat : ` + this.form.description.label.width + ` mm (laize) x ` + this.form.description.label.length + `mm (avance)`;
+                if (this.form.description.label.type === "old") this.summary += `Étiquette existante` + labelName;
+                if (this.form.description.label.type === "new") this.summary += `Nouvelle étiquette` + labelName;
+
+                // if (this.form.description.quantities[0].quantity > 0) {
+                //     let quantities = [];
+                //     this.form.description.quantities.forEach(el => {
+                //         quantities.push(el.quantity);
+                //     });
+                //     let minQuantity = Math.min.apply(null, quantities);
+                //     this.summary += `\nQuantité : ` + minQuantity + ` exemplaires`;
+                // }
+
+                if (this.form.description.label.width > 0 && this.form.description.label.length > 0) {
+                    this.summary += `\nFormat : ` + this.form.description.label.width + ` mm (laize) x ` + this.form.description.label.length + `mm (avance)`;
+                }
+
                 if (this.form.printing.press !== "") this.summary += `\nMachine : ` + this.form.printing.name;
                 if (this.form.printing.colors > 0) this.summary += `\nImpression : ` + this.form.printing.colors + ` couleurs`;
                 if (this.form.printing.quadri) this.summary += `en quadrichromie`;
@@ -176,6 +200,9 @@
                     if (this.form.printing.substrate.type === "old") this.summary += `\nPapier existant : ` + this.form.printing.substrate.name;
                     if (this.form.printing.substrate.type === "new") this.summary += `\nNouveau papier : ` + this.form.printing.substrate.name;
                     this.summary += ` (` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²)`;
+                } else {
+                    if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += `\nPapier existant : ` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²`;
+                    if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += `\nNouveau papier : ` +  + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²`;
                 }
                 if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
                     if (this.form.finishing.finishings.length > 1) {
@@ -197,11 +224,16 @@
                         }
                     });
 
+
+                    let $shape = "";
+
                     if (this.form.finishing.cutting.name !== "") {
-                        let $shape = "";
                         if (this.form.finishing.cutting.shape > 0) $shape = ` (prix : ` + this.form.finishing.cutting.shape + `€)`;
                         if (this.form.finishing.cutting.type === "old") this.summary += `\nOutil de découpe existant : ` + this.form.finishing.cutting.name;
                         if (this.form.finishing.cutting.type === "new") this.summary += `\nNouvel outil de découpe : ` + this.form.finishing.cutting.name + $shape;
+                    } else {
+                        if (this.form.finishing.cutting.shape > 0) $shape = ` : ` + this.form.finishing.cutting.shape + `€`;
+                        if (this.form.finishing.cutting.type === "new") this.summary += `\nNouvel outil de découpe` + $shape;
                     }
 
                     let $direction = "";
@@ -285,74 +317,6 @@
         }
     }
 
-    .wrap-summary {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: calc(100vh - 13.5rem);
-        background-color: #fff;
-        z-index: 1;
-        border-radius: 3rem 3rem 0 0 ;
-        margin: 0 -2rem;
-        padding: 1rem 2rem;
-        box-shadow: 0 0 .5rem rgba($primary-color-dark, 0.2);
-        transition: 0.5s;
-
-        &.pull {
-            top: 8.4rem;
-        }
-
-        .head-summary {
-            text-align: center;
-
-            .pull-summary {
-                position: absolute;
-                left: -9999px;
-
-                & + label {
-                    width: 100%;
-                    transition: 0.4s;
-
-                    [class^="fa"] {
-                        display: block;
-                        width: 100%;
-                        color: $secondary-color;
-                    }
-                }
-
-                &:checked {
-                    & + label {
-                        /*color: $white;
-                        background-color: $secondary-color;
-                        border: .15rem solid $secondary-color;
-                        transform: rotate(180deg);*/
-                    }
-                }
-            }
-        }
-
-        .wrap-content-summary {
-            margin-top: 2rem;
-
-            .image-no-data {
-                display: block;
-                width: 100%;
-                max-width: 41rem;
-                margin: 0 auto;
-            }
-
-            textarea {
-                resize: none;
-                border: 0;
-                padding: 0;
-                width: 100%;
-                font-family: $font-family-primary;
-                font-size: 1.4rem;
-                line-height: 1.8rem;
-                color: $grey-dark;
-            }
-        }
-    }
 
     @media screen and (min-width: 680px) {
         .wrap-main-content {
@@ -391,20 +355,6 @@
                     }
                 }
             }
-
-            .wrap-summary {
-                position: initial;
-                margin: 0 0 0 2rem;
-                border-radius: 2rem 1rem 3rem 1rem;
-
-                .head-summary {
-                    label {
-                        [class^="fa"] {
-                            display: none;
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -414,10 +364,6 @@
             .wrap-main-form {
                 width: calc(100% - 45rem);
                 padding-right: 4rem;
-            }
-
-            .wrap-summary {
-                width: 45rem;
             }
         }
     }

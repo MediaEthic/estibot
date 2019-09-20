@@ -22,7 +22,7 @@ const routes = [
         }
     },
     {
-        path: '/',
+        path: '/quotations',
         name: 'home',
         component: Home,
         meta: {
@@ -30,6 +30,7 @@ const routes = [
             requiresAuth: true
         }
     },
+    { path: '/', redirect: { name: 'home' }},
     {
         path: '/quotation',
         name: 'quotation',
@@ -40,7 +41,7 @@ const routes = [
         },
     },
     {
-        path: '/quotation/:id',
+        path: '/quotations/:id',
         name: 'single-quotation',
         component: SingleQuotation,
         meta: {

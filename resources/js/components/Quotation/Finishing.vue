@@ -36,29 +36,29 @@
                            :class="{ hasValue: item.shape }"
                            type="number"
                            step="0.0001"
-                           autocomplete="off"
-                           required>
-                    <label class="label-field">Prix de l'outil à commander (si besoin)</label>
+                           autocomplete="off">
+                    <label class="label-field">Prix de l'outil à commander</label>
                 </div>
 
-                <div class="wrap-field h-50 switcher">
-                    <input type="radio"
-                           v-model="item.reworking"
-                           id="toggle-on-reworking"
-                           class="field toggle toggle-left hasValue"
-                           value="true"
-                           required>
-                    <label for="toggle-on-reworking" class="toggle-btn"><i class="far fa-check-circle"></i>Oui</label>
+<!--                TODO : mettre la liste des presses-->
+<!--                <div class="wrap-field h-50 switcher">-->
+<!--                    <input type="radio"-->
+<!--                           v-model="item.reworking"-->
+<!--                           id="toggle-on-reworking"-->
+<!--                           class="field toggle toggle-left hasValue"-->
+<!--                           value="true"-->
+<!--                           required>-->
+<!--                    <label for="toggle-on-reworking" class="toggle-btn"><i class="far fa-check-circle"></i>Oui</label>-->
 
-                    <input type="radio"
-                           v-model="item.reworking"
-                           id="toggle-off-reworking"
-                           class="field toggle toggle-right hasValue"
-                           value="false">
-                    <label for="toggle-off-reworking" class="toggle-btn"><i class="far fa-times-circle"></i>Non</label>
+<!--                    <input type="radio"-->
+<!--                           v-model="item.reworking"-->
+<!--                           id="toggle-off-reworking"-->
+<!--                           class="field toggle toggle-right hasValue"-->
+<!--                           value="false">-->
+<!--                    <label for="toggle-off-reworking" class="toggle-btn"><i class="far fa-times-circle"></i>Non</label>-->
 
-                    <label class="label-field">Reprise</label>
-                </div>
+<!--                    <label class="label-field">Reprise</label>-->
+<!--                </div>-->
                 <span class="focus-field"></span>
                 <span class="symbol-left-field"><i class="fas fa-cut"></i></span>
             </div>
@@ -77,8 +77,7 @@
                                class="field"
                                :class="{ hasValue: item.consumable.name }"
                                type="text"
-                               autocomplete="off"
-                               required>
+                               autocomplete="off">
                         <label class="label-field">Désignation du consommable</label>
                     </div>
 
@@ -160,8 +159,7 @@
                        class="field"
                        :class="{ hasValue: form.finishing.cutting.name }"
                        type="text"
-                       autocomplete="off"
-                       required>
+                       autocomplete="off">
                 <label class="label-field">Désignation de l'outil</label>
             </div>
             <div class="wrap-field-inline">
@@ -288,7 +286,7 @@
                     type: "",
                     name: "",
                     shape: false,
-                    reworking: false,
+                    reworking: "",
                     presence_consumable: false,
                     hasFocus: false,
                 });

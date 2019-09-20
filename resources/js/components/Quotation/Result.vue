@@ -32,12 +32,12 @@
                         <p class="price-quotation">{{ quantity.totals.totalCosts }}<span class="symbol-price">€</span> HT</p>
                         <ul class="detail-quantity">
                             <li class="item-detail"><i class="far fa-clock"></i>{{ quantity.totals.totalTimes }}h</li>
-                            <li class="item-detail"><i class="fas fa-weight-hanging"></i>{{ quantity.totals.weight }}kg</li>
+                            <li class="item-detail"><i class="fas fa-weight-hanging"></i>{{ (quantity.totals.weight).toFixed(2) }}kg</li>
                             <li class="item-detail"><i class="fas fa-layer-group"></i>{{ (quantity.totals.totalFixedCosts).toFixed(2) }}€</li>
                             <li class="item-detail"><i class="fas fa-percentage"></i>{{ (quantity.totals.totalVariableCosts).toFixed(2) }}€</li>
                             <li class="item-detail"><i class="fas fa-tag"></i>{{ (quantity.totals.totalCosts / index).toFixed(2) }}€</li>
     <!--                        <li class="item-detail"><i class="fas fa-weight-hanging"></i>{{ (quantity.totals.totalVariableCosts / copies) * 1000 }}</li>-->
-                            <li class="item-detail"><i class="fas fa-tags"></i>{{ (quantity.totals.totalCosts / 1000).toFixed(2) }}€</li>
+                            <li class="item-detail"><i class="fas fa-tags"></i>{{ ((quantity.totals.totalCosts / index) * 1000).toFixed(2) }}€</li>
                         </ul>
                     </div>
                     <button class="detail-result"><i class="fas fa-chevron-right"></i></button>
@@ -72,6 +72,7 @@
                 } else {
                     this.errors = [];
                     document.getElementById('save-quotation').disabled = false;
+                    console.log(this.result);
                 }
             });
         },

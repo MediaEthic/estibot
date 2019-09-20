@@ -88,8 +88,7 @@
                        class="field"
                        :class="{ hasValue: form.printing.substrate.name }"
                        type="text"
-                       autocomplete="off"
-                       required>
+                       autocomplete="off">
                 <label class="label-field">Désignation du support</label>
             </div>
             <div class="wrap-field h-50">

@@ -40,11 +40,14 @@
                         <p class="text-new-quotation">Créer un<br> nouveau devis</p>
                     </router-link>
 
-                    <article v-for="quotation in quotations.data"
-                             :key="quotation.id"
-                             class="wrap-quotation"
-                             :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
-                        <div class="">
+                    <router-link tag="article"
+                                 v-for="quotation in quotations.data"
+                                 :to="{ name: 'single-quotation', params: { id: quotation.id }}"
+                                 :key="quotation.id"
+                                 class="wrap-quotation"
+                                 :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
+                        <router-link tag="div"
+                                     :to="{ name: 'single-quotation', params: { id: quotation.id }}">
                             <div class="head-quotation">
                                 <h2 class="page-subtitle">Devis <span class="number-quotation">#{{ quotation.id }}</span></h2>
                                 <div class="tag tag-info">{{ thirdType(quotation.third_type) }}</div>
@@ -64,8 +67,8 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                    </article>
+                        </router-link>
+                    </router-link>
 
                     <nav v-if="pagination.last_page > 1"
                          class="wrap-pagination">
@@ -223,7 +226,9 @@
             },
             randomBgImage() {
                 let random_images_array = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
-                return "/assets/img/quotations/" . random_images_array[Math.floor(Math.random() * random_images_array.length)];
+                // return "/assets/img/quotations/" . random_images_array[Math.floor(Math.random() * random_images_array.length)];
+                // TODO : POSING PROBLEM
+                return "/assets/img/quotations/undraw_Credit_card_3ed6.svg";
             }
         }
     }
@@ -301,7 +306,7 @@
                 > * {
                     display: flex;
                     flex-flow: column wrap;
-                    background-color: rgba(#fff, .5);
+                    background-color: rgba(#fff, .75);
                     min-height: 16.5rem;
                     padding: 1.5rem 2rem;
 

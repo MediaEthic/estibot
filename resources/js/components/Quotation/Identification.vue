@@ -55,8 +55,7 @@
                        class="field"
                        :class="{ hasValue: form.identification.third.address }"
                        type="text"
-                       autocomplete="off"
-                       required>
+                       autocomplete="off">
 
                 <label class="label-field">Adresse</label>
             </div>
