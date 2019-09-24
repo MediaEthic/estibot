@@ -75,18 +75,18 @@
                         <ul class="list-paginate">
                             <li class="paginate controls-paginate"
                                 :class="[{ disabled: !pagination.previous_page }]">
-                                <a href="#" @click="fetchQuotations(pagination.previous_page)">
+                                <button type="button" class="link-paginate" @click="fetchQuotations(pagination.previous_page)">
                                     <i class="fas fa-chevron-left"></i>
-                                </a>
+                                </button>
                             </li>
                             <li class="paginate">
                                 Page {{ pagination.current_page }} sur {{ pagination.last_page }}
                             </li>
                             <li class="paginate controls-paginate"
                                 :class="[{ disabled: !pagination.next_page }]">
-                                <a href="#" @click="fetchQuotations(pagination.next_page)">
+                                <button type="button" class="link-paginate" @click="fetchQuotations(pagination.next_page)">
                                     <i class="fas fa-chevron-right"></i>
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </nav>
@@ -468,6 +468,10 @@
                     width: 100%;
 
                     .controls-paginate {
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         width: 3.5rem;
                         height: 3.5rem;
                         margin: 0 1rem;
@@ -484,17 +488,14 @@
                             border: .15rem solid $secondary-color;
                             color: $secondary-color;
 
-                            a {
+                            .link-paginate {
                                 color: $secondary-color;
                             }
                         }
 
-                        a:hover,
-                        a:active,
-                        a:focus {
-                            padding: 0;
-                            background: transparent;
-                            color: $secondary-color;
+                        .link-paginate {
+                            cursor: pointer;
+                            color: inherit;
                         }
 
                         &.disabled {
