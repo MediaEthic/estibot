@@ -231,7 +231,7 @@ export default new Vuex.Store({
                     price: context.state.price,
                     workflow: context.state.workflow
                 }).then(response => {
-                    console.log(response.data);
+                    console.log(response);
                     context.commit("setQuotation", response.data);
                     resolve(response);
                 }).catch(error => {
@@ -244,6 +244,11 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.get('/api/auth/quotation/' + credentials.id + '/edit')).data;
             context.commit("setQuotation", data);
+        },
+        async destroyQuotation(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            let data = (await axios.delete('/api/auth/quotation/' + credentials.id)).data;
+            context.commit("setQuotations", data);
         },
     },
 })

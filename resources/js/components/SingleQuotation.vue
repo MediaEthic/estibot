@@ -18,7 +18,7 @@
                             <li class="action-item"><a href="#" class="fas fa-print"></a></li>
                             <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
                             <li class="action-item"><a href="#" class="fas fa-copy"></a></li>
-                            <li class="action-item"><a href="#" class="fas fa-trash-alt"></a></li>
+                            <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt"></i></li>
                         </ul>
                     </div>
                     <ul class="list-details-quotation">
@@ -89,7 +89,7 @@
                     </tr>
                     <tr class="border">
                         <td>Total HT</td>
-                        <td class="price">{{ quotation.cost + quotation.shipping }}€</td>
+                        <td class="price">{{ (quotation.cost + quotation.shipping).toFixed(2) }}€</td>
                     </tr>
                     <tr>
                         <td>TVA</td>
@@ -168,6 +168,13 @@
                     el.style.cssText = 'height:auto; padding:0';
                     el.style.cssText = 'height:' + el.scrollHeight + 'px';
                 },0);
+            },
+            destroyQuotation(id) {
+                this.$store.dispatch("destroyQuotation", {
+                    id: id
+                }).then(() => {
+                    this.$router.push({name: "home"});
+                }).catch(err => console.log(err));
             }
         }
     }
@@ -232,28 +239,27 @@
                             height: 3.5rem;
                             opacity: 0;
                             transition: 0.5s;
-                        }
 
-                        a {
-                            display: block;
-                            width: inherit;
-                            height: inherit;
-                            line-height: 3.25rem;
-                            color: $secondary-color;
-                            background: #fff;
-                            border: .15rem solid $secondary-color;
-                            border-radius: 50%;
-                            text-align: center;
-                            text-decoration: none;
-                            font-size: 2rem;
-                            pointer-events: none;
-                            transition: 0.2s;
+                            > * {
+                                display: block;
+                                width: inherit;
+                                height: inherit;
+                                line-height: 3.25rem;
+                                color: $secondary-color;
+                                background: #fff;
+                                border: .15rem solid $secondary-color;
+                                border-radius: 50%;
+                                text-align: center;
+                                text-decoration: none;
+                                font-size: 2rem;
+                                pointer-events: none;
+                                transition: 0.2s;
 
-                            &:hover {
-                                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-                                color: white;
-                                background: rgba(255, 255, 255, 0.3);
-                                font-size: 44.44px;
+                                &:hover {
+                                    color: $secondary-color-light;
+                                    border-color: $secondary-color-light;
+                                    transform: scale(1.1);
+                                }
                             }
                         }
                     }
@@ -286,7 +292,7 @@
                                     transform: translateY(14.5rem);
                                 }
 
-                                a {
+                                > * {
                                     pointer-events: auto;
                                 }
                             }

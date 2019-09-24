@@ -158,8 +158,8 @@ class QuotationRepository
     {
         $model->quotation_id = $quotation['id'];
         $model->quantity = $inputs['datas']['copies'];
-        $model->time = $inputs['totals']['totalTimes'];
-        $model->weight = $inputs['totals']['weight'];
+//        $model->time = $inputs['totals']['totalTimes'];
+//        $model->weight = $inputs['totals']['weight'];
         $model->margin = 20;
         $model->cost = $inputs['totals']['totalCosts'];
         $model->thousand = ($inputs['totals']['totalCosts'] / $inputs['datas']['copies']) * 1000;
@@ -739,7 +739,11 @@ class QuotationRepository
 
     public function destroy($id)
     {
+        $quantities = Quantity::where('quotation_id', $id)->get();
+        foreach ($quantities as $quantity) {
+            $quantity->delete();
+        }
         $this->getById($id)->delete();
-        return response()->json();
+        return $this->getPaginate();
     }
 }

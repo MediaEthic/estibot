@@ -169,8 +169,6 @@ class QuotationController extends Controller
      */
     public function destroy($id)
     {
-//        $this->repository->destroy($id);
-//
-//        return response()->json();
+        return $this->repository->destroy($id);
     }
 }

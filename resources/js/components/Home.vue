@@ -63,7 +63,7 @@
                                         <li class="action-item"><a href="#" class="fas fa-print"></a></li>
                                         <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
                                         <li class="action-item"><a href="#" class="fas fa-copy"></a></li>
-                                        <li class="action-item"><a href="#" class="fas fa-trash-alt"></a></li>
+                                        <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt"></i></li>
                                     </ul>
                                 </div>
                             </div>
@@ -139,10 +139,10 @@
                                 <input :id="'options-toggler' + index" class="options-toggler" type="checkbox">
                                 <label :for="'options-toggler' + index" class="fas fa-cog"></label>
                                 <ul class="list-actions">
-                                    <li class="action-item"><a href="#" class="fas fa-print"></a></li>
-                                    <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
-                                    <li class="action-item"><a href="#" class="fas fa-copy"></a></li>
-                                    <li class="action-item"><a href="#" class="fas fa-trash-alt"></a></li>
+                                    <li class="action-item"><i class="fas fa-print"></i></li>
+                                    <li class="action-item"><i class="fas fa-edit"></i></li>
+                                    <li class="action-item"><i class="fas fa-copy"></i></li>
+                                    <li class="action-item"><i class="fas fa-trash-alt"></i></li>
                                 </ul>
                             </div>
                         </div>
@@ -229,6 +229,15 @@
                 // return "/assets/img/quotations/" . random_images_array[Math.floor(Math.random() * random_images_array.length)];
                 // TODO : POSING PROBLEM
                 return "/assets/img/quotations/undraw_Credit_card_3ed6.svg";
+            },
+            destroyQuotation(id) {
+                this.$store.dispatch("destroyQuotation", {
+                    id: id
+                }).then(res => {
+                    console.log(res);
+                    // this.quotations = this.$store.state.quotations;
+                    // this.makePagination(this.$store.state.quotations);
+                }).catch(err => console.log(err));
             }
         }
     }
@@ -367,43 +376,42 @@
                                     opacity: 0;
                                     transition: 0.5s;
 
-                                    &:nth-child(1) a {
+                                    &:nth-child(1) > * {
                                         transform: rotate(0deg);
                                     }
 
-                                    &:nth-child(2) a {
+                                    &:nth-child(2) > * {
                                         transform: rotate(-60deg);
                                     }
 
-                                    &:nth-child(3) a {
+                                    &:nth-child(3) > * {
                                         transform: rotate(-120deg);
                                     }
 
-                                    &:nth-child(4) a {
+                                    &:nth-child(4) > * {
                                         transform: rotate(-180deg);
                                     }
-                                }
 
-                                a {
-                                    display: block;
-                                    width: inherit;
-                                    height: inherit;
-                                    line-height: 3.25rem;
-                                    color: $secondary-color;
-                                    background: #fff;
-                                    border: .15rem solid $secondary-color;
-                                    border-radius: 50%;
-                                    text-align: center;
-                                    text-decoration: none;
-                                    font-size: 2rem;
-                                    pointer-events: none;
-                                    transition: 0.2s;
+                                    > * {
+                                        display: block;
+                                        width: inherit;
+                                        height: inherit;
+                                        line-height: 3.25rem;
+                                        color: $secondary-color;
+                                        background: #fff;
+                                        border: .15rem solid $secondary-color;
+                                        border-radius: 50%;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        font-size: 2rem;
+                                        pointer-events: none;
+                                        transition: 0.2s;
 
-                                    &:hover {
-                                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-                                        color: white;
-                                        background: rgba(255, 255, 255, 0.3);
-                                        font-size: 44.44px;
+                                        &:hover {
+                                            color: $secondary-color-light;
+                                            border-color: $secondary-color-light;
+                                            transform: scale(1.1);
+                                        }
                                     }
                                 }
                             }
@@ -436,7 +444,7 @@
                                             transform: rotate(180deg) translateX(0) translateY(-3rem);
                                         }
 
-                                        a {
+                                        > * {
                                             pointer-events: auto;
                                         }
                                     }
