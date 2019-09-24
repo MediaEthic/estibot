@@ -266,7 +266,7 @@
             },
             saveQuotation() {
                 this.$store.dispatch('saveQuotation').then(resp => {
-                    this.$router.push({name: "single-quotation", params: { id: resp.data.id }})
+                    this.$router.push({name: "single-quotation", params: { id: resp.id }});
                 }).catch(error => {
                     console.log(error);
                 });
