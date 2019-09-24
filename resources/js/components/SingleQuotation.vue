@@ -15,9 +15,9 @@
                         <input id="options-toggler" class="options-toggler" type="checkbox">
                         <label for="options-toggler" class="fas fa-cog"></label>
                         <ul class="list-actions">
-                            <li class="action-item"><a href="#" class="fas fa-print action-event"></a><span>Imprimer</span></li>
-                            <li class="action-item"><a href="#" class="fas fa-edit action-event"></a><span>Modifiter</span></li>
-                            <li class="action-item"><a href="#" class="fas fa-copy action-event"></a><span>Dupliquer</span></li>
+                            <li class="action-item"><i class="fas fa-print action-event"></i><span>Imprimer</span></li>
+                            <li class="action-item"><i class="fas fa-edit action-event"></i><span>Modifiter</span></li>
+                            <li class="action-item"><i class="fas fa-copy action-event"></i><span>Dupliquer</span></li>
                             <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt action-event"></i><span>Supprimer</span></li>
                         </ul>
                     </div>
@@ -195,7 +195,7 @@
         .wrap-main-header {
             position: relative;
             background-position: bottom right;
-            background-size: auto 13.5rem;
+            background-size: auto 15rem;
             background-repeat: no-repeat;
 
             .page-main-title {
@@ -324,6 +324,12 @@
         }
     }
 
+    .wrap-central {
+        .left-part {
+            overflow-x: scroll;
+        }
+    }
+
     .table {
         width: 100%;
         font-size: 1.4rem;
@@ -361,6 +367,7 @@
                         position: initial;
 
                         .action-item {
+                            cursor: pointer;
                             position: initial;
                             display: flex;
                             align-items: center;
@@ -385,6 +392,8 @@
                                 font-size: inherit;
                                 line-height: initial;
                                 margin-right: 1rem;
+                                background: transparent;
+                                color: inherit;
                             }
 
                             span {

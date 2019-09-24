@@ -89,7 +89,7 @@
 // Table
 .responsive-table {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     border-collapse: collapse;
     margin: 0;
     padding: 0;
@@ -111,6 +111,16 @@
 
     tbody {
         flex-grow: 1;
+        display: flex;
+
+        tr {
+            flex-grow: 1;
+
+
+            td {
+
+            }
+        }
     }
 
     tr {
@@ -118,10 +128,6 @@
         flex-flow: column wrap;
         padding: .35em;
         text-align: right;
-
-        &:not(:last-child) {
-            border-bottom: .05rem solid $primary-color-dark;
-        }
     }
 
     th,
@@ -139,6 +145,7 @@
 @media screen and (max-width: 880px) {
     .responsive-table {
         border: 0;
+        display: block;
 
         caption {
             color: $primary-color-dark;
@@ -158,6 +165,10 @@
             width: .1rem;
         }
 
+        tbody {
+            display: initial;
+        }
+
         tr {
             display: block;
 
@@ -167,6 +178,10 @@
 
             &:last-child {
                 border-radius: 0 0 1rem 1rem;
+            }
+
+            &:not(:last-child) {
+                border-bottom: .05rem solid $primary-color-dark;
             }
         }
 

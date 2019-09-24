@@ -1205,8 +1205,8 @@ progress[value]::-moz-progress-bar {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
   border-collapse: collapse;
   margin: 0;
   padding: 0;
@@ -1228,6 +1228,15 @@ progress[value]::-moz-progress-bar {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.responsive-table tbody tr {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .responsive-table tr {
@@ -1240,10 +1249,6 @@ progress[value]::-moz-progress-bar {
           flex-flow: column wrap;
   padding: .35em;
   text-align: right;
-}
-
-.responsive-table tr:not(:last-child) {
-  border-bottom: 0.05rem solid #62799F;
 }
 
 .responsive-table th,
@@ -1260,6 +1265,7 @@ progress[value]::-moz-progress-bar {
 @media screen and (max-width: 880px) {
   .responsive-table {
     border: 0;
+    display: block;
   }
 
   .responsive-table caption {
@@ -1280,6 +1286,10 @@ progress[value]::-moz-progress-bar {
     width: .1rem;
   }
 
+  .responsive-table tbody {
+    display: initial;
+  }
+
   .responsive-table tr {
     display: block;
   }
@@ -1290,6 +1300,10 @@ progress[value]::-moz-progress-bar {
 
   .responsive-table tr:last-child {
     border-radius: 0 0 1rem 1rem;
+  }
+
+  .responsive-table tr:not(:last-child) {
+    border-bottom: 0.05rem solid #62799F;
   }
 
   .responsive-table td {
