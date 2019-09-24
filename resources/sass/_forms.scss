@@ -770,6 +770,10 @@ progress[value]::-moz-progress-bar {
   background: transparent;
   transition: all 0.2s ease;
 
+    &:not(:disabled) {
+        cursor: pointer;
+    }
+
   &:before {
     content: "";
     position: absolute;

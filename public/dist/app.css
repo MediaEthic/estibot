@@ -967,6 +967,10 @@ progress[value]::-moz-progress-bar {
   transition: all 0.2s ease;
 }
 
+.cta:not(:disabled) {
+  cursor: pointer;
+}
+
 .cta:before {
   content: "";
   position: absolute;
@@ -1122,7 +1126,7 @@ progress[value]::-moz-progress-bar {
   width: 100%;
   height: 100%;
   position: fixed;
-  top: calc(100vh - 13.5rem);
+  top: calc(100vh - 15rem);
   background-color: #fff;
   z-index: 1;
   border-radius: 3rem 3rem 0 0;
@@ -1184,7 +1188,7 @@ progress[value]::-moz-progress-bar {
     border-radius: 2rem 1rem 3rem 1rem;
   }
 
-  .wrap-summary .head-summary label [class^="fa"] {
+  .wrap-summary .head-summary .pull-summary + label [class^="fa"] {
     display: none;
   }
 }
@@ -1196,17 +1200,46 @@ progress[value]::-moz-progress-bar {
 }
 
 .responsive-table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
   border-collapse: collapse;
   margin: 0;
   padding: 0;
   width: 100%;
   table-layout: fixed;
+  border-radius: 1rem;
   -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);
           box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);
 }
 
+.responsive-table thead tr th {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #C2D9FF;
+  text-align: left;
+}
+
+.responsive-table tbody {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
 .responsive-table tr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
   padding: .35em;
+  text-align: right;
 }
 
 .responsive-table tr:not(:last-child) {
@@ -1216,7 +1249,6 @@ progress[value]::-moz-progress-bar {
 .responsive-table th,
 .responsive-table td {
   padding: .625em;
-  text-align: center;
 }
 
 .responsive-table th {
@@ -1225,10 +1257,9 @@ progress[value]::-moz-progress-bar {
   text-transform: uppercase;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 880px) {
   .responsive-table {
     border: 0;
-    border-radius: 1rem;
   }
 
   .responsive-table caption {
@@ -1279,6 +1310,36 @@ progress[value]::-moz-progress-bar {
 
   .responsive-table td:last-child {
     border-bottom: 0;
+  }
+}
+
+.go-back {
+  display: block;
+  width: 100%;
+  margin-right: 2rem;
+  color: #C49998;
+}
+
+.wrap-central {
+  display: table;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.wrap-central > * {
+  display: table-cell;
+  width: 100%;
+}
+
+.wrap-central .left-part {
+  margin: 0;
+  padding-right: 2rem;
+}
+
+@media screen and (min-width: 880px) {
+  .wrap-central .left-part {
+    width: calc(100% - 45rem);
+    padding-right: 4rem;
   }
 }
 

@@ -36748,7 +36748,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-form .wrap-buttons-controls-step .next-step {\n      margin-left: auto;\n}\n@media screen and (min-width: 680px) {\n.wrap-main-content .wrap-head-page .wrap-main-header {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .go-back {\n      margin-right: 2rem;\n      font-size: 2.5rem;\n}\n.wrap-central {\n    display: table;\n    width: 100%;\n    margin-top: 2rem;\n}\n.wrap-central > * {\n      display: table-cell;\n      width: 100%;\n}\n.wrap-central .wrap-main-form {\n      margin: 0;\n      padding-right: 2rem;\n}\n.wrap-central .wrap-main-form .wrap-step {\n        text-align: left;\n}\n.wrap-central .wrap-main-form .wrap-step .image-step {\n          margin-left: 0;\n}\n}\n@media screen and (min-width: 880px) {\n.wrap-central .wrap-main-form {\n    width: calc(100% - 45rem);\n    padding-right: 4rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.wrap-main-form {\n  margin-top: 3rem;\n  margin-bottom: 13rem;\n}\n.wrap-main-form .wrap-step {\n    text-align: center;\n}\n.wrap-main-form .wrap-step .image-step {\n      display: block;\n      width: 100%;\n      max-width: 5rem;\n      margin: 0 auto;\n}\n.wrap-main-form .wrap-step .main-title-step {\n      width: 100%;\n      margin: 1rem 0;\n}\n.wrap-main-form .wrap-step .wrap-content-step {\n      margin-top: 3.5rem;\n}\n.wrap-main-form .wrap-buttons-controls-step {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-form .wrap-buttons-controls-step .next-step {\n      margin-left: auto;\n}\n@media screen and (min-width: 680px) {\n.wrap-main-content .wrap-head-page .wrap-main-header {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.wrap-central .wrap-main-form .wrap-step {\n    text-align: left;\n}\n.wrap-central .wrap-main-form .wrap-step .image-step {\n      margin-left: 0;\n}\n}\n", ""]);
 
 // exports
 
@@ -36771,6 +36771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Quotation_Result__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Quotation_Result___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Quotation_Result__);
+//
 //
 //
 //
@@ -41974,7 +41975,10 @@ var render = function() {
                     staticClass: "go-back",
                     attrs: { tag: "a", to: { name: "home" } }
                   },
-                  [_c("i", { staticClass: "fas fa-arrow-left" })]
+                  [
+                    _c("i", { staticClass: "fas fa-arrow-left" }),
+                    _vm._v("\n                    Retour\n                ")
+                  ]
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -41987,7 +41991,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "wrap-central" }, [
-        _c("form", { staticClass: "wrap-main-form" }, [
+        _c("form", { staticClass: "wrap-main-form left-part" }, [
           _c("fieldset", { staticClass: "wrap-step" }, [
             _c("img", {
               staticClass: "image-step",
@@ -42071,7 +42075,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "aside",
-          { staticClass: "wrap-summary", class: { pull: _vm.summaryPulled } },
+          {
+            staticClass: "wrap-summary right-part",
+            class: { pull: _vm.summaryPulled }
+          },
           [
             _c("div", { staticClass: "head-summary" }, [
               _c("input", {
@@ -46457,7 +46464,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 13.5rem;\n    background-repeat: no-repeat;\n    background-position-x: 9rem;\n}\n.wrap-head-page .wrap-main-header .go-back[data-v-14addc89] {\n      color: #C49998;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: block;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > *[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > *[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > *[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation[data-v-14addc89] {\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n          color: #91A8D0;\n          margin-right: 1.5rem;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 13.5rem;\n    background-repeat: no-repeat;\n}\n.wrap-head-page .wrap-main-header .page-main-title[data-v-14addc89] {\n      width: 100%;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: block;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event span[data-v-14addc89] {\n                display: none;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation[data-v-14addc89] {\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n          color: #91A8D0;\n          margin-right: 1.5rem;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n@media screen and (min-width: 680px) {\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n    position: initial;\n    margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler[data-v-14addc89],\n    .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label[data-v-14addc89] {\n      display: none !important;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions[data-v-14addc89],\n      .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: initial;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89],\n        .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89] {\n          position: initial;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          margin: 0 2rem 0 0;\n          padding: .25rem 1rem;\n          width: auto;\n          height: auto;\n          opacity: 1;\n          border: 0.15rem solid #C49998;\n          border-radius: 5rem;\n          font-size: 1.3rem;\n          color: #C49998;\n          text-transform: uppercase;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89]:hover,\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89]:hover {\n            background-color: #C49998;\n            color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            border: 0;\n            font-size: inherit;\n            line-height: initial;\n            margin-right: 1rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item span[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item span[data-v-14addc89] {\n            display: initial;\n            font-weight: 500;\n            letter-spacing: 0.02em;\n}\n}\n", ""]);
 
 // exports
 
@@ -46470,6 +46477,8 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
 //
 //
 //
@@ -46674,8 +46683,7 @@ var render = function() {
           {
             staticClass: "wrap-main-header",
             style: {
-              backgroundImage:
-                "url(/assets/img/quotations/" + _vm.quotation.image + ")"
+              backgroundImage: "url(/assets/img/quotations/" + _vm.image + ")"
             }
           },
           [
@@ -46723,7 +46731,10 @@ var render = function() {
                       }
                     }
                   },
-                  [_c("i", { staticClass: "fas fa-trash-alt" })]
+                  [
+                    _c("i", { staticClass: "fas fa-trash-alt action-event" }),
+                    _c("span", [_vm._v("Supprimer")])
+                  ]
                 )
               ])
             ]),
@@ -46757,225 +46768,237 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "wrap-central" }, [
-        _c("table", { staticClass: "responsive-table" }, [
-          _vm._m(3),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.quotation.quantities, function(quantity) {
-              return _c("tr", [
-                _c("td", { attrs: { "data-label": "Quantité" } }, [
-                  _vm._v(_vm._s(quantity.quantity))
-                ]),
-                _vm._v(" "),
-                _c("td", { attrs: { "data-label": "Marge (%)" } }, [
-                  _vm._v(_vm._s(quantity.margin))
-                ]),
-                _vm._v(" "),
-                _c("td", { attrs: { "data-label": "Prix HT (€)" } }, [
-                  _vm._v(_vm._s(quantity.cost))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { attrs: { "data-label": "Frais d'expédition (€)" } },
-                  [_vm._v(_vm._s(quantity.shipping))]
-                ),
-                _vm._v(" "),
-                _c("td", { attrs: { "data-label": "Prix du mille (€)" } }, [
-                  _vm._v(_vm._s(quantity.thousand))
-                ]),
-                _vm._v(" "),
-                _c("td", { attrs: { "data-label": "TVA (%)" } }, [
-                  _vm._v("20")
-                ]),
-                _vm._v(" "),
-                _c("td", { attrs: { "data-label": "Prix TTC (€)" } }, [
-                  _vm._v(_vm._s(quantity.price))
+        _c("div", { staticClass: "left-part" }, [
+          _c("table", { staticClass: "responsive-table" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.quotation.quantities, function(quantity) {
+                return _c("tr", [
+                  _c("td", { attrs: { "data-label": "Quantité" } }, [
+                    _vm._v(_vm._s(quantity.quantity))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { "data-label": "Marge (%)" } }, [
+                    _vm._v(_vm._s(quantity.margin))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { "data-label": "Prix du mille (€)" } }, [
+                    _vm._v(_vm._s(quantity.thousand))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { attrs: { "data-label": "Frais d'expédition (€)" } },
+                    [_vm._v(_vm._s(quantity.shipping))]
+                  ),
+                  _vm._v(" "),
+                  _c("td", { attrs: { "data-label": "Prix HT (€)" } }, [
+                    _vm._v(_vm._s(quantity.cost))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { "data-label": "TVA (%)" } }, [
+                    _vm._v("20")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { "data-label": "Prix TTC (€)" } }, [
+                    _vm._v(_vm._s(quantity.price))
+                  ])
                 ])
-              ])
-            }),
-            0
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "aside",
-      { staticClass: "wrap-summary", class: { pull: _vm.summaryPulled } },
-      [
-        _c("div", { staticClass: "head-summary" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.summaryPulled,
-                expression: "summaryPulled"
-              }
-            ],
-            staticClass: "pull-summary",
-            attrs: { id: "pull-summary", type: "checkbox" },
-            domProps: {
-              checked: Array.isArray(_vm.summaryPulled)
-                ? _vm._i(_vm.summaryPulled, null) > -1
-                : _vm.summaryPulled
-            },
-            on: {
-              change: function($event) {
-                var $$a = _vm.summaryPulled,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      (_vm.summaryPulled = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
-                  }
-                } else {
-                  _vm.summaryPulled = $$c
-                }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "page-subtitle", attrs: { for: "pull-summary" } },
-            [
-              _c("i", {
-                class: this.summaryPulled
-                  ? "fas fa-chevron-up"
-                  : "fas fa-chevron-down"
               }),
-              _vm._v("Récapitulatif")
-            ]
-          )
+              0
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "wrap-content-summary" }, [
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.summary,
-                expression: "summary"
-              }
-            ],
-            domProps: { value: _vm.summary },
-            on: {
-              keydown: _vm.textareaAutosize,
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.summary = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("table", { staticClass: "table" }, [
-            _c("tr", { staticClass: "border" }, [
-              _c("td", [_vm._v("Sous-total")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "price" }, [
-                _vm._v(_vm._s(_vm.quotation.cost) + "€")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("Frais d'expédition")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "price" }, [
-                _vm._v(_vm._s(_vm.quotation.shipping) + "€")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", { staticClass: "border" }, [
-              _c("td", [_vm._v("Total HT")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "price" }, [
-                _vm._v(
-                  _vm._s(
-                    (_vm.quotation.cost + _vm.quotation.shipping).toFixed(2)
-                  ) + "€"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("TVA")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "price" }, [
-                _vm._v(
-                  _vm._s(
-                    (
-                      ((_vm.quotation.cost + _vm.quotation.shipping) *
-                        _vm.quotation.vat) /
-                      100
-                    ).toFixed(2)
-                  ) + "€"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("Total TTC")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "price" }, [
-                _vm._v(
-                  _vm._s(
-                    (
-                      _vm.quotation.cost +
-                      _vm.quotation.shipping +
-                      ((_vm.quotation.cost + _vm.quotation.shipping) *
-                        _vm.quotation.vat) /
-                        100
-                    ).toFixed(2)
-                  ) + "€"
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "wrap-button-submit" }, [
-            _c(
-              "button",
-              {
-                staticClass: "cta",
-                attrs: { type: "submit", id: "save-quotation", disabled: "" }
-              },
-              [
-                _c("span", [_vm._v("Sauvegarder")]),
-                _vm._v(" "),
-                _c(
-                  "svg",
+        _c(
+          "aside",
+          {
+            staticClass: "wrap-summary right-part",
+            class: { pull: _vm.summaryPulled }
+          },
+          [
+            _c("div", { staticClass: "head-summary" }, [
+              _c("input", {
+                directives: [
                   {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.summaryPulled,
+                    expression: "summaryPulled"
+                  }
+                ],
+                staticClass: "pull-summary",
+                attrs: { id: "pull-summary", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.summaryPulled)
+                    ? _vm._i(_vm.summaryPulled, null) > -1
+                    : _vm.summaryPulled
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.summaryPulled,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.summaryPulled = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.summaryPulled = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "page-subtitle",
+                  attrs: { for: "pull-summary" }
+                },
+                [
+                  _c("i", {
+                    class: this.summaryPulled
+                      ? "fas fa-chevron-up"
+                      : "fas fa-chevron-down"
+                  }),
+                  _vm._v("Récapitulatif")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-content-summary" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.summary,
+                    expression: "summary"
+                  }
+                ],
+                domProps: { value: _vm.summary },
+                on: {
+                  keydown: _vm.textareaAutosize,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.summary = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("table", { staticClass: "table" }, [
+                _c("tr", { staticClass: "border" }, [
+                  _c("td", [_vm._v("Sous-total")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "price" }, [
+                    _vm._v(_vm._s(_vm.quotation.cost) + "€")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("td", [_vm._v("Frais d'expédition")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "price" }, [
+                    _vm._v(_vm._s(_vm.quotation.shipping) + "€")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", { staticClass: "border" }, [
+                  _c("td", [_vm._v("Total HT")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "price" }, [
+                    _vm._v(
+                      _vm._s(
+                        (_vm.quotation.cost + _vm.quotation.shipping).toFixed(2)
+                      ) + "€"
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("td", [_vm._v("TVA")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "price" }, [
+                    _vm._v(
+                      _vm._s(
+                        (
+                          ((_vm.quotation.cost + _vm.quotation.shipping) *
+                            _vm.quotation.vat) /
+                          100
+                        ).toFixed(2)
+                      ) + "€"
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("td", [_vm._v("Total TTC")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "price" }, [
+                    _vm._v(
+                      _vm._s(
+                        (
+                          _vm.quotation.cost +
+                          _vm.quotation.shipping +
+                          ((_vm.quotation.cost + _vm.quotation.shipping) *
+                            _vm.quotation.vat) /
+                            100
+                        ).toFixed(2)
+                      ) + "€"
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "wrap-button-submit" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "cta",
                     attrs: {
-                      width: "13px",
-                      height: "10px",
-                      viewBox: "0 0 13 10"
+                      type: "submit",
+                      id: "save-quotation",
+                      disabled: ""
                     }
                   },
                   [
-                    _c("path", { attrs: { d: "M1,5 L11,5" } }),
+                    _c("span", [_vm._v("Enregistrer")]),
                     _vm._v(" "),
-                    _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                    _c(
+                      "svg",
+                      {
+                        attrs: {
+                          width: "13px",
+                          height: "10px",
+                          viewBox: "0 0 13 10"
+                        }
+                      },
+                      [
+                        _c("path", { attrs: { d: "M1,5 L11,5" } }),
+                        _vm._v(" "),
+                        _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                      ]
+                    )
                   ]
                 )
-              ]
-            )
-          ])
-        ])
-      ]
-    )
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -46984,7 +47007,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "action-item" }, [
-      _c("a", { staticClass: "fas fa-print", attrs: { href: "#" } })
+      _c("a", {
+        staticClass: "fas fa-print action-event",
+        attrs: { href: "#" }
+      }),
+      _c("span", [_vm._v("Imprimer")])
     ])
   },
   function() {
@@ -46992,7 +47019,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "action-item" }, [
-      _c("a", { staticClass: "fas fa-edit", attrs: { href: "#" } })
+      _c("a", {
+        staticClass: "fas fa-edit action-event",
+        attrs: { href: "#" }
+      }),
+      _c("span", [_vm._v("Modifiter")])
     ])
   },
   function() {
@@ -47000,7 +47031,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "action-item" }, [
-      _c("a", { staticClass: "fas fa-copy", attrs: { href: "#" } })
+      _c("a", {
+        staticClass: "fas fa-copy action-event",
+        attrs: { href: "#" }
+      }),
+      _c("span", [_vm._v("Dupliquer")])
     ])
   },
   function() {
@@ -47013,13 +47048,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Marge (%)")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prix HT (€)")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prix du mille (€)")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [
           _vm._v("Frais d'expédition (€)")
         ]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prix du mille (€)")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prix HT (€)")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("TVA (%)")]),
         _vm._v(" "),

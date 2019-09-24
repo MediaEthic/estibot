@@ -3,7 +3,7 @@
         <main class="wrap-main-content">
             <div class="wrap-head-page">
                 <header class="wrap-main-header"
-                        :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
+                        :style="{ backgroundImage: 'url(/assets/img/quotations/' + image + ')' }">
                     <router-link class="go-back"
                                  tag="a"
                                  :to="{ name : 'home' }">
@@ -15,10 +15,10 @@
                         <input id="options-toggler" class="options-toggler" type="checkbox">
                         <label for="options-toggler" class="fas fa-cog"></label>
                         <ul class="list-actions">
-                            <li class="action-item"><a href="#" class="fas fa-print"></a></li>
-                            <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
-                            <li class="action-item"><a href="#" class="fas fa-copy"></a></li>
-                            <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt"></i></li>
+                            <li class="action-item"><a href="#" class="fas fa-print action-event"></a><span>Imprimer</span></li>
+                            <li class="action-item"><a href="#" class="fas fa-edit action-event"></a><span>Modifiter</span></li>
+                            <li class="action-item"><a href="#" class="fas fa-copy action-event"></a><span>Dupliquer</span></li>
+                            <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt action-event"></i><span>Supprimer</span></li>
                         </ul>
                     </div>
                     <ul class="list-details-quotation">
@@ -39,79 +39,81 @@
             </div>
 
             <div class="wrap-central">
-                <table class="responsive-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Quantité</th>
-                        <th scope="col">Marge (%)</th>
-                        <th scope="col">Prix HT (€)</th>
-                        <th scope="col">Frais d'expédition (€)</th>
-                        <th scope="col">Prix du mille (€)</th>
-                        <th scope="col">TVA (%)</th>
-                        <th scope="col">Prix TTC (€)</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="quantity in quotation.quantities">
-                        <td data-label="Quantité">{{ quantity.quantity }}</td>
-                        <td data-label="Marge (%)">{{ quantity.margin }}</td>
-                        <td data-label="Prix HT (€)">{{ quantity.cost }}</td>
-                        <td data-label="Frais d'expédition (€)">{{ quantity.shipping }}</td>
-                        <td data-label="Prix du mille (€)">{{ quantity.thousand }}</td>
-                        <td data-label="TVA (%)">20</td>
-                        <td data-label="Prix TTC (€)">{{ quantity.price }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
+                <div class="left-part">
+                    <table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Quantité</th>
+                                <th scope="col">Marge (%)</th>
+                                <th scope="col">Prix du mille (€)</th>
+                                <th scope="col">Frais d'expédition (€)</th>
+                                <th scope="col">Prix HT (€)</th>
+                                <th scope="col">TVA (%)</th>
+                                <th scope="col">Prix TTC (€)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="quantity in quotation.quantities">
+                            <td data-label="Quantité">{{ quantity.quantity }}</td>
+                            <td data-label="Marge (%)">{{ quantity.margin }}</td>
+                            <td data-label="Prix du mille (€)">{{ quantity.thousand }}</td>
+                            <td data-label="Frais d'expédition (€)">{{ quantity.shipping }}</td>
+                            <td data-label="Prix HT (€)">{{ quantity.cost }}</td>
+                            <td data-label="TVA (%)">20</td>
+                            <td data-label="Prix TTC (€)">{{ quantity.price }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <aside class="wrap-summary" :class="{ pull: summaryPulled }">
-            <div class="head-summary">
-                <input v-model="summaryPulled"
-                       id="pull-summary"
-                       class="pull-summary"
-                       type="checkbox">
-                <label for="pull-summary" class="page-subtitle"><i :class="this.summaryPulled ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>Récapitulatif</label>
-            </div>
-            <div class="wrap-content-summary">
+                <aside class="wrap-summary right-part" :class="{ pull: summaryPulled }">
+                    <div class="head-summary">
+                        <input v-model="summaryPulled"
+                               id="pull-summary"
+                               class="pull-summary"
+                               type="checkbox">
+                        <label for="pull-summary" class="page-subtitle"><i :class="this.summaryPulled ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>Récapitulatif</label>
+                    </div>
+                    <div class="wrap-content-summary">
                 <textarea v-model="summary" @keydown="textareaAutosize">
                 </textarea>
 
-                <table class="table">
-                    <tr class="border">
-                        <td>Sous-total</td>
-                        <td class="price">{{ quotation.cost }}€</td>
-                    </tr>
-                    <tr>
-                        <td>Frais d'expédition</td>
-                        <td class="price">{{ quotation.shipping }}€</td>
-                    </tr>
-                    <tr class="border">
-                        <td>Total HT</td>
-                        <td class="price">{{ (quotation.cost + quotation.shipping).toFixed(2) }}€</td>
-                    </tr>
-                    <tr>
-                        <td>TVA</td>
-                        <td class="price">{{ ((quotation.cost + quotation.shipping) * quotation.vat / 100).toFixed(2)  }}€</td>
-                    </tr>
-                    <tr>
-                        <td>Total TTC</td>
-                        <td class="price">{{ ((quotation.cost + quotation.shipping) + ((quotation.cost + quotation.shipping) * quotation.vat / 100)).toFixed(2) }}€</td>
-                    </tr>
-                </table>
+                        <table class="table">
+                            <tr class="border">
+                                <td>Sous-total</td>
+                                <td class="price">{{ quotation.cost }}€</td>
+                            </tr>
+                            <tr>
+                                <td>Frais d'expédition</td>
+                                <td class="price">{{ quotation.shipping }}€</td>
+                            </tr>
+                            <tr class="border">
+                                <td>Total HT</td>
+                                <td class="price">{{ (quotation.cost + quotation.shipping).toFixed(2) }}€</td>
+                            </tr>
+                            <tr>
+                                <td>TVA</td>
+                                <td class="price">{{ ((quotation.cost + quotation.shipping) * quotation.vat / 100).toFixed(2)  }}€</td>
+                            </tr>
+                            <tr>
+                                <td>Total TTC</td>
+                                <td class="price">{{ ((quotation.cost + quotation.shipping) + ((quotation.cost + quotation.shipping) * quotation.vat / 100)).toFixed(2) }}€</td>
+                            </tr>
+                        </table>
 
-                <div class="wrap-button-submit">
-                    <button type="submit" class="cta" id="save-quotation" disabled>
-                        <span>Sauvegarder</span>
-                        <svg width="13px" height="10px" viewBox="0 0 13 10">
-                            <path d="M1,5 L11,5"></path>
-                            <polyline points="8 1 12 5 8 9"></polyline>
-                        </svg>
-                    </button>
-                </div>
+                        <div class="wrap-button-submit">
+                            <button type="submit" class="cta" id="save-quotation" disabled>
+                                <span>Enregistrer</span>
+                                <svg width="13px" height="10px" viewBox="0 0 13 10">
+                                    <path d="M1,5 L11,5"></path>
+                                    <polyline points="8 1 12 5 8 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
             </div>
-        </aside>
+        </main>
     </div>
 </template>
 
@@ -195,15 +197,16 @@
             background-position: bottom right;
             background-size: auto 13.5rem;
             background-repeat: no-repeat;
-            background-position-x: 9rem;
 
-            .go-back {
-                color: $secondary-color;
+            .page-main-title {
+                width: 100%;
             }
+
             .wrap-actions-quotation {
                 position: absolute;
                 top: 2rem;
                 right: 0;
+
                 .options-toggler {
                     position: absolute;
                     left: -9999px;
@@ -240,7 +243,7 @@
                             opacity: 0;
                             transition: 0.5s;
 
-                            > * {
+                            > .action-event {
                                 display: block;
                                 width: inherit;
                                 height: inherit;
@@ -254,6 +257,10 @@
                                 font-size: 2rem;
                                 pointer-events: none;
                                 transition: 0.2s;
+
+                                span {
+                                    display: none;
+                                }
 
                                 &:hover {
                                     color: $secondary-color-light;
@@ -292,7 +299,7 @@
                                     transform: translateY(14.5rem);
                                 }
 
-                                > * {
+                                > .action-event {
                                     pointer-events: auto;
                                 }
                             }
@@ -336,6 +343,59 @@
             line-height: 2rem;
             color: $primary-color;
             text-align: right;
+        }
+    }
+
+    @media screen and (min-width: 680px) {
+        .wrap-head-page .wrap-main-header {
+            .wrap-actions-quotation {
+                position: initial;
+                margin-top: 3rem;
+
+                > .options-toggler,
+                > .options-toggler + label {
+                    display: none !important;
+
+                    ~ .list-actions {
+                        display: flex;
+                        position: initial;
+
+                        .action-item {
+                            position: initial;
+                            display: flex;
+                            align-items: center;
+                            margin: 0 2rem 0 0;
+                            padding: .25rem 1rem;
+                            width: auto;
+                            height: auto;
+                            opacity: 1;
+                            border: .15rem solid $secondary-color;
+                            border-radius: 5rem;
+                            font-size: 1.3rem;
+                            color: $secondary-color;
+                            text-transform: uppercase;
+
+                            &:hover {
+                                background-color: $secondary-color;
+                                color: $white;
+                            }
+
+                            > .action-event {
+                                border: 0;
+                                font-size: inherit;
+                                line-height: initial;
+                                margin-right: 1rem;
+                            }
+
+                            span {
+                                display: initial;
+                                font-weight: $medium;
+                                letter-spacing: 0.02em;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 </style>

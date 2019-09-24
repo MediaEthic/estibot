@@ -8,13 +8,14 @@
                                  tag="a"
                                  :to="{ name : 'home' }">
                         <i class="fas fa-arrow-left"></i>
+                        Retour
                     </router-link>
                     <h1 class="page-main-title">Nouveau devis</h1>
                 </header>
             </div>
 
             <div class="wrap-central">
-                <form class="wrap-main-form">
+                <form class="wrap-main-form left-part">
                     <fieldset class="wrap-step">
                         <img class="image-step"
                              :src="steps[step-1].img"
@@ -49,7 +50,7 @@
                         </button>
                     </div>
                 </form>
-                <aside class="wrap-summary" :class="{ pull: summaryPulled }">
+                <aside class="wrap-summary right-part" :class="{ pull: summaryPulled }">
                     <div class="head-summary">
                         <input v-model="summaryPulled"
                                id="pull-summary"
@@ -323,30 +324,14 @@
             .wrap-head-page {
                 .wrap-main-header {
                     display: flex;
+                    flex-flow: row wrap;
                     align-items: center;
-
-                    .go-back {
-                        margin-right: 2rem;
-                        font-size: 2.5rem;
-                    }
                 }
             }
         }
 
         .wrap-central {
-            display: table;
-            width: 100%;
-            margin-top: 2rem;
-
-            > * {
-                display: table-cell;
-                width: 100%;
-            }
-
             .wrap-main-form {
-                margin: 0;
-                padding-right: 2rem;
-
                 .wrap-step {
                     text-align: left;
 
@@ -354,16 +339,6 @@
                         margin-left: 0;
                     }
                 }
-            }
-        }
-    }
-
-    @media screen and (min-width: 880px) {
-        .wrap-central {
-
-            .wrap-main-form {
-                width: calc(100% - 45rem);
-                padding-right: 4rem;
             }
         }
     }
