@@ -26,7 +26,7 @@
                 <div v-for="(quantity, index) in result.quantities"
                     @click="displayQuantityDetail(index)"
                     class="item-list">
-                    <div class="left-part">
+                    <div class="">
                         <p class="page-subtitle">{{ index }} exemplaires</p>
                         <p>{{ quantity.datas.models }} modèle(s) - {{ quantity.datas.plates }} cliché(s)</p>
                         <p class="price-quotation">{{ quantity.totals.totalCosts }}<span class="symbol-price">€</span> HT</p>
@@ -130,6 +130,7 @@
 
             .item-list {
                 display: flex;
+                justify-content: space-between;
                 cursor: pointer;
                 padding: 1.5rem 2rem;
                 box-shadow: 0 0 .5rem rgba($primary-color-dark, 0.2);
