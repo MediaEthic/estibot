@@ -95,18 +95,14 @@
     padding: 0;
     width: 100%;
     table-layout: fixed;
-    border-radius: 1rem;
-    box-shadow: 0 0 .5rem rgba($grey-dark, 0.1);
 
-    thead {
-        tr {
-            th {
-                font-weight: $bold;
-                text-transform: uppercase;
-                color: $primary-color-light;
-                text-align: left;
-            }
-        }
+    th {
+        font-size: .85em;
+        font-weight: $bold;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: $primary-color-light;
+        text-align: left;
     }
 
     tbody {
@@ -115,17 +111,13 @@
 
         tr {
             flex-grow: 1;
-
-
-            td {
-
-            }
         }
     }
 
     tr {
         display: flex;
         flex-flow: column wrap;
+        justify-content: flex-end;
         padding: .35em;
         text-align: right;
     }
@@ -134,18 +126,15 @@
     td {
         padding: .625em;
     }
-
-    th {
-        font-size: .85em;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-    }
 }
 
 @media screen and (max-width: 880px) {
     .responsive-table {
         border: 0;
         display: block;
+
+        border-radius: 1rem;
+        box-shadow: 0 0 .5rem rgba($grey-dark, 0.1);
 
         caption {
             color: $primary-color-dark;
@@ -223,10 +212,7 @@
     width: 100%;
     margin-top: 2rem;
 
-    > * {
-        display: table-cell;
-        width: 100%;
-    }
+
 
     .left-part {
         margin: 0;
@@ -236,6 +222,11 @@
 
 @media screen and (min-width: 880px) {
     .wrap-central {
+        > * {
+            display: table-cell;
+            width: 100%;
+        }
+
         .left-part {
             width: calc(100% - 45rem);
             padding-right: 4rem;
