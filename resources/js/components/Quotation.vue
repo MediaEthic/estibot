@@ -181,17 +181,9 @@
                 if (this.form.description.label.type === "old") this.summary += `Étiquette existante` + labelName;
                 if (this.form.description.label.type === "new") this.summary += `Nouvelle étiquette` + labelName;
 
-                // if (this.form.description.quantities[0].quantity > 0) {
-                //     let quantities = [];
-                //     this.form.description.quantities.forEach(el => {
-                //         quantities.push(el.quantity);
-                //     });
-                //     let minQuantity = Math.min.apply(null, quantities);
-                //     this.summary += `\nQuantité : ` + minQuantity + ` exemplaires`;
-                // }
 
                 if (this.form.description.label.width > 0 && this.form.description.label.length > 0) {
-                    this.summary += `\nFormat : ` + this.form.description.label.width + ` mm (laize) x ` + this.form.description.label.length + `mm (avance)`;
+                    this.summary += `\nFormat : ` + this.form.description.label.width + ` mm (laize) x ` + this.form.description.label.length + ` mm (avance)`;
                 }
 
                 if (this.form.printing.press !== "") this.summary += `\nMachine : ` + this.form.printing.name;
@@ -200,10 +192,10 @@
                 if (this.form.printing.substrate.name !== "") {
                     if (this.form.printing.substrate.type === "old") this.summary += `\nPapier existant : ` + this.form.printing.substrate.name;
                     if (this.form.printing.substrate.type === "new") this.summary += `\nNouveau papier : ` + this.form.printing.substrate.name;
-                    this.summary += ` (` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²)`;
+                    this.summary += ` (` + this.form.printing.substrate.width + ` mm en laize - ` + this.form.printing.substrate.weight + ` g/m² - ` + this.form.printing.substrate.price + ` €/m²)`;
                 } else {
-                    if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += `\nPapier existant : ` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²`;
-                    if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += `\nNouveau papier : ` +  + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m² - ` + this.form.printing.substrate.price + `€/m²`;
+                    if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += `\nPapier existant : ` + this.form.printing.substrate.width + ` mm en laize - ` + this.form.printing.substrate.weight + ` g/m² - ` + this.form.printing.substrate.price + ` €/m²`;
+                    if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += `\nNouveau papier : ` +  + this.form.printing.substrate.width + ` mm en laize - ` + this.form.printing.substrate.weight + ` g/m² - ` + this.form.printing.substrate.price + ` €/m²`;
                 }
                 if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
                     if (this.form.finishing.finishings.length > 1) {
@@ -216,7 +208,7 @@
                         let $consumable = "";
                         if (el.presence_consumable) $consumable = ` + consommable`;
                         let $shape = "";
-                        if (el.shape > 0) $shape = ` (outil : ` + el.shape + `€)`;
+                        if (el.shape > 0) $shape = ` (outil : ` + el.shape + ` €)`;
 
                         if (this.form.finishing.finishings.length > 1) {
                             this.summary += `\n - ` + el.name + $consumable + $shape;
@@ -267,7 +259,7 @@
             },
             saveQuotation() {
                 this.$store.dispatch('saveQuotation').then(resp => {
-                    this.$router.push({name: "single-quotation", params: { id: resp.id }});
+                    this.$router.push({name: "single-quotation", params: { id: resp.data.id }});
                 }).catch(error => {
                     console.log(error);
                 });

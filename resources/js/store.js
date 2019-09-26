@@ -231,6 +231,20 @@ export default new Vuex.Store({
                     price: context.state.price,
                     workflow: context.state.workflow
                 }).then(response => {
+                    context.commit("setQuotation", response.data);
+                    resolve(response);
+                }).catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });
+        },
+        updateQuotation(context, credentials) {
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+                axios.post('/api/auth/quotation/' + credentials.quotation.id + '/edit', {
+                    quotation: credentials.quotation
+                }).then(response => {
                     console.log(response);
                     context.commit("setQuotation", response.data);
                     resolve(response);

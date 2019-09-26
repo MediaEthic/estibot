@@ -36950,17 +36950,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.form.description.label.type === "old") this.summary += '\xC9tiquette existante' + labelName;
             if (this.form.description.label.type === "new") this.summary += 'Nouvelle \xE9tiquette' + labelName;
 
-            // if (this.form.description.quantities[0].quantity > 0) {
-            //     let quantities = [];
-            //     this.form.description.quantities.forEach(el => {
-            //         quantities.push(el.quantity);
-            //     });
-            //     let minQuantity = Math.min.apply(null, quantities);
-            //     this.summary += `\nQuantité : ` + minQuantity + ` exemplaires`;
-            // }
-
             if (this.form.description.label.width > 0 && this.form.description.label.length > 0) {
-                this.summary += '\nFormat : ' + this.form.description.label.width + ' mm (laize) x ' + this.form.description.label.length + 'mm (avance)';
+                this.summary += '\nFormat : ' + this.form.description.label.width + ' mm (laize) x ' + this.form.description.label.length + ' mm (avance)';
             }
 
             if (this.form.printing.press !== "") this.summary += '\nMachine : ' + this.form.printing.name;
@@ -36969,10 +36960,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.form.printing.substrate.name !== "") {
                 if (this.form.printing.substrate.type === "old") this.summary += '\nPapier existant : ' + this.form.printing.substrate.name;
                 if (this.form.printing.substrate.type === "new") this.summary += '\nNouveau papier : ' + this.form.printing.substrate.name;
-                this.summary += ' (' + this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2 - ' + this.form.printing.substrate.price + '\u20AC/m\xB2)';
+                this.summary += ' (' + this.form.printing.substrate.width + ' mm en laize - ' + this.form.printing.substrate.weight + ' g/m\xB2 - ' + this.form.printing.substrate.price + ' \u20AC/m\xB2)';
             } else {
-                if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += '\nPapier existant : ' + this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2 - ' + this.form.printing.substrate.price + '\u20AC/m\xB2';
-                if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += '\nNouveau papier : ' + +this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2 - ' + this.form.printing.substrate.price + '\u20AC/m\xB2';
+                if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += '\nPapier existant : ' + this.form.printing.substrate.width + ' mm en laize - ' + this.form.printing.substrate.weight + ' g/m\xB2 - ' + this.form.printing.substrate.price + ' \u20AC/m\xB2';
+                if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += '\nNouveau papier : ' + +this.form.printing.substrate.width + ' mm en laize - ' + this.form.printing.substrate.weight + ' g/m\xB2 - ' + this.form.printing.substrate.price + ' \u20AC/m\xB2';
             }
             if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
                 if (this.form.finishing.finishings.length > 1) {
@@ -36985,7 +36976,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     var $consumable = "";
                     if (el.presence_consumable) $consumable = ' + consommable';
                     var $shape = "";
-                    if (el.shape > 0) $shape = ' (outil : ' + el.shape + '\u20AC)';
+                    if (el.shape > 0) $shape = ' (outil : ' + el.shape + ' \u20AC)';
 
                     if (_this.form.finishing.finishings.length > 1) {
                         _this.summary += '\n - ' + el.name + $consumable + $shape;
@@ -37037,7 +37028,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.$store.dispatch('saveQuotation').then(function (resp) {
-                _this2.$router.push({ name: "single-quotation", params: { id: resp.id } });
+                _this2.$router.push({ name: "single-quotation", params: { id: resp.data.id } });
             }).catch(function (error) {
                 console.log(error);
             });
@@ -42240,19 +42231,19 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(267)
+  __webpack_require__(209)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(211)
 /* template */
-var __vue_template__ = __webpack_require__(269)
+var __vue_template__ = __webpack_require__(212)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-01a5370e"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -42285,8 +42276,46 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 209 */,
-/* 210 */,
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(210);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("272e34b0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01a5370e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Quantity.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01a5370e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Quantity.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 210 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-01a5370e], [class*=\" icon-\"][data-v-01a5370e] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-01a5370e]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-01a5370e]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-01a5370e]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-01a5370e]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-01a5370e]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-01a5370e]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-01a5370e]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-01a5370e]:before {\n  content: \"\\E907\";\n}\n.arrow-return[data-v-01a5370e] {\n  display: block;\n  margin-right: auto;\n  font-size: 1.2rem;\n  line-height: 1.4rem;\n  font-weight: 700;\n  color: #C49998;\n  text-transform: uppercase;\n}\n.arrow-return [class^=\"fa\"][data-v-01a5370e] {\n    font-size: 1.5rem;\n    margin-right: .5rem;\n}\n.responsive-table[data-v-01a5370e] {\n  display: initial;\n}\n.responsive-table tr[data-v-01a5370e] {\n    display: initial;\n}\n.responsive-table tbody[data-v-01a5370e] {\n    display: initial;\n}\n.responsive-table tbody tr[data-v-01a5370e] {\n      display: initial;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 211 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -42358,7 +42387,96 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 212 */,
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "arrow-return",
+        attrs: { type: "button" },
+        on: {
+          click: function($event) {
+            return _vm.$emit("goBack")
+          }
+        }
+      },
+      [_c("i", { staticClass: "fas fa-arrow-left" }), _vm._v("Retour")]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "responsive-table" }, [
+      _c("caption", [_vm._v(_vm._s(_vm.copies) + " exemplaires")]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.quantities[_vm.copies].operations, function(
+          operation,
+          index
+        ) {
+          return _c("tr", [
+            _c("td", { attrs: { "data-label": "Opération" } }, [
+              _vm._v(_vm._s(operation.name))
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { "data-label": "Temps (h)" } }, [
+              _vm._v(_vm._s(operation.time))
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { "data-label": "Part fixe (€)" } }, [
+              _vm._v(_vm._s(operation.fixed))
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { "data-label": "Part variable (€)" } }, [
+              _vm._v(_vm._s(operation.variable))
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { "data-label": "Prix (€)" } }, [
+              _vm._v(_vm._s(operation.price))
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Opération")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Temps (h)")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Coût fixe (€)")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Coût variable (€)")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prix (€)")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-01a5370e", module.exports)
+  }
+}
+
+/***/ }),
 /* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42985,6 +43103,20 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation', {
                     price: context.state.price,
                     workflow: context.state.workflow
+                }).then(function (response) {
+                    context.commit("setQuotation", response.data);
+                    resolve(response);
+                }).catch(function (error) {
+                    console.log(error);
+                    reject(error);
+                });
+            });
+        },
+        updateQuotation: function updateQuotation(context, credentials) {
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation/' + credentials.quotation.id + '/edit', {
+                    quotation: credentials.quotation
                 }).then(function (response) {
                     console.log(response);
                     context.commit("setQuotation", response.data);
@@ -46214,7 +46346,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7e236c8b], [class*=\" icon-\"][data-v-7e236c8b] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7e236c8b]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7e236c8b]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7e236c8b]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7e236c8b]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7e236c8b]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7e236c8b]:before {\n  content: \"\\E907\";\n}\n.wrap-list-errors[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b] {\n    font-size: 1.3rem;\n    line-height: 1.7rem;\n    padding: .75rem 1.5rem;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b]:not(:last-child) {\n      border-bottom: 0.05rem solid #62799F;\n}\n.wrap-success .list-results[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    cursor: pointer;\n    padding: 1.5rem 2rem;\n    -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n            box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n    border-radius: 2rem 1rem 3rem 1rem;\n    margin: 1rem 0;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b]:hover {\n      background-position-x: 7rem;\n      border-left: 1.5rem solid #91A8D0;\n      -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n              box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-success .list-results .item-list .detail-result[data-v-7e236c8b] {\n      border: 0;\n      background: transparent;\n      font-size: 2.5rem;\n      color: #C49998;\n}\n.wrap-success .list-results .item-list .detail-quantity[data-v-7e236c8b] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-flow: row wrap;\n              flex-flow: row wrap;\n      margin-top: .5rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail[data-v-7e236c8b] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        margin: .5rem;\n        font-size: 1.3rem;\n        line-height: 1.7rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail [class^=\"fa\"][data-v-7e236c8b] {\n          font-size: 1.5rem;\n          color: #C2D9FF;\n          margin-right: .5rem;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7e236c8b], [class*=\" icon-\"][data-v-7e236c8b] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7e236c8b]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7e236c8b]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7e236c8b]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7e236c8b]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7e236c8b]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7e236c8b]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7e236c8b]:before {\n  content: \"\\E907\";\n}\n.wrap-list-errors[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b] {\n    font-size: 1.3rem;\n    line-height: 1.7rem;\n    padding: .75rem 1.5rem;\n}\n.wrap-list-errors .item-list[data-v-7e236c8b]:not(:last-child) {\n      border-bottom: 0.05rem solid #62799F;\n}\n.wrap-success .list-results[data-v-7e236c8b] {\n  text-align: left;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    cursor: pointer;\n    padding: 1.5rem 2rem;\n    -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n            box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n    border-radius: 2rem 1rem 3rem 1rem;\n    margin: 1rem 0;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-success .list-results .item-list[data-v-7e236c8b]:hover {\n      background-position-x: 7rem;\n      border-left: 1.5rem solid #91A8D0;\n      -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n              box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-success .list-results .item-list .detail-result[data-v-7e236c8b] {\n      border: 0;\n      background: transparent;\n      font-size: 2.5rem;\n      color: #C49998;\n}\n.wrap-success .list-results .item-list .detail-quantity[data-v-7e236c8b] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-flow: row wrap;\n              flex-flow: row wrap;\n      margin-top: .5rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail[data-v-7e236c8b] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        margin: .5rem;\n        font-size: 1.3rem;\n        line-height: 1.7rem;\n}\n.wrap-success .list-results .item-list .detail-quantity .item-detail [class^=\"fa\"][data-v-7e236c8b] {\n          font-size: 1.5rem;\n          color: #C2D9FF;\n          margin-right: .5rem;\n}\n", ""]);
 
 // exports
 
@@ -46280,7 +46412,7 @@ var render = function() {
                       }
                     },
                     [
-                      _c("div", { staticClass: "left-part" }, [
+                      _c("div", {}, [
                         _c("p", { staticClass: "page-subtitle" }, [
                           _vm._v(_vm._s(index) + " exemplaires")
                         ]),
@@ -46466,7 +46598,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 15rem;\n    background-repeat: no-repeat;\n}\n.wrap-head-page .wrap-main-header .page-main-title[data-v-14addc89] {\n      width: 100%;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: block;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event span[data-v-14addc89] {\n                display: none;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation[data-v-14addc89] {\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n          color: #91A8D0;\n          margin-right: 1.5rem;\n}\n.wrap-central .left-part[data-v-14addc89] {\n  overflow-x: scroll;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n@media screen and (min-width: 680px) {\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n    position: initial;\n    margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler[data-v-14addc89],\n    .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label[data-v-14addc89] {\n      display: none !important;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions[data-v-14addc89],\n      .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: initial;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89],\n        .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89] {\n          cursor: pointer;\n          position: initial;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          margin: 0 2rem 0 0;\n          padding: .25rem 1rem;\n          width: auto;\n          height: auto;\n          opacity: 1;\n          border: 0.15rem solid #C49998;\n          border-radius: 5rem;\n          font-size: 1.3rem;\n          color: #C49998;\n          text-transform: uppercase;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89]:hover,\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89]:hover {\n            background-color: #C49998;\n            color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            border: 0;\n            font-size: inherit;\n            line-height: initial;\n            margin-right: 1rem;\n            background: transparent;\n            color: inherit;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item span[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item span[data-v-14addc89] {\n            display: initial;\n            font-weight: 500;\n            letter-spacing: 0.02em;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 15rem;\n    background-repeat: no-repeat;\n}\n.wrap-head-page .wrap-main-header .page-main-title[data-v-14addc89] {\n      width: 100%;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: block;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event span[data-v-14addc89] {\n                display: none;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation[data-v-14addc89] {\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n          color: #91A8D0;\n          margin-right: 1.5rem;\n}\n.wrap-central .left-part[data-v-14addc89] {\n  overflow-x: auto;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n@media screen and (min-width: 680px) {\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n    position: initial;\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler[data-v-14addc89],\n    .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label[data-v-14addc89] {\n      display: none !important;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions[data-v-14addc89],\n      .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: initial;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89],\n        .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89] {\n          cursor: pointer;\n          position: initial;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          margin: 0 2rem 0 0;\n          padding: .25rem 1rem;\n          width: auto;\n          height: auto;\n          opacity: 1;\n          border: 0.15rem solid #C49998;\n          border-radius: 5rem;\n          font-size: 1.3rem;\n          color: #C49998;\n          text-transform: uppercase;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89]:hover,\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89]:hover {\n            background-color: #C49998;\n            color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            border: 0;\n            font-size: inherit;\n            line-height: initial;\n            margin-right: 1rem;\n            background: transparent;\n            color: inherit;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item span[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item span[data-v-14addc89] {\n            display: initial;\n            font-weight: 500;\n            letter-spacing: 0.02em;\n}\n}\n", ""]);
 
 // exports
 
@@ -46598,6 +46730,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -46605,9 +46741,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             third: "",
-            image: "",
-            summary: "",
-            summaryPulled: false
+            summaryPulled: false,
+            indexMinValue: ""
         };
     },
     created: function created() {
@@ -46616,27 +46751,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.$store.dispatch('getQuotation', {
             id: this.$route.params.id
         }).then(function () {
-            _this.summary = _this.quotation.description;
+            _this.generateThird();
+
             var el = document.querySelector('textarea');
             setTimeout(function () {
                 el.style.cssText = 'height:auto; padding:0';
-                el.style.cssText = 'height:' + el.scrollHeight + 'px';
+                var scrollHeight = el.scrollHeight + 10;
+                el.style.cssText = 'height:' + scrollHeight + 'px';
             }, 0);
-            _this.image = _this.quotation.image;
-            _this.generateThird();
+
+            var quantities = [];
+            _this.quotation.quantities.forEach(function (element) {
+                quantities.push(element.quantity);
+            });
+            // let minQuantity = Math.min.apply(null, quantities);
+            var i = quantities.indexOf(Math.min.apply(Math, quantities));
+            _this.indexMinValue = i;
         });
     },
 
     computed: {
-        quotation: function quotation() {
-            console.log(this.$store.state.quotation);
-            return this.$store.state.quotation;
+        quotation: {
+            get: function get() {
+                return this.$store.state.quotation;
+            },
+            set: function set() {
+                return this.$store.state.quotation;
+            }
+        },
+        thousand: {
+            get: function get() {
+                return this.$store.state.quotation;
+            },
+            set: function set() {
+                return this.$store.state.quotation;
+            }
         }
     },
     methods: {
-        goBack: function goBack() {
-            $router.go(-1);
-        },
         getHumanDate: function getHumanDate(date) {
             return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
         },
@@ -46652,7 +46804,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var el = document.querySelector('textarea');
             setTimeout(function () {
                 el.style.cssText = 'height:auto; padding:0';
-                el.style.cssText = 'height:' + el.scrollHeight + 'px';
+                var scrollHeight = el.scrollHeight + 10;
+                el.style.cssText = 'height:' + scrollHeight + 'px';
             }, 0);
         },
         destroyQuotation: function destroyQuotation(id) {
@@ -46665,6 +46818,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (err) {
                 return console.log(err);
             });
+        },
+        updateQuotation: function updateQuotation(quotation) {
+            var _this3 = this;
+
+            this.$store.dispatch("updateQuotation", {
+                quotation: quotation
+            }).then(function () {
+                _this3.quotation = _this3.$store.state.quotation;
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        },
+        calculateCost: function calculateCost(element, quantityID) {
+            var quantity = this.quotation.quantities[quantityID].quantity;
+            var margin = parseFloat(this.quotation.quantities[quantityID].margin);
+            var cost = this.quotation.quantities[quantityID].cost;
+
+            var costWithMargin = 0;
+            var thousandWithMargin = 0;
+
+            if (element === "margin") {
+                costWithMargin = cost + cost * (margin / 100);
+                thousandWithMargin = costWithMargin / quantity * 1000;
+                this.quotation.quantities[quantityID].thousand = thousandWithMargin.toFixed(2);
+            } else if (element === "thousand") {
+                thousandWithMargin = parseFloat(this.quotation.quantities[quantityID].thousand);
+                costWithMargin = thousandWithMargin / 1000 * quantity;
+                var costWithoutShipping = this.quotation.quantities[quantityID].subtotal - this.quotation.quantities[quantityID].shipping;
+                var percentage = costWithMargin * margin / costWithoutShipping / 100;
+                this.quotation.quantities[quantityID].margin = (parseFloat(margin) + percentage).toFixed(2);
+            }
+
+            var subtotal = parseFloat(this.quotation.quantities[quantityID].shipping + costWithMargin);
+            subtotal = parseFloat(subtotal);
+            var vat = parseFloat(this.quotation.vat);
+            var vatPrice = subtotal * (vat / 100);
+            var price = subtotal + vatPrice;
+
+            this.quotation.quantities[quantityID].subtotal = subtotal.toFixed(2);
+            this.quotation.quantities[quantityID].price = price.toFixed(2);
+
+            if (quantityID === this.indexMinValue) {
+                this.quotation.cost = costWithMargin.toFixed(2);
+                this.quotation.thousand = thousandWithMargin.toFixed(2);
+                this.quotation.vat_price = vatPrice.toFixed(2);
+                this.quotation.price = price.toFixed(2);
+            }
         }
     }
 });
@@ -46685,7 +46885,8 @@ var render = function() {
           {
             staticClass: "wrap-main-header",
             style: {
-              backgroundImage: "url(/assets/img/quotations/" + _vm.image + ")"
+              backgroundImage:
+                "url(/assets/img/quotations/" + _vm.quotation.image + ")"
             }
           },
           [
@@ -46776,18 +46977,64 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.quotation.quantities, function(quantity) {
+              _vm._l(_vm.quotation.quantities, function(quantity, index) {
                 return _c("tr", [
                   _c("td", { attrs: { "data-label": "Quantité" } }, [
                     _vm._v(_vm._s(quantity.quantity))
                   ]),
                   _vm._v(" "),
                   _c("td", { attrs: { "data-label": "Marge (%)" } }, [
-                    _vm._v(_vm._s(quantity.margin))
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: quantity.margin,
+                          expression: "quantity.margin"
+                        }
+                      ],
+                      staticClass: "editable",
+                      attrs: { type: "number", step: "0.0001" },
+                      domProps: { value: quantity.margin },
+                      on: {
+                        change: function($event) {
+                          return _vm.calculateCost("margin", index)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(quantity, "margin", $event.target.value)
+                        }
+                      }
+                    })
                   ]),
                   _vm._v(" "),
                   _c("td", { attrs: { "data-label": "Prix du mille (€)" } }, [
-                    _vm._v(_vm._s(quantity.thousand))
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: quantity.thousand,
+                          expression: "quantity.thousand"
+                        }
+                      ],
+                      staticClass: "editable",
+                      attrs: { type: "number", step: "0.0001" },
+                      domProps: { value: quantity.thousand },
+                      on: {
+                        change: function($event) {
+                          return _vm.calculateCost("thousand", index)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(quantity, "thousand", $event.target.value)
+                        }
+                      }
+                    })
                   ]),
                   _vm._v(" "),
                   _c(
@@ -46797,7 +47044,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("td", { attrs: { "data-label": "Prix HT (€)" } }, [
-                    _vm._v(_vm._s(quantity.cost))
+                    _vm._v(_vm._s(quantity.subtotal))
                   ]),
                   _vm._v(" "),
                   _c("td", { attrs: { "data-label": "TVA (%)" } }, [
@@ -46884,18 +47131,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.summary,
-                    expression: "summary"
+                    value: _vm.quotation.description,
+                    expression: "quotation.description"
                   }
                 ],
-                domProps: { value: _vm.summary },
+                staticClass: "editable",
+                domProps: { value: _vm.quotation.description },
                 on: {
                   keydown: _vm.textareaAutosize,
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.summary = $event.target.value
+                    _vm.$set(_vm.quotation, "description", $event.target.value)
                   }
                 }
               }),
@@ -46923,7 +47171,10 @@ var render = function() {
                   _c("td", { staticClass: "price" }, [
                     _vm._v(
                       _vm._s(
-                        (_vm.quotation.cost + _vm.quotation.shipping).toFixed(2)
+                        (
+                          parseFloat(_vm.quotation.cost) +
+                          parseFloat(_vm.quotation.shipping)
+                        ).toFixed(2)
                       ) + "€"
                     )
                   ])
@@ -46933,15 +47184,7 @@ var render = function() {
                   _c("td", [_vm._v("TVA")]),
                   _vm._v(" "),
                   _c("td", { staticClass: "price" }, [
-                    _vm._v(
-                      _vm._s(
-                        (
-                          ((_vm.quotation.cost + _vm.quotation.shipping) *
-                            _vm.quotation.vat) /
-                          100
-                        ).toFixed(2)
-                      ) + "€"
-                    )
+                    _vm._v(_vm._s(_vm.quotation.vat_price) + "€")
                   ])
                 ]),
                 _vm._v(" "),
@@ -46949,17 +47192,7 @@ var render = function() {
                   _c("td", [_vm._v("Total TTC")]),
                   _vm._v(" "),
                   _c("td", { staticClass: "price" }, [
-                    _vm._v(
-                      _vm._s(
-                        (
-                          _vm.quotation.cost +
-                          _vm.quotation.shipping +
-                          ((_vm.quotation.cost + _vm.quotation.shipping) *
-                            _vm.quotation.vat) /
-                            100
-                        ).toFixed(2)
-                      ) + "€"
-                    )
+                    _vm._v(_vm._s(_vm.quotation.price) + "€")
                   ])
                 ])
               ]),
@@ -46969,14 +47202,15 @@ var render = function() {
                   "button",
                   {
                     staticClass: "cta",
-                    attrs: {
-                      type: "submit",
-                      id: "save-quotation",
-                      disabled: ""
+                    attrs: { type: "submit", id: "save-quotation" },
+                    on: {
+                      click: function($event) {
+                        return _vm.updateQuotation(_vm.quotation)
+                      }
                     }
                   },
                   [
-                    _c("span", [_vm._v("Enregistrer")]),
+                    _c("span", [_vm._v("Sauvegarder")]),
                     _vm._v(" "),
                     _c(
                       "svg",
@@ -47062,136 +47296,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-14addc89", module.exports)
-  }
-}
-
-/***/ }),
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(268);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("c5e0bce6", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01a5370e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Quantity.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-01a5370e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Quantity.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 268 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\n.arrow-return {\n  display: block;\n  margin-right: auto;\n  font-size: 1.2rem;\n  line-height: 1.4rem;\n  font-weight: 700;\n  color: #C49998;\n  text-transform: uppercase;\n}\n.arrow-return [class^=\"fa\"] {\n    font-size: 1.5rem;\n    margin-right: .5rem;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 269 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "arrow-return",
-        attrs: { type: "button" },
-        on: {
-          click: function($event) {
-            return _vm.$emit("goBack")
-          }
-        }
-      },
-      [_c("i", { staticClass: "fas fa-arrow-left" }), _vm._v("Retour")]
-    ),
-    _vm._v(" "),
-    _c("table", { staticClass: "responsive-table" }, [
-      _c("caption", [_vm._v(_vm._s(_vm.copies) + " exemplaires")]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.quantities[_vm.copies].operations, function(
-          operation,
-          index
-        ) {
-          return _c("tr", [
-            _c("td", { attrs: { "data-label": "Opération" } }, [
-              _vm._v(_vm._s(operation.name))
-            ]),
-            _vm._v(" "),
-            _c("td", { attrs: { "data-label": "Temps (h)" } }, [
-              _vm._v(_vm._s(operation.time))
-            ]),
-            _vm._v(" "),
-            _c("td", { attrs: { "data-label": "Part fixe (€)" } }, [
-              _vm._v(_vm._s(operation.fixed))
-            ]),
-            _vm._v(" "),
-            _c("td", { attrs: { "data-label": "Part variable (€)" } }, [
-              _vm._v(_vm._s(operation.variable))
-            ]),
-            _vm._v(" "),
-            _c("td", { attrs: { "data-label": "Prix (€)" } }, [
-              _vm._v(_vm._s(operation.price))
-            ])
-          ])
-        }),
-        0
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Opération")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Temps (h)")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Coût fixe (€)")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Coût variable (€)")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prix (€)")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-01a5370e", module.exports)
   }
 }
 

@@ -3,7 +3,7 @@
         <main class="wrap-main-content">
             <div class="wrap-head-page">
                 <header class="wrap-main-header"
-                        :style="{ backgroundImage: 'url(/assets/img/quotations/' + image + ')' }">
+                        :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
                     <router-link class="go-back"
                                  tag="a"
                                  :to="{ name : 'home' }">
@@ -53,12 +53,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="quantity in quotation.quantities">
+                        <tr v-for="(quantity, index) in quotation.quantities">
                             <td data-label="Quantité">{{ quantity.quantity }}</td>
-                            <td data-label="Marge (%)">{{ quantity.margin }}</td>
-                            <td data-label="Prix du mille (€)">{{ quantity.thousand }}</td>
+                            <td data-label="Marge (%)">
+                                <input type="number" class="editable" step="0.0001" @change="calculateCost('margin', index)" v-model="quantity.margin">
+                            </td>
+                            <td data-label="Prix du mille (€)">
+                                <input type="number" class="editable" step="0.0001" @change="calculateCost('thousand', index)" v-model="quantity.thousand">
+                            </td>
                             <td data-label="Frais d'expédition (€)">{{ quantity.shipping }}</td>
-                            <td data-label="Prix HT (€)">{{ quantity.cost }}</td>
+                            <td data-label="Prix HT (€)">{{ quantity.subtotal }}</td>
                             <td data-label="TVA (%)">20</td>
                             <td data-label="Prix TTC (€)">{{ quantity.price }}</td>
                         </tr>
@@ -75,7 +79,7 @@
                         <label for="pull-summary" class="page-subtitle"><i :class="this.summaryPulled ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>Récapitulatif</label>
                     </div>
                     <div class="wrap-content-summary">
-                <textarea v-model="summary" @keydown="textareaAutosize">
+                <textarea v-model="quotation.description" class="editable" @keydown="textareaAutosize">
                 </textarea>
 
                         <table class="table">
@@ -89,21 +93,21 @@
                             </tr>
                             <tr class="border">
                                 <td>Total HT</td>
-                                <td class="price">{{ (quotation.cost + quotation.shipping).toFixed(2) }}€</td>
+                                <td class="price">{{ (parseFloat(quotation.cost) + parseFloat(quotation.shipping)).toFixed(2) }}€</td>
                             </tr>
                             <tr>
                                 <td>TVA</td>
-                                <td class="price">{{ ((quotation.cost + quotation.shipping) * quotation.vat / 100).toFixed(2)  }}€</td>
+                                <td class="price">{{ quotation.vat_price  }}€</td>
                             </tr>
                             <tr>
                                 <td>Total TTC</td>
-                                <td class="price">{{ ((quotation.cost + quotation.shipping) + ((quotation.cost + quotation.shipping) * quotation.vat / 100)).toFixed(2) }}€</td>
+                                <td class="price">{{ quotation.price }}€</td>
                             </tr>
                         </table>
 
                         <div class="wrap-button-submit">
-                            <button type="submit" class="cta" id="save-quotation" disabled>
-                                <span>Enregistrer</span>
+                            <button type="submit" @click="updateQuotation(quotation)" class="cta" id="save-quotation">
+                                <span>Sauvegarder</span>
                                 <svg width="13px" height="10px" viewBox="0 0 13 10">
                                     <path d="M1,5 L11,5"></path>
                                     <polyline points="8 1 12 5 8 9"></polyline>
@@ -124,35 +128,51 @@
         data() {
             return {
                 third: "",
-                image: "",
-                summary: "",
                 summaryPulled: false,
+                indexMinValue: "",
             }
         },
         created() {
             this.$store.dispatch('getQuotation', {
                 id: this.$route.params.id
             }).then(() => {
-                this.summary = this.quotation.description;
+                this.generateThird();
+
                 let el = document.querySelector('textarea');
                 setTimeout(function(){
                     el.style.cssText = 'height:auto; padding:0';
-                    el.style.cssText = 'height:' + el.scrollHeight + 'px';
+                    let scrollHeight = el.scrollHeight + 10;
+                    el.style.cssText = 'height:' + scrollHeight + 'px';
                 },0);
-                this.image = this.quotation.image;
-                this.generateThird();
+
+                let quantities = [];
+                this.quotation.quantities.forEach(element => {
+                    quantities.push(element.quantity);
+                });
+                // let minQuantity = Math.min.apply(null, quantities);
+                let i = quantities.indexOf(Math.min(...quantities));
+                this.indexMinValue = i;
             })
         },
         computed: {
-            quotation() {
-                console.log(this.$store.state.quotation);
-                return this.$store.state.quotation;
-            }
+            quotation: {
+                get() {
+                    return this.$store.state.quotation;
+                },
+                set() {
+                    return this.$store.state.quotation;
+                },
+            },
+            thousand: {
+                get() {
+                    return this.$store.state.quotation;
+                },
+                set() {
+                    return this.$store.state.quotation;
+                }
+            },
         },
         methods: {
-            goBack() {
-                $router.go(-1);
-            },
             getHumanDate(date) {
                 return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             },
@@ -168,7 +188,8 @@
                 let el = document.querySelector('textarea');
                 setTimeout(function(){
                     el.style.cssText = 'height:auto; padding:0';
-                    el.style.cssText = 'height:' + el.scrollHeight + 'px';
+                    let scrollHeight = el.scrollHeight + 10;
+                    el.style.cssText = 'height:' + scrollHeight + 'px';
                 },0);
             },
             destroyQuotation(id) {
@@ -177,6 +198,50 @@
                 }).then(() => {
                     this.$router.push({name: "home"});
                 }).catch(err => console.log(err));
+            },
+            updateQuotation(quotation) {
+                this.$store.dispatch("updateQuotation", {
+                    quotation: quotation,
+                }).then(() => {
+                    this.quotation = this.$store.state.quotation;
+                }).catch(err => console.log(err));
+            },
+            calculateCost(element, quantityID) {
+                let quantity = this.quotation.quantities[quantityID].quantity;
+                let margin = parseFloat(this.quotation.quantities[quantityID].margin);
+                let cost = this.quotation.quantities[quantityID].cost;
+
+                let costWithMargin = 0;
+                let thousandWithMargin = 0;
+
+                if (element === "margin") {
+                    costWithMargin = cost + (cost * (margin / 100));
+                    thousandWithMargin = (costWithMargin / quantity) * 1000;
+                    this.quotation.quantities[quantityID].thousand = (thousandWithMargin).toFixed(2);
+
+                } else if (element === "thousand") {
+                    thousandWithMargin = parseFloat(this.quotation.quantities[quantityID].thousand);
+                    costWithMargin = (thousandWithMargin / 1000) * quantity;
+                    let costWithoutShipping = this.quotation.quantities[quantityID].subtotal - this.quotation.quantities[quantityID].shipping;
+                    let percentage = ((costWithMargin * margin) / costWithoutShipping) / 100;
+                    this.quotation.quantities[quantityID].margin = (parseFloat(margin) + percentage).toFixed(2);
+                }
+
+                let subtotal = parseFloat(this.quotation.quantities[quantityID].shipping + costWithMargin);
+                subtotal = parseFloat(subtotal);
+                let vat = parseFloat(this.quotation.vat);
+                let vatPrice = subtotal * (vat / 100);
+                let price = subtotal + vatPrice;
+
+                this.quotation.quantities[quantityID].subtotal = (subtotal).toFixed(2);
+                this.quotation.quantities[quantityID].price = (price).toFixed(2);
+
+                if (quantityID === this.indexMinValue) {
+                    this.quotation.cost = (costWithMargin).toFixed(2);
+                    this.quotation.thousand = (thousandWithMargin).toFixed(2);
+                    this.quotation.vat_price = (vatPrice).toFixed(2);
+                    this.quotation.price = (price).toFixed(2);
+                }
             }
         }
     }
@@ -326,7 +391,7 @@
 
     .wrap-central {
         .left-part {
-            overflow-x: scroll;
+            overflow-x: auto;
         }
     }
 
@@ -356,6 +421,7 @@
         .wrap-head-page .wrap-main-header {
             .wrap-actions-quotation {
                 position: initial;
+                width: 100%;
                 margin-top: 3rem;
 
                 > .options-toggler,

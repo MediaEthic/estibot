@@ -154,11 +154,9 @@ class QuotationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EstablishmentRequest $request, $id)
+    public function update(Request $request, $id)
     {
-//        Establishment::find($id)->update($request->all());
-//
-//        return redirect('parameters/corporation/establishments')->withOk("L'établissement " . $request->input('name') . " a bien été modifié.");
+        return $this->repository->update($id, $request->all());
     }
 
     /**

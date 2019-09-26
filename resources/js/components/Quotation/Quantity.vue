@@ -67,7 +67,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import '~@/_variables.scss';
 
     .arrow-return {
@@ -82,6 +82,22 @@
         [class^="fa"] {
             font-size: 1.5rem;
             margin-right: .5rem;
+        }
+    }
+
+    .responsive-table {
+        display: initial;
+
+        tr {
+            display: initial;
+        }
+
+        tbody {
+            display: initial;
+
+            tr {
+                display: initial;
+            }
         }
     }
 </style>

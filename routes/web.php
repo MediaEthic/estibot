@@ -28,6 +28,7 @@ $router->group(['prefix' => 'api'], function ($router) {
             $router->post('/price', 'QuotationController@getPrice');
             $router->post('/', 'QuotationController@store');
             $router->get('/{id}/edit', 'QuotationController@edit');
+            $router->post('/{id}/edit', 'QuotationController@update');
             $router->delete('/{id}', 'QuotationController@destroy');
         });
 

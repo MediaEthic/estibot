@@ -142,14 +142,20 @@ class QuotationRepository
         }
         $minQuantity = min($allQuantities);
 
-        $model->cost = $price['quantities'][$minQuantity]['totals']['totalCosts'];
-        $thousandPrice = ($price['quantities'][$minQuantity]['totals']['totalCosts'] / $minQuantity) * 1000;
+        $totalCostWithMargin = round($price['quantities'][$minQuantity]['totals']['totalCosts'] + ($price['quantities'][$minQuantity]['totals']['totalCosts'] * (20/100)), 2);
+        $model->cost = $totalCostWithMargin;
+        $thousandPrice = round(($totalCostWithMargin / $minQuantity) * 1000, 2); // prix de revient
         $model->thousand = $thousandPrice;
         $model->quantity = $minQuantity;
         $model->shipping = $price['quantities'][$minQuantity]['totals']['expedition'];
-        $model->vat = 20;
+        $vat = 20;
+        $model->vat = $vat;
+        $subtotal = round($totalCostWithMargin + $price['quantities'][$minQuantity]['totals']['expedition'], 2);
+        $vat_price = round($subtotal * ($vat / 100), 2);
+        $model->vat_price = $vat_price;
+        $model->price = round($subtotal + $vat_price, 2);
         $model->workflow = serialize($inputs);
-        $model->price = serialize($price);
+        $model->datas_price = serialize($price);
         $model->save();
         return $model;
     }
@@ -158,16 +164,18 @@ class QuotationRepository
     {
         $model->quotation_id = $quotation['id'];
         $model->quantity = $inputs['datas']['copies'];
-//        $model->time = $inputs['totals']['totalTimes'];
-//        $model->weight = $inputs['totals']['weight'];
+        $model->time = $inputs['totals']['totalTimes'];
+        $model->weight = $inputs['totals']['weight'];
+        $model->cost = $inputs['totals']['totalCosts']; // prix de revient
         $model->margin = 20;
-        $model->cost = $inputs['totals']['totalCosts'];
-        $model->thousand = ($inputs['totals']['totalCosts'] / $inputs['datas']['copies']) * 1000;
+        $totalCostWithMargin = round($inputs['totals']['totalCosts'] + ($inputs['totals']['totalCosts'] * (20/100)), 2);
+        $model->thousand = round(($totalCostWithMargin / $inputs['datas']['copies']) * 1000, 2); // prix de vente
         $model->shipping = $inputs['totals']['expedition'];
-        $subtotal = $inputs['totals']['totalCosts'] + $inputs['totals']['expedition'];
-        $vat_price = $subtotal * ($quotation['vat'] / 100);
-        $model->vat_price = $subtotal * ($quotation['vat'] / 100);
-        $model->price = $subtotal + $vat_price;
+        $subtotal = round($totalCostWithMargin + $inputs['totals']['expedition'], 2);
+        $model->subtotal = $subtotal;
+        $vat_price = round($subtotal * ($quotation['vat'] / 100), 2);
+        $model->vat_price = $vat_price;
+        $model->price = round($subtotal + $vat_price, 2);
         $model->save();
         return $model;
     }
@@ -407,9 +415,12 @@ class QuotationRepository
 
             foreach ($quantities as $quantity) {
                 if (!empty($quantity['quantity']) && !empty($quantity['model']) && !empty($quantity['plate'])) {
-                    $totalFixedCosts = 0;
-                    $totalVariableCosts = 0;
-                    $totalCosts = 0;
+                    $totalFixedCostsWithoutMargin = 0;
+                    $totalVariableCostsWithoutMargin = 0;
+                    $totalFixedCostsWithMargin = 0;
+                    $totalVariableCostsWithMargin = 0;
+                    $totalCostsWithoutMargin = 0;
+                    $totalCostsWithMargin = 0;
                     $totalTimes = 0;
 
                     $copies = intval($quantity['quantity']);
@@ -442,9 +453,12 @@ class QuotationRepository
                             $lastElement = end($costWithMarginReturned);
                             foreach ($costWithMarginReturned as $result) {
                                 if ($result === $lastElement) {
-                                    $totalCosts += $result[0];
-                                    $totalFixedCosts += $result[1];
-                                    $totalVariableCosts += $result[2];
+                                    $totalCostsWithoutMargin += $totalCostPrepress;
+                                    $totalCostsWithMargin += $result[0];
+                                    $totalFixedCostsWithoutMargin += $totalFixedCostPrepress;
+                                    $totalVariableCostsWithoutMargin += $totalVariableCostPrepress;
+                                    $totalFixedCostsWithMargin += $result[1];
+                                    $totalVariableCostsWithMargin += $result[2];
                                     $totalTimes += $totalTimePrepress;
 
                                     $results['quantities'][$copies]['operations'][$operationId]['name'] = "Prépresse";
@@ -520,9 +534,12 @@ class QuotationRepository
                         $lastElement = end($costWithMarginReturned);
                         foreach ($costWithMarginReturned as $result) {
                             if ($result === $lastElement) {
-                                $totalCosts += $result[0];
-                                $totalFixedCosts += $result[1];
-                                $totalVariableCosts += $result[2];
+                                $totalCostsWithoutMargin += $totalCostProduction;
+                                $totalCostsWithMargin += $result[0];
+                                $totalFixedCostsWithoutMargin += $totalFixedCostProduction;
+                                $totalVariableCostsWithoutMargin += $totalVariableCostProduction;
+                                $totalFixedCostsWithMargin += $result[1];
+                                $totalVariableCostsWithMargin += $result[2];
                                 $totalTimes += $totalTimeProduction;
 
                                 $results['quantities'][$copies]['operations'][$operationId]['name'] = "Production";
@@ -592,9 +609,12 @@ class QuotationRepository
                             $lastElement = end($costWithMarginReturned);
                             foreach ($costWithMarginReturned as $result) {
                                 if ($result === $lastElement) {
-                                    $totalCosts += $result[0];
-                                    $totalFixedCosts += $result[1];
-                                    $totalVariableCosts += $result[2];
+                                    $totalCostsWithoutMargin += $totalCostFinishing;
+                                    $totalCostsWithMargin += $result[0];
+                                    $totalFixedCostsWithoutMargin += $totalFixedCostFinishing;
+                                    $totalVariableCostsWithoutMargin += $totalVariableCostFinishing;
+                                    $totalFixedCostsWithMargin += $result[1];
+                                    $totalVariableCostsWithMargin += $result[2];
                                     $totalTimes += $totalTimeFinishing;
 
                                     $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishingPress->name;
@@ -626,9 +646,12 @@ class QuotationRepository
                         $lastElement = end($costWithMarginReturned);
                         foreach ($costWithMarginReturned as $result) {
                             if ($result === $lastElement) {
-                                $totalCosts += $result[0];
-                                $totalFixedCosts += $result[1];
-                                $totalVariableCosts += $result[2];
+                                $totalCostsWithoutMargin += $totalCostSubstrate;
+                                $totalCostsWithMargin += $result[0];
+                                $totalFixedCostsWithoutMargin += $totalFixedCostSubstrate;
+                                $totalVariableCostsWithoutMargin += $totalVariableCostSubstrate;
+                                $totalFixedCostsWithMargin += $result[1];
+                                $totalVariableCostsWithMargin += $result[2];
                                 $totalTimes += $totalTimeSubstrate;
 
                                 $results['quantities'][$copies]['operations'][$operationId]['name'] = "Support d'impression";
@@ -674,9 +697,12 @@ class QuotationRepository
                             $lastElement = end($costWithMarginReturned);
                             foreach ($costWithMarginReturned as $result) {
                                 if ($result === $lastElement) {
-                                    $totalCosts += $result[0];
-                                    $totalFixedCosts += $result[1];
-                                    $totalVariableCosts += $result[2];
+                                    $totalCostsWithoutMargin += $totalCostWinding;
+                                    $totalCostsWithMargin += $result[0];
+                                    $totalFixedCostsWithoutMargin += $totalFixedCostWinding;
+                                    $totalVariableCostsWithoutMargin += $totalVariableCostWinding;
+                                    $totalFixedCostsWithMargin += $result[1];
+                                    $totalVariableCostsWithMargin += $result[2];
                                     $totalTimes += $totalTimeWinding;
 
                                     $results['quantities'][$copies]['operations'][$operationId]['name'] = "Conditionnement";
@@ -694,13 +720,13 @@ class QuotationRepository
                     }
 
                     $weight = $copies * $labelWidth / 1000 * $labelLength / 1000 * $substrateWeight / 1000;
-                    $expedition = round($totalCosts * (5/100), 2);
+                    $expedition = round($totalCostsWithoutMargin * (5/100), 2);
 
-                    $results['quantities'][$copies]['totals']['weight'] = $weight;
+                    $results['quantities'][$copies]['totals']['weight'] = round($weight, 2);
                     $results['quantities'][$copies]['totals']['totalTimes'] = round($totalTimes, 2);
-                    $results['quantities'][$copies]['totals']['totalCosts'] = round($totalCosts, 2);
-                    $results['quantities'][$copies]['totals']['totalFixedCosts'] = $totalFixedCosts;
-                    $results['quantities'][$copies]['totals']['totalVariableCosts'] = $totalVariableCosts;
+                    $results['quantities'][$copies]['totals']['totalCosts'] = round($totalCostsWithoutMargin, 2);
+                    $results['quantities'][$copies]['totals']['totalFixedCosts'] = round($totalFixedCostsWithoutMargin, 2);
+                    $results['quantities'][$copies]['totals']['totalVariableCosts'] = round($totalVariableCostsWithoutMargin, 2);
                     $results['quantities'][$copies]['totals']['expedition'] = $expedition;
 
                     // TODO : transport (expedition)
@@ -723,18 +749,48 @@ class QuotationRepository
     private function handleMargin($margin, $totalCost, $fixedCost, $variableCost) {
         $resultToReturn = array();
 
-        $totalCostWithMargin = round($totalCost + ($totalCost * ($margin / 100)), 4);
-        $fixedCostWithMargin = round($fixedCost + ($fixedCost * ($margin / 100)), 4);
-        $variableCostWithMargin = round($variableCost + ($variableCost * ($margin / 100)), 4);
+//        $totalCostWithMargin = round($totalCost + ($totalCost * ($margin / 100)), 4);
+//        $fixedCostWithMargin = round($fixedCost + ($fixedCost * ($margin / 100)), 4);
+//        $variableCostWithMargin = round($variableCost + ($variableCost * ($margin / 100)), 4);
 
-        $resultToReturn[] = array($totalCostWithMargin, $fixedCostWithMargin, $variableCostWithMargin);
+        $totalCostWithoutMargin = round($totalCost, 4);
+        $fixedCostWithoutMargin = round($fixedCost, 4);
+        $variableCostWithoutMargin = round($variableCost, 4);
+
+        $resultToReturn[] = array($totalCostWithoutMargin, $fixedCostWithoutMargin, $variableCostWithoutMargin);
 
         return $resultToReturn;
     }
 
     public function update($id, Array $inputs)
     {
-        $this->save($this->getById($id), $inputs);
+        $model = Quotation::findOrFail($id);
+        $description = $inputs['quotation']['description'];
+        $model->update([
+            'description' => $description,
+            'cost' => $inputs['quotation']['cost'],
+            'thousand' => $inputs['quotation']['thousand'],
+            'vat_price' => $inputs['quotation']['vat_price'],
+            'price' => $inputs['quotation']['price'],
+        ]);
+
+        $vat = $model->vat;
+
+        foreach ($inputs['quotation']['quantities'] as $quantity) {
+            $modelQuantity = Quantity::findOrFail($quantity['id']);
+            $subtotal = $quantity['subtotal'];
+            $vatPrice = $subtotal * ($vat / 100);
+
+            $modelQuantity->update([
+                'margin' => $quantity['margin'],
+                'thousand' => $quantity['thousand'],
+                'subtotal' => $subtotal,
+                'vat_price' => $vatPrice,
+                'price' => $quantity['price'],
+            ]);
+        }
+
+        return $this->getById($id);
     }
 
     public function destroy($id)
