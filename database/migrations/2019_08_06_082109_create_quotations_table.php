@@ -31,8 +31,10 @@ class CreateQuotationsTable extends Migration
             $table->unsignedBigInteger('quantity')->nullable()->default(null);
             $table->float('shipping', 10, 6)->nullable()->default(null);
             $table->float('vat', 10, 6)->nullable()->default(null);
+            $table->float('vat_price', 10, 6)->nullable()->default(null);
+            $table->float('price', 10, 6)->nullable()->default(null);
             $table->text('workflow')->nullable()->default(null);
-            $table->text('price')->nullable()->default(null);
+            $table->text('datas_price')->nullable()->default(null);
         });
     }
 

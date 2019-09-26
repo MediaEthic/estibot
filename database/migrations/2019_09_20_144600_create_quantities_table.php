@@ -20,10 +20,11 @@ class CreateQuantitiesTable extends Migration
             $table->unsignedBigInteger('quantity')->nullable()->default(null);
             $table->float('time', 10, 6)->nullable()->default(null);
             $table->float('weight', 10, 6)->nullable()->default(null);
-            $table->float('margin', 10, 6)->nullable()->default(null);
             $table->float('cost', 10, 6)->nullable()->default(null);
+            $table->float('margin', 10, 6)->nullable()->default(null);
             $table->float('thousand', 10, 6)->nullable()->default(null);
             $table->float('shipping', 10, 6)->nullable()->default(null);
+            $table->float('subtotal', 10, 6)->nullable()->default(null);
             $table->float('vat_price', 10, 6)->nullable()->default(null);
             $table->float('price', 10, 6)->nullable()->default(null);
         });

@@ -27,8 +27,10 @@ class Quotation extends Model
         'quantity',
         'shipping',
         'vat',
-        'workflow',
+        'vat_price',
         'price',
+        'workflow',
+        'datas_price',
     ];
 
 

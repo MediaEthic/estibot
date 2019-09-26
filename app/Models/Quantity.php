@@ -16,10 +16,11 @@ class Quantity extends Model
         'quantity',
         'time',
         'weight',
-        'margin',
         'cost',
+        'margin',
         'thousand',
         'shipping',
+        'subtotal',
         'vat_price',
         'price',
     ];
