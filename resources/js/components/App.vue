@@ -1,7 +1,7 @@
 <template>
     <div v-if="!loading" class="wrap-padding">
         <nav v-if="!isMobile" class="wrap-main-navigation">
-            <router-link :to="{ name : 'home' }"
+            <router-link :to="{ name: 'quotations.index' }"
                          tag="a"
                          title="Retour sur la page d'accueil">
                 <img src="/assets/img/logo-ethic-software.png"
@@ -24,7 +24,7 @@
             <nav>
                 <ul class="wrap-main-menu">
                     <li v-for="(route, key) in routes">
-                        <router-link :to="{ name : route.path }"
+                        <router-link :to="{ name: route.path }"
                                      :key="key"
                                      class="link-menu">
                             <i :class="route.icon"></i>
@@ -57,12 +57,12 @@
                 routes: [
                     {
                         name: 'Accueil',
-                        path: 'home',
+                        path: 'quotations.index',
                         icon: 'fas fa-home'
                     },
                     {
                         name: 'Devis',
-                        path: 'quotation',
+                        path: 'quotations.create',
                         icon: 'fas fa-plus-circle'
                     },
                     {

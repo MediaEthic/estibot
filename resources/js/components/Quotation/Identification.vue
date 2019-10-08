@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="wrap-radio">
-<!--            <div class="wrap-field">-->
-<!--                <input type="radio" id="third_old" v-model="form.identification.third.type" value="old">-->
-<!--                <label for="third_old">-->
-<!--                    <i class="fas fa-user-secret"></i>-->
-<!--                    <span>Rechercher un client</span>-->
-<!--                </label>-->
-<!--            </div>-->
+            <div class="wrap-field">
+                <input type="radio" id="third_old" v-model="form.identification.third.type" value="old">
+                <label for="third_old">
+                    <i class="fas fa-user-secret"></i>
+                    <span>Rechercher un client</span>
+                </label>
+            </div>
             <div class="wrap-field">
                 <input type="radio" id="third_new" v-model="form.identification.third.type" value="new">
                 <label for="third_new">
@@ -95,6 +95,23 @@
                       { hasFocus: form.identification.contact.hasFocus }]">
 
             <div class="wrap-field h-50">
+
+<!--                <select v-model="item.type"-->
+<!--                        @focus="item.hasFocus = true"-->
+<!--                        @blur="item.hasFocus = false"-->
+<!--                        @animationstart="checkAnimation"-->
+<!--                        class="field select"-->
+<!--                        :class="{ hasValue: item.type }"-->
+<!--                        @change="handleFinishingChanging($event, index)"-->
+<!--                        required>-->
+<!--                    <option disabled value="">Choisir</option>-->
+<!--                    <option v-for="finishing in finishings"-->
+<!--                            v-bind:value="finishing.id"-->
+<!--                            :data-name="finishing.name">-->
+<!--                        {{ finishing.name }}-->
+<!--                    </option>-->
+<!--                </select>-->
+
                 <select v-model="form.identification.contact.id"
                         @focus="form.identification.contact.hasFocus = true"
                         @blur="form.identification.contact.hasFocus = false"
@@ -103,6 +120,10 @@
                         :class="{ hasValue: form.identification.contact.id }"
                         required>
                     <option disabled value="">Choisir</option>
+                    <option v-for="contact in form.identification.third.contacts"
+                            v-bind:value="contact.id">
+                        {{ generateContact(contact) }}
+                    </option>
                 </select>
                 <label class="label-field">Contact</label>
             </div>
@@ -206,6 +227,21 @@
                     target.classList.add("hasValue");
                 }
             },
+            generateContact(contact) {
+                let $contact = ``;
+                if (contact.civility === "Mr") {
+                    $contact += `M. `;
+                } else {
+                    $contact += `Mme `;
+                }
+                if (contact.name !== null) {
+                    $contact += contact.name + ` `;
+                }
+                if (contact.surname !== null) {
+                    $contact += contact.surname + ` `;
+                }
+                return $contact;
+            }
         }
     }
 </script>

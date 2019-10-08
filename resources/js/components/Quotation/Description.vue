@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="wrap-radio">
-<!--            <div class="wrap-field">-->
-<!--                <input type="radio" id="label_old" v-model="form.description.label.type" value="old">-->
-<!--                <label for="label_old">-->
-<!--                    <i class="fas fa-search"></i>-->
-<!--                    <span>Rechercher une étiquette</span>-->
-<!--                </label>-->
-<!--            </div>-->
+            <div class="wrap-field">
+                <input type="radio" id="label_old" v-model="form.description.label.type" value="old">
+                <label for="label_old">
+                    <i class="fas fa-search"></i>
+                    <span>Rechercher une étiquette</span>
+                </label>
+            </div>
             <div class="wrap-field">
                 <input type="radio" id="label_new" v-model="form.description.label.type" value="new">
                 <label for="label_new">
@@ -168,6 +168,7 @@
             },
             addQuantity() {
                 this.form.description.quantities.push({
+                    id: "",
                     quantity: "",
                     model: "",
                     plate: "",

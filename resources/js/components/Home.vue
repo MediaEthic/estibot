@@ -35,19 +35,19 @@
                     <router-link v-if="!isMobile"
                                  class="create-new-quotation"
                                  tag="div"
-                                 :to="{ name : 'quotation' }">
+                                 :to="{ name: 'quotations.create' }">
                         <i class="far fa-plus-square"></i>
                         <p class="text-new-quotation">Créer un<br> nouveau devis</p>
                     </router-link>
 
                     <router-link tag="article"
                                  v-for="quotation in quotations.data"
-                                 :to="{ name: 'single-quotation', params: { id: quotation.id }}"
+                                 :to="{ name: 'quotations.show', params: { id: quotation.id }}"
                                  :key="quotation.id"
                                  class="wrap-quotation"
                                  :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
                         <router-link tag="div"
-                                     :to="{ name: 'single-quotation', params: { id: quotation.id }}">
+                                     :to="{ name: 'quotations.show', params: { id: quotation.id }}">
                             <div class="head-quotation">
                                 <h2 class="page-subtitle">Devis <span class="number-quotation">#{{ quotation.id }}</span></h2>
                                 <div class="tag tag-info">{{ thirdType(quotation.third_type) }}</div>
@@ -62,7 +62,7 @@
                                     <ul class="list-actions">
                                         <li class="action-item"><a href="#" class="fas fa-print"></a></li>
                                         <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
-                                        <li class="action-item"><a href="#" class="fas fa-copy"></a></li>
+<!--                                        <li class="action-item"><a href="#" class="fas fa-copy"></a></li>-->
                                         <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt"></i></li>
                                     </ul>
                                 </div>
@@ -92,7 +92,7 @@
                     </nav>
                 </div>
                 <router-link v-else
-                             :to="{ name: 'quotation' }"
+                             :to="{ name: 'quotations.create' }"
                              tag="div"
                              class="wrap-empty-result">
                     <div class="wrap-image">
@@ -106,7 +106,7 @@
 
                     <router-link class="create-new-quotation"
                                  tag="div"
-                                 :to="{ name : 'quotation' }">
+                                 :to="{ name: 'quotations.create' }">
                         <i class="far fa-plus-square"></i>
                         <p class="text-new-quotation">Créer un<br> nouveau devis</p>
                     </router-link>
@@ -117,7 +117,7 @@
                 <router-link v-if="!isMobile"
                              class="create-new-quotation"
                              tag="div"
-                             :to="{ name : 'quotation' }">
+                             :to="{ name: 'quotations.create' }">
                     <i class="far fa-plus-square"></i>
                     <p class="text-new-quotation">Créer un<br> nouveau devis</p>
                 </router-link>

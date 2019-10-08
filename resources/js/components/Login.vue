@@ -96,7 +96,7 @@
                     email: this.form.email,
                     password: this.form.password,
                 }).then(resp => {
-                    this.$router.push({ name: "home" });
+                    this.$router.push({ name: "quotations.index" });
                 }).catch(error => {
                     this.infoError = true;
                 });

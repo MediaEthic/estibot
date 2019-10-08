@@ -33,9 +33,16 @@ class QuotationRepository
 
     public function getById($id)
     {
-        return $this->model->with('third')
-            ->with('quantities')
+        $quotation = $this->model->with('third', 'quantities')
             ->findOrFail($id);
+
+//  TODO :
+//        if ($quotation->third_type === "new") {
+        $quotation['contacts'] = Contact::where('third_id', $quotation->third_id)->get();
+            return $quotation;
+//        } else {
+//            return $quotation;
+//        }
     }
 
     private function saveProspect(Third $model, Array $inputs)
@@ -107,9 +114,11 @@ class QuotationRepository
     {
         if (!empty($inputs['type'])) $model->finishing_id = $inputs['type'];
         if (!empty($label)) $model->label_id = $label;
-        if (!empty($inputs['shape'])) $model->shape = $inputs['shape'];
-        if (!empty($inputs['reworking'])) $model->reworking = $inputs['reworking'];
+        if (floatval($inputs['shape']) > 0) $model->shape = $inputs['shape'];
+//        if (!empty($inputs['reworking'])) return $inputs['reworking'];
+        $model->save();
         return $model;
+
     }
 
     private function saveConsumable(Consumable $model, Array $inputs, $finishingLabel)
@@ -118,6 +127,7 @@ class QuotationRepository
         if (!empty($inputs['name'])) $model->name = $inputs['name'];
         if (!empty($inputs['width'])) $model->width = $inputs['width'];
         if (!empty($inputs['price'])) $model->price = $inputs['price'];
+        $model->save();
         return $model;
     }
 
@@ -126,10 +136,10 @@ class QuotationRepository
         if (!empty($inputs['summary'])) $model->description = $inputs['summary'];
         $images = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
         $model->image = $images[array_rand($images)];
-        $model->third_type = $inputs['identification']['third']['type'];
+        if ($inputs['identification']['third']['ethic']) $model->third_type = "old";
         if (!empty($third)) $model->third_id = $third;
         if (!empty($contact)) $model->contact_id = $contact;
-        $model->label_type = $inputs['description']['label']['type'];
+        if ($inputs['description']['label']['ethic']) $model->label_type = "old";
         if (!empty($label)) $model->label_id = $label;
         $validityDate = date('Y-m-d', strtotime("+3 months"));
         $model->validity = $validityDate;
@@ -154,8 +164,8 @@ class QuotationRepository
         $vat_price = round($subtotal * ($vat / 100), 2);
         $model->vat_price = $vat_price;
         $model->price = round($subtotal + $vat_price, 2);
-        $model->workflow = serialize($inputs);
-        $model->datas_price = serialize($price);
+        $model->workflow = json_encode($inputs);
+        $model->datas_price = json_encode($price);
         $model->save();
         return $model;
     }
@@ -182,50 +192,142 @@ class QuotationRepository
 
     public function store(Array $inputs)
     {
-        $workflow = $inputs['workflow'];
-        $identification = $workflow['identification'];
-        $description = $workflow['description'];
-        $printing = $workflow['printing'];
-        $finishing = $workflow['finishing'];
-        $packing = $workflow['packing'];
-
-        $third = null;
-        $contact = null;
-        if ($identification['third']['type'] === "new") {
-            $third = $this->saveProspect(new Third(), $identification['third']);
-            $contact = $this->saveContact(new Contact(), $identification['contact'], $third['id']);
+        $errors = array();
+//        return $inputs['workflow']['identification']['third']['id'];
+        if (isset($inputs['quotation'])) {
+            $modelThird = Third::findOrFail($inputs['workflow']['identification']['third']['id']);
+            $modelContact = Contact::findOrFail($inputs['workflow']['identification']['contact']['id']);
+            $modelSubstrate = Substrate::findOrFail($inputs['workflow']['printing']['substrate']['id']);
+            $modelCutting = Cutting::findOrFail($inputs['workflow']['finishing']['cutting']['id']);
+            $modelLabel = Label::findOrFail($inputs['workflow']['description']['label']['id']);
+            $modelQuotation = Quotation::findOrFail($inputs['quotation']);
+        } else {
+            $modelThird = new Third();
+            $modelContact = new Contact();
+            $modelSubstrate = new Substrate();
+            $modelCutting = new Cutting();
+            $modelLabel = new Label();
+            $modelQuotation = new Quotation();
         }
 
-        $substrate = null;
-        if ($printing['substrate']['type'] === "new") {
-            $substrate = $this->saveSubstrate(new Substrate(), $printing['substrate']);
+
+        $third = $this->saveProspect($modelThird, $inputs['workflow']['identification']['third']);
+        if (!isset($third)) $errors[] = "L'insertion du donneur d'ordre a échoué.";
+
+        if (empty($errors)) {
+            $inputs['workflow']['identification']['third']['type'] = "old";
+            $inputs['workflow']['identification']['third']['id'] = $third['id'];
+            $contact = $this->saveContact($modelContact, $inputs['workflow']['identification']['contact'], $third['id']);
+            if (!isset($contact)) $errors['errors'][] = "L'insertion du contact a échoué.";
         }
 
-        $cutting = null;
-        if ($finishing['cutting']['type'] === "new") {
-            $cutting = $this->saveCutting(new Cutting(), $finishing['cutting']);
+        if (empty($errors)) {
+            $inputs['workflow']['identification']['contact']['id'] = $contact['id'];
+            $substrate = $this->saveSubstrate($modelSubstrate, $inputs['workflow']['printing']['substrate']);
+            if (!isset($substrate)) $errors['errors'][] = "L'insertion du support d'impression a échoué.";
         }
 
-        $label = null;
-        if ($description['label']['type'] === "new") {
-            $label = $this->saveLabel(new Label(), $description['label'], $printing, $substrate['id'], $cutting['id'], $packing);
+        if (empty($errors)) {
+            $inputs['workflow']['printing']['substrate']['type'] = "old";
+            $inputs['workflow']['printing']['substrate']['id'] = $substrate['id'];
+            $cutting = $this->saveCutting($modelCutting, $inputs['workflow']['finishing']['cutting']);
+            if (!isset($cutting)) $errors['errors'][] = "L'insertion de l'outil de découpe a échoué.";
         }
 
-        foreach ($finishing['finishings'] as $finishing) {
-            $finishingID = $finishing['type'];
-            $finishingLabel = $this->saveFinishingLabel(new FinishingLabel(), $finishing, $label['id']);
-            if ($finishing['presence_consumable']) {
-                $consumable = $this->saveConsumable(new Consumable(), $finishing['consumable'], $finishingLabel['id']);
+        if (empty($errors)) {
+            $inputs['workflow']['finishing']['cutting']['type'] = "old";
+            $inputs['workflow']['finishing']['cutting']['id'] = $cutting['id'];
+            $label = $this->saveLabel($modelLabel, $inputs['workflow']['description']['label'], $inputs['workflow']['printing'], $substrate['id'], $cutting['id'], $inputs['workflow']['packing']);
+            if (!isset($label)) $errors['errors'][] = "L'insertion de l'étiquette a échoué.";
+        }
+
+        if (empty($errors)) {
+            $inputs['workflow']['description']['label']['type'] = "old";
+            $inputs['workflow']['description']['label']['id'] = $label['id'];
+
+            $finishingsLabel = array();
+            foreach ($inputs['workflow']['finishing']['finishings'] as $key => $finishing) {
+                if (empty($errors)) {
+                    if ($finishing['id'] === "") {
+                        $modelFinishingLabel = new FinishingLabel();
+                    } else {
+                        $modelFinishingLabel = FinishingLabel::findOrFail($finishing['id']);
+                    }
+
+                    $finishingLabel = $this->saveFinishingLabel($modelFinishingLabel, $finishing, $label['id']);
+                    if (!isset($finishingLabel)) $errors['errors'][] = "L'insertion de la finition " . $finishing['name'] . " a échoué.";
+
+                    if (empty($errors)) {
+                        $inputs['workflow']['finishing']['finishings'][$key]['id'] = $finishingLabel['id'];
+                        $finishingsLabel[] = $finishingLabel['id'];
+
+                        if ($finishing['presence_consumable']) {
+                            if ($finishing['consumable']['id'] !== "") {
+                                $modelConsumable = Consumable::findOrFail($finishing['consumable']['id']);
+                            } else {
+                                $modelConsumable = new Consumable();
+                            }
+                            $consumable = $this->saveConsumable($modelConsumable, $finishing['consumable'], $finishingLabel['id']);
+                            if (!isset($consumable)) $errors['errors'][] = "L'insertion du consommable de " . $finishing['name'] . " a échoué.";
+                            $finishing['consumable']['id'] = $consumable['id'];
+                        } else {
+//                TODO : to test
+                            if ($finishing['id'] !== "") {
+                                Consumable::where('finishing_label', $finishingLabel['id'])->delete();
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        $quotation = $this->saveQuotation(new Quotation(), $workflow, $inputs['price'], $third['id'], $contact['id'], $label['id']);
+        if (empty($errors)) {
+            $finishingsLabels = FinishingLabel::where('label_id', $label['id'])->pluck('id')->toArray();
 
-        foreach ($inputs['price']['quantities'] as $workflowQuantity) {
-            $quantities = $this->saveQuantities(new Quantity(), $workflowQuantity, $quotation);
+            $finishingsDeleted = array_diff($finishingsLabels, $finishingsLabel);
+            foreach ($finishingsDeleted as $finishingDeleted) {
+                Consumable::where('finishing_label', $finishingDeleted)->delete();
+                FinishingLabel::findOrFail($finishingDeleted)->delete();
+            }
+
+            $quotation = $this->saveQuotation($modelQuotation, $inputs['workflow'], $inputs['price'], $third['id'], $contact['id'], $label['id']);
+            if (!isset($quotation)) $errors['errors'][] = "L'insertion du devis a échoué.";
         }
 
-        return $quotation;
+        $quantitiesQuotation = array();
+        foreach ($inputs['workflow']['description']['quantities'] as $key => $workflowQuantity) {
+            foreach ($inputs['price']['quantities'] as $index => $priceQuantity) {
+                if (empty($errors)) {
+                    if (intval($workflowQuantity['quantity']) === $index) {
+                        if ($workflowQuantity['id'] === "") {
+                            $modelQuantity = new Quantity();
+                        } else {
+                            $modelQuantity = Quantity::findOrFail($workflowQuantity['id']);
+                        }
+                        $quantity = $this->saveQuantities($modelQuantity, $priceQuantity, $quotation);
+                        if (!isset($quantity)) $errors['errors'][] = "L'insertion de la quantité" . $index . " a échoué.";
+
+                        $inputs['workflow']['description']['quantities'][$key]['id'] = $quantity['id'];
+                        $quantitiesQuotation[] = $quantity['id'];
+                    }
+                }
+            }
+        }
+
+        if (empty($errors)) {
+            $allQuantities = Quantity::where('quotation_id', $quotation['id'])->pluck('id')->toArray();
+
+            $quantitiesDeleted = array_diff($allQuantities, $quantitiesQuotation);
+            foreach ($quantitiesDeleted as $quantityDeleted) {
+                Quantity::findOrFail($quantityDeleted)->delete();
+            }
+        }
+
+        if (empty($errors)) {
+            return $quotation;
+        } else {
+            return $errors;
+        }
     }
 
     public function getPrice($inputs) {
@@ -241,13 +343,9 @@ class QuotationRepository
         $third = $identification['third'];
         $contact = $identification['contact'];
 
-        if ($third['type'] === "old") {
-            $costumer = Third::find($third['id']);
-        } else {
-            if (empty($third['name'])) { $errors['errors'][] = "Vous devez saisir le nom du prospect"; }
-            if (empty($third['zipcode'])) { $errors['errors'][] = "Vous devez saisir le code postal du prospect"; }
-            if (empty($contact['email'])) { $errors['errors'][] = "Vous devez saisir l'adresse e-mail du prospect"; }
-        }
+        if (empty($third['name'])) { $errors['errors'][] = "Vous devez saisir le nom du prospect"; }
+        if (empty($third['zipcode'])) { $errors['errors'][] = "Vous devez saisir le code postal du prospect"; }
+        if (empty($contact['email'])) { $errors['errors'][] = "Vous devez saisir l'adresse e-mail du prospect"; }
 
 
         /*
@@ -255,14 +353,11 @@ class QuotationRepository
          */
         $printing = $workflow['printing'];
         $substrate = $printing['substrate'];
-        if ($substrate['type'] === 'old') {
 
-        } else {
-            $substrateName = $substrate['name'];
-            $substrateWidth = $substrate['width'];
-            $substrateWeight = $substrate['weight'];
-            $substratePrice = $substrate['price'];
-        }
+        $substrateName = $substrate['name'];
+        $substrateWidth = $substrate['width'];
+        $substrateWeight = $substrate['weight'];
+        $substratePrice = $substrate['price'];
 
         if (empty($substrateWidth)) { $errors['errors'][] = "Vous devez saisir la laize du support d'impression"; }
         if (empty($substrateWeight)) { $errors['errors'][] = "Vous devez saisir le grammage du support d'impression"; }
@@ -296,19 +391,9 @@ class QuotationRepository
         */
         $label = $description['label'];
 
-        if ($label['type'] === "old") {
-            $labelID = $label['id'];
-            if (!empty($labelID)) {
-                $label = Label::find($labelID);
-                $labelName = $label->name;
-                $labelWidth = $label->width;
-                $labelLength = $label->length;
-            }
-        } else {
-            $labelName = $label['name'];
-            $labelWidth = $label['width'];
-            $labelLength = $label['length'];
-        }
+        $labelName = $label['name'];
+        $labelWidth = $label['width'];
+        $labelLength = $label['length'];
 
         if (empty($labelWidth)) { $errors['errors'][] = "Vous devez saisir la laize de l'étiquette"; }
         if (empty($labelLength)) { $errors['errors'][] = "Vous devez saisir l'avance de l'étiquette"; }
@@ -332,27 +417,13 @@ class QuotationRepository
         $finishing = $workflow['finishing'];
         $cutting = $finishing['cutting'];
 
-        if ($cutting['type'] === "old") {
-            $cuttingID = $cutting['id'];
-            if (!empty($cuttingID)) {
-                $cutting = Cutting::find($cuttingID);
-                $cuttingName = $cutting->name;
-                $cuttingDimensionWidth = $cutting->dimension_width;
-                $cuttingDimensionLength = $cutting->dimension_length;
-                $cuttingBleedWidth = $cutting->bleed_width;
-                $cuttingBleedLength = $cutting->bleed_length;
-                $cuttingPoseWidth = $cutting->pose_width;
-                $cuttingPoseLength = $cutting->pose_length;
-            }
-        } else {
-            $cuttingName = $cutting['name'];
-            $cuttingDimensionWidth = $cutting['dimension_width'];
-            $cuttingDimensionLength = $cutting['dimension_length'];
-            $cuttingBleedWidth = $cutting['bleed_width'];
-            $cuttingBleedLength = $cutting['bleed_length'];
-            $cuttingPoseWidth = $cutting['pose_width'];
-            $cuttingPoseLength = $cutting['pose_length'];
-        }
+        $cuttingName = $cutting['name'];
+        $cuttingDimensionWidth = $cutting['dimension_width'];
+        $cuttingDimensionLength = $cutting['dimension_length'];
+        $cuttingBleedWidth = $cutting['bleed_width'];
+        $cuttingBleedLength = $cutting['bleed_length'];
+        $cuttingPoseWidth = $cutting['pose_width'];
+        $cuttingPoseLength = $cutting['pose_length'];
 
         if (empty($cuttingDimensionWidth) || empty($cuttingDimensionLength)) { $errors['errors'][] = "Vous devez saisir une dimension en laize et en avance pour l'outil de découpe"; }
         if (empty($cuttingBleedWidth) || empty($cuttingBleedLength)) { $errors['errors'][] = "Vous devez saisir l'entrepose en laize et en avance pour l'outil de découpe"; }
@@ -799,7 +870,11 @@ class QuotationRepository
         foreach ($quantities as $quantity) {
             $quantity->delete();
         }
-        $this->getById($id)->delete();
+        $quantities = Quantity::where('quotation_id', $id)->get();
+        foreach ($quantities as $quantity) {
+            $quantity->delete();
+        }
+        Quotation::findOrFail($id)->delete();
         return $this->getPaginate();
     }
 }

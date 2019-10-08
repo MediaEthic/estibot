@@ -6,7 +6,7 @@
                         :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
                     <router-link class="go-back"
                                  tag="a"
-                                 :to="{ name : 'home' }">
+                                 :to="{ name: 'quotations.index' }">
                         <i class="fas fa-arrow-left"></i>
                         Retour
                     </router-link>
@@ -16,8 +16,8 @@
                         <label for="options-toggler" class="fas fa-cog"></label>
                         <ul class="list-actions">
                             <li class="action-item"><i class="fas fa-print action-event"></i><span>Imprimer</span></li>
-                            <li class="action-item"><i class="fas fa-edit action-event"></i><span>Modifiter</span></li>
-                            <li class="action-item"><i class="fas fa-copy action-event"></i><span>Dupliquer</span></li>
+                            <router-link tag="li" :to="{ name: 'quotations.edit', params: { id: quotation.id } }" class="action-item"><i class="fas fa-edit action-event"></i><span>Modifier</span></router-link>
+<!--                            <li class="action-item"><i class="fas fa-copy action-event"></i><span>Dupliquer</span></li>-->
                             <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt action-event"></i><span>Supprimer</span></li>
                         </ul>
                     </div>
@@ -136,6 +136,7 @@
             this.$store.dispatch('getQuotation', {
                 id: this.$route.params.id
             }).then(() => {
+                console.log(this.quotation);
                 this.generateThird();
 
                 let el = document.querySelector('textarea');
@@ -149,10 +150,9 @@
                 this.quotation.quantities.forEach(element => {
                     quantities.push(element.quantity);
                 });
-                // let minQuantity = Math.min.apply(null, quantities);
-                let i = quantities.indexOf(Math.min(...quantities));
-                this.indexMinValue = i;
-            })
+                let index = quantities.indexOf(Math.min(...quantities));
+                this.indexMinValue = index;
+            });
         },
         computed: {
             quotation: {
@@ -178,6 +178,7 @@
             },
             generateThird() {
                 let third = ``;
+                console.log(this.quotation.third.name);
                 if (this.quotation.third.name !== null) third += this.quotation.third.name;
                 if (this.quotation.third.address !== null) third += ` - ` + this.quotation.third.address;
                 if (this.quotation.third.zipcode !== null) third += ` - ` + this.quotation.third.zipcode;
@@ -297,7 +298,7 @@
 
                         .action-item {
                             position: absolute;
-                            display: block;
+                            display: none;
                             top: 0;
                             bottom: 0;
                             left: 0;
@@ -323,15 +324,15 @@
                                 pointer-events: none;
                                 transition: 0.2s;
 
-                                span {
-                                    display: none;
-                                }
-
                                 &:hover {
                                     color: $secondary-color-light;
                                     border-color: $secondary-color-light;
                                     transform: scale(1.1);
                                 }
+                            }
+
+                            span {
+                                display: none;
                             }
                         }
                     }
@@ -346,6 +347,7 @@
 
                         ~ .list-actions {
                             .action-item {
+                                display: block;
                                 opacity: 1;
 
                                 &:nth-child(1) {

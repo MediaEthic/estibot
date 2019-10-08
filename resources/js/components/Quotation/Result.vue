@@ -64,6 +64,7 @@
         },
         created() {
             this.$store.dispatch("getQuotationPrice").then(res => {
+                console.log(this.$store.state.price);
                 this.result = this.$store.state.price;
 
                 if (this.result.errors !== undefined) {
@@ -142,7 +143,7 @@
                     background-position-x: 7rem;
                     border-left: 1.5rem solid $primary-color;
                     box-shadow: 0 0 1rem rgba($primary-color-dark, 0.4);
-                    transform: scale(1.1);
+                    transform: scale(1.05);
                 }
 
                 .detail-result {

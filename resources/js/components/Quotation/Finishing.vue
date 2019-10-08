@@ -4,6 +4,9 @@
             <div class="wrap-group-field"
                  :class="[{ hasValue: item.type },
                           { hasValue: item.shape },
+                          { hasValue: (item.presence_consumable && item.consumable.name !== '') },
+                          { hasValue: (item.presence_consumable && item.consumable.width !== '') },
+                          { hasValue: (item.presence_consumable && item.consumable.price !== '') },
                           { hasFocus: item.hasFocus }]">
 
                     <span class="btn-right-field" @click="deleteFinishing(index)">
@@ -59,56 +62,45 @@
 
 <!--                    <label class="label-field">Reprise</label>-->
 <!--                </div>-->
+
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.type !== ''">
+                    <input v-model.trim="item.consumable.name"
+                           @focus="item.hasFocus = true"
+                           @blur="item.hasFocus = false"
+                           class="field"
+                           :class="{ hasValue: item.consumable.name }"
+                           type="text"
+                           autocomplete="off">
+                    <label class="label-field">Désignation du consommable</label>
+                </div>
+
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.type !== ''">
+                    <input v-model="item.consumable.width"
+                           @focus="item.hasFocus = true"
+                           @blur="item.hasFocus = false"
+                           class="field"
+                           :class="{ hasValue: item.consumable.width }"
+                           type="number"
+                           autocomplete="off"
+                           required>
+                    <label class="label-field">Laize du consommable (mm)</label>
+                </div>
+
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.type !== ''">
+                    <input v-model="item.consumable.price"
+                           @focus="item.hasFocus = true"
+                           @blur="item.hasFocus = false"
+                           class="field"
+                           :class="{ hasValue: item.consumable.price }"
+                           type="number"
+                           step="0.0001"
+                           autocomplete="off"
+                           required>
+                    <label class="label-field">Prix du consommable (€/m&#xB2;)</label>
+                </div>
                 <span class="focus-field"></span>
                 <span class="symbol-left-field"><i class="fas fa-cut"></i></span>
             </div>
-
-            <transition name="fade" tag="div" mode="out-in">
-                <div v-if="item.presence_consumable === true && item.type !== ''"
-                    class="wrap-group-field"
-                     :class="[{ hasValue: item.consumable.name },
-                              { hasValue: item.consumable.width },
-                              { hasValue: item.consumable.price },
-                              { hasFocus: item.consumable.hasFocus }]">
-                    <div class="wrap-field h-50">
-                        <input v-model.trim="item.consumable.name"
-                               @focus="item.consumable.hasFocus = true"
-                               @blur="item.consumable.hasFocus = false"
-                               class="field"
-                               :class="{ hasValue: item.consumable.name }"
-                               type="text"
-                               autocomplete="off">
-                        <label class="label-field">Désignation du consommable</label>
-                    </div>
-
-                    <div class="wrap-field h-50">
-                        <input v-model="item.consumable.width"
-                               @focus="item.consumable.hasFocus = true"
-                               @blur="item.consumable.hasFocus = false"
-                               class="field"
-                               :class="{ hasValue: item.consumable.width }"
-                               type="number"
-                               autocomplete="off"
-                               required>
-                        <label class="label-field">Laize (mm)</label>
-                    </div>
-
-                    <div class="wrap-field h-50">
-                        <input v-model="item.consumable.price"
-                               @focus="item.consumable.hasFocus = true"
-                               @blur="item.consumable.hasFocus = false"
-                               class="field"
-                               :class="{ hasValue: item.consumable.price }"
-                               type="number"
-                               step="0.0001"
-                               autocomplete="off"
-                               required>
-                        <label class="label-field">Prix (€/m&#xB2;)</label>
-                    </div>
-                    <span class="focus-field"></span>
-                    <span class="symbol-left-field"><i class="fab fa-confluence"></i></span>
-                </div>
-            </transition>
         </div>
 
         <button type="button"
@@ -121,13 +113,13 @@
 
 
         <div class="wrap-radio">
-<!--            <div class="wrap-field">-->
-<!--                <input type="radio" id="cutting_old" v-model="form.finishing.cutting.type" value="old">-->
-<!--                <label for="cutting_old">-->
-<!--                    <i class="fas fa-search"></i>-->
-<!--                    <span>Rechercher un outil</span>-->
-<!--                </label>-->
-<!--            </div>-->
+            <div class="wrap-field">
+                <input type="radio" id="cutting_old" v-model="form.finishing.cutting.type" value="old">
+                <label for="cutting_old">
+                    <i class="fas fa-search"></i>
+                    <span>Rechercher un outil</span>
+                </label>
+            </div>
             <div class="wrap-field">
                 <input type="radio" id="cutting_new" v-model="form.finishing.cutting.type" value="new">
                 <label for="cutting_new">
@@ -284,6 +276,7 @@
             addFinishing() {
                 this.form.finishing.finishings.push({
                     type: "",
+                    id: "",
                     name: "",
                     shape: false,
                     reworking: "",
@@ -303,6 +296,7 @@
 
                 if (finishingConsumable.consumable) {
                     let newConsumable = {
+                        id: "",
                         name: "",
                         width: "",
                         price: "",

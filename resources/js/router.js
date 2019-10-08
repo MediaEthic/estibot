@@ -23,17 +23,17 @@ const routes = [
     },
     {
         path: '/quotations',
-        name: 'home',
+        name: 'quotations.index',
         component: Home,
         meta: {
             title: 'Liste de devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true
         }
     },
-    { path: '/', redirect: { name: 'home' }},
+    { path: '/', redirect: { name: 'quotations.index' }},
     {
         path: '/quotation',
-        name: 'quotation',
+        name: 'quotations.create',
         component: Quotation,
         meta: {
             title: 'Création d\'un nouveau devis Estibot - Application de devis simple et rapide pour les imprimeurs',
@@ -42,10 +42,20 @@ const routes = [
     },
     {
         path: '/quotations/:id',
-        name: 'single-quotation',
+        name: 'quotations.show',
         component: SingleQuotation,
         meta: {
             title: 'Devis Estibot - Application de devis simple et rapide pour les imprimeurs',
+            requiresAuth: true,
+            transitionName: 'slide'
+        },
+    },
+    {
+        path: '/quotations/:id/edit',
+        name: 'quotations.edit',
+        component: Quotation,
+        meta: {
+            title: 'Modification d\'un devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true,
             transitionName: 'slide'
         },

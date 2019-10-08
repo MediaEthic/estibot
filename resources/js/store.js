@@ -19,11 +19,13 @@ export default new Vuex.Store({
             identification: {
                 third: {
                     type: "new",
+                    ethic: false,
                     id: "",
                     name: "",
                     address: "",
                     zipcode: "",
                     city: "",
+                    contacts: [],
                     hasFocus: false,
                 },
                 contact: {
@@ -38,6 +40,7 @@ export default new Vuex.Store({
             description: {
                 label: {
                     type: "new",
+                    ethic: false,
                     id: "",
                     name: "",
                     width: "",
@@ -46,6 +49,7 @@ export default new Vuex.Store({
                 },
                 quantities: [
                     {
+                        id: "",
                         quantity: "",
                         model: "",
                         plate: "",
@@ -63,6 +67,7 @@ export default new Vuex.Store({
                 hasFocus: false,
                 substrate: {
                     type: "new",
+                    ethic: false,
                     id: "",
                     name: "",
                     width: "",
@@ -75,6 +80,7 @@ export default new Vuex.Store({
                 finishings: [
                     {
                         type: "",
+                        id: "",
                         name: "",
                         shape: false,
                         reworking: "",
@@ -85,6 +91,7 @@ export default new Vuex.Store({
                 ],
                 cutting: {
                     type: "new",
+                    ethic: false,
                     id: "",
                     name: "",
                     dimension_width: "",
@@ -149,6 +156,9 @@ export default new Vuex.Store({
         },
         setQuotation(state, data) {
             state.quotation = data;
+        },
+        setWorkflow(state, data) {
+            state.workflow = data;
         }
     },
     actions: {
@@ -229,8 +239,11 @@ export default new Vuex.Store({
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
                 axios.post('/api/auth/quotation', {
                     price: context.state.price,
-                    workflow: context.state.workflow
+                    workflow: context.state.workflow,
+                    quotation: credentials.quotation,
                 }).then(response => {
+                    console.log("SaveQuotation :");
+                    console.log(response.data);
                     context.commit("setQuotation", response.data);
                     resolve(response);
                 }).catch(error => {
@@ -263,6 +276,14 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.delete('/api/auth/quotation/' + credentials.id)).data;
             context.commit("setQuotations", data);
+        },
+        async getWorkflow(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            let data = (await axios.get('/api/auth/quotation/' + credentials.id + '/edit')).data;
+            let workflow = JSON.parse(data.workflow);
+            let contacts = data.contacts;
+            workflow.identification.third.contacts = contacts;
+            context.commit("setWorkflow", workflow);
         },
     },
 })

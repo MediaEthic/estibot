@@ -2,11 +2,20 @@
     <div>
         <main class="wrap-main-content">
             <div class="wrap-head-page">
-                <header class="wrap-main-header">
-                    <router-link v-if="!isMobile"
-                                 class="go-back"
+                <header v-if="!isMobile && $route.params.id !== undefined" class="wrap-main-header">
+                    <router-link class="go-back"
                                  tag="a"
-                                 :to="{ name : 'home' }">
+                                 :to="{ name: 'quotations.show', params: { id: $route.params.id }}">
+                        <i class="fas fa-arrow-left"></i>
+                        Annuler
+                    </router-link>
+                    <h1 class="page-main-title">Modification du devis #{{ this.$route.params.id }}</h1>
+                </header>
+
+                <header v-else-if="!isMobile && $route.params.id === undefined" class="wrap-main-header">
+                    <router-link class="go-back"
+                                 tag="a"
+                                 :to="{ name: 'quotations.index' }">
                         <i class="fas fa-arrow-left"></i>
                         Retour
                     </router-link>
@@ -66,7 +75,8 @@
 
                         <div v-else>
                             <textarea v-model="summary"
-                                      rows="15">
+                                      rows="15"
+                                      disabled>
                             </textarea>
 
                             <div class="wrap-total-quotation">
@@ -150,16 +160,28 @@
             }
         },
         created() {
-
+            console.log(this.$route.params.id);
+            if (this.$route.params.id !== undefined) {
+                this.$store.dispatch('getWorkflow', {
+                    id: this.$route.params.id
+                }).then(() => {
+                    console.log(this.form);
+                    this.summary = this.form.summary;
+                });
+            }
         },
         computed: {
-            form() {
-                return this.$store.state.workflow;
+            form: {
+                get() {
+                    return this.$store.state.workflow;
+                },
+                set() {
+                    return this.$store.state.workflow;
+                },
             },
         },
         methods: {
             prev() {
-                // $router.go(-1);
                 this.step--;
                 this.progress = (this.step * 100) / 6;
                 document.getElementById('save-quotation').disabled = true;
@@ -258,8 +280,15 @@
                 }
             },
             saveQuotation() {
-                this.$store.dispatch('saveQuotation').then(resp => {
-                    this.$router.push({name: "single-quotation", params: { id: resp.data.id }});
+                this.$store.dispatch('saveQuotation', {
+                    quotation: this.$route.params.id,
+                }).then(resp => {
+                    console.log(resp);
+                    if (resp.errors === undefined) {
+                        this.$router.push({ name: "quotations.show", params: { id: resp.data.id } });
+                    } else {
+                        console.log(resp);
+                    }
                 }).catch(error => {
                     console.log(error);
                 });
