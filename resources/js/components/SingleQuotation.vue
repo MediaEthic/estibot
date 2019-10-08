@@ -117,16 +117,29 @@
                     </div>
                 </aside>
             </div>
+
+            <Notification v-show="isModalVisible"
+                          @close="closeModal">
+                <p slot="body">{{ notification.body }}</p>
+            </Notification>
         </main>
     </div>
 </template>
 
 <script>
     import moment from 'moment';
+    import Notification from "./Notification";
 
     export default {
+        components: {
+            Notification
+        },
         data() {
             return {
+                isModalVisible: false,
+                notification: {
+                    body: "",
+                },
                 third: "",
                 summaryPulled: false,
                 indexMinValue: "",
@@ -163,22 +176,19 @@
                     return this.$store.state.quotation;
                 },
             },
-            thousand: {
-                get() {
-                    return this.$store.state.quotation;
-                },
-                set() {
-                    return this.$store.state.quotation;
-                }
-            },
         },
         methods: {
+            showModal() {
+                this.isModalVisible = true;
+            },
+            closeModal() {
+                this.isModalVisible = false;
+            },
             getHumanDate(date) {
                 return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             },
             generateThird() {
                 let third = ``;
-                console.log(this.quotation.third.name);
                 if (this.quotation.third.name !== null) third += this.quotation.third.name;
                 if (this.quotation.third.address !== null) third += ` - ` + this.quotation.third.address;
                 if (this.quotation.third.zipcode !== null) third += ` - ` + this.quotation.third.zipcode;
@@ -197,14 +207,19 @@
                 this.$store.dispatch("destroyQuotation", {
                     id: id
                 }).then(() => {
-                    this.$router.push({name: "home"});
+                    this.$router.push({ name: "home" });
                 }).catch(err => console.log(err));
             },
             updateQuotation(quotation) {
                 this.$store.dispatch("updateQuotation", {
                     quotation: quotation,
                 }).then(() => {
+                    this.showModal();
                     this.quotation = this.$store.state.quotation;
+                    this.notification.body = "Le devis a bien été modifié.";
+                    setTimeout(() => {
+                        this.closeModal();
+                    }, 5000);
                 }).catch(err => console.log(err));
             },
             calculateCost(element, quantityID) {

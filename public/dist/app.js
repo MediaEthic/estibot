@@ -43007,6 +43007,8 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notification__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Notification__);
 //
 //
 //
@@ -43130,12 +43132,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Notification: __WEBPACK_IMPORTED_MODULE_1__Notification___default.a
+    },
     data: function data() {
         return {
+            isModalVisible: false,
+            notification: {
+                body: ""
+            },
             third: "",
             summaryPulled: false,
             indexMinValue: ""
@@ -43174,23 +43189,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             set: function set() {
                 return this.$store.state.quotation;
             }
-        },
-        thousand: {
-            get: function get() {
-                return this.$store.state.quotation;
-            },
-            set: function set() {
-                return this.$store.state.quotation;
-            }
         }
     },
     methods: {
+        showModal: function showModal() {
+            this.isModalVisible = true;
+        },
+        closeModal: function closeModal() {
+            this.isModalVisible = false;
+        },
         getHumanDate: function getHumanDate(date) {
             return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
         },
         generateThird: function generateThird() {
             var third = "";
-            console.log(this.quotation.third.name);
             if (this.quotation.third.name !== null) third += this.quotation.third.name;
             if (this.quotation.third.address !== null) third += " - " + this.quotation.third.address;
             if (this.quotation.third.zipcode !== null) third += " - " + this.quotation.third.zipcode;
@@ -43222,7 +43234,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch("updateQuotation", {
                 quotation: quotation
             }).then(function () {
+                _this3.showModal();
                 _this3.quotation = _this3.$store.state.quotation;
+                _this3.notification.body = "Le devis a bien été modifié.";
+                setTimeout(function () {
+                    _this3.closeModal();
+                }, 5000);
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -43275,382 +43292,417 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("main", { staticClass: "wrap-main-content" }, [
-      _c("div", { staticClass: "wrap-head-page" }, [
-        _c(
-          "header",
-          {
-            staticClass: "wrap-main-header",
-            style: {
-              backgroundImage:
-                "url(/assets/img/quotations/" + _vm.quotation.image + ")"
-            }
-          },
-          [
-            _c(
-              "router-link",
-              {
-                staticClass: "go-back",
-                attrs: { tag: "a", to: { name: "quotations.index" } }
-              },
-              [
-                _c("i", { staticClass: "fas fa-arrow-left" }),
-                _vm._v("\n                        Retour\n                    ")
-              ]
-            ),
-            _vm._v(" "),
-            _c("h1", { staticClass: "page-main-title" }, [
-              _vm._v("Devis #" + _vm._s(_vm.quotation.id))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "wrap-actions-quotation" }, [
-              _c("input", {
-                staticClass: "options-toggler",
-                attrs: { id: "options-toggler", type: "checkbox" }
-              }),
-              _vm._v(" "),
-              _c("label", {
-                staticClass: "fas fa-cog",
-                attrs: { for: "options-toggler" }
-              }),
-              _vm._v(" "),
+    _c(
+      "main",
+      { staticClass: "wrap-main-content" },
+      [
+        _c("div", { staticClass: "wrap-head-page" }, [
+          _c(
+            "header",
+            {
+              staticClass: "wrap-main-header",
+              style: {
+                backgroundImage:
+                  "url(/assets/img/quotations/" + _vm.quotation.image + ")"
+              }
+            },
+            [
               _c(
-                "ul",
-                { staticClass: "list-actions" },
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "action-item",
-                      attrs: {
-                        tag: "li",
-                        to: {
-                          name: "quotations.edit",
-                          params: { id: _vm.quotation.id }
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-edit action-event" }),
-                      _c("span", [_vm._v("Modifier")])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      staticClass: "action-item",
-                      on: {
-                        click: function($event) {
-                          return _vm.destroyQuotation(_vm.quotation.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-trash-alt action-event" }),
-                      _c("span", [_vm._v("Supprimer")])
-                    ]
-                  )
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("ul", { staticClass: "list-details-quotation" }, [
-              _c("li", { staticClass: "item-detail-quotation" }, [
-                _c("i", { staticClass: "fas fa-user-tie" }),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(this.third))])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "item-detail-quotation" }, [
-                _c("i", { staticClass: "far fa-calendar-plus" }),
-                _vm._v(" "),
-                _c("time", { attrs: { datetime: _vm.quotation.created_at } }, [
-                  _vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.created_at)))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "item-detail-quotation" }, [
-                _c("i", { staticClass: "fas fa-hourglass-half" }),
-                _vm._v(" "),
-                _c("time", { attrs: { datetime: _vm.quotation.validity } }, [
-                  _vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.validity)))
-                ])
-              ])
-            ])
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-central" }, [
-        _c("div", { staticClass: "left-part" }, [
-          _c("table", { staticClass: "responsive-table" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.quotation.quantities, function(quantity, index) {
-                return _c("tr", [
-                  _c("td", { attrs: { "data-label": "Quantité" } }, [
-                    _vm._v(_vm._s(quantity.quantity))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { "data-label": "Marge (%)" } }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: quantity.margin,
-                          expression: "quantity.margin"
-                        }
-                      ],
-                      staticClass: "editable",
-                      attrs: { type: "number", step: "0.0001" },
-                      domProps: { value: quantity.margin },
-                      on: {
-                        change: function($event) {
-                          return _vm.calculateCost("margin", index)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(quantity, "margin", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { "data-label": "Prix du mille (€)" } }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: quantity.thousand,
-                          expression: "quantity.thousand"
-                        }
-                      ],
-                      staticClass: "editable",
-                      attrs: { type: "number", step: "0.0001" },
-                      domProps: { value: quantity.thousand },
-                      on: {
-                        change: function($event) {
-                          return _vm.calculateCost("thousand", index)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(quantity, "thousand", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { attrs: { "data-label": "Frais d'expédition (€)" } },
-                    [_vm._v(_vm._s(quantity.shipping))]
-                  ),
-                  _vm._v(" "),
-                  _c("td", { attrs: { "data-label": "Prix HT (€)" } }, [
-                    _vm._v(_vm._s(quantity.subtotal))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { "data-label": "TVA (%)" } }, [
-                    _vm._v("20")
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { "data-label": "Prix TTC (€)" } }, [
-                    _vm._v(_vm._s(quantity.price))
-                  ])
-                ])
-              }),
-              0
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "aside",
-          {
-            staticClass: "wrap-summary right-part",
-            class: { pull: _vm.summaryPulled }
-          },
-          [
-            _c("div", { staticClass: "head-summary" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.summaryPulled,
-                    expression: "summaryPulled"
-                  }
-                ],
-                staticClass: "pull-summary",
-                attrs: { id: "pull-summary", type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.summaryPulled)
-                    ? _vm._i(_vm.summaryPulled, null) > -1
-                    : _vm.summaryPulled
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.summaryPulled,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.summaryPulled = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.summaryPulled = $$c
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
+                "router-link",
                 {
-                  staticClass: "page-subtitle",
-                  attrs: { for: "pull-summary" }
+                  staticClass: "go-back",
+                  attrs: { tag: "a", to: { name: "quotations.index" } }
                 },
                 [
-                  _c("i", {
-                    class: this.summaryPulled
-                      ? "fas fa-chevron-up"
-                      : "fas fa-chevron-down"
-                  }),
-                  _vm._v("Récapitulatif")
+                  _c("i", { staticClass: "fas fa-arrow-left" }),
+                  _vm._v(
+                    "\n                        Retour\n                    "
+                  )
                 ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "wrap-content-summary" }, [
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.quotation.description,
-                    expression: "quotation.description"
-                  }
-                ],
-                staticClass: "editable",
-                domProps: { value: _vm.quotation.description },
-                on: {
-                  keydown: _vm.textareaAutosize,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.quotation, "description", $event.target.value)
-                  }
-                }
-              }),
+              ),
               _vm._v(" "),
-              _c("table", { staticClass: "table" }, [
-                _c("tr", { staticClass: "border" }, [
-                  _c("td", [_vm._v("Sous-total")]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "price" }, [
-                    _vm._v(_vm._s(_vm.quotation.cost) + "€")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", [_vm._v("Frais d'expédition")]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "price" }, [
-                    _vm._v(_vm._s(_vm.quotation.shipping) + "€")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tr", { staticClass: "border" }, [
-                  _c("td", [_vm._v("Total HT")]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "price" }, [
-                    _vm._v(
-                      _vm._s(
-                        (
-                          parseFloat(_vm.quotation.cost) +
-                          parseFloat(_vm.quotation.shipping)
-                        ).toFixed(2)
-                      ) + "€"
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", [_vm._v("TVA")]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "price" }, [
-                    _vm._v(_vm._s(_vm.quotation.vat_price) + "€")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", [_vm._v("Total TTC")]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "price" }, [
-                    _vm._v(_vm._s(_vm.quotation.price) + "€")
-                  ])
-                ])
+              _c("h1", { staticClass: "page-main-title" }, [
+                _vm._v("Devis #" + _vm._s(_vm.quotation.id))
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "wrap-button-submit" }, [
+              _c("div", { staticClass: "wrap-actions-quotation" }, [
+                _c("input", {
+                  staticClass: "options-toggler",
+                  attrs: { id: "options-toggler", type: "checkbox" }
+                }),
+                _vm._v(" "),
+                _c("label", {
+                  staticClass: "fas fa-cog",
+                  attrs: { for: "options-toggler" }
+                }),
+                _vm._v(" "),
                 _c(
-                  "button",
-                  {
-                    staticClass: "cta",
-                    attrs: { type: "submit", id: "save-quotation" },
-                    on: {
-                      click: function($event) {
-                        return _vm.updateQuotation(_vm.quotation)
-                      }
-                    }
-                  },
+                  "ul",
+                  { staticClass: "list-actions" },
                   [
-                    _c("span", [_vm._v("Sauvegarder")]),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c(
-                      "svg",
+                      "router-link",
                       {
+                        staticClass: "action-item",
                         attrs: {
-                          width: "13px",
-                          height: "10px",
-                          viewBox: "0 0 13 10"
+                          tag: "li",
+                          to: {
+                            name: "quotations.edit",
+                            params: { id: _vm.quotation.id }
+                          }
                         }
                       },
                       [
-                        _c("path", { attrs: { d: "M1,5 L11,5" } }),
-                        _vm._v(" "),
-                        _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                        _c("i", { staticClass: "fas fa-edit action-event" }),
+                        _c("span", [_vm._v("Modifier")])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        staticClass: "action-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.destroyQuotation(_vm.quotation.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fas fa-trash-alt action-event"
+                        }),
+                        _c("span", [_vm._v("Supprimer")])
                       ]
                     )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("ul", { staticClass: "list-details-quotation" }, [
+                _c("li", { staticClass: "item-detail-quotation" }, [
+                  _c("i", { staticClass: "fas fa-user-tie" }),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(this.third))])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "item-detail-quotation" }, [
+                  _c("i", { staticClass: "far fa-calendar-plus" }),
+                  _vm._v(" "),
+                  _c(
+                    "time",
+                    { attrs: { datetime: _vm.quotation.created_at } },
+                    [_vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.created_at)))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "item-detail-quotation" }, [
+                  _c("i", { staticClass: "fas fa-hourglass-half" }),
+                  _vm._v(" "),
+                  _c("time", { attrs: { datetime: _vm.quotation.validity } }, [
+                    _vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.validity)))
+                  ])
+                ])
+              ])
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "wrap-central" }, [
+          _c("div", { staticClass: "left-part" }, [
+            _c("table", { staticClass: "responsive-table" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.quotation.quantities, function(quantity, index) {
+                  return _c("tr", [
+                    _c("td", { attrs: { "data-label": "Quantité" } }, [
+                      _vm._v(_vm._s(quantity.quantity))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-label": "Marge (%)" } }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: quantity.margin,
+                            expression: "quantity.margin"
+                          }
+                        ],
+                        staticClass: "editable",
+                        attrs: { type: "number", step: "0.0001" },
+                        domProps: { value: quantity.margin },
+                        on: {
+                          change: function($event) {
+                            return _vm.calculateCost("margin", index)
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(quantity, "margin", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-label": "Prix du mille (€)" } }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: quantity.thousand,
+                            expression: "quantity.thousand"
+                          }
+                        ],
+                        staticClass: "editable",
+                        attrs: { type: "number", step: "0.0001" },
+                        domProps: { value: quantity.thousand },
+                        on: {
+                          change: function($event) {
+                            return _vm.calculateCost("thousand", index)
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(quantity, "thousand", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { attrs: { "data-label": "Frais d'expédition (€)" } },
+                      [_vm._v(_vm._s(quantity.shipping))]
+                    ),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-label": "Prix HT (€)" } }, [
+                      _vm._v(_vm._s(quantity.subtotal))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-label": "TVA (%)" } }, [
+                      _vm._v("20")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-label": "Prix TTC (€)" } }, [
+                      _vm._v(_vm._s(quantity.price))
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "aside",
+            {
+              staticClass: "wrap-summary right-part",
+              class: { pull: _vm.summaryPulled }
+            },
+            [
+              _c("div", { staticClass: "head-summary" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.summaryPulled,
+                      expression: "summaryPulled"
+                    }
+                  ],
+                  staticClass: "pull-summary",
+                  attrs: { id: "pull-summary", type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.summaryPulled)
+                      ? _vm._i(_vm.summaryPulled, null) > -1
+                      : _vm.summaryPulled
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.summaryPulled,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.summaryPulled = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.summaryPulled = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "page-subtitle",
+                    attrs: { for: "pull-summary" }
+                  },
+                  [
+                    _c("i", {
+                      class: this.summaryPulled
+                        ? "fas fa-chevron-up"
+                        : "fas fa-chevron-down"
+                    }),
+                    _vm._v("Récapitulatif")
                   ]
                 )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "wrap-content-summary" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.quotation.description,
+                      expression: "quotation.description"
+                    }
+                  ],
+                  staticClass: "editable",
+                  domProps: { value: _vm.quotation.description },
+                  on: {
+                    keydown: _vm.textareaAutosize,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.quotation,
+                        "description",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("table", { staticClass: "table" }, [
+                  _c("tr", { staticClass: "border" }, [
+                    _c("td", [_vm._v("Sous-total")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "price" }, [
+                      _vm._v(_vm._s(_vm.quotation.cost) + "€")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("Frais d'expédition")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "price" }, [
+                      _vm._v(_vm._s(_vm.quotation.shipping) + "€")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", { staticClass: "border" }, [
+                    _c("td", [_vm._v("Total HT")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "price" }, [
+                      _vm._v(
+                        _vm._s(
+                          (
+                            parseFloat(_vm.quotation.cost) +
+                            parseFloat(_vm.quotation.shipping)
+                          ).toFixed(2)
+                        ) + "€"
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("TVA")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "price" }, [
+                      _vm._v(_vm._s(_vm.quotation.vat_price) + "€")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("Total TTC")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "price" }, [
+                      _vm._v(_vm._s(_vm.quotation.price) + "€")
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "wrap-button-submit" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "cta",
+                      attrs: { type: "submit", id: "save-quotation" },
+                      on: {
+                        click: function($event) {
+                          return _vm.updateQuotation(_vm.quotation)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", [_vm._v("Sauvegarder")]),
+                      _vm._v(" "),
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            width: "13px",
+                            height: "10px",
+                            viewBox: "0 0 13 10"
+                          }
+                        },
+                        [
+                          _c("path", { attrs: { d: "M1,5 L11,5" } }),
+                          _vm._v(" "),
+                          _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                        ]
+                      )
+                    ]
+                  )
+                ])
               ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "Notification",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isModalVisible,
+                expression: "isModalVisible"
+              }
+            ],
+            on: { close: _vm.closeModal }
+          },
+          [
+            _c("p", { attrs: { slot: "body" }, slot: "body" }, [
+              _vm._v(_vm._s(_vm.notification.body))
             ])
           ]
         )
-      ])
-    ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -47139,7 +47191,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.price-quotation {\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.8rem;\n  line-height: 2.2rem;\n  color: #91A8D0;\n  letter-spacing: 0.1em;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-fade-enter-active {\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container {\n  width: 300px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 20px 0;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.price-quotation {\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.8rem;\n  line-height: 2.2rem;\n  color: #91A8D0;\n  letter-spacing: 0.1em;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-fade-enter-active {\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
@@ -47569,6 +47621,190 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(260)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(262)
+/* template */
+var __vue_template__ = __webpack_require__(263)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-6a4ce154"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Notification.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6a4ce154", Component.options)
+  } else {
+    hotAPI.reload("data-v-6a4ce154", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(261);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("af9acf06", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a4ce154\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notification.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a4ce154\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notification.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-6a4ce154], [class*=\" icon-\"][data-v-6a4ce154] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-6a4ce154]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-6a4ce154]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-6a4ce154]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-6a4ce154]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-6a4ce154]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-6a4ce154]:before {\n  content: \"\\E907\";\n}\n.modal-fade-enter[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  opacity: 0;\n}\n.modal-fade-enter-active[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  -webkit-transition: opacity .5s ease;\n  transition: opacity .5s ease;\n}\n.notification[data-v-6a4ce154] {\n  position: fixed;\n  bottom: 0;\n  right: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  width: 100%;\n  max-width: calc(100% / 2);\n  padding: .75rem 1.25rem;\n  margin-right: 1rem;\n  margin-bottom: 1rem;\n  border: .1rem solid transparent;\n  border-radius: 2rem 1rem 3rem 1rem;\n}\n.notification.notification-primary[data-v-6a4ce154] {\n    color: #62799F;\n    background-color: #C2D9FF;\n    border-color: #91A8D0;\n}\n.notification.notification-secondary[data-v-6a4ce154] {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n    border-color: #C49998;\n}\n.notification .btn-close[data-v-6a4ce154] {\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    background-color: rgba(10, 10, 10, 0.2);\n    border: none;\n    border-radius: 290486px;\n    cursor: pointer;\n    pointer-events: auto;\n    display: inline-block;\n    -webkit-box-flex: 0;\n        -ms-flex-positive: 0;\n            flex-grow: 0;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    font-size: 1rem;\n    width: 2rem;\n    height: 2rem;\n    max-height: 2rem;\n    max-width: 2rem;\n    min-height: 2rem;\n    min-width: 2rem;\n    outline: 0;\n    vertical-align: top;\n    position: absolute;\n    right: .5rem;\n    top: .5rem;\n    font-weight: 700;\n    color: #fff;\n}\n.notification .btn-close[data-v-6a4ce154]:before {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: .2rem;\n      width: 50%;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .btn-close[data-v-6a4ce154]:after {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: 50%;\n      width: .2rem;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .notification-body[data-v-6a4ce154] {\n    position: relative;\n    padding: 1rem .5rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 262 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'notification',
+    data: function data() {
+        return {};
+    },
+    created: function created() {},
+
+    computed: {},
+    methods: {
+        close: function close() {
+            this.$emit('close');
+        }
+    }
+});
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "modal-fade", mode: "out-in" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "notification notification-primary notification-wrapper",
+        attrs: { role: "alert" }
+      },
+      [
+        _c("div", { staticClass: "notification-container" }, [
+          _c("button", {
+            staticClass: "btn-close",
+            attrs: { type: "button", "aria-label": "Fermer la notification" },
+            on: { click: _vm.close }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "notification-body" },
+            [
+              _vm._t("body", [
+                _vm._v("\n                    default body\n                ")
+              ])
+            ],
+            2
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6a4ce154", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
