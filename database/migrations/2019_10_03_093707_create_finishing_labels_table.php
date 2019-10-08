@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFinishingLabelTable extends Migration
+class CreateFinishingLabelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFinishingLabelTable extends Migration
      */
     public function up()
     {
-        Schema::create('finishing_label', function (Blueprint $table) {
+        Schema::create('finishing_labels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->nullableTimestamps();
             $table->unsignedBigInteger('finishing_id')->nullable()->default(null);
@@ -32,7 +32,7 @@ class CreateFinishingLabelTable extends Migration
 
 
             $table->float('shape', 10, 6)->nullable()->default(null);
-            $table->boolean('reworking')->default(false);
+//            $table->boolean('reworking')->default(false);
         });
     }
 
@@ -43,6 +43,6 @@ class CreateFinishingLabelTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('finishing_label');
+        Schema::dropIfExists('finishing_labels');
     }
 }

@@ -19,10 +19,10 @@ class CreateQuotationsTable extends Migration
             $table->string('name')->nullable()->default(null);
             $table->text('description')->nullable()->default(null);
             $table->string('image')->nullable()->default(null);
-            $table->enum('third_type', ['old', 'new'])->default('new');
+            $table->enum('third_type', ['ethic', 'estibot'])->default('estibot');
             $table->unsignedBigInteger('third_id')->nullable()->default(null);
             $table->unsignedBigInteger('contact_id')->nullable()->default(null);
-            $table->enum('label_type', ['old', 'new'])->default('new');
+            $table->enum('label_type', ['ethic', 'estibot'])->default('estibot');
             $table->unsignedBigInteger('label_id')->nullable()->default(null);
             $table->dateTime('delivery_date')->nullable()->default(null);
             $table->dateTime('validity')->nullable()->default(null);

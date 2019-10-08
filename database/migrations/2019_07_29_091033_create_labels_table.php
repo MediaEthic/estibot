@@ -22,7 +22,9 @@ class CreateLabelsTable extends Migration
             $table->unsignedBigInteger('printing_id')->nullable()->default(null);
             $table->unsignedTinyInteger('number_colors')->nullable()->default(null);
             $table->boolean('quadri')->default(false);
+            $table->enum('substrate_type', ['ethic', 'estibot'])->default('estibot');
             $table->unsignedBigInteger('substrate_id')->nullable()->default(null);
+            $table->enum('cutting_type', ['ethic', 'estibot'])->default('estibot');
             $table->unsignedBigInteger('cutting_id')->nullable()->default(null);
             $table->enum('winding', ['ihead', 'ifoot', 'iright', 'ileft', 'ehead', 'efoot', 'eright', 'eleft'])->default('ihead');
             $table->unsignedInteger('packing')->nullable()->default(null);

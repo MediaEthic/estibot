@@ -15,7 +15,7 @@ class FinishingLabel extends Model
         'finishing_id',
         'label_id',
         'shape',
-        'reworking',
+//        'reworking',
     ];
 
 
