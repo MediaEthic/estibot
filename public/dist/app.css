@@ -804,8 +804,12 @@ textarea {
   border-top: 0;
 }
 
-.wrap-group-field > .btn-right-field + [class^="wrap-field"] .field,
-.wrap-group-field > .btn-right-field + [class^="wrap-field"] .label-field {
+.wrap-group-field > .btn-right-field ~ [class^="wrap-field"] {
+  width: calc(100% - 4rem);
+}
+
+.wrap-group-field > .btn-right-field .field,
+.wrap-group-field > .btn-right-field .label-field {
   padding-right: 4rem;
 }
 
@@ -1175,7 +1179,7 @@ progress[value]::-moz-progress-bar {
   width: 100%;
   height: 100%;
   position: fixed;
-  top: calc(100vh - 15rem);
+  top: calc(100vh - 14rem);
   background-color: #fff;
   z-index: 1;
   border-radius: 3rem 3rem 0 0;
@@ -1382,18 +1386,13 @@ progress[value]::-moz-progress-bar {
   color: #C49998;
 }
 
-.wrap-central {
-  display: table;
-  width: 100%;
-  margin-top: 2rem;
-}
-
-.wrap-central .left-part {
-  margin: 0;
-  padding-right: 2rem;
-}
-
 @media screen and (min-width: 880px) {
+  .wrap-central {
+    display: table;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
   .wrap-central > * {
     display: table-cell;
     width: 100%;
@@ -1401,7 +1400,8 @@ progress[value]::-moz-progress-bar {
 
   .wrap-central .left-part {
     width: calc(100% - 45rem);
-    padding-right: 4rem;
+    margin: 0;
+    padding-right: 2rem;
   }
 }
 

@@ -595,8 +595,13 @@ textarea {
     }
   }
 
-  > .btn-right-field + [class^="wrap-field"] {
-    border-top: 0;
+  > .btn-right-field {
+      & + [class^="wrap-field"] {
+          border-top: 0;
+      }
+      & ~ [class^="wrap-field"] {
+          width: calc(100% - 4rem);
+      }
 
     .field,
     .label-field {
