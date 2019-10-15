@@ -18,7 +18,7 @@ $factory->define(App\Models\Third::class, function (Faker $faker) {
     return [
         'alias' => $faker->asciify('*******'),
         'name' => $faker->name,
-        'address' => Str::random(25),
+        'address_line2' => Str::random(25),
         'zipcode' => $faker->randomDigit,
         'city' => Str::random(10),
     ];

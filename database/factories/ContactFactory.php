@@ -21,6 +21,7 @@ $factory->define(App\Models\Contact::class, function (Faker $faker) {
         'name' => $faker->name,
         'surname' => $faker->name,
         'profession' => $faker->asciify('**********'),
+        'service' => $faker->asciify('**********'),
         'email' => $faker->email,
         'mobile' => $faker->randomDigit,
         'phone' => $faker->randomDigit,

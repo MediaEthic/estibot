@@ -17,12 +17,25 @@ class Contact extends Model
         'name',
         'surname',
         'profession',
+        'service',
         'email',
         'mobile',
         'phone',
         'default',
         'active',
     ];
+
+
+    /**
+     * Set the contact's last name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setSurnameAttribute($value)
+    {
+        $this->attributes['surname'] = mb_strtoupper($value, 'UTF-8');
+    }
 
 
     /**

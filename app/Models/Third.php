@@ -13,12 +13,58 @@ class Third extends Model
      */
     protected $fillable = [
         'description',
-        'address',
+        'address_line1',
+        'address_line2',
+        'address_line3',
         'zipcode',
         'city',
         'country_id',
     ];
 
+
+    /**
+     * Set the third's address_line2.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setAdressLine2Attribute($value)
+    {
+        $this->attributes['address_line2'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    /**
+     * Set the third's address_line3.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setAdressLine3Attribute($value)
+    {
+        $this->attributes['address_line3'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    /**
+     * Set the third's zipcode.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setZipcodeAttribute($value)
+    {
+        $this->attributes['zipcode'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    /**
+     * Set the third's city.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setCityAttribute($value)
+    {
+        $this->attributes['city'] = mb_strtoupper($value, 'UTF-8');
+    }
 
     /**
      * Get the country of the third.

@@ -17,10 +17,12 @@ class CreateThirdsTable extends Migration
             $table->bigIncrements('id');
             $table->nullableTimestamps();
             $table->string('alias', 50)->nullable()->default(null);
-            $table->string('name', 100);
-            $table->string('address')->nullable()->default(null);
-            $table->string('zipcode', 15)->nullable()->default(null);
-            $table->string('city', 50)->nullable()->default(null);
+            $table->string('name', 38);
+            $table->string('address_line1', 38)->nullable()->default(null);
+            $table->string('address_line2', 38)->nullable()->default(null);
+            $table->string('address_line3', 38)->nullable()->default(null);
+            $table->string('zipcode', 38)->nullable()->default(null);
+            $table->string('city', 38)->nullable()->default(null);
             $table->unsignedInteger('country_id')->nullable()->default('74');
             $table->boolean('active')->default(true);
 

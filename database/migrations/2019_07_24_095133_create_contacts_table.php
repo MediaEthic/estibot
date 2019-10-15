@@ -18,9 +18,10 @@ class CreateContactsTable extends Migration
             $table->nullableTimestamps();
             $table->unsignedBigInteger('third_id');
             $table->enum('civility', ['Mr', 'Mrs'])->default('Mr');
-            $table->string('name')->nullable()->default(null);
-            $table->string('surname')->nullable()->default(null);
+            $table->string('name', 38)->nullable()->default(null);
+            $table->string('surname', 38)->nullable()->default(null);
             $table->string('profession', 80)->nullable()->default(null);
+            $table->string('service', 38)->nullable()->default(null);
             $table->string('email', 100)->nullable()->default(null);
             $table->string('mobile', 50)->nullable()->default(null);
             $table->string('phone', 50)->nullable()->default(null);
