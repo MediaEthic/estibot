@@ -12,6 +12,7 @@ class Quotation extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'name',
         'description',
         'image',
@@ -31,8 +32,18 @@ class Quotation extends Model
         'price',
         'workflow',
         'datas_price',
+        'settlement_id',
+        'status_id',
     ];
 
+
+    /**
+     * Get the user of the quotation.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the third of the quotation.
@@ -56,6 +67,22 @@ class Quotation extends Model
     public function label()
     {
         return $this->belongsTo(Label::class);
+    }
+
+    /**
+     * Get the settlement of the quotation.
+     */
+    public function settlement()
+    {
+        return $this->belongsTo(Settlement::class);
+    }
+
+    /**
+     * Get the status of the quotation.
+     */
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 
     /**

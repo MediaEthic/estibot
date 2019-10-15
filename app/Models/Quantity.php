@@ -14,6 +14,9 @@ class Quantity extends Model
     protected $fillable = [
         'quotation_id',
         'quantity',
+        'models',
+        'plates',
+        'prepress',
         'time',
         'weight',
         'cost',

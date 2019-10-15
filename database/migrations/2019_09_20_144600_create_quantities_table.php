@@ -18,6 +18,9 @@ class CreateQuantitiesTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('quotation_id')->nullable()->default(null);
             $table->unsignedBigInteger('quantity')->nullable()->default(null);
+            $table->unsignedBigInteger('models')->nullable()->default(null);
+            $table->unsignedBigInteger('plates')->nullable()->default(null);
+            $table->float('prepress', 10, 6)->nullable()->default(null);
             $table->float('time', 10, 6)->nullable()->default(null);
             $table->float('weight', 10, 6)->nullable()->default(null);
             $table->float('cost', 10, 6)->nullable()->default(null);
