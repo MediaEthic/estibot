@@ -11,9 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('QuotesTableSeeder');
-        $this->call('UsersTableSeeder');
         $this->call('CountriesTableSeeder');
+        $this->call('LanguagesTableSeeder');
+        $this->call('TimeZonesTableSeeder');
+        $this->call('QuotesTableSeeder');
+        $this->call('CompaniesTableSeeder');
+        $this->call('UsersTableSeeder');
         $this->call('ThirdsTableSeeder');
         $this->call('ContactsTableSeeder');
         $this->call('PrepressesTableSeeder');
@@ -22,6 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call('PackingsTableSeeder');
         $this->call('SubstratesTableSeeder');
         $this->call('LabelsTableSeeder');
+        $this->call('StatusesTableSeeder');
+        $this->call('SettlementsTableSeeder');
         $this->call('QuotationsTableSeeder');
 
 
