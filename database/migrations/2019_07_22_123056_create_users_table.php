@@ -16,6 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->nullableTimestamps();
+            $table->unsignedBigInteger('company_id')->nullable()->default('1');
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->string('name');
             $table->string('surname');
             $table->string('email', 100)->unique();
@@ -31,6 +37,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['company_id']);
+        });
+
         Schema::dropIfExists('users');
     }
 }

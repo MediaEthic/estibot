@@ -31,6 +31,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      * @var array
      */
     protected $fillable = [
+        'company_id',
         'name',
         'surname',
         'email',
@@ -46,6 +47,23 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         'password',
         'remember_token',
     ];
+
+
+    /**
+     * Get the company of the user.
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Get all of the quotations for the user.
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
 
     public function getJWTIdentifier()
