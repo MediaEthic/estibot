@@ -33,31 +33,53 @@
         </div>
 
         <div class="wrap-group-field"
-             :class="[{ hasValue: form.identification.third.address },
+             :class="[{ hasValue: form.identification.third.addressLine1 },
+                      { hasValue: form.identification.third.addressLine2 },
+                      { hasValue: form.identification.third.addressLine3 },
                       { hasValue: form.identification.third.zipcode },
                       { hasValue: form.identification.third.city },
                       { hasFocus: form.identification.third.hasFocus }]">
             <div class="wrap-field h-50">
                 <input v-if="form.identification.third.type === 'old'"
-                       v-model.trim="form.identification.third.address"
+                       v-model.trim="form.identification.third.addressLine2"
                        @focus="form.identification.third.hasFocus = true"
                        @blur="form.identification.third.hasFocus = false"
                        class="field"
-                       :class="[{ hasValue: form.identification.third.address }]"
+                       :class="[{ hasValue: form.identification.third.addressLine2 }]"
                        type="text"
                        autocomplete="off"
                        required>
 
                 <input v-else
-                       v-model.trim="form.identification.third.address"
+                       v-model.trim="form.identification.third.addressLine2"
                        @focus="form.identification.third.hasFocus = true"
                        @blur="form.identification.third.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.identification.third.address }"
+                       :class="{ hasValue: form.identification.third.addressLine2 }"
                        type="text"
                        autocomplete="off">
 
-                <label class="label-field">Adresse</label>
+                <label class="label-field">Numéro + Libellé de la voie</label>
+            </div>
+            <div class="wrap-field h-50">
+                <input v-model.trim="form.identification.third.addressLine1"
+                       @focus="form.identification.third.hasFocus = true"
+                       @blur="form.identification.third.hasFocus = false"
+                       class="field"
+                       :class="[{ hasValue: form.identification.third.addressLine1 }]"
+                       type="text"
+                       autocomplete="off">
+                <label class="label-field">Complément de localisation</label>
+            </div>
+            <div class="wrap-field h-50">
+                <input v-model.trim="form.identification.third.addressLine3"
+                       @focus="form.identification.third.hasFocus = true"
+                       @blur="form.identification.third.hasFocus = false"
+                       class="field"
+                       :class="[{ hasValue: form.identification.third.addressLine3 }]"
+                       type="text"
+                       autocomplete="off">
+                <label class="label-field">BP - Lieu dit</label>
             </div>
             <div class="wrap-field-inline">
                 <div class="wrap-field h-50">
@@ -91,27 +113,11 @@
              :class="[{ hasValue: form.identification.contact.civility },
                       { hasValue: form.identification.contact.name },
                       { hasValue: form.identification.contact.surname },
+                      { hasValue: form.identification.contact.service },
                       { hasValue: form.identification.contact.email },
                       { hasFocus: form.identification.contact.hasFocus }]">
 
             <div class="wrap-field h-50">
-
-<!--                <select v-model="item.type"-->
-<!--                        @focus="item.hasFocus = true"-->
-<!--                        @blur="item.hasFocus = false"-->
-<!--                        @animationstart="checkAnimation"-->
-<!--                        class="field select"-->
-<!--                        :class="{ hasValue: item.type }"-->
-<!--                        @change="handleFinishingChanging($event, index)"-->
-<!--                        required>-->
-<!--                    <option disabled value="">Choisir</option>-->
-<!--                    <option v-for="finishing in finishings"-->
-<!--                            v-bind:value="finishing.id"-->
-<!--                            :data-name="finishing.name">-->
-<!--                        {{ finishing.name }}-->
-<!--                    </option>-->
-<!--                </select>-->
-
                 <select v-model="form.identification.contact.id"
                         @focus="form.identification.contact.hasFocus = true"
                         @blur="form.identification.contact.hasFocus = false"
@@ -127,6 +133,7 @@
                 </select>
                 <label class="label-field">Contact</label>
             </div>
+
             <div class="wrap-field h-50">
                 <input v-model.trim="form.identification.contact.email"
                        @focus="form.identification.contact.hasFocus = true"
@@ -147,6 +154,7 @@
              :class="[{ hasValue: form.identification.contact.civility },
                       { hasValue: form.identification.contact.name },
                       { hasValue: form.identification.contact.surname },
+                      { hasValue: form.identification.contact.service },
                       { hasValue: form.identification.contact.email },
                       { hasFocus: form.identification.contact.hasFocus }]">
             <div class="wrap-field-inline">
@@ -183,6 +191,16 @@
                        type="text"
                        autocomplete="off">
                 <label class="label-field">Prénom du contact</label>
+            </div>
+            <div class="wrap-field h-50">
+                <input v-model.trim="form.identification.contact.service"
+                       @focus="form.identification.contact.hasFocus = true"
+                       @blur="form.identification.contact.hasFocus = false"
+                       class="field"
+                       :class="{ hasValue: form.identification.contact.service }"
+                       type="text"
+                       autocomplete="off">
+                <label class="label-field">Service</label>
             </div>
             <div class="wrap-field h-50">
                 <input v-model.trim="form.identification.contact.email"

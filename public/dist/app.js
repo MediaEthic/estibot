@@ -5099,7 +5099,7 @@ function applyToTag (styleElement, obj) {
 
 
 var bind = __webpack_require__(136);
-var isBuffer = __webpack_require__(230);
+var isBuffer = __webpack_require__(235);
 
 /*global toString:true*/
 
@@ -20824,7 +20824,7 @@ module.exports = function isCancel(value) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(4);
-var normalizeHeaderName = __webpack_require__(235);
+var normalizeHeaderName = __webpack_require__(240);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -20930,10 +20930,10 @@ module.exports = defaults;
 
 
 var utils = __webpack_require__(4);
-var settle = __webpack_require__(236);
+var settle = __webpack_require__(241);
 var buildURL = __webpack_require__(137);
-var parseHeaders = __webpack_require__(238);
-var isURLSameOrigin = __webpack_require__(239);
+var parseHeaders = __webpack_require__(243);
+var isURLSameOrigin = __webpack_require__(244);
 var createError = __webpack_require__(141);
 
 module.exports = function xhrAdapter(config) {
@@ -21026,7 +21026,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(240);
+      var cookies = __webpack_require__(245);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -21110,7 +21110,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(237);
+var enhanceError = __webpack_require__(242);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -21217,7 +21217,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(145);
-module.exports = __webpack_require__(255);
+module.exports = __webpack_require__(260);
 
 
 /***/ }),
@@ -21232,7 +21232,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(228);
 
 
  // Importing Vue Library
@@ -21316,7 +21316,7 @@ __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to
     next();
 });
 
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(245));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(250));
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.mixin({
     data: function data() {
@@ -34762,7 +34762,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Quotation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Quotation__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SingleQuotation__ = __webpack_require__(213);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SingleQuotation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_SingleQuotation__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Profile__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Profile__ = __webpack_require__(223);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Profile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Profile__);
 
 
@@ -37375,6 +37375,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -38052,7 +38070,9 @@ var render = function() {
       {
         staticClass: "wrap-group-field",
         class: [
-          { hasValue: _vm.form.identification.third.address },
+          { hasValue: _vm.form.identification.third.addressLine1 },
+          { hasValue: _vm.form.identification.third.addressLine2 },
+          { hasValue: _vm.form.identification.third.addressLine3 },
           { hasValue: _vm.form.identification.third.zipcode },
           { hasValue: _vm.form.identification.third.city },
           { hasFocus: _vm.form.identification.third.hasFocus }
@@ -38066,15 +38086,17 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model.trim",
-                    value: _vm.form.identification.third.address,
-                    expression: "form.identification.third.address",
+                    value: _vm.form.identification.third.addressLine2,
+                    expression: "form.identification.third.addressLine2",
                     modifiers: { trim: true }
                   }
                 ],
                 staticClass: "field",
-                class: [{ hasValue: _vm.form.identification.third.address }],
+                class: [
+                  { hasValue: _vm.form.identification.third.addressLine2 }
+                ],
                 attrs: { type: "text", autocomplete: "off", required: "" },
-                domProps: { value: _vm.form.identification.third.address },
+                domProps: { value: _vm.form.identification.third.addressLine2 },
                 on: {
                   focus: function($event) {
                     _vm.form.identification.third.hasFocus = true
@@ -38093,7 +38115,7 @@ var render = function() {
                     }
                     _vm.$set(
                       _vm.form.identification.third,
-                      "address",
+                      "addressLine2",
                       $event.target.value.trim()
                     )
                   }
@@ -38104,15 +38126,15 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model.trim",
-                    value: _vm.form.identification.third.address,
-                    expression: "form.identification.third.address",
+                    value: _vm.form.identification.third.addressLine2,
+                    expression: "form.identification.third.addressLine2",
                     modifiers: { trim: true }
                   }
                 ],
                 staticClass: "field",
-                class: { hasValue: _vm.form.identification.third.address },
+                class: { hasValue: _vm.form.identification.third.addressLine2 },
                 attrs: { type: "text", autocomplete: "off" },
-                domProps: { value: _vm.form.identification.third.address },
+                domProps: { value: _vm.form.identification.third.addressLine2 },
                 on: {
                   focus: function($event) {
                     _vm.form.identification.third.hasFocus = true
@@ -38131,14 +38153,104 @@ var render = function() {
                     }
                     _vm.$set(
                       _vm.form.identification.third,
-                      "address",
+                      "addressLine2",
                       $event.target.value.trim()
                     )
                   }
                 }
               }),
           _vm._v(" "),
-          _c("label", { staticClass: "label-field" }, [_vm._v("Adresse")])
+          _c("label", { staticClass: "label-field" }, [
+            _vm._v("Numéro + Libellé de la voie")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "wrap-field h-50" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.form.identification.third.addressLine1,
+                expression: "form.identification.third.addressLine1",
+                modifiers: { trim: true }
+              }
+            ],
+            staticClass: "field",
+            class: [{ hasValue: _vm.form.identification.third.addressLine1 }],
+            attrs: { type: "text", autocomplete: "off" },
+            domProps: { value: _vm.form.identification.third.addressLine1 },
+            on: {
+              focus: function($event) {
+                _vm.form.identification.third.hasFocus = true
+              },
+              blur: [
+                function($event) {
+                  _vm.form.identification.third.hasFocus = false
+                },
+                function($event) {
+                  return _vm.$forceUpdate()
+                }
+              ],
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.form.identification.third,
+                  "addressLine1",
+                  $event.target.value.trim()
+                )
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { staticClass: "label-field" }, [
+            _vm._v("Complément de localisation")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "wrap-field h-50" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model.trim",
+                value: _vm.form.identification.third.addressLine3,
+                expression: "form.identification.third.addressLine3",
+                modifiers: { trim: true }
+              }
+            ],
+            staticClass: "field",
+            class: [{ hasValue: _vm.form.identification.third.addressLine3 }],
+            attrs: { type: "text", autocomplete: "off" },
+            domProps: { value: _vm.form.identification.third.addressLine3 },
+            on: {
+              focus: function($event) {
+                _vm.form.identification.third.hasFocus = true
+              },
+              blur: [
+                function($event) {
+                  _vm.form.identification.third.hasFocus = false
+                },
+                function($event) {
+                  return _vm.$forceUpdate()
+                }
+              ],
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.form.identification.third,
+                  "addressLine3",
+                  $event.target.value.trim()
+                )
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { staticClass: "label-field" }, [_vm._v("BP - Lieu dit")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "wrap-field-inline" }, [
@@ -38244,6 +38356,7 @@ var render = function() {
               { hasValue: _vm.form.identification.contact.civility },
               { hasValue: _vm.form.identification.contact.name },
               { hasValue: _vm.form.identification.contact.surname },
+              { hasValue: _vm.form.identification.contact.service },
               { hasValue: _vm.form.identification.contact.email },
               { hasFocus: _vm.form.identification.contact.hasFocus }
             ]
@@ -38301,9 +38414,9 @@ var render = function() {
                   ) {
                     return _c("option", { domProps: { value: contact.id } }, [
                       _vm._v(
-                        "\n                        " +
+                        "\n                    " +
                           _vm._s(_vm.generateContact(contact)) +
-                          "\n                    "
+                          "\n                "
                       )
                     ])
                   })
@@ -38370,6 +38483,7 @@ var render = function() {
               { hasValue: _vm.form.identification.contact.civility },
               { hasValue: _vm.form.identification.contact.name },
               { hasValue: _vm.form.identification.contact.surname },
+              { hasValue: _vm.form.identification.contact.service },
               { hasValue: _vm.form.identification.contact.email },
               { hasFocus: _vm.form.identification.contact.hasFocus }
             ]
@@ -38531,6 +38645,49 @@ var render = function() {
               _c("label", { staticClass: "label-field" }, [
                 _vm._v("Prénom du contact")
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "wrap-field h-50" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.form.identification.contact.service,
+                    expression: "form.identification.contact.service",
+                    modifiers: { trim: true }
+                  }
+                ],
+                staticClass: "field",
+                class: { hasValue: _vm.form.identification.contact.service },
+                attrs: { type: "text", autocomplete: "off" },
+                domProps: { value: _vm.form.identification.contact.service },
+                on: {
+                  focus: function($event) {
+                    _vm.form.identification.contact.hasFocus = true
+                  },
+                  blur: [
+                    function($event) {
+                      _vm.form.identification.contact.hasFocus = false
+                    },
+                    function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  ],
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form.identification.contact,
+                      "service",
+                      $event.target.value.trim()
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { staticClass: "label-field" }, [_vm._v("Service")])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "wrap-field h-50" }, [
@@ -42921,7 +43078,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(216)
 /* template */
-var __vue_template__ = __webpack_require__(217)
+var __vue_template__ = __webpack_require__(222)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -42994,7 +43151,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 15rem;\n    background-repeat: no-repeat;\n}\n.wrap-head-page .wrap-main-header .page-main-title[data-v-14addc89] {\n      width: 100%;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: none;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item span[data-v-14addc89] {\n              display: none;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          display: block;\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation[data-v-14addc89] {\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n          color: #91A8D0;\n          margin-right: 1.5rem;\n}\n.wrap-central .left-part[data-v-14addc89] {\n  overflow-x: auto;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n@media screen and (min-width: 680px) {\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n    position: initial;\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler[data-v-14addc89],\n    .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label[data-v-14addc89] {\n      display: none !important;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions[data-v-14addc89],\n      .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: initial;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89],\n        .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89] {\n          cursor: pointer;\n          position: initial;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          margin: 0 2rem 0 0;\n          padding: .25rem 1rem;\n          width: auto;\n          height: auto;\n          opacity: 1;\n          border: 0.15rem solid #C49998;\n          border-radius: 5rem;\n          font-size: 1.3rem;\n          color: #C49998;\n          text-transform: uppercase;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89]:hover,\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89]:hover {\n            background-color: #C49998;\n            color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            border: 0;\n            font-size: inherit;\n            line-height: initial;\n            margin-right: 1rem;\n            background: transparent;\n            color: inherit;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item span[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item span[data-v-14addc89] {\n            display: initial;\n            font-weight: 500;\n            letter-spacing: 0.02em;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 15rem;\n    background-repeat: no-repeat;\n}\n.wrap-head-page .wrap-main-header .page-main-title[data-v-14addc89] {\n      width: 100%;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: none;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n            .wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89]:hover,\n              .wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item span[data-v-14addc89] {\n              display: none;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          display: block;\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation[data-v-14addc89] {\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n          color: #91A8D0;\n          margin-right: 1.5rem;\n}\n.wrap-central .left-part[data-v-14addc89] {\n  overflow-x: auto;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n@media screen and (min-width: 680px) {\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n    position: initial;\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler[data-v-14addc89],\n    .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label[data-v-14addc89] {\n      display: none !important;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions[data-v-14addc89],\n      .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: initial;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89],\n        .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89] {\n          cursor: pointer;\n          position: initial;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          margin: 0 2rem 0 0;\n          padding: .25rem 1rem;\n          width: auto;\n          height: auto;\n          opacity: 1;\n          border: 0.15rem solid #C49998;\n          border-radius: 5rem;\n          font-size: 1.3rem;\n          color: #C49998;\n          text-transform: uppercase;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > a[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > a[data-v-14addc89] {\n            color: #C49998;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89]:hover,\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89]:hover {\n            background-color: #C49998;\n            color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item:hover *[data-v-14addc89],\n            .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item:hover *[data-v-14addc89] {\n              color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            display: initial;\n            border: 0;\n            font-size: inherit;\n            line-height: initial;\n            margin-right: 1rem;\n            background: transparent;\n            color: inherit;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item span[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item span[data-v-14addc89] {\n            display: initial;\n            font-weight: 500;\n            letter-spacing: 0.02em;\n}\n}\n", ""]);
 
 // exports
 
@@ -43007,8 +43164,13 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notification__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notification__ = __webpack_require__(217);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Notification__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43151,7 +43313,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             notification: {
                 body: ""
             },
-            third: "",
+            third: [],
             summaryPulled: false,
             indexMinValue: ""
         };
@@ -43202,12 +43364,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
         },
         generateThird: function generateThird() {
-            var third = "";
-            if (this.quotation.third.name !== null) third += this.quotation.third.name;
-            if (this.quotation.third.address !== null) third += " - " + this.quotation.third.address;
-            if (this.quotation.third.zipcode !== null) third += " - " + this.quotation.third.zipcode;
-            if (this.quotation.third.city !== null) third += " " + this.quotation.third.city;
-            this.third = third;
+            console.log(this.quotation.third.name);
+            this.third = [];
+            if (this.quotation.third.name !== undefined) this.third.push(this.quotation.third.name);
+
+            var contact = "";
+            if (this.quotation.contact.name !== undefined && this.quotation.contact.name !== null || this.quotation.contact.surname !== undefined && this.quotation.contact.surname !== null) {
+                var _contact = "\xC0 l'attention de ";
+                if (this.quotation.contact.civility === "Mr") {
+                    _contact += "M.";
+                } else {
+                    _contact += "Mme";
+                }
+
+                if (this.quotation.contact.name !== undefined && this.quotation.contact.name !== null) _contact += " " + this.quotation.contact.name;
+                if (this.quotation.contact.surname !== undefined && this.quotation.contact.surname !== null) _contact += " " + this.quotation.contact.surname;
+                if (this.quotation.contact.service !== undefined && this.quotation.contact.service !== null) _contact += " - Service " + this.quotation.contact.service;
+
+                if (_contact !== "") this.third.push(_contact);
+            }
+
+            if (this.quotation.third.addressLine1 !== undefined && this.quotation.third.addressLine1 !== null) this.third.push(this.quotation.third.addressLine1);
+            if (this.quotation.third.addressLine2 !== undefined && this.quotation.third.addressLine2 !== null) this.third.push(this.quotation.third.addressLine2);
+            if (this.quotation.third.addressLine3 !== undefined && this.quotation.third.addressLine3 !== null) this.third.push(this.quotation.third.addressLine3);
+            if (this.quotation.third.zipcode !== undefined && this.quotation.third.zipcode !== null) {
+                if (this.quotation.third.city !== undefined && this.quotation.third.city !== null) {
+                    this.third.push(this.quotation.third.zipcode + " " + this.quotation.third.city);
+                } else {
+                    this.third.push(this.quotation.third.zipcode);
+                }
+            }
+
+            if (this.quotation.contact.email !== undefined && this.quotation.contact.email !== null) this.third.push(this.quotation.contact.email);
         },
         textareaAutosize: function textareaAutosize() {
             var el = document.querySelector('textarea');
@@ -43217,13 +43405,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 el.style.cssText = 'height:' + scrollHeight + 'px';
             }, 0);
         },
+        generatePDF: function generatePDF(id) {
+            this.$store.dispatch("generatePDF", {
+                id: id
+            }).then(function (resp) {
+                console.log(resp);
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        },
         destroyQuotation: function destroyQuotation(id) {
             var _this2 = this;
 
             this.$store.dispatch("destroyQuotation", {
                 id: id
             }).then(function () {
-                _this2.$router.push({ name: "home" });
+                _this2.$router.push({ name: "quotations.index" });
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -43231,6 +43428,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateQuotation: function updateQuotation(quotation) {
             var _this3 = this;
 
+            console.log(quotation);
             this.$store.dispatch("updateQuotation", {
                 quotation: quotation
             }).then(function () {
@@ -43287,6 +43485,187 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(218)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(220)
+/* template */
+var __vue_template__ = __webpack_require__(221)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-6a4ce154"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Notification.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6a4ce154", Component.options)
+  } else {
+    hotAPI.reload("data-v-6a4ce154", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(219);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("af9acf06", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a4ce154\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notification.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a4ce154\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notification.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-6a4ce154], [class*=\" icon-\"][data-v-6a4ce154] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-6a4ce154]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-6a4ce154]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-6a4ce154]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-6a4ce154]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-6a4ce154]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-6a4ce154]:before {\n  content: \"\\E907\";\n}\n.modal-fade-enter[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  opacity: 0;\n}\n.modal-fade-enter-active[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  -webkit-transition: opacity .5s ease;\n  transition: opacity .5s ease;\n}\n.notification[data-v-6a4ce154] {\n  position: fixed;\n  bottom: 0;\n  right: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  width: 100%;\n  max-width: calc(100% / 2);\n  padding: .75rem 1.25rem;\n  margin-right: 2rem;\n  margin-bottom: 2rem;\n  border: .1rem solid transparent;\n  border-radius: 2rem 1rem 3rem 1rem;\n}\n.notification.notification-primary[data-v-6a4ce154] {\n    color: #62799F;\n    background-color: #C2D9FF;\n    border-color: #91A8D0;\n}\n.notification.notification-secondary[data-v-6a4ce154] {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n    border-color: #C49998;\n}\n.notification .btn-close[data-v-6a4ce154] {\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    background-color: rgba(10, 10, 10, 0.2);\n    border: none;\n    border-radius: 290486px;\n    cursor: pointer;\n    pointer-events: auto;\n    display: inline-block;\n    -webkit-box-flex: 0;\n        -ms-flex-positive: 0;\n            flex-grow: 0;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    font-size: 1rem;\n    width: 2rem;\n    height: 2rem;\n    max-height: 2rem;\n    max-width: 2rem;\n    min-height: 2rem;\n    min-width: 2rem;\n    outline: 0;\n    vertical-align: top;\n    position: absolute;\n    right: .5rem;\n    top: .5rem;\n    font-weight: 700;\n    color: #fff;\n}\n.notification .btn-close[data-v-6a4ce154]:before {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: .2rem;\n      width: 50%;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .btn-close[data-v-6a4ce154]:after {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: 50%;\n      width: .2rem;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .notification-body[data-v-6a4ce154] {\n    position: relative;\n    padding: 1rem .5rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 220 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'notification',
+    data: function data() {
+        return {};
+    },
+    created: function created() {},
+
+    computed: {},
+    methods: {
+        close: function close() {
+            this.$emit('close');
+        }
+    }
+});
+
+/***/ }),
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "modal-fade", mode: "out-in" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "notification notification-primary notification-wrapper",
+        attrs: { role: "alert" }
+      },
+      [
+        _c("div", { staticClass: "notification-container" }, [
+          _c("button", {
+            staticClass: "btn-close",
+            attrs: { type: "button", "aria-label": "Fermer la notification" },
+            on: { click: _vm.close }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "notification-body" },
+            [
+              _vm._t("body", [
+                _vm._v("\n                    default body\n                ")
+              ])
+            ],
+            2
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6a4ce154", module.exports)
+  }
+}
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -43340,7 +43719,24 @@ var render = function() {
                   "ul",
                   { staticClass: "list-actions" },
                   [
-                    _vm._m(0),
+                    _c("li", { staticClass: "action-item" }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "/api/auth/quotations/" +
+                              _vm.quotation.id +
+                              "/pdf",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-print action-event" }),
+                          _c("span", [_vm._v("Imprimer")])
+                        ]
+                      )
+                    ]),
                     _vm._v(" "),
                     _c(
                       "router-link",
@@ -43386,7 +43782,20 @@ var render = function() {
                 _c("li", { staticClass: "item-detail-quotation" }, [
                   _c("i", { staticClass: "fas fa-user-tie" }),
                   _vm._v(" "),
-                  _c("p", [_vm._v(_vm._s(this.third))])
+                  _c(
+                    "address",
+                    _vm._l(_vm.third, function(line) {
+                      return _c("span", [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(line) +
+                            "\n                                    "
+                        ),
+                        _c("br")
+                      ])
+                    }),
+                    0
+                  )
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "item-detail-quotation" }, [
@@ -43415,7 +43824,7 @@ var render = function() {
         _c("div", { staticClass: "wrap-central" }, [
           _c("div", { staticClass: "left-part" }, [
             _c("table", { staticClass: "responsive-table" }, [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -43710,15 +44119,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "action-item" }, [
-      _c("i", { staticClass: "fas fa-print action-event" }),
-      _c("span", [_vm._v("Imprimer")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Quantité")]),
@@ -43750,19 +44150,19 @@ if (false) {
 }
 
 /***/ }),
-/* 218 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(219)
+  __webpack_require__(224)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(221)
+var __vue_script__ = __webpack_require__(226)
 /* template */
-var __vue_template__ = __webpack_require__(222)
+var __vue_template__ = __webpack_require__(227)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43801,13 +44201,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 219 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(220);
+var content = __webpack_require__(225);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -43827,7 +44227,7 @@ if(false) {
 }
 
 /***/ }),
-/* 220 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -43841,7 +44241,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 
 /***/ }),
-/* 221 */
+/* 226 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43914,7 +44314,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 222 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44004,16 +44404,16 @@ if (false) {
 }
 
 /***/ }),
-/* 223 */
+/* 228 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(227);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 
 
@@ -44043,7 +44443,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     ethic: false,
                     id: "",
                     name: "",
-                    address: "",
+                    addressLine1: "",
+                    addressLine2: "",
+                    addressLine3: "",
                     zipcode: "",
                     city: "",
                     contacts: [],
@@ -44054,6 +44456,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     civility: "",
                     name: "",
                     surname: "",
+                    service: "",
                     email: "",
                     hasFocus: false
                 }
@@ -44187,6 +44590,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     email: credentials.email,
                     password: credentials.password
                 }).then(function (response) {
+                    console.log(response);
                     localStorage.setItem("token", response.data.token);
                     context.commit("login", response.data.token);
                     localStorage.setItem("user", response.data.user.name);
@@ -44284,7 +44688,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                         switch (_context3.prev = _context3.next) {
                             case 0:
                                 _context3.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/printings');
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotations/printings');
 
                             case 2:
                                 data = _context3.sent.data;
@@ -44307,7 +44711,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         }(),
 
         // async getSubstrates(context) {
-        //     let data = (await axios.get('/api/auth/quotation/substrates')).data;
+        //     let data = (await axios.get('/api/auth/quotations/substrates')).data;
         //     context.commit("setSubstrates", data);
         // },
         getFinishings: function () {
@@ -44318,7 +44722,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                         switch (_context4.prev = _context4.next) {
                             case 0:
                                 _context4.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/finishings');
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotations/finishings');
 
                             case 2:
                                 data = _context4.sent.data;
@@ -44341,7 +44745,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         }(),
 
         // async getCuttings(context) {
-        //     let data = (await axios.get('/api/auth/quotation/cuttings')).data;
+        //     let data = (await axios.get('/api/auth/quotations/cuttings')).data;
         //     context.commit("setCuttings", data);
         // },
         updateQuotationSummary: function updateQuotationSummary(context, credentials) {
@@ -44357,7 +44761,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 0:
                                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
                                 _context5.next = 3;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation/price', {
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotations/price', { // quotations.price
                                     workflow: context.getters.workflow
                                 });
 
@@ -44383,7 +44787,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         saveQuotation: function saveQuotation(context, credentials) {
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation', {
+                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotations', { // quotations.store
                     price: context.state.price,
                     workflow: context.state.workflow,
                     quotation: credentials.quotation
@@ -44401,7 +44805,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         updateQuotation: function updateQuotation(context, credentials) {
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotation/' + credentials.quotation.id + '/edit', {
+                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotations/' + credentials.quotation.id, { // quotations.update
                     quotation: credentials.quotation
                 }).then(function (response) {
                     console.log(response);
@@ -44422,14 +44826,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 0:
                                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
                                 _context6.next = 3;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/' + credentials.id + '/edit');
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotations/' + credentials.id + '/edit');
 
                             case 3:
                                 data = _context6.sent.data;
-
+                                // quotations.edit
+                                console.log("getQuotation");
+                                console.log(data);
                                 context.commit("setQuotation", data);
 
-                            case 5:
+                            case 7:
                             case 'end':
                                 return _context6.stop();
                         }
@@ -44452,11 +44858,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 0:
                                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
                                 _context7.next = 3;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.delete('/api/auth/quotation/' + credentials.id);
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.delete('/api/auth/quotations/' + credentials.id);
 
                             case 3:
                                 data = _context7.sent.data;
-
+                                // quotations.destroy
                                 context.commit("setQuotations", data);
 
                             case 5:
@@ -44482,10 +44888,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 0:
                                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
                                 _context8.next = 3;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotation/' + credentials.id + '/edit');
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotations/' + credentials.id + '/edit');
 
                             case 3:
                                 data = _context8.sent.data;
+                                // quotations.edit
                                 workflow = JSON.parse(data.workflow);
                                 contacts = data.contacts;
 
@@ -44505,19 +44912,49 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             }
 
             return getWorkflow;
+        }(),
+        generatePDF: function () {
+            var _ref9 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9(context, credentials) {
+                var data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
+                    while (1) {
+                        switch (_context9.prev = _context9.next) {
+                            case 0:
+                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                                _context9.next = 3;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/api/auth/quotations/' + credentials.id + '/pdf');
+
+                            case 3:
+                                data = _context9.sent;
+                                // quotations.edit
+                                console.log(data);
+
+                            case 5:
+                            case 'end':
+                                return _context9.stop();
+                        }
+                    }
+                }, _callee9, this);
+            }));
+
+            function generatePDF(_x13, _x14) {
+                return _ref9.apply(this, arguments);
+            }
+
+            return generatePDF;
         }()
     }
 }));
 
 /***/ }),
-/* 224 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(225);
+module.exports = __webpack_require__(230);
 
 
 /***/ }),
-/* 225 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -44542,7 +44979,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(226);
+module.exports = __webpack_require__(231);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -44558,7 +44995,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 226 */
+/* 231 */
 /***/ (function(module, exports) {
 
 /**
@@ -45291,7 +45728,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 227 */
+/* 232 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46316,13 +46753,13 @@ var index_esm = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
-/* 228 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(229);
+module.exports = __webpack_require__(234);
 
 /***/ }),
-/* 229 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46330,7 +46767,7 @@ module.exports = __webpack_require__(229);
 
 var utils = __webpack_require__(4);
 var bind = __webpack_require__(136);
-var Axios = __webpack_require__(231);
+var Axios = __webpack_require__(236);
 var mergeConfig = __webpack_require__(142);
 var defaults = __webpack_require__(139);
 
@@ -46366,14 +46803,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(143);
-axios.CancelToken = __webpack_require__(243);
+axios.CancelToken = __webpack_require__(248);
 axios.isCancel = __webpack_require__(138);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(244);
+axios.spread = __webpack_require__(249);
 
 module.exports = axios;
 
@@ -46382,7 +46819,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 230 */
+/* 235 */
 /***/ (function(module, exports) {
 
 /*!
@@ -46399,7 +46836,7 @@ module.exports = function isBuffer (obj) {
 
 
 /***/ }),
-/* 231 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46407,8 +46844,8 @@ module.exports = function isBuffer (obj) {
 
 var utils = __webpack_require__(4);
 var buildURL = __webpack_require__(137);
-var InterceptorManager = __webpack_require__(232);
-var dispatchRequest = __webpack_require__(233);
+var InterceptorManager = __webpack_require__(237);
+var dispatchRequest = __webpack_require__(238);
 var mergeConfig = __webpack_require__(142);
 
 /**
@@ -46492,7 +46929,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 232 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46551,18 +46988,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 233 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(4);
-var transformData = __webpack_require__(234);
+var transformData = __webpack_require__(239);
 var isCancel = __webpack_require__(138);
 var defaults = __webpack_require__(139);
-var isAbsoluteURL = __webpack_require__(241);
-var combineURLs = __webpack_require__(242);
+var isAbsoluteURL = __webpack_require__(246);
+var combineURLs = __webpack_require__(247);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -46644,7 +47081,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 234 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46671,7 +47108,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 235 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46690,7 +47127,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 236 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46722,7 +47159,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 237 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46771,7 +47208,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 238 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46831,7 +47268,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 239 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46906,7 +47343,7 @@ module.exports = (
 
 
 /***/ }),
-/* 240 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46966,7 +47403,7 @@ module.exports = (
 
 
 /***/ }),
-/* 241 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46987,7 +47424,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 242 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47008,7 +47445,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 243 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47072,7 +47509,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 244 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47106,19 +47543,19 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 245 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(246)
+  __webpack_require__(251)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(248)
+var __vue_script__ = __webpack_require__(253)
 /* template */
-var __vue_template__ = __webpack_require__(254)
+var __vue_template__ = __webpack_require__(259)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47157,13 +47594,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 246 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(247);
+var content = __webpack_require__(252);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -47183,7 +47620,7 @@ if(false) {
 }
 
 /***/ }),
-/* 247 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -47197,12 +47634,12 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 
 /***/ }),
-/* 248 */
+/* 253 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Spinner_vue__);
 //
 //
@@ -47305,6 +47742,9 @@ var DEFAULT_TRANSITION = 'fade';
         },
         user: function user() {
             return this.$store.state.user;
+        },
+        loggedIn: function loggedIn() {
+            return this.$store.getters.loggedIn;
         }
     },
     methods: {
@@ -47332,19 +47772,19 @@ var DEFAULT_TRANSITION = 'fade';
 });
 
 /***/ }),
-/* 249 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(250)
+  __webpack_require__(255)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(252)
+var __vue_script__ = __webpack_require__(257)
 /* template */
-var __vue_template__ = __webpack_require__(253)
+var __vue_template__ = __webpack_require__(258)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47383,13 +47823,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 250 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(251);
+var content = __webpack_require__(256);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -47409,7 +47849,7 @@ if(false) {
 }
 
 /***/ }),
-/* 251 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -47423,7 +47863,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 
 
 /***/ }),
-/* 252 */
+/* 257 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47449,7 +47889,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 253 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47491,7 +47931,7 @@ if (false) {
 }
 
 /***/ }),
-/* 254 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47528,28 +47968,34 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "form",
-                    {
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.logout($event)
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "button",
+                  _vm.loggedIn
+                    ? _c(
+                        "form",
                         {
-                          staticClass:
-                            "button button-small button-outline-secondary button-submit-secondary",
-                          attrs: { type: "submit" }
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.logout($event)
+                            }
+                          }
                         },
-                        [_vm._v("\n                Déconnexion\n            ")]
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "button button-small button-outline-secondary button-submit-secondary",
+                              attrs: { type: "submit" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                Déconnexion\n            "
+                              )
+                            ]
+                          )
+                        ]
                       )
-                    ]
-                  )
+                    : _vm._e()
                 ],
                 1
               )
@@ -47617,194 +48063,10 @@ if (false) {
 }
 
 /***/ }),
-/* 255 */
+/* 260 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(260)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(262)
-/* template */
-var __vue_template__ = __webpack_require__(263)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-6a4ce154"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Notification.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6a4ce154", Component.options)
-  } else {
-    hotAPI.reload("data-v-6a4ce154", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 260 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(261);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("af9acf06", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a4ce154\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notification.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a4ce154\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notification.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 261 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-6a4ce154], [class*=\" icon-\"][data-v-6a4ce154] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-6a4ce154]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-6a4ce154]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-6a4ce154]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-6a4ce154]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-6a4ce154]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-6a4ce154]:before {\n  content: \"\\E907\";\n}\n.modal-fade-enter[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  opacity: 0;\n}\n.modal-fade-enter-active[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  -webkit-transition: opacity .5s ease;\n  transition: opacity .5s ease;\n}\n.notification[data-v-6a4ce154] {\n  position: fixed;\n  bottom: 0;\n  right: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  width: 100%;\n  max-width: calc(100% / 2);\n  padding: .75rem 1.25rem;\n  margin-right: 1rem;\n  margin-bottom: 1rem;\n  border: .1rem solid transparent;\n  border-radius: 2rem 1rem 3rem 1rem;\n}\n.notification.notification-primary[data-v-6a4ce154] {\n    color: #62799F;\n    background-color: #C2D9FF;\n    border-color: #91A8D0;\n}\n.notification.notification-secondary[data-v-6a4ce154] {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n    border-color: #C49998;\n}\n.notification .btn-close[data-v-6a4ce154] {\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    background-color: rgba(10, 10, 10, 0.2);\n    border: none;\n    border-radius: 290486px;\n    cursor: pointer;\n    pointer-events: auto;\n    display: inline-block;\n    -webkit-box-flex: 0;\n        -ms-flex-positive: 0;\n            flex-grow: 0;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    font-size: 1rem;\n    width: 2rem;\n    height: 2rem;\n    max-height: 2rem;\n    max-width: 2rem;\n    min-height: 2rem;\n    min-width: 2rem;\n    outline: 0;\n    vertical-align: top;\n    position: absolute;\n    right: .5rem;\n    top: .5rem;\n    font-weight: 700;\n    color: #fff;\n}\n.notification .btn-close[data-v-6a4ce154]:before {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: .2rem;\n      width: 50%;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .btn-close[data-v-6a4ce154]:after {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: 50%;\n      width: .2rem;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .notification-body[data-v-6a4ce154] {\n    position: relative;\n    padding: 1rem .5rem;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 262 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'notification',
-    data: function data() {
-        return {};
-    },
-    created: function created() {},
-
-    computed: {},
-    methods: {
-        close: function close() {
-            this.$emit('close');
-        }
-    }
-});
-
-/***/ }),
-/* 263 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "modal-fade", mode: "out-in" } }, [
-    _c(
-      "div",
-      {
-        staticClass: "notification notification-primary notification-wrapper",
-        attrs: { role: "alert" }
-      },
-      [
-        _c("div", { staticClass: "notification-container" }, [
-          _c("button", {
-            staticClass: "btn-close",
-            attrs: { type: "button", "aria-label": "Fermer la notification" },
-            on: { click: _vm.close }
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "notification-body" },
-            [
-              _vm._t("body", [
-                _vm._v("\n                    default body\n                ")
-              ])
-            ],
-            2
-          )
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6a4ce154", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

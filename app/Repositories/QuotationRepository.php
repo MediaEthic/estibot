@@ -15,6 +15,8 @@ use App\Models\{Consumable,
     Substrate,
     Third};
 
+use Auth;
+
 class QuotationRepository
 {
     protected $model;
@@ -33,22 +35,19 @@ class QuotationRepository
 
     public function getById($id)
     {
-        $quotation = $this->model->with('third', 'quantities')
+        $quotation = $this->model->with('user', 'third', 'contact', 'quantities')
             ->findOrFail($id);
 
-//  TODO :
-//        if ($quotation->third_type === "new") {
         $quotation['contacts'] = Contact::where('third_id', $quotation->third_id)->get();
-            return $quotation;
-//        } else {
-//            return $quotation;
-//        }
+        return $quotation;
     }
 
     private function saveProspect(Third $model, Array $inputs)
     {
         if (!empty($inputs['name'])) $model->name = $inputs['name'];
-        if (!empty($inputs['address'])) $model->address = $inputs['address'];
+        if (!empty($inputs['addressLine1'])) $model->address_line1 = $inputs['addressLine1'];
+        if (!empty($inputs['addressLine2'])) $model->address_line2 = $inputs['addressLine2'];
+        if (!empty($inputs['addressLine3'])) $model->address_line3 = $inputs['addressLine3'];
         if (!empty($inputs['zipcode'])) $model->zipcode = $inputs['zipcode'];
         if (!empty($inputs['city'])) $model->city = $inputs['city'];
         $model->save();
@@ -62,6 +61,7 @@ class QuotationRepository
         if (!empty($inputs['civility'])) $model->civility = $inputs['civility'];
         if (!empty($inputs['name'])) $model->name = $inputs['name'];
         if (!empty($inputs['surname'])) $model->surname = $inputs['surname'];
+        if (!empty($inputs['service'])) $model->service = $inputs['service'];
         if (!empty($inputs['email'])) $model->email = $inputs['email'];
         $model->save();
 
@@ -93,18 +93,20 @@ class QuotationRepository
         return $model;
     }
 
-    private function saveLabel(Label $model, Array $inputs, $printing, $substrate, $cutting, $packing)
+    private function saveLabel(Label $model, Array $inputs, $substrate, $cutting)
     {
-        if (!empty($inputs['name'])) $model->name = $inputs['name'];
-        if (!empty($inputs['width'])) $model->width = $inputs['width'];
-        if (!empty($inputs['length'])) $model->length = $inputs['length'];
-        if (!empty($printing['press'])) $model->printing_id = $printing['press'];
-        if (!empty($printing['colors'])) $model->number_colors = $printing['colors'];
-        if (!empty($printing['quadri'])) $model->quadri = $printing['quadri'];
+        if (!empty($inputs['description']['label']['name'])) $model->name = $inputs['description']['label']['name'];
+        if (!empty($inputs['description']['label']['width'])) $model->width = $inputs['description']['label']['width'];
+        if (!empty($inputs['description']['label']['length'])) $model->length = $inputs['description']['label']['length'];
+        if (!empty($inputs['printing']['press'])) $model->printing_id = $inputs['printing']['press'];
+        if (!empty($inputs['printing']['colors'])) $model->number_colors = $inputs['printing']['colors'];
+        if ($inputs['printing']['quadri']) $model->quadri = 1;
+        if ($inputs['description']['label']['ethic']) $model->substrate_type = "ethic";
         if (!empty($substrate)) $model->substrate_id = $substrate;
+        if ($inputs['finishing']['cutting']['ethic']) $model->cutting_type = "ethic";
         if (!empty($cutting)) $model->cutting_id = $cutting;
-        if (!empty($packing['direction'])) $model->winding = $packing['direction'];
-        if (!empty($packing['packing'])) $model->packing = $packing['packing'];
+        if (!empty($inputs['packing']['direction'])) $model->winding = $inputs['packing']['direction'];
+        if (!empty($inputs['packing']['packing'])) $model->packing = $inputs['packing']['packing'];
         $model->save();
 
         return $model;
@@ -133,13 +135,15 @@ class QuotationRepository
 
     private function saveQuotation(Quotation $model, Array $inputs, $price, $third, $contact, $label)
     {
+        $user = Auth::user();
+        $model->user_id = $user->id;
         if (!empty($inputs['summary'])) $model->description = $inputs['summary'];
         $images = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
         $model->image = $images[array_rand($images)];
-        if ($inputs['identification']['third']['ethic']) $model->third_type = "old";
+        if ($inputs['identification']['third']['ethic']) $model->third_type = "ethic";
         if (!empty($third)) $model->third_id = $third;
         if (!empty($contact)) $model->contact_id = $contact;
-        if ($inputs['description']['label']['ethic']) $model->label_type = "old";
+        if ($inputs['description']['label']['ethic']) $model->label_type = "ethic";
         if (!empty($label)) $model->label_id = $label;
         $validityDate = date('Y-m-d', strtotime("+3 months"));
         $model->validity = $validityDate;
@@ -174,6 +178,9 @@ class QuotationRepository
     {
         $model->quotation_id = $quotation['id'];
         $model->quantity = $inputs['datas']['copies'];
+        $model->models = $inputs['datas']['models'];
+        $model->plates = $inputs['datas']['plates'];
+        $model->prepress = $inputs['datas']['prepress'];
         $model->time = $inputs['totals']['totalTimes'];
         $model->weight = $inputs['totals']['weight'];
         $model->cost = $inputs['totals']['totalCosts']; // prix de revient
@@ -237,7 +244,7 @@ class QuotationRepository
         if (empty($errors)) {
             $inputs['workflow']['finishing']['cutting']['type'] = "old";
             $inputs['workflow']['finishing']['cutting']['id'] = $cutting['id'];
-            $label = $this->saveLabel($modelLabel, $inputs['workflow']['description']['label'], $inputs['workflow']['printing'], $substrate['id'], $cutting['id'], $inputs['workflow']['packing']);
+            $label = $this->saveLabel($modelLabel, $inputs['workflow'], $substrate['id'], $cutting['id']);
             if (!isset($label)) $errors['errors'][] = "L'insertion de l'étiquette a échoué.";
         }
 
@@ -516,6 +523,7 @@ class QuotationRepository
 
                         $marginPrepress = $margin;
 
+                        $results['quantities'][$copies]['datas']['prepress'] = $totalTimePrepress;
                         $results['quantities'][$copies]['time'][] = "Prépresse : " . $totalTimePrepress . "h";
                         $results['quantities'][$copies]['cost'][] = "Prépresse : " . $totalCostPrepress . "€";
 
@@ -837,8 +845,10 @@ class QuotationRepository
     {
         $model = Quotation::findOrFail($id);
         $description = $inputs['quotation']['description'];
+        $validityDate = date('Y-m-d', strtotime("+1 months"));
         $model->update([
             'description' => $description,
+            'validity' => $validityDate,
             'cost' => $inputs['quotation']['cost'],
             'thousand' => $inputs['quotation']['thousand'],
             'vat_price' => $inputs['quotation']['vat_price'],

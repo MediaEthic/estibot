@@ -22,7 +22,9 @@ export default new Vuex.Store({
                     ethic: false,
                     id: "",
                     name: "",
-                    address: "",
+                    addressLine1: "",
+                    addressLine2: "",
+                    addressLine3: "",
                     zipcode: "",
                     city: "",
                     contacts: [],
@@ -33,6 +35,7 @@ export default new Vuex.Store({
                     civility: "",
                     name: "",
                     surname: "",
+                    service: "",
                     email: "",
                     hasFocus: false,
                 }
@@ -168,6 +171,7 @@ export default new Vuex.Store({
                     email: credentials.email,
                     password: credentials.password
                 }).then(response => {
+                    console.log(response);
                     localStorage.setItem("token", response.data.token);
                     context.commit("login", response.data.token);
                     localStorage.setItem("user", response.data.user.name);
@@ -208,19 +212,19 @@ export default new Vuex.Store({
             context.commit("setQuotations", data);
         },
         async getPrintings(context) {
-            let data = (await axios.get('/api/auth/quotation/printings')).data;
+            let data = (await axios.get('/api/auth/quotations/printings')).data;
             context.commit("setPrintings", data);
         },
         // async getSubstrates(context) {
-        //     let data = (await axios.get('/api/auth/quotation/substrates')).data;
+        //     let data = (await axios.get('/api/auth/quotations/substrates')).data;
         //     context.commit("setSubstrates", data);
         // },
         async getFinishings(context) {
-            let data = (await axios.get('/api/auth/quotation/finishings')).data;
+            let data = (await axios.get('/api/auth/quotations/finishings')).data;
             context.commit("setFinishings", data);
         },
         // async getCuttings(context) {
-        //     let data = (await axios.get('/api/auth/quotation/cuttings')).data;
+        //     let data = (await axios.get('/api/auth/quotations/cuttings')).data;
         //     context.commit("setCuttings", data);
         // },
         updateQuotationSummary(context, credentials) {
@@ -229,7 +233,7 @@ export default new Vuex.Store({
         },
         async getQuotationPrice(context) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.post('/api/auth/quotation/price', {
+            let data = (await axios.post('/api/auth/quotations/price', { // quotations.price
                 workflow: context.getters.workflow,
             })).data;
             context.commit("setQuotationPrice", data);
@@ -237,7 +241,7 @@ export default new Vuex.Store({
         saveQuotation(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-                axios.post('/api/auth/quotation', {
+                axios.post('/api/auth/quotations', { // quotations.store
                     price: context.state.price,
                     workflow: context.state.workflow,
                     quotation: credentials.quotation,
@@ -255,7 +259,7 @@ export default new Vuex.Store({
         updateQuotation(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-                axios.post('/api/auth/quotation/' + credentials.quotation.id + '/edit', {
+                axios.post('/api/auth/quotations/' + credentials.quotation.id, { // quotations.update
                     quotation: credentials.quotation
                 }).then(response => {
                     console.log(response);
@@ -269,21 +273,28 @@ export default new Vuex.Store({
         },
         async getQuotation(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.get('/api/auth/quotation/' + credentials.id + '/edit')).data;
+            let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit')).data; // quotations.edit
+            console.log("getQuotation");
+            console.log(data);
             context.commit("setQuotation", data);
         },
         async destroyQuotation(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.delete('/api/auth/quotation/' + credentials.id)).data;
+            let data = (await axios.delete('/api/auth/quotations/' + credentials.id)).data; // quotations.destroy
             context.commit("setQuotations", data);
         },
         async getWorkflow(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.get('/api/auth/quotation/' + credentials.id + '/edit')).data;
+            let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit')).data; // quotations.edit
             let workflow = JSON.parse(data.workflow);
             let contacts = data.contacts;
             workflow.identification.third.contacts = contacts;
             context.commit("setWorkflow", workflow);
+        },
+        async generatePDF(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            let data = await axios.get('/api/auth/quotations/' + credentials.id + '/pdf'); // quotations.edit
+            console.log(data)
         },
     },
 })

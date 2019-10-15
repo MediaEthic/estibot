@@ -8,7 +8,7 @@
                  alt="Logotype Ethic Software"
                  class="main-logo" />
             </router-link>
-            <form @submit.prevent="logout">
+            <form v-if="loggedIn" @submit.prevent="logout">
                 <button type="submit" class="button button-small button-outline-secondary button-submit-secondary">
                     Déconnexion
                 </button>
@@ -100,6 +100,9 @@
             },
             user() {
                 return this.$store.state.user;
+            },
+            loggedIn() {
+                return this.$store.getters.loggedIn;
             }
         },
         methods: {

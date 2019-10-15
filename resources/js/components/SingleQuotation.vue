@@ -15,7 +15,7 @@
                         <input id="options-toggler" class="options-toggler" type="checkbox">
                         <label for="options-toggler" class="fas fa-cog"></label>
                         <ul class="list-actions">
-                            <li class="action-item"><i class="fas fa-print action-event"></i><span>Imprimer</span></li>
+                            <li class="action-item"><a :href="'/api/auth/quotations/' + quotation.id + '/pdf'" target="_blank"><i class="fas fa-print action-event"></i><span>Imprimer</span></a></li>
                             <router-link tag="li" :to="{ name: 'quotations.edit', params: { id: quotation.id } }" class="action-item"><i class="fas fa-edit action-event"></i><span>Modifier</span></router-link>
 <!--                            <li class="action-item"><i class="fas fa-copy action-event"></i><span>Dupliquer</span></li>-->
                             <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt action-event"></i><span>Supprimer</span></li>
@@ -24,7 +24,12 @@
                     <ul class="list-details-quotation">
                         <li class="item-detail-quotation">
                             <i class="fas fa-user-tie"></i>
-                            <p>{{ this.third }}</p>
+                            <address>
+                                <span v-for="line in third">
+                                    {{ line }}
+                                    <br>
+                                </span>
+                            </address>
                         </li>
                         <li class="item-detail-quotation">
                             <i class="far fa-calendar-plus"></i>
@@ -140,7 +145,7 @@
                 notification: {
                     body: "",
                 },
-                third: "",
+                third: [],
                 summaryPulled: false,
                 indexMinValue: "",
             }
@@ -188,12 +193,39 @@
                 return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             },
             generateThird() {
-                let third = ``;
-                if (this.quotation.third.name !== null) third += this.quotation.third.name;
-                if (this.quotation.third.address !== null) third += ` - ` + this.quotation.third.address;
-                if (this.quotation.third.zipcode !== null) third += ` - ` + this.quotation.third.zipcode;
-                if (this.quotation.third.city !== null) third += ` ` + this.quotation.third.city;
-                this.third = third;
+                console.log(this.quotation.third.name);
+                this.third = [];
+                if (this.quotation.third.name !== undefined) this.third.push(this.quotation.third.name);
+
+
+                let contact = ``;
+                if (this.quotation.contact.name !== undefined && this.quotation.contact.name !== null || this.quotation.contact.surname !== undefined && this.quotation.contact.surname !== null) {
+                    let contact = `À l'attention de `;
+                    if (this.quotation.contact.civility === "Mr") {
+                        contact += `M.`;
+                    } else {
+                        contact += `Mme`;
+                    }
+
+                    if (this.quotation.contact.name !== undefined && this.quotation.contact.name !== null)  contact += ` ` + this.quotation.contact.name;
+                    if (this.quotation.contact.surname !== undefined && this.quotation.contact.surname !== null)  contact += ` ` + this.quotation.contact.surname;
+                    if (this.quotation.contact.service !== undefined && this.quotation.contact.service !== null)  contact += ` - Service ` + this.quotation.contact.service;
+
+                    if (contact !== "") this.third.push(contact);
+                }
+
+                if (this.quotation.third.addressLine1 !== undefined && this.quotation.third.addressLine1 !== null) this.third.push(this.quotation.third.addressLine1);
+                if (this.quotation.third.addressLine2 !== undefined && this.quotation.third.addressLine2 !== null) this.third.push(this.quotation.third.addressLine2);
+                if (this.quotation.third.addressLine3 !== undefined && this.quotation.third.addressLine3 !== null) this.third.push(this.quotation.third.addressLine3);
+                if (this.quotation.third.zipcode !== undefined && this.quotation.third.zipcode !== null) {
+                    if (this.quotation.third.city !== undefined && this.quotation.third.city !== null) {
+                        this.third.push(this.quotation.third.zipcode + ` ` + this.quotation.third.city);
+                    } else {
+                        this.third.push(this.quotation.third.zipcode);
+                    }
+                }
+
+                if (this.quotation.contact.email !== undefined && this.quotation.contact.email !== null) this.third.push(this.quotation.contact.email);
             },
             textareaAutosize() {
                 let el = document.querySelector('textarea');
@@ -203,14 +235,22 @@
                     el.style.cssText = 'height:' + scrollHeight + 'px';
                 },0);
             },
+            generatePDF(id) {
+                this.$store.dispatch("generatePDF", {
+                    id: id
+                }).then(resp => {
+                    console.log(resp);
+                }).catch(err => console.log(err));
+            },
             destroyQuotation(id) {
                 this.$store.dispatch("destroyQuotation", {
                     id: id
                 }).then(() => {
-                    this.$router.push({ name: "home" });
+                    this.$router.push({ name: "quotations.index" });
                 }).catch(err => console.log(err));
             },
             updateQuotation(quotation) {
+                console.log(quotation);
                 this.$store.dispatch("updateQuotation", {
                     quotation: quotation,
                 }).then(() => {
@@ -324,6 +364,7 @@
                             opacity: 0;
                             transition: 0.5s;
 
+                            > a > .action-event,
                             > .action-event {
                                 display: block;
                                 width: inherit;
@@ -465,12 +506,22 @@
                             color: $secondary-color;
                             text-transform: uppercase;
 
+                            > a {
+                                color: $secondary-color;
+                            }
+
                             &:hover {
                                 background-color: $secondary-color;
                                 color: $white;
+
+                                * {
+                                    color: $white;
+                                }
                             }
 
+                            > a > .action-event,
                             > .action-event {
+                                display: initial;
                                 border: 0;
                                 font-size: inherit;
                                 line-height: initial;

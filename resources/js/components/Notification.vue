@@ -67,8 +67,8 @@
         width: 100%;
         max-width: calc(100% / 2);
         padding: .75rem 1.25rem;
-        margin-right: 1rem;
-        margin-bottom: 1rem;
+        margin-right: 2rem;
+        margin-bottom: 2rem;
         border: .1rem solid transparent;
         border-radius: 2rem 1rem 3rem 1rem;
 
