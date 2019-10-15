@@ -36981,19 +36981,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.form.description.label.type === "new") this.summary += 'Nouvelle \xE9tiquette' + labelName;
 
             if (this.form.description.label.width > 0 && this.form.description.label.length > 0) {
-                this.summary += '\nFormat : ' + this.form.description.label.width + ' mm (laize) x ' + this.form.description.label.length + ' mm (avance)';
+                this.summary += '\nFormat : ' + this.form.description.label.width + 'mm (laize) x ' + this.form.description.label.length + 'mm (avance)';
             }
 
             if (this.form.printing.press !== "") this.summary += '\nMachine : ' + this.form.printing.name;
             if (this.form.printing.colors > 0) this.summary += '\nImpression : ' + this.form.printing.colors + ' couleurs';
-            if (this.form.printing.quadri) this.summary += 'en quadrichromie';
+            if (this.form.printing.quadri) this.summary += ' en quadrichromie';
             if (this.form.printing.substrate.name !== "") {
                 if (this.form.printing.substrate.type === "old") this.summary += '\nPapier existant : ' + this.form.printing.substrate.name;
                 if (this.form.printing.substrate.type === "new") this.summary += '\nNouveau papier : ' + this.form.printing.substrate.name;
-                this.summary += ' (' + this.form.printing.substrate.width + ' mm en laize - ' + this.form.printing.substrate.weight + ' g/m\xB2 - ' + this.form.printing.substrate.price + ' \u20AC/m\xB2)';
+                this.summary += ' (' + this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2)';
             } else {
-                if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += '\nPapier existant : ' + this.form.printing.substrate.width + ' mm en laize - ' + this.form.printing.substrate.weight + ' g/m\xB2 - ' + this.form.printing.substrate.price + ' \u20AC/m\xB2';
-                if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += '\nNouveau papier : ' + +this.form.printing.substrate.width + ' mm en laize - ' + this.form.printing.substrate.weight + ' g/m\xB2 - ' + this.form.printing.substrate.price + ' \u20AC/m\xB2';
+                if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += '\nPapier existant : ' + this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2';
+                if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += '\nNouveau papier : ' + +this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2';
             }
             if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
                 if (this.form.finishing.finishings.length > 1) {
@@ -37005,25 +37005,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.form.finishing.finishings.forEach(function (el) {
                     var $consumable = "";
                     if (el.presence_consumable) $consumable = ' + consommable';
-                    var $shape = "";
-                    if (el.shape > 0) $shape = ' (outil : ' + el.shape + ' \u20AC)';
 
                     if (_this2.form.finishing.finishings.length > 1) {
-                        _this2.summary += '\n - ' + el.name + $consumable + $shape;
+                        _this2.summary += '\n - ' + el.name + $consumable;
                     } else {
-                        _this2.summary += el.name + $consumable + $shape;
+                        _this2.summary += el.name + $consumable;
                     }
                 });
 
-                var $shape = "";
-
                 if (this.form.finishing.cutting.name !== "") {
-                    if (this.form.finishing.cutting.shape > 0) $shape = ' (prix : ' + this.form.finishing.cutting.shape + '\u20AC)';
                     if (this.form.finishing.cutting.type === "old") this.summary += '\nOutil de d\xE9coupe existant : ' + this.form.finishing.cutting.name;
-                    if (this.form.finishing.cutting.type === "new") this.summary += '\nNouvel outil de d\xE9coupe : ' + this.form.finishing.cutting.name + $shape;
+                    if (this.form.finishing.cutting.type === "new") this.summary += '\nNouvel outil de d\xE9coupe : ' + this.form.finishing.cutting.name;
                 } else {
-                    if (this.form.finishing.cutting.shape > 0) $shape = ' : ' + this.form.finishing.cutting.shape + '\u20AC';
-                    if (this.form.finishing.cutting.type === "new") this.summary += '\nNouvel outil de d\xE9coupe' + $shape;
+                    if (this.form.finishing.cutting.type === "new") this.summary += '\nNouvel outil de d\xE9coupe';
                 }
 
                 var $direction = "";
@@ -43299,6 +43293,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -43801,18 +43803,60 @@ var render = function() {
                 _c("li", { staticClass: "item-detail-quotation" }, [
                   _c("i", { staticClass: "far fa-calendar-plus" }),
                   _vm._v(" "),
-                  _c(
-                    "time",
-                    { attrs: { datetime: _vm.quotation.created_at } },
-                    [_vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.created_at)))]
-                  )
+                  _c("p", [
+                    _vm._v("Date de création : "),
+                    _c(
+                      "time",
+                      { attrs: { datetime: _vm.quotation.created_at } },
+                      [
+                        _vm._v(
+                          _vm._s(_vm.getHumanDate(_vm.quotation.created_at))
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "item-detail-quotation" }, [
+                  _c("i", { staticClass: "far fa-calendar-check" }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("Date de modification : "),
+                    _c(
+                      "time",
+                      { attrs: { datetime: _vm.quotation.created_at } },
+                      [
+                        _vm._v(
+                          _vm._s(_vm.getHumanDate(_vm.quotation.updated_at))
+                        )
+                      ]
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "item-detail-quotation" }, [
                   _c("i", { staticClass: "fas fa-hourglass-half" }),
                   _vm._v(" "),
-                  _c("time", { attrs: { datetime: _vm.quotation.validity } }, [
-                    _vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.validity)))
+                  _c("p", [
+                    _vm._v("Fin de validité  : "),
+                    _c(
+                      "time",
+                      { attrs: { datetime: _vm.quotation.validity } },
+                      [_vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.validity)))]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "item-detail-quotation" }, [
+                  _c("i", { staticClass: "fas fa-user" }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "Suivi par " +
+                        _vm._s(_vm.quotation.user.name) +
+                        " " +
+                        _vm._s(_vm.quotation.user.surname)
+                    )
                   ])
                 ])
               ])

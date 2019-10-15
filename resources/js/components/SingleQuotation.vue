@@ -33,11 +33,19 @@
                         </li>
                         <li class="item-detail-quotation">
                             <i class="far fa-calendar-plus"></i>
-                            <time :datetime="quotation.created_at">{{ getHumanDate(quotation.created_at) }}</time>
+                            <p>Date de création : <time :datetime="quotation.created_at">{{ getHumanDate(quotation.created_at) }}</time></p>
+                        </li>
+                        <li class="item-detail-quotation">
+                            <i class="far fa-calendar-check"></i>
+                            <p>Date de modification : <time :datetime="quotation.created_at">{{ getHumanDate(quotation.updated_at) }}</time></p>
                         </li>
                         <li class="item-detail-quotation">
                             <i class="fas fa-hourglass-half"></i>
-                            <time :datetime="quotation.validity">{{ getHumanDate(quotation.validity) }}</time>
+                            <p>Fin de validité  : <time :datetime="quotation.validity">{{ getHumanDate(quotation.validity) }}</time></p>
+                        </li>
+                        <li class="item-detail-quotation">
+                            <i class="fas fa-user"></i>
+                            <p>Suivi par {{ quotation.user.name }} {{ quotation.user.surname }}</p>
                         </li>
                     </ul>
                 </header>

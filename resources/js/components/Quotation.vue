@@ -205,19 +205,19 @@
 
 
                 if (this.form.description.label.width > 0 && this.form.description.label.length > 0) {
-                    this.summary += `\nFormat : ` + this.form.description.label.width + ` mm (laize) x ` + this.form.description.label.length + ` mm (avance)`;
+                    this.summary += `\nFormat : ` + this.form.description.label.width + `mm (laize) x ` + this.form.description.label.length + `mm (avance)`;
                 }
 
                 if (this.form.printing.press !== "") this.summary += `\nMachine : ` + this.form.printing.name;
                 if (this.form.printing.colors > 0) this.summary += `\nImpression : ` + this.form.printing.colors + ` couleurs`;
-                if (this.form.printing.quadri) this.summary += `en quadrichromie`;
+                if (this.form.printing.quadri) this.summary += ` en quadrichromie`;
                 if (this.form.printing.substrate.name !== "") {
                     if (this.form.printing.substrate.type === "old") this.summary += `\nPapier existant : ` + this.form.printing.substrate.name;
                     if (this.form.printing.substrate.type === "new") this.summary += `\nNouveau papier : ` + this.form.printing.substrate.name;
-                    this.summary += ` (` + this.form.printing.substrate.width + ` mm en laize - ` + this.form.printing.substrate.weight + ` g/m² - ` + this.form.printing.substrate.price + ` €/m²)`;
+                    this.summary += ` (` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m²)`;
                 } else {
-                    if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += `\nPapier existant : ` + this.form.printing.substrate.width + ` mm en laize - ` + this.form.printing.substrate.weight + ` g/m² - ` + this.form.printing.substrate.price + ` €/m²`;
-                    if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += `\nNouveau papier : ` +  + this.form.printing.substrate.width + ` mm en laize - ` + this.form.printing.substrate.weight + ` g/m² - ` + this.form.printing.substrate.price + ` €/m²`;
+                    if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += `\nPapier existant : ` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m²`;
+                    if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += `\nNouveau papier : ` +  + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m²`;
                 }
                 if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
                     if (this.form.finishing.finishings.length > 1) {
@@ -229,26 +229,20 @@
                     this.form.finishing.finishings.forEach(el => {
                         let $consumable = "";
                         if (el.presence_consumable) $consumable = ` + consommable`;
-                        let $shape = "";
-                        if (el.shape > 0) $shape = ` (outil : ` + el.shape + ` €)`;
 
                         if (this.form.finishing.finishings.length > 1) {
-                            this.summary += `\n - ` + el.name + $consumable + $shape;
+                            this.summary += `\n - ` + el.name + $consumable;
                         } else {
-                            this.summary += el.name + $consumable + $shape;
+                            this.summary += el.name + $consumable;
                         }
                     });
 
 
-                    let $shape = "";
-
                     if (this.form.finishing.cutting.name !== "") {
-                        if (this.form.finishing.cutting.shape > 0) $shape = ` (prix : ` + this.form.finishing.cutting.shape + `€)`;
                         if (this.form.finishing.cutting.type === "old") this.summary += `\nOutil de découpe existant : ` + this.form.finishing.cutting.name;
-                        if (this.form.finishing.cutting.type === "new") this.summary += `\nNouvel outil de découpe : ` + this.form.finishing.cutting.name + $shape;
+                        if (this.form.finishing.cutting.type === "new") this.summary += `\nNouvel outil de découpe : ` + this.form.finishing.cutting.name;
                     } else {
-                        if (this.form.finishing.cutting.shape > 0) $shape = ` : ` + this.form.finishing.cutting.shape + `€`;
-                        if (this.form.finishing.cutting.type === "new") this.summary += `\nNouvel outil de découpe` + $shape;
+                        if (this.form.finishing.cutting.type === "new") this.summary += `\nNouvel outil de découpe`;
                     }
 
                     let $direction = "";
