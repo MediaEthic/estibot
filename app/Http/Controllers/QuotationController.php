@@ -14,6 +14,7 @@ use App\Models\ {
     Third,
     Quotation
 };
+use Barryvdh\DomPDF\Facade as PDF;
 
 use Illuminate\Http\Request;
 
@@ -109,20 +110,7 @@ class QuotationController extends Controller
      */
     public function getPrice(Request $request)
     {
-//        return $request;
         return $this->repository->getPrice($request->all());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-//        $corporations = DB::table('corporations')->select('id', 'name')->get();
-//
-//        return view('parameters.corporation.establishments.create', compact('corporations'));
     }
 
     /**
@@ -168,5 +156,17 @@ class QuotationController extends Controller
     public function destroy($id)
     {
         return $this->repository->destroy($id);
+    }
+
+
+    public function generatePDF($id)
+    {
+        $quotation = Quotation::with('third', 'contact', 'label', 'quantities')->findOrFail($id);
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option("enable_php", true);
+        $pdf->loadView('quotation', compact('quotation'));
+        $name = "Devis#-" . $quotation->id . ".pdf";
+        return $pdf->stream($name);
     }
 }

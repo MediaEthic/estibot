@@ -38,6 +38,7 @@ $router->group(['prefix' => 'api'], function ($router) {
             });
             $router->post('/logout', 'AuthController@logout');
         });
+        $router->get('/quotations/{id}/pdf', 'QuotationController@generatePDF');
     });
 });
 
