@@ -19,7 +19,7 @@ $router->group(['prefix' => 'api'], function ($router) {
     $router->group(['prefix' => 'auth'], function ($router) {
         $router->post('/login', 'AuthController@login');
 
-        $router->group(['middleware' => 'jwt.auth'], function ($router) {
+//        $router->group(['middleware' => 'jwt.auth'], function ($router) {
             $router->group(['prefix' => 'quotations'], function ($router) {
                 $router->get('/', 'QuotationController@index');
                 $router->post('/', 'QuotationController@store');
@@ -29,6 +29,8 @@ $router->group(['prefix' => 'api'], function ($router) {
                 $router->post('/{id}', 'QuotationController@update');
                 $router->delete('/{id}', 'QuotationController@destroy');
 
+                $router->get('/{id}/email', 'QuotationController@sendEmail');
+
 
                 $router->get('/printings', 'QuotationController@getPrintings');
                 $router->get('/finishings', 'QuotationController@getFinishings');
@@ -37,7 +39,7 @@ $router->group(['prefix' => 'api'], function ($router) {
     //            $router->get('/cuttings', 'QuotationController@getCuttings');
             });
             $router->post('/logout', 'AuthController@logout');
-        });
+//        });
         $router->get('/quotations/{id}/pdf', 'QuotationController@generatePDF');
     });
 });
