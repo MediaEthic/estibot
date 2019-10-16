@@ -1,6 +1,6 @@
 <?php
 
-$url = parse_url(getenv("DB4FREE_DATABASE_URL"));
+$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
 
 $host = $url["host"];
 $username = $url["user"];
@@ -20,7 +20,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'db4free_mysql_connection'),
+    'default' => env('DB_CONNECTION', 'heroku_mysql_connection'),
 
     /*
     |--------------------------------------------------------------------------
