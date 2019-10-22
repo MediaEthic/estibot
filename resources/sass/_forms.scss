@@ -31,8 +31,11 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 100rem #fff inset;
-  border-radius: 0 0 1rem 1rem;
+  background-color: #fff !important;
+  -webkit-box-shadow: 0 0 0 100rem #fff inset !important;
+  box-shadow: 0 0 0 100rem #fff inset !important;
+  border-radius: 0 0 1rem 1rem !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 button {
@@ -194,7 +197,7 @@ textarea {
   position: relative;
   border: .1rem solid $primary-color-dark;
   border-radius: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 
   .field {
     display: block;
@@ -207,6 +210,7 @@ textarea {
     color: $secondary-color-dark;
     padding: 0 2.5rem 0 6rem;
     outline: none;
+      box-shadow: none !important;
     -webkit-transition: all .4s;
     -o-transition: all .4s;
     -moz-transition: all .4s;
@@ -306,6 +310,11 @@ textarea {
       &.hasValue,
       &.select {
         height: 3.5rem !important;
+
+          &.editable {
+              padding-top: 2rem;
+              height: auto !important;
+          }
 
         & ~ .label-field {
           top: .5rem;
@@ -489,6 +498,16 @@ textarea {
   -o-transition: all .4s;
   -moz-transition: all .4s;
   transition: all .4s;
+}
+
+.v-validate {
+    position: absolute;
+    bottom: -1.75rem;
+    padding-left: .5rem;
+
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    color: $secondary-color;
 }
 
 .wrap-group-field {
@@ -761,6 +780,32 @@ progress[value]::-moz-progress-bar {
   margin: 3rem auto 0 auto;
   border: 0;
   background: transparent;
+
+    &:not(:disabled) {
+        cursor: pointer;
+    }
+
+    &:disabled,
+    &[disabled] {
+        .cta {
+            &:before {
+                background: rgba($primary-color-light, 0.5);
+            }
+
+            span {
+                color: $primary-color-light;
+            }
+
+            svg {
+                stroke: $primary-color-light;
+            }
+        }
+    }
+}
+
+.wrap-button-submit,
+.cta {
+
 }
 
 .cta {
