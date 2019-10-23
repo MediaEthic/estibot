@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -26,8 +26,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $credentials = $request->only(['email', 'password']);
+
         try {
-            if (!$token = $this->jwt->attempt($request->only('email', 'password'))) {
+            if (!$token = $this->jwt->attempt($credentials)) {
                 return response()->json(['user_not_found'], 404);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -38,11 +40,12 @@ class AuthController extends Controller
             return response()->json(['token_absent' => $e->getMessage()], 500);
         }
 
-//        return response()->json(compact('token'));
-
-        $response = compact('token');
-        $response['user'] = Auth::user();
-        return response()->json($response);
+        return response()->json([
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60,
+            'user' => Auth::user()
+        ], 200);
     }
 
     public function logout(Request $request)

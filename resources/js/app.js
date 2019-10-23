@@ -1,13 +1,40 @@
 import 'es6-promise/auto'
-
 import Vue from 'vue'; // Importing Vue Library
-window.Vue = Vue;
-
 import VueRouter from 'vue-router'; // importing Vue router library
 import router from './router';
+import store from './store';
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
+import { required, email } from 'vee-validate/dist/rules';
+import { localize } from 'vee-validate';
+import en from 'vee-validate/dist/locale/en.json';
+import fr from 'vee-validate/dist/locale/fr.json';
+import CxltToastr from 'cxlt-vue2-toastr';
+
+
+window.Vue = Vue;
+
 Vue.use(VueRouter);
 
-import store from './store';
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('ValidationProvider', ValidationProvider);
+extend('required', {
+    ...required,
+    message: 'The {_field_} field is required'
+});
+extend('email', email);
+// Install English and French locales.
+localize('fr', fr);
+
+var toastrConfigs = {
+    position: 'bottom right',
+    showDuration: 2000,
+    timeOut: 5000,
+    progressBar: true,
+    successColor: '#91A8D0',
+    showMethod: 'slideInUp',
+    hideMethod: 'SlideOutRight',
+};
+Vue.use(CxltToastr, toastrConfigs);
 
 
 router.beforeEach((to, from, next) => {

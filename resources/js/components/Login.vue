@@ -13,18 +13,29 @@
             </div>
         </div>
 
-        <main>
-            <form @submit.prevent="login" class="main-form" autocomplete="off">
+        <ValidationObserver tag="main" v-slot="{ invalid, passes }">
+            <form @submit.prevent="passes(login)" class="main-form" autocomplete="off">
                 <fieldset>
                     <legend class="page-main-title mobile-hidden">Accès membre</legend>
                     <p class="baseline-main-title mobile-hidden">Entrez vos identifiants et poursuivez l’aventure parmi nous...</p>
 
                     <div class="wrap-form-main">
-                        <div class="wrap-field">
+                        <transition name="fade">
+                            <div v-if="serverError" class="notification notification-secondary notification-wrapper" role="alert">
+                                <div class="notification-container">
+                                    <div class="notification-body">
+                                        {{ serverError[0] }}
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+
+                        <ValidationProvider class="wrap-field"
+                                            name="email"
+                                            v-slot="{ errors }">
                             <input v-model.trim="form.email"
-                                   class="field "
-                                   :class="{ hasValue: form.email }"
-                                   name="email"
+                                   class="field"
+                                   :class="{ 'hasValue': form.email, 'input-error': errors[0] }"
                                    type="email"
                                    @animationstart="checkAnimation"
                                    autofocus
@@ -32,16 +43,18 @@
                             <span class="focus-field"></span>
                             <label class="label-field">Adresse e-mail</label>
                             <span class="symbol-left-field"><i class="fas fa-at"></i></span>
-                        </div>
+                            <span class="v-validate">{{ errors[0] }}</span>
+                        </ValidationProvider>
 
-                        <div class="wrap-field">
+                        <ValidationProvider class="wrap-field"
+                                            name="password"
+                                            v-slot="{ errors }">
                             <span class="btn-right-field" @click="switchVisibility">
-                                <i :class="this.passwordFieldType === 'password' ? 'far fa-eye' : 'far fa-eye-slash'"></i>
+                                <i :class="passwordFieldType === 'password' ? 'far fa-eye' : 'far fa-eye-slash'"></i>
                             </span>
                             <input v-model.trim="form.password"
                                    class="field"
-                                   :class="{ hasValue: form.password }"
-                                   name="password"
+                                   :class="{ 'hasValue': form.password, 'input-error': errors[0] }"
                                    :type="passwordFieldType"
                                    @animationstart="checkAnimation"
                                    required>
@@ -49,23 +62,23 @@
                             <span class="focus-field"></span>
                             <label class="label-field">Mot de passe</label>
                             <span class="symbol-left-field"><i class="fas fa-lock"></i></span>
-                        </div>
+                            <span class="v-validate">{{ errors[0] }}</span>
+                        </ValidationProvider>
 
-                        <div class="info info-error" v-if="infoError">Mauvais identifiant et/ou mot de passe.</div>
-
-                        <button type="submit" class="wrap-button-submit">
-                            <a href="#" class="cta">
+                        <button :disabled="invalid" type="submit" class="wrap-button-submit">
+                            <a href="#" class="cta" v-if="!loading">
                                 <span>Connexion</span>
                                 <svg width="13px" height="10px" viewBox="0 0 13 10">
                                     <path d="M1,5 L11,5"></path>
                                     <polyline points="8 1 12 5 8 9"></polyline>
                                 </svg>
                             </a>
+                            <div v-else class="lds-ring"><div></div><div></div><div></div><div></div></div>
                         </button>
                     </div>
                 </fieldset>
             </form>
-        </main>
+        </ValidationObserver>
     </div>
 </template>
 
@@ -73,11 +86,12 @@
     export default {
         data() {
             return {
+                loading: false,
                 form: {
                     email: '',
                     password: '',
                 },
-                infoError: false,
+                serverError: "",
                 passwordFieldType: 'password',
             }
         },
@@ -91,14 +105,17 @@
                 this.passwordFieldType = this.passwordFieldType === "password" ? "text" : "password";
             },
             login () {
-                this.infoError = false;
+                this.loading = true;
                 this.$store.dispatch('login', {
                     email: this.form.email,
                     password: this.form.password,
                 }).then(resp => {
+                    this.loading = false;
                     this.$router.push({ name: "quotations.index" });
                 }).catch(error => {
-                    this.infoError = true;
+                    this.loading = false;
+                    this.serverError = error.response.data;
+                    this.form.password = "";
                 });
             }
         }

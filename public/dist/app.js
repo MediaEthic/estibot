@@ -21233,6 +21233,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(151);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vee_validate__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vee_validate_dist_rules__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vee_validate_dist_locale_en_json__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vee_validate_dist_locale_en_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vee_validate_dist_locale_en_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate_dist_locale_fr_json__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate_dist_locale_fr_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_vee_validate_dist_locale_fr_json__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
  // Importing Vue Library
@@ -21243,6 +21251,20 @@ window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]);
 
 
+
+
+
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('ValidationObserver', __WEBPACK_IMPORTED_MODULE_5_vee_validate__["a" /* ValidationObserver */]);
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('ValidationProvider', __WEBPACK_IMPORTED_MODULE_5_vee_validate__["b" /* ValidationProvider */]);
+Object(__WEBPACK_IMPORTED_MODULE_5_vee_validate__["c" /* extend */])('required', _extends({}, __WEBPACK_IMPORTED_MODULE_6_vee_validate_dist_rules__["a" /* required */], {
+    message: 'The {_field_} field is required'
+}));
+
+
+
+
+// Install English and French locales.
+Object(__WEBPACK_IMPORTED_MODULE_5_vee_validate__["d" /* localize */])('fr', __WEBPACK_IMPORTED_MODULE_8_vee_validate_dist_locale_fr_json___default.a);
 
 __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to, from, next) {
     // requiresAuth && requiresVisitor
@@ -35034,6 +35056,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -35042,7 +35079,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 email: '',
                 password: ''
             },
-            infoError: false,
+            serverError: "",
             passwordFieldType: 'password'
         };
     },
@@ -35062,14 +35099,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         login: function login() {
             var _this = this;
 
-            this.infoError = false;
             this.$store.dispatch('login', {
                 email: this.form.email,
                 password: this.form.password
             }).then(function (resp) {
                 _this.$router.push({ name: "quotations.index" });
             }).catch(function (error) {
-                _this.infoError = true;
+                _this.serverError = error.response.data;
+                _this.form.password = "";
             });
         }
     }
@@ -35083,176 +35120,318 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "wrap-full-content no-footer" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("main", [
-      _c(
-        "form",
-        {
-          staticClass: "main-form",
-          attrs: { autocomplete: "off" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.login($event)
-            }
-          }
-        },
-        [
-          _c("fieldset", [
-            _c("legend", { staticClass: "page-main-title mobile-hidden" }, [
-              _vm._v("Accès membre")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "baseline-main-title mobile-hidden" }, [
-              _vm._v(
-                "Entrez vos identifiants et poursuivez l’aventure parmi nous..."
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "wrap-form-main" }, [
-              _c("div", { staticClass: "wrap-field" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.trim",
-                      value: _vm.form.email,
-                      expression: "form.email",
-                      modifiers: { trim: true }
-                    }
-                  ],
-                  staticClass: "field ",
-                  class: { hasValue: _vm.form.email },
-                  attrs: {
-                    name: "email",
-                    type: "email",
-                    autofocus: "",
-                    required: ""
-                  },
-                  domProps: { value: _vm.form.email },
-                  on: {
-                    animationstart: _vm.checkAnimation,
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "email", $event.target.value.trim())
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "focus-field" }),
-                _vm._v(" "),
-                _c("label", { staticClass: "label-field" }, [
-                  _vm._v("Adresse e-mail")
-                ]),
-                _vm._v(" "),
-                _vm._m(1)
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "wrap-field" }, [
+  return _c(
+    "div",
+    { staticClass: "wrap-full-content no-footer" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("ValidationObserver", {
+        attrs: { tag: "main" },
+        scopedSlots: _vm._u([
+          {
+            key: "default",
+            fn: function(ref) {
+              var invalid = ref.invalid
+              var passes = ref.passes
+              return [
                 _c(
-                  "span",
+                  "form",
                   {
-                    staticClass: "btn-right-field",
-                    on: { click: _vm.switchVisibility }
+                    staticClass: "main-form",
+                    attrs: { autocomplete: "off" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return passes(_vm.login)
+                      }
+                    }
                   },
                   [
-                    _c("i", {
-                      class:
-                        this.passwordFieldType === "password"
-                          ? "far fa-eye"
-                          : "far fa-eye-slash"
-                    })
+                    _c("fieldset", [
+                      _c(
+                        "legend",
+                        { staticClass: "page-main-title mobile-hidden" },
+                        [_vm._v("Accès membre")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        { staticClass: "baseline-main-title mobile-hidden" },
+                        [
+                          _vm._v(
+                            "Entrez vos identifiants et poursuivez l’aventure parmi nous..."
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "wrap-form-main" },
+                        [
+                          _c("ValidationProvider", {
+                            staticClass: "wrap-field",
+                            attrs: { rules: "required", name: "email" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var errors = ref.errors
+                                    return [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model.trim",
+                                            value: _vm.form.email,
+                                            expression: "form.email",
+                                            modifiers: { trim: true }
+                                          }
+                                        ],
+                                        staticClass: "field ",
+                                        class: { hasValue: _vm.form.email },
+                                        attrs: {
+                                          type: "text",
+                                          autofocus: "",
+                                          required: ""
+                                        },
+                                        domProps: { value: _vm.form.email },
+                                        on: {
+                                          animationstart: _vm.checkAnimation,
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form,
+                                              "email",
+                                              $event.target.value.trim()
+                                            )
+                                          },
+                                          blur: function($event) {
+                                            return _vm.$forceUpdate()
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("span", {
+                                        staticClass: "focus-field"
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        { staticClass: "label-field" },
+                                        [_vm._v("Adresse e-mail")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "symbol-left-field" },
+                                        [_c("i", { staticClass: "fas fa-at" })]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "v-validate" },
+                                        [_vm._v(_vm._s(errors[0]))]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c("ValidationProvider", {
+                            staticClass: "wrap-field",
+                            attrs: { rules: "required", name: "password" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var errors = ref.errors
+                                    return [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "btn-right-field",
+                                          on: { click: _vm.switchVisibility }
+                                        },
+                                        [
+                                          _c("i", {
+                                            class:
+                                              this.passwordFieldType ===
+                                              "password"
+                                                ? "far fa-eye"
+                                                : "far fa-eye-slash"
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model.trim",
+                                            value: _vm.form.password,
+                                            expression: "form.password",
+                                            modifiers: { trim: true }
+                                          }
+                                        ],
+                                        staticClass: "field",
+                                        class: { hasValue: _vm.form.password },
+                                        attrs: {
+                                          name: "password",
+                                          type: _vm.passwordFieldType,
+                                          required: ""
+                                        },
+                                        domProps: { value: _vm.form.password },
+                                        on: {
+                                          animationstart: _vm.checkAnimation,
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form,
+                                              "password",
+                                              $event.target.value.trim()
+                                            )
+                                          },
+                                          blur: function($event) {
+                                            return _vm.$forceUpdate()
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("span", {
+                                        staticClass: "focus-field"
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        { staticClass: "label-field" },
+                                        [_vm._v("Mot de passe")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "symbol-left-field" },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-lock"
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "v-validate" },
+                                        [_vm._v(_vm._s(errors[0]))]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "transition",
+                            { attrs: { name: "modal-fade", mode: "out-in" } },
+                            [
+                              _vm.serverError
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "notification notification-secondary notification-wrapper",
+                                      attrs: { role: "alert" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "notification-container"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "notification-body"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                    " +
+                                                  _vm._s(_vm.serverError) +
+                                                  "\n                                "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "wrap-button-submit",
+                              attrs: { disabled: invalid, type: "submit" }
+                            },
+                            [
+                              _c(
+                                "a",
+                                { staticClass: "cta", attrs: { href: "#" } },
+                                [
+                                  _c("span", [_vm._v("Connexion")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "svg",
+                                    {
+                                      attrs: {
+                                        width: "13px",
+                                        height: "10px",
+                                        viewBox: "0 0 13 10"
+                                      }
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: { d: "M1,5 L11,5" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("polyline", {
+                                        attrs: { points: "8 1 12 5 8 9" }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
                   ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.trim",
-                      value: _vm.form.password,
-                      expression: "form.password",
-                      modifiers: { trim: true }
-                    }
-                  ],
-                  staticClass: "field",
-                  class: { hasValue: _vm.form.password },
-                  attrs: {
-                    name: "password",
-                    type: _vm.passwordFieldType,
-                    required: ""
-                  },
-                  domProps: { value: _vm.form.password },
-                  on: {
-                    animationstart: _vm.checkAnimation,
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "password", $event.target.value.trim())
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "focus-field" }),
-                _vm._v(" "),
-                _c("label", { staticClass: "label-field" }, [
-                  _vm._v("Mot de passe")
-                ]),
-                _vm._v(" "),
-                _vm._m(2)
-              ]),
-              _vm._v(" "),
-              _vm.infoError
-                ? _c("div", { staticClass: "info info-error" }, [
-                    _vm._v("Mauvais identifiant et/ou mot de passe.")
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "wrap-button-submit",
-                  attrs: { type: "submit" }
-                },
-                [
-                  _c("a", { staticClass: "cta", attrs: { href: "#" } }, [
-                    _c("span", [_vm._v("Connexion")]),
-                    _vm._v(" "),
-                    _c(
-                      "svg",
-                      {
-                        attrs: {
-                          width: "13px",
-                          height: "10px",
-                          viewBox: "0 0 13 10"
-                        }
-                      },
-                      [
-                        _c("path", { attrs: { d: "M1,5 L11,5" } }),
-                        _vm._v(" "),
-                        _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
-                      ]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ])
-        ]
-      )
-    ])
-  ])
+                )
+              ]
+            }
+          }
+        ])
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -35277,22 +35456,6 @@ var staticRenderFns = [
           }
         })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "symbol-left-field" }, [
-      _c("i", { staticClass: "fas fa-at" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "symbol-left-field" }, [
-      _c("i", { staticClass: "fas fa-lock" })
     ])
   }
 ]
@@ -36777,6 +36940,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Quotation_Packing__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Quotation_Result__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Quotation_Result___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Quotation_Result__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Notification__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Notification__);
 //
 //
 //
@@ -36881,6 +37046,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -36896,10 +37071,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Printing: __WEBPACK_IMPORTED_MODULE_2__Quotation_Printing___default.a,
         Finishing: __WEBPACK_IMPORTED_MODULE_3__Quotation_Finishing___default.a,
         Packing: __WEBPACK_IMPORTED_MODULE_4__Quotation_Packing___default.a,
-        Result: __WEBPACK_IMPORTED_MODULE_5__Quotation_Result___default.a
+        Result: __WEBPACK_IMPORTED_MODULE_5__Quotation_Result___default.a,
+        Notification: __WEBPACK_IMPORTED_MODULE_6__Notification___default.a
     },
     data: function data() {
         return {
+            isModalVisible: false,
+            notification: {
+                body: []
+            },
             step: 1,
             steps: [{
                 img: "/assets/img/workflow/undraw_man_eiev.svg",
@@ -36956,6 +37136,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        showNotification: function showNotification() {
+            this.isModalVisible = true;
+        },
+        closeNotification: function closeNotification() {
+            this.isModalVisible = false;
+        },
         prev: function prev() {
             this.step--;
             this.progress = this.step * 100 / 6;
@@ -37058,7 +37244,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (resp.errors === undefined) {
                     _this3.$router.push({ name: "quotations.show", params: { id: resp.data.id } });
                 } else {
-                    console.log(resp);
+                    _this3.showNotification();
+                    _this3.notification.body = resp.errors;
+                    setTimeout(function () {
+                        _this3.closeNotification();
+                    }, 5000);
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -38027,7 +38217,7 @@ var render = function() {
             modifiers: { trim: true }
           }
         ],
-        staticClass: "field ",
+        staticClass: "field",
         class: { hasValue: _vm.form.identification.third.name },
         attrs: { type: "text", required: "" },
         domProps: { value: _vm.form.identification.third.name },
@@ -38434,7 +38624,7 @@ var render = function() {
                 ],
                 staticClass: "field",
                 class: [{ hasValue: _vm.form.identification.contact.email }],
-                attrs: { type: "text", autocomplete: "off", required: "" },
+                attrs: { type: "email", autocomplete: "off", required: "" },
                 domProps: { value: _vm.form.identification.contact.email },
                 on: {
                   focus: function($event) {
@@ -38697,7 +38887,7 @@ var render = function() {
                 ],
                 staticClass: "field",
                 class: [{ hasValue: _vm.form.identification.contact.email }],
-                attrs: { type: "text", autocomplete: "off", required: "" },
+                attrs: { type: "email", autocomplete: "off", required: "" },
                 domProps: { value: _vm.form.identification.contact.email },
                 on: {
                   focus: function($event) {
@@ -42423,7 +42613,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-01a5370e], [class*=\" icon-\"][data-v-01a5370e] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-01a5370e]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-01a5370e]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-01a5370e]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-01a5370e]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-01a5370e]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-01a5370e]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-01a5370e]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-01a5370e]:before {\n  content: \"\\E907\";\n}\n.arrow-return[data-v-01a5370e] {\n  display: block;\n  margin-right: auto;\n  font-size: 1.2rem;\n  line-height: 1.4rem;\n  font-weight: 700;\n  color: #C49998;\n  text-transform: uppercase;\n}\n.arrow-return [class^=\"fa\"][data-v-01a5370e] {\n    font-size: 1.5rem;\n    margin-right: .5rem;\n}\n.responsive-table[data-v-01a5370e] {\n  display: initial;\n}\n.responsive-table tr[data-v-01a5370e] {\n    display: initial;\n}\n.responsive-table tbody[data-v-01a5370e] {\n    display: initial;\n}\n.responsive-table tbody tr[data-v-01a5370e] {\n      display: initial;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-01a5370e], [class*=\" icon-\"][data-v-01a5370e] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-01a5370e]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-01a5370e]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-01a5370e]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-01a5370e]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-01a5370e]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-01a5370e]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-01a5370e]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-01a5370e]:before {\n  content: \"\\E907\";\n}\n.arrow-return[data-v-01a5370e] {\n  cursor: pointer;\n  display: block;\n  margin-right: auto;\n  font-size: 1.2rem;\n  line-height: 1.4rem;\n  font-weight: 700;\n  color: #C49998;\n  text-transform: uppercase;\n}\n.arrow-return [class^=\"fa\"][data-v-01a5370e] {\n    font-size: 1.5rem;\n    margin-right: .5rem;\n}\n", ""]);
 
 // exports
 
@@ -42522,7 +42712,7 @@ var render = function() {
       [_c("i", { staticClass: "fas fa-arrow-left" }), _vm._v("Retour")]
     ),
     _vm._v(" "),
-    _c("table", { staticClass: "responsive-table" }, [
+    _c("table", { staticClass: "table-responsive" }, [
       _c("caption", [_vm._v(_vm._s(_vm.copies) + " exemplaires")]),
       _vm._v(" "),
       _vm._m(0),
@@ -42759,285 +42949,326 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("main", { staticClass: "wrap-main-content" }, [
-      _c("div", { staticClass: "wrap-head-page" }, [
-        !_vm.isMobile && _vm.$route.params.id !== undefined
-          ? _c(
-              "header",
-              { staticClass: "wrap-main-header" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "go-back",
-                    attrs: {
-                      tag: "a",
-                      to: {
-                        name: "quotations.show",
-                        params: { id: _vm.$route.params.id }
+    _c(
+      "main",
+      { staticClass: "wrap-main-content" },
+      [
+        _c("div", { staticClass: "wrap-head-page" }, [
+          !_vm.isMobile && _vm.$route.params.id !== undefined
+            ? _c(
+                "header",
+                { staticClass: "wrap-main-header" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "go-back",
+                      attrs: {
+                        tag: "a",
+                        to: {
+                          name: "quotations.show",
+                          params: { id: _vm.$route.params.id }
+                        }
                       }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-arrow-left" }),
-                    _vm._v("\n                    Annuler\n                ")
-                  ]
-                ),
-                _vm._v(" "),
-                _c("h1", { staticClass: "page-main-title" }, [
-                  _vm._v(
-                    "Modification du devis #" + _vm._s(this.$route.params.id)
-                  )
-                ])
-              ],
-              1
-            )
-          : !_vm.isMobile && _vm.$route.params.id === undefined
-          ? _c(
-              "header",
-              { staticClass: "wrap-main-header" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "go-back",
-                    attrs: { tag: "a", to: { name: "quotations.index" } }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-arrow-left" }),
-                    _vm._v("\n                    Retour\n                ")
-                  ]
-                ),
-                _vm._v(" "),
-                _c("h1", { staticClass: "page-main-title" }, [
-                  _vm._v("Nouveau devis")
-                ])
-              ],
-              1
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wrap-central" }, [
-        _c("form", { staticClass: "wrap-main-form left-part" }, [
-          _c("fieldset", { staticClass: "wrap-step" }, [
-            _c("img", {
-              staticClass: "image-step",
-              attrs: {
-                src: _vm.steps[_vm.step - 1].img,
-                alt: "Illustration d'un donneur d'ordre"
-              }
-            }),
-            _vm._v(" "),
-            _c("h2", { staticClass: "page-subtitle main-title-step" }, [
-              _vm._v(_vm._s(_vm.steps[_vm.step - 1].title))
-            ]),
-            _vm._v(" "),
-            _c(
-              "progress",
-              {
-                staticClass: "progress",
-                attrs: { max: "100" },
-                domProps: { value: _vm.progress }
-              },
-              [
-                _c("div", { staticClass: "progress-bar" }, [
-                  _c("span", { style: { width: _vm.progress + "%" } }, [
-                    _vm._v("Progress: " + _vm._s(_vm.progress) + "%")
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "section",
-              { staticClass: "wrap-content-step" },
-              [
-                _c(
-                  "transition",
-                  { attrs: { name: "fade", mode: "out-in" } },
-                  [_c(_vm.steps[_vm.step - 1].component, { tag: "component" })],
-                  1
-                )
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "wrap-buttons-controls-step" }, [
-            _vm.step > 1
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "button button-small button-secondary",
-                    attrs: { type: "button" },
-                    on: { click: _vm.prev }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-chevron-left" }),
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-arrow-left" }),
+                      _vm._v("\n                    Annuler\n                ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("h1", { staticClass: "page-main-title" }, [
                     _vm._v(
-                      "\n                        Précédent\n                    "
+                      "Modification du devis #" + _vm._s(this.$route.params.id)
                     )
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.step < 6
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "button button-small button-primary next-step",
-                    attrs: { type: "button" },
-                    on: { click: _vm.next }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Suivant\n                        "
-                    ),
-                    _c("i", { staticClass: "fas fa-chevron-right" })
-                  ]
-                )
-              : _vm._e()
-          ])
+                  ])
+                ],
+                1
+              )
+            : !_vm.isMobile && _vm.$route.params.id === undefined
+            ? _c(
+                "header",
+                { staticClass: "wrap-main-header" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "go-back",
+                      attrs: { tag: "a", to: { name: "quotations.index" } }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-arrow-left" }),
+                      _vm._v("\n                    Retour\n                ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("h1", { staticClass: "page-main-title" }, [
+                    _vm._v("Nouveau devis")
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
         ]),
         _vm._v(" "),
-        _c(
-          "aside",
-          {
-            staticClass: "wrap-summary right-part",
-            class: { pull: _vm.summaryPulled }
-          },
-          [
-            _c("div", { staticClass: "head-summary" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.summaryPulled,
-                    expression: "summaryPulled"
-                  }
-                ],
-                staticClass: "pull-summary",
-                attrs: { id: "pull-summary", type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.summaryPulled)
-                    ? _vm._i(_vm.summaryPulled, null) > -1
-                    : _vm.summaryPulled
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.summaryPulled,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.summaryPulled = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.summaryPulled = $$c
-                    }
-                  }
+        _c("div", { staticClass: "wrap-central" }, [
+          _c("form", { staticClass: "wrap-main-form left-part" }, [
+            _c("fieldset", { staticClass: "wrap-step" }, [
+              _c("img", {
+                staticClass: "image-step",
+                attrs: {
+                  src: _vm.steps[_vm.step - 1].img,
+                  alt: "Illustration d'un donneur d'ordre"
                 }
               }),
               _vm._v(" "),
+              _c("h2", { staticClass: "page-subtitle main-title-step" }, [
+                _vm._v(_vm._s(_vm.steps[_vm.step - 1].title))
+              ]),
+              _vm._v(" "),
               _c(
-                "label",
+                "progress",
                 {
-                  staticClass: "page-subtitle",
-                  attrs: { for: "pull-summary" }
+                  staticClass: "progress",
+                  attrs: { max: "100" },
+                  domProps: { value: _vm.progress }
                 },
                 [
-                  _c("i", {
-                    class: this.summaryPulled
-                      ? "fas fa-chevron-up"
-                      : "fas fa-chevron-down"
-                  }),
-                  _vm._v("Récapitulatif")
+                  _c("div", { staticClass: "progress-bar" }, [
+                    _c("span", { style: { width: _vm.progress + "%" } }, [
+                      _vm._v("Progress: " + _vm._s(_vm.progress) + "%")
+                    ])
+                  ])
                 ]
+              ),
+              _vm._v(" "),
+              _c(
+                "section",
+                { staticClass: "wrap-content-step" },
+                [
+                  _c(
+                    "transition",
+                    { attrs: { name: "fade", mode: "out-in" } },
+                    [
+                      _c(_vm.steps[_vm.step - 1].component, {
+                        tag: "component"
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "wrap-content-summary" }, [
-              _vm.summary === ""
-                ? _c("img", {
-                    staticClass: "image-no-data",
-                    attrs: {
-                      src: "/assets/img/undraw_no_data_qbuo.svg",
-                      alt:
-                        "Illustration montrant qu'aucune donnée n'a encore été saisie"
-                    }
-                  })
-                : _c("div", [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.summary,
-                          expression: "summary"
-                        }
-                      ],
-                      attrs: { rows: "15", disabled: "" },
-                      domProps: { value: _vm.summary },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.summary = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm._m(0)
-                  ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "wrap-button-submit" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "cta",
-                    attrs: {
-                      type: "submit",
-                      id: "save-quotation",
-                      disabled: ""
+            _c("div", { staticClass: "wrap-buttons-controls-step" }, [
+              _vm.step > 1
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "button button-small button-secondary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.prev }
                     },
-                    on: { click: _vm.saveQuotation }
+                    [
+                      _c("i", { staticClass: "fas fa-chevron-left" }),
+                      _vm._v(
+                        "\n                        Précédent\n                    "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.step < 6
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "button button-small button-primary next-step",
+                      attrs: { type: "button" },
+                      on: { click: _vm.next }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Suivant\n                        "
+                      ),
+                      _c("i", { staticClass: "fas fa-chevron-right" })
+                    ]
+                  )
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "aside",
+            {
+              staticClass: "wrap-summary right-part",
+              class: { pull: _vm.summaryPulled }
+            },
+            [
+              _c("div", { staticClass: "head-summary" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.summaryPulled,
+                      expression: "summaryPulled"
+                    }
+                  ],
+                  staticClass: "pull-summary",
+                  attrs: { id: "pull-summary", type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.summaryPulled)
+                      ? _vm._i(_vm.summaryPulled, null) > -1
+                      : _vm.summaryPulled
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.summaryPulled,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.summaryPulled = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.summaryPulled = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.summaryPulled = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "page-subtitle",
+                    attrs: { for: "pull-summary" }
                   },
                   [
-                    _c("span", [_vm._v("Sauvegarder")]),
-                    _vm._v(" "),
-                    _c(
-                      "svg",
-                      {
-                        attrs: {
-                          width: "13px",
-                          height: "10px",
-                          viewBox: "0 0 13 10"
-                        }
-                      },
-                      [
-                        _c("path", { attrs: { d: "M1,5 L11,5" } }),
-                        _vm._v(" "),
-                        _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
-                      ]
-                    )
+                    _c("i", {
+                      class: this.summaryPulled
+                        ? "fas fa-chevron-up"
+                        : "fas fa-chevron-down"
+                    }),
+                    _vm._v("Récapitulatif")
                   ]
                 )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "wrap-content-summary" }, [
+                _vm.summary === ""
+                  ? _c("img", {
+                      staticClass: "image-no-data",
+                      attrs: {
+                        src: "/assets/img/undraw_no_data_qbuo.svg",
+                        alt:
+                          "Illustration montrant qu'aucune donnée n'a encore été saisie"
+                      }
+                    })
+                  : _c("div", [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.summary,
+                            expression: "summary"
+                          }
+                        ],
+                        attrs: { rows: "15", disabled: "" },
+                        domProps: { value: _vm.summary },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.summary = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "wrap-button-submit" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "cta",
+                      attrs: {
+                        type: "submit",
+                        id: "save-quotation",
+                        disabled: ""
+                      },
+                      on: { click: _vm.saveQuotation }
+                    },
+                    [
+                      _c("span", [_vm._v("Sauvegarder")]),
+                      _vm._v(" "),
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            width: "13px",
+                            height: "10px",
+                            viewBox: "0 0 13 10"
+                          }
+                        },
+                        [
+                          _c("path", { attrs: { d: "M1,5 L11,5" } }),
+                          _vm._v(" "),
+                          _c("polyline", { attrs: { points: "8 1 12 5 8 9" } })
+                        ]
+                      )
+                    ]
+                  )
+                ])
               ])
-            ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "Notification",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isModalVisible,
+                expression: "isModalVisible"
+              }
+            ],
+            on: { close: _vm.closeNotification }
+          },
+          [
+            _c(
+              "ul",
+              { attrs: { slot: "body" }, slot: "body" },
+              _vm._l(_vm.notification.body, function(error) {
+                return _c("li", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(error) +
+                      "\n                "
+                  )
+                ])
+              }),
+              0
+            )
           ]
         )
-      ])
-    ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -43145,7 +43376,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 15rem;\n    background-repeat: no-repeat;\n}\n.wrap-head-page .wrap-main-header .page-main-title[data-v-14addc89] {\n      width: 100%;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: none;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n            .wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89]:hover,\n              .wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item span[data-v-14addc89] {\n              display: none;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          display: block;\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation[data-v-14addc89] {\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n          color: #91A8D0;\n          margin-right: 1.5rem;\n}\n.wrap-central .left-part[data-v-14addc89] {\n  overflow-x: auto;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n@media screen and (min-width: 680px) {\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n    position: initial;\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler[data-v-14addc89],\n    .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label[data-v-14addc89] {\n      display: none !important;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions[data-v-14addc89],\n      .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: initial;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89],\n        .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89] {\n          cursor: pointer;\n          position: initial;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          margin: 0 2rem 0 0;\n          padding: .25rem 1rem;\n          width: auto;\n          height: auto;\n          opacity: 1;\n          border: 0.15rem solid #C49998;\n          border-radius: 5rem;\n          font-size: 1.3rem;\n          color: #C49998;\n          text-transform: uppercase;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > a[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > a[data-v-14addc89] {\n            color: #C49998;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89]:hover,\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89]:hover {\n            background-color: #C49998;\n            color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item:hover *[data-v-14addc89],\n            .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item:hover *[data-v-14addc89] {\n              color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            display: initial;\n            border: 0;\n            font-size: inherit;\n            line-height: initial;\n            margin-right: 1rem;\n            background: transparent;\n            color: inherit;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item span[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item span[data-v-14addc89] {\n            display: initial;\n            font-weight: 500;\n            letter-spacing: 0.02em;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-14addc89], [class*=\" icon-\"][data-v-14addc89] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-14addc89]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-14addc89]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-14addc89]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-14addc89]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-14addc89]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-14addc89]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-14addc89]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-14addc89]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-14addc89] {\n  margin-bottom: 13rem !important;\n}\n.wrap-head-page[data-v-14addc89] {\n  margin-bottom: 3rem;\n}\n.wrap-head-page .wrap-main-header[data-v-14addc89] {\n    position: relative;\n    background-position: bottom right;\n    background-size: auto 15rem;\n    background-repeat: no-repeat;\n}\n.wrap-head-page .wrap-main-header .page-main-title[data-v-14addc89] {\n      width: 100%;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n      position: absolute;\n      top: 2rem;\n      right: 0;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler[data-v-14addc89] {\n        position: absolute;\n        left: -9999px;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler + label[data-v-14addc89] {\n          font-size: 2rem;\n          color: #C49998;\n          background-color: #fff;\n          border: 0.15rem solid #C49998;\n          border-radius: 50%;\n          position: relative;\n          z-index: 1;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-pack: center;\n              -ms-flex-pack: center;\n                  justify-content: center;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          width: 3.5rem;\n          height: 3.5rem;\n          -webkit-transition: 0.4s;\n          transition: 0.4s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-14addc89] {\n          position: relative;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-14addc89] {\n            position: absolute;\n            display: none;\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            margin: auto;\n            width: 3.5rem;\n            height: 3.5rem;\n            opacity: 0;\n            -webkit-transition: 0.5s;\n            transition: 0.5s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n            .wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n              display: block;\n              width: inherit;\n              height: inherit;\n              line-height: 3.25rem;\n              color: #C49998;\n              background: #fff;\n              border: 0.15rem solid #C49998;\n              border-radius: 50%;\n              text-align: center;\n              text-decoration: none;\n              font-size: 2rem;\n              pointer-events: none;\n              -webkit-transition: 0.2s;\n              transition: 0.2s;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89]:hover,\n              .wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89]:hover {\n                color: #F7CAC9;\n                border-color: #F7CAC9;\n                -webkit-transform: scale(1.1);\n                        transform: scale(1.1);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler ~ .list-actions .action-item span[data-v-14addc89] {\n              display: none;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked + label[data-v-14addc89] {\n          color: #FFFDFC;\n          background-color: #C49998;\n          border: 0.15rem solid #C49998;\n          -webkit-transform: rotate(180deg);\n                  transform: rotate(180deg);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89] {\n          display: block;\n          opacity: 1;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(1) {\n            -webkit-transform: translateY(2.5rem);\n                    transform: translateY(2.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(2) {\n            -webkit-transform: translateY(6.5rem);\n                    transform: translateY(6.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(3) {\n            -webkit-transform: translateY(10.5rem);\n                    transform: translateY(10.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-14addc89]:nth-child(4) {\n            -webkit-transform: translateY(14.5rem);\n                    transform: translateY(14.5rem);\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            pointer-events: auto;\n}\n.wrap-head-page .wrap-main-header .wrap-list-details-quotation[data-v-14addc89] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-flow: row wrap;\n              flex-flow: row wrap;\n      margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-list-details-quotation .list-details-quotation[data-v-14addc89] {\n        padding: 0 2rem;\n}\n.wrap-head-page .wrap-main-header .wrap-list-details-quotation .list-details-quotation .item-detail-quotation[data-v-14addc89] {\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          margin: 1rem 0;\n}\n.wrap-head-page .wrap-main-header .wrap-list-details-quotation .list-details-quotation .item-detail-quotation [class^=\"fa\"][data-v-14addc89] {\n            color: #91A8D0;\n            margin-right: 1.5rem;\n}\n.wrap-central .left-part[data-v-14addc89] {\n  overflow-x: auto;\n}\n.table[data-v-14addc89] {\n  width: 100%;\n  font-size: 1.4rem;\n  margin-top: 2rem;\n}\n.table td[data-v-14addc89] {\n    padding: .75rem;\n}\n.table .border[data-v-14addc89] {\n    border-top: 0.1rem solid #263238;\n}\n.table .price[data-v-14addc89] {\n    font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n    font-size: 1.6rem;\n    line-height: 2rem;\n    color: #91A8D0;\n    text-align: right;\n}\n@media screen and (min-width: 680px) {\n.wrap-head-page .wrap-main-header .wrap-actions-quotation[data-v-14addc89] {\n    position: initial;\n    width: 100%;\n    margin-top: 3rem;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler[data-v-14addc89],\n    .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label[data-v-14addc89] {\n      display: none !important;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions[data-v-14addc89],\n      .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions[data-v-14addc89] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: initial;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89],\n        .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89] {\n          cursor: pointer;\n          position: initial;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-align: center;\n              -ms-flex-align: center;\n                  align-items: center;\n          margin: 0 2rem 0 0;\n          padding: .25rem 1rem;\n          width: auto;\n          height: auto;\n          opacity: 1;\n          border: 0.15rem solid #C49998;\n          border-radius: 5rem;\n          font-size: 1.3rem;\n          color: #C49998;\n          text-transform: uppercase;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > a[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > a[data-v-14addc89] {\n            color: #C49998;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item[data-v-14addc89]:hover,\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item[data-v-14addc89]:hover {\n            background-color: #C49998;\n            color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item:hover *[data-v-14addc89],\n            .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item:hover *[data-v-14addc89] {\n              color: #FFFDFC;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > a > .action-event[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item > .action-event[data-v-14addc89] {\n            display: initial;\n            border: 0;\n            font-size: inherit;\n            line-height: initial;\n            margin-right: 1rem;\n            background: transparent;\n            color: inherit;\n}\n.wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler ~ .list-actions .action-item span[data-v-14addc89],\n          .wrap-head-page .wrap-main-header .wrap-actions-quotation > .options-toggler + label ~ .list-actions .action-item span[data-v-14addc89] {\n            display: initial;\n            font-weight: 500;\n            letter-spacing: 0.02em;\n}\n}\n", ""]);
 
 // exports
 
@@ -43158,8 +43389,10 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notification__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Notification__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Modal__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Modal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Notification__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Notification__);
 //
 //
 //
@@ -43301,23 +43534,152 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        Notification: __WEBPACK_IMPORTED_MODULE_1__Notification___default.a
+        Modal: __WEBPACK_IMPORTED_MODULE_1__Modal___default.a,
+        Notification: __WEBPACK_IMPORTED_MODULE_2__Notification___default.a
     },
     data: function data() {
         return {
+            showModal: false,
             isModalVisible: false,
             notification: {
                 body: ""
             },
             third: [],
             summaryPulled: false,
-            indexMinValue: ""
+            indexMinValue: "",
+            user: {
+                name: "",
+                surname: ""
+            },
+            form: {
+                hasFocus: false
+            },
+            serverErrors: ""
         };
     },
     created: function created() {
@@ -43328,20 +43690,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }).then(function () {
             console.log(_this.quotation);
             _this.generateThird();
+            _this.user.name = _this.quotation.user.name;
+            _this.user.surname = _this.quotation.user.surname;
 
-            var el = document.querySelector('textarea');
-            setTimeout(function () {
-                el.style.cssText = 'height:auto; padding:0';
-                var scrollHeight = el.scrollHeight + 10;
-                el.style.cssText = 'height:' + scrollHeight + 'px';
-            }, 0);
+            var textareaList = document.getElementsByTagName("textarea");
+
+            var _loop = function _loop(i) {
+                var el = textareaList[i];
+                setTimeout(function () {
+                    el.style.cssText = 'height:auto !important; padding:0 !important;';
+                    var scrollHeight = el.scrollHeight + 10;
+                    el.style.cssText = 'height:' + scrollHeight + 'px !important';
+                    if (el.value === "") {
+                        el.style.cssText = 'height:100% !important; ';
+                    }
+                }, 0);
+            };
+
+            for (var i = 0; i < textareaList.length; i++) {
+                _loop(i);
+            }
 
             var quantities = [];
             _this.quotation.quantities.forEach(function (element) {
                 quantities.push(element.quantity);
             });
-            var index = quantities.indexOf(Math.min.apply(Math, quantities));
-            _this.indexMinValue = index;
+            var indexQuantity = quantities.indexOf(Math.min.apply(Math, quantities));
+            _this.indexMinValue = indexQuantity;
+
+            _this.quotation.subject_email = "Votre demande de devis #" + _this.quotation.id;
         });
     },
 
@@ -43356,10 +43733,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        showModal: function showModal() {
-            this.isModalVisible = true;
+        checkAnimation: function checkAnimation(_ref) {
+            var target = _ref.target,
+                animationName = _ref.animationName;
+
+            if (animationName.startsWith("onAutoFillStart")) {
+                target.classList.add("hasValue");
+            }
         },
-        closeModal: function closeModal() {
+        showNotification: function showNotification() {
+            this.isModalVisible = true;
+            this.textareaAutosize();
+        },
+        closeNotification: function closeNotification() {
             this.isModalVisible = false;
         },
         getHumanDate: function getHumanDate(date) {
@@ -43400,12 +43786,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.quotation.contact.email !== undefined && this.quotation.contact.email !== null) this.third.push(this.quotation.contact.email);
         },
         textareaAutosize: function textareaAutosize() {
-            var el = document.querySelector('textarea');
-            setTimeout(function () {
-                el.style.cssText = 'height:auto; padding:0';
-                var scrollHeight = el.scrollHeight + 10;
-                el.style.cssText = 'height:' + scrollHeight + 'px';
-            }, 0);
+            var textareaList = document.getElementsByTagName("textarea");
+
+            var _loop2 = function _loop2(i) {
+                var el = textareaList[i];
+                setTimeout(function () {
+                    el.style.cssText = 'height:auto !important; padding:0 !important;';
+                    var scrollHeight = el.scrollHeight + 10;
+                    el.style.cssText = 'height:' + scrollHeight + 'px !important; ';
+                    if (el.value === "") {
+                        el.style.cssText = 'height:100% !important; ';
+                    }
+                }, 0);
+            };
+
+            for (var i = 0; i < textareaList.length; i++) {
+                _loop2(i);
+            }
         },
         generatePDF: function generatePDF(id) {
             this.$store.dispatch("generatePDF", {
@@ -43416,29 +43813,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return console.log(err);
             });
         },
-        destroyQuotation: function destroyQuotation(id) {
+        sendEmail: function sendEmail() {
             var _this2 = this;
+
+            this.$store.dispatch("sendEmail", {
+                quotation: this.quotation
+            }).then(function () {
+                _this2.notification.body = "Le devis a bien été envoyé.";
+                _this2.showModal = false;
+                _this2.showNotification();
+                setTimeout(function () {
+                    _this2.closeNotification();
+                }, 5000);
+            }).catch(function (error) {
+                _this2.serverErrors = error.response.data;
+            });
+        },
+        destroyQuotation: function destroyQuotation(id) {
+            var _this3 = this;
 
             this.$store.dispatch("destroyQuotation", {
                 id: id
             }).then(function () {
-                _this2.$router.push({ name: "quotations.index" });
+                _this3.$router.push({ name: "quotations.index" });
             }).catch(function (err) {
                 return console.log(err);
             });
         },
         updateQuotation: function updateQuotation(quotation) {
-            var _this3 = this;
+            var _this4 = this;
 
             console.log(quotation);
             this.$store.dispatch("updateQuotation", {
                 quotation: quotation
             }).then(function () {
-                _this3.showModal();
-                _this3.quotation = _this3.$store.state.quotation;
-                _this3.notification.body = "Le devis a bien été modifié.";
+                _this4.showNotification();
+                _this4.quotation = _this4.$store.state.quotation;
+                _this4.notification.body = "Le devis a bien été modifié.";
                 setTimeout(function () {
-                    _this3.closeModal();
+                    _this4.closeNotification();
                 }, 5000);
             }).catch(function (err) {
                 return console.log(err);
@@ -43569,7 +43982,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-6a4ce154], [class*=\" icon-\"][data-v-6a4ce154] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-6a4ce154]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-6a4ce154]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-6a4ce154]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-6a4ce154]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-6a4ce154]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-6a4ce154]:before {\n  content: \"\\E907\";\n}\n.modal-fade-enter[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  opacity: 0;\n}\n.modal-fade-enter-active[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  -webkit-transition: opacity .5s ease;\n  transition: opacity .5s ease;\n}\n.notification[data-v-6a4ce154] {\n  position: fixed;\n  bottom: 0;\n  right: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  width: 100%;\n  max-width: calc(100% / 2);\n  padding: .75rem 1.25rem;\n  margin-right: 2rem;\n  margin-bottom: 2rem;\n  border: .1rem solid transparent;\n  border-radius: 2rem 1rem 3rem 1rem;\n}\n.notification.notification-primary[data-v-6a4ce154] {\n    color: #62799F;\n    background-color: #C2D9FF;\n    border-color: #91A8D0;\n}\n.notification.notification-secondary[data-v-6a4ce154] {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n    border-color: #C49998;\n}\n.notification .btn-close[data-v-6a4ce154] {\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    background-color: rgba(10, 10, 10, 0.2);\n    border: none;\n    border-radius: 290486px;\n    cursor: pointer;\n    pointer-events: auto;\n    display: inline-block;\n    -webkit-box-flex: 0;\n        -ms-flex-positive: 0;\n            flex-grow: 0;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    font-size: 1rem;\n    width: 2rem;\n    height: 2rem;\n    max-height: 2rem;\n    max-width: 2rem;\n    min-height: 2rem;\n    min-width: 2rem;\n    outline: 0;\n    vertical-align: top;\n    position: absolute;\n    right: .5rem;\n    top: .5rem;\n    font-weight: 700;\n    color: #fff;\n}\n.notification .btn-close[data-v-6a4ce154]:before {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: .2rem;\n      width: 50%;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .btn-close[data-v-6a4ce154]:after {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: 50%;\n      width: .2rem;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.notification .notification-body[data-v-6a4ce154] {\n    position: relative;\n    padding: 1rem .5rem;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-6a4ce154], [class*=\" icon-\"][data-v-6a4ce154] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-6a4ce154]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-6a4ce154]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-6a4ce154]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-6a4ce154]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-6a4ce154]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-6a4ce154]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-6a4ce154]:before {\n  content: \"\\E907\";\n}\n.modal-fade-enter[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  opacity: 0;\n}\n.modal-fade-enter-active[data-v-6a4ce154],\n.modal-fade-leave-active[data-v-6a4ce154] {\n  -webkit-transition: opacity .5s ease;\n  transition: opacity .5s ease;\n}\n.notification[data-v-6a4ce154] {\n  position: fixed;\n  max-width: calc(100% / 2);\n}\n", ""]);
 
 // exports
 
@@ -43741,6 +44154,24 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c(
+                      "li",
+                      {
+                        staticClass: "action-item",
+                        on: {
+                          click: function($event) {
+                            _vm.showModal = true
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fas fa-paper-plane action-event"
+                        }),
+                        _c("span", [_vm._v("Envoyer par e-mail")])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
                       "router-link",
                       {
                         staticClass: "action-item",
@@ -43780,83 +44211,159 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("ul", { staticClass: "list-details-quotation" }, [
-                _c("li", { staticClass: "item-detail-quotation" }, [
-                  _c("i", { staticClass: "fas fa-user-tie" }),
-                  _vm._v(" "),
-                  _c(
-                    "address",
-                    _vm._l(_vm.third, function(line) {
-                      return _c("span", [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(line) +
-                            "\n                                    "
-                        ),
-                        _c("br")
-                      ])
-                    }),
-                    0
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "item-detail-quotation" }, [
-                  _c("i", { staticClass: "far fa-calendar-plus" }),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v("Date de création : "),
+              _c("div", { staticClass: "wrap-list-details-quotation" }, [
+                _c("ul", { staticClass: "list-details-quotation" }, [
+                  _c("li", { staticClass: "item-detail-quotation" }, [
+                    _c("i", { staticClass: "fas fa-user-tie" }),
+                    _vm._v(" "),
                     _c(
-                      "time",
-                      { attrs: { datetime: _vm.quotation.created_at } },
-                      [
-                        _vm._v(
-                          _vm._s(_vm.getHumanDate(_vm.quotation.created_at))
-                        )
-                      ]
+                      "address",
+                      _vm._l(_vm.third, function(line) {
+                        return _c("span", [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(line) +
+                              "\n                                        "
+                          ),
+                          _c("br")
+                        ])
+                      }),
+                      0
                     )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "item-detail-quotation" }, [
+                    _c("div", { staticClass: "wrap-field h-50" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.quotation.settlement_id,
+                              expression: "quotation.settlement_id"
+                            }
+                          ],
+                          staticClass: "field select",
+                          class: { hasValue: _vm.quotation.settlement_id },
+                          on: {
+                            focus: function($event) {
+                              _vm.form.hasFocus = true
+                            },
+                            blur: function($event) {
+                              _vm.form.hasFocus = false
+                            },
+                            animationstart: _vm.checkAnimation,
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.quotation,
+                                "settlement_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.quotation.settlements, function(settlement) {
+                          return _c(
+                            "option",
+                            { domProps: { value: settlement.id } },
+                            [
+                              _vm._v(
+                                "\n                                            " +
+                                  _vm._s(settlement.name) +
+                                  "\n                                        "
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "focus-field" }),
+                      _vm._v(" "),
+                      _c("label", { staticClass: "label-field" }, [
+                        _vm._v("Conditions de règlement")
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "item-detail-quotation" }, [
+                    _c("i", { staticClass: "fas fa-user" }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "Suivi par " +
+                          _vm._s(_vm.user.name) +
+                          " " +
+                          _vm._s(_vm.user.surname)
+                      )
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("li", { staticClass: "item-detail-quotation" }, [
-                  _c("i", { staticClass: "far fa-calendar-check" }),
+                _c("ul", { staticClass: "list-details-quotation" }, [
+                  _c("li", { staticClass: "item-detail-quotation" }, [
+                    _c("i", { staticClass: "far fa-calendar-plus" }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Date de création : "),
+                      _c(
+                        "time",
+                        { attrs: { datetime: _vm.quotation.created_at } },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.getHumanDate(_vm.quotation.created_at))
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c("p", [
-                    _vm._v("Date de modification : "),
-                    _c(
-                      "time",
-                      { attrs: { datetime: _vm.quotation.created_at } },
-                      [
-                        _vm._v(
-                          _vm._s(_vm.getHumanDate(_vm.quotation.updated_at))
-                        )
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "item-detail-quotation" }, [
-                  _c("i", { staticClass: "fas fa-hourglass-half" }),
+                  _c("li", { staticClass: "item-detail-quotation" }, [
+                    _c("i", { staticClass: "far fa-calendar-check" }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Date de modification : "),
+                      _c(
+                        "time",
+                        { attrs: { datetime: _vm.quotation.updated_at } },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.getHumanDate(_vm.quotation.updated_at))
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c("p", [
-                    _vm._v("Fin de validité  : "),
-                    _c(
-                      "time",
-                      { attrs: { datetime: _vm.quotation.validity } },
-                      [_vm._v(_vm._s(_vm.getHumanDate(_vm.quotation.validity)))]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "item-detail-quotation" }, [
-                  _c("i", { staticClass: "fas fa-user" }),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "Suivi par " +
-                        _vm._s(_vm.quotation.user.name) +
-                        " " +
-                        _vm._s(_vm.quotation.user.surname)
-                    )
+                  _c("li", { staticClass: "item-detail-quotation" }, [
+                    _c("i", { staticClass: "far fa-calendar-alt" }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Fin de validité  : "),
+                      _c(
+                        "time",
+                        { attrs: { datetime: _vm.quotation.validity } },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.getHumanDate(_vm.quotation.validity))
+                          )
+                        ]
+                      )
+                    ])
                   ])
                 ])
               ])
@@ -43867,8 +44374,8 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "wrap-central" }, [
           _c("div", { staticClass: "left-part" }, [
-            _c("table", { staticClass: "responsive-table" }, [
-              _vm._m(0),
+            _c("table", { staticClass: "table-responsive" }, [
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -44134,6 +44641,330 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
+        _vm.showModal
+          ? _c(
+              "Modal",
+              {
+                on: {
+                  close: function($event) {
+                    _vm.showModal = false
+                  }
+                }
+              },
+              [
+                _c(
+                  "h3",
+                  {
+                    staticClass: "page-main-title",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [_vm._v("Envoyer par e-mail")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { attrs: { slot: "body" }, slot: "body" },
+                  [
+                    _c("ValidationProvider", {
+                      staticClass: "wrap-field h-50",
+                      attrs: { rules: "required|email", name: "subject email" },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              return [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.trim",
+                                      value: _vm.quotation.contact.email,
+                                      expression: "quotation.contact.email",
+                                      modifiers: { trim: true }
+                                    }
+                                  ],
+                                  staticClass: "field",
+                                  class: [
+                                    { hasValue: _vm.quotation.contact.email }
+                                  ],
+                                  attrs: {
+                                    type: "email",
+                                    autocomplete: "off",
+                                    required: ""
+                                  },
+                                  domProps: {
+                                    value: _vm.quotation.contact.email
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.quotation.contact,
+                                        "email",
+                                        $event.target.value.trim()
+                                      )
+                                    },
+                                    blur: function($event) {
+                                      return _vm.$forceUpdate()
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "focus-field" }),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "label-field" }, [
+                                  _vm._v("E-mail")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "symbol-left-field" },
+                                  [_c("i", { staticClass: "fas fa-at" })]
+                                ),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "v-validate" }, [
+                                  _vm._v(_vm._s(errors[0]))
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        false,
+                        3078409896
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      staticClass: "wrap-field h-50",
+                      attrs: { rules: "required", name: "subject email" },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              return [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.trim",
+                                      value: _vm.quotation.subject_email,
+                                      expression: "quotation.subject_email",
+                                      modifiers: { trim: true }
+                                    }
+                                  ],
+                                  staticClass: "field",
+                                  class: [
+                                    { hasValue: _vm.quotation.subject_email }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    autocomplete: "off",
+                                    required: ""
+                                  },
+                                  domProps: {
+                                    value: _vm.quotation.subject_email
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.quotation,
+                                        "subject_email",
+                                        $event.target.value.trim()
+                                      )
+                                    },
+                                    blur: function($event) {
+                                      return _vm.$forceUpdate()
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "focus-field" }),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "label-field" }, [
+                                  _vm._v("Sujet")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "symbol-left-field" },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-comment-dots"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "v-validate" }, [
+                                  _vm._v(_vm._s(errors[0]))
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        false,
+                        1681382511
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      staticClass: "wrap-field h-50",
+                      staticStyle: {
+                        height: "auto !important",
+                        "min-height": "5rem"
+                      },
+                      attrs: { rules: "required", name: "body email" },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              return [
+                                _c("textarea", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.trim",
+                                      value: _vm.quotation.body_email,
+                                      expression: "quotation.body_email",
+                                      modifiers: { trim: true }
+                                    }
+                                  ],
+                                  staticClass: "field editable",
+                                  class: [
+                                    { hasValue: _vm.quotation.body_email }
+                                  ],
+                                  attrs: { autocomplete: "off", required: "" },
+                                  domProps: { value: _vm.quotation.body_email },
+                                  on: {
+                                    keydown: _vm.textareaAutosize,
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.quotation,
+                                        "body_email",
+                                        $event.target.value.trim()
+                                      )
+                                    },
+                                    blur: function($event) {
+                                      return _vm.$forceUpdate()
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "focus-field" }),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "label-field" }, [
+                                  _vm._v("Message")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "symbol-left-field" },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-align-justify"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "v-validate" }, [
+                                  _vm._v(_vm._s(errors[0]))
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        false,
+                        1554098755
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "transition",
+                      { attrs: { name: "modal-fade", mode: "out-in" } },
+                      [
+                        _vm.serverErrors
+                          ? _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "notification notification-secondary notification-wrapper",
+                                attrs: { role: "alert" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "notification-container" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "notification-body" },
+                                      _vm._l(_vm.serverErrors, function(
+                                        value,
+                                        key
+                                      ) {
+                                        return _c("p", { key: key }, [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(value[0]) +
+                                              "\n                                    "
+                                          )
+                                        ])
+                                      }),
+                                      0
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button button-small button-primary",
+                      staticStyle: { "margin-left": "auto" },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.sendEmail()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Envoyer\n                        "
+                      ),
+                      _c("i", { staticClass: "fas fa-paper-plane" })
+                    ]
+                  )
+                ])
+              ]
+            )
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "Notification",
           {
@@ -44145,7 +44976,7 @@ var render = function() {
                 expression: "isModalVisible"
               }
             ],
-            on: { close: _vm.closeModal }
+            on: { close: _vm.closeNotification }
           },
           [
             _c("p", { attrs: { slot: "body" }, slot: "body" }, [
@@ -44159,6 +44990,14 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "symbol-left-field" }, [
+      _c("i", { staticClass: "fas fa-money-check" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -44634,7 +45473,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     email: credentials.email,
                     password: credentials.password
                 }).then(function (response) {
-                    console.log(response);
                     localStorage.setItem("token", response.data.token);
                     context.commit("login", response.data.token);
                     localStorage.setItem("user", response.data.user.name);
@@ -44649,10 +45487,14 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         },
         logout: function logout(context) {
             __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+            console.log(context.getters.loggedIn);
             if (context.getters.loggedIn) {
                 return new Promise(function (resolve, reject) {
-                    __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/logout').then(function (response) {
+                    __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/logout', { // quotations.price
+                        token: context.state.token
+                    }).then(function (response) {
                         localStorage.removeItem("token");
+                        localStorage.removeItem("user");
                         context.commit("logout");
                         resolve(response);
                     }).catch(function (error) {
@@ -44970,7 +45812,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
                             case 3:
                                 data = _context9.sent;
-                                // quotations.edit
+                                // quotations.generatePDF
                                 console.log(data);
 
                             case 5:
@@ -44986,6 +45828,38 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             }
 
             return generatePDF;
+        }(),
+        sendEmail: function () {
+            var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10(context, credentials) {
+                var data;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
+                    while (1) {
+                        switch (_context10.prev = _context10.next) {
+                            case 0:
+                                __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+                                _context10.next = 3;
+                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotations/' + credentials.quotation.id + '/email', { // quotations.sendEmail
+                                    quotation: credentials.quotation
+                                });
+
+                            case 3:
+                                data = _context10.sent;
+
+                                console.log(data);
+
+                            case 5:
+                            case 'end':
+                                return _context10.stop();
+                        }
+                    }
+                }, _callee10, this);
+            }));
+
+            function sendEmail(_x15, _x16) {
+                return _ref10.apply(this, arguments);
+            }
+
+            return sendEmail;
         }()
     }
 }));
@@ -47672,7 +48546,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.price-quotation {\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.8rem;\n  line-height: 2.2rem;\n  color: #91A8D0;\n  letter-spacing: 0.1em;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-fade-enter-active {\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.price-quotation {\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.8rem;\n  line-height: 2.2rem;\n  color: #91A8D0;\n  letter-spacing: 0.1em;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-fade-enter-active {\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n  padding: 0 10rem;\n}\n.modal-container {\n  position: relative;\n  width: 100%;\n  max-width: 150rem;\n  margin: 0 auto;\n  padding: 3rem;\n  background-position: bottom right;\n  background-size: auto 25rem;\n  background-repeat: no-repeat;\n  background-color: #fff;\n  border-top: 3rem solid #91A8D0;\n  border-radius: 2rem 1rem 3rem 1rem;\n  -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n          box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.modal-container .btn-close {\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    background-color: #62799F;\n    border: none;\n    border-radius: 290486px;\n    cursor: pointer;\n    pointer-events: auto;\n    display: inline-block;\n    -webkit-box-flex: 0;\n        -ms-flex-positive: 0;\n            flex-grow: 0;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    font-size: 1rem;\n    width: 2rem;\n    height: 2rem;\n    max-height: 2rem;\n    max-width: 2rem;\n    min-height: 2rem;\n    min-width: 2rem;\n    outline: 0;\n    vertical-align: top;\n    position: absolute;\n    right: .5rem;\n    top: -2.5rem;\n    font-weight: 700;\n    color: #fff;\n}\n.modal-container .btn-close:before {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: .2rem;\n      width: 50%;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.modal-container .btn-close:after {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: 50%;\n      width: .2rem;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.modal-container .modal-header {\n    padding-bottom: 1rem;\n    border-bottom: 0.1rem solid #62799F;\n}\n.modal-container .modal-body {\n    margin: 20px 0;\n}\n.modal-container .modal-default-button {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
@@ -48111,6 +48985,2908 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(265)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(267)
+/* template */
+var __vue_template__ = __webpack_require__(268)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-53ab54d2"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Modal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-53ab54d2", Component.options)
+  } else {
+    hotAPI.reload("data-v-53ab54d2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 265 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(266);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("074bff30", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53ab54d2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-53ab54d2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-53ab54d2], [class*=\" icon-\"][data-v-53ab54d2] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-53ab54d2]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-53ab54d2]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-53ab54d2]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-53ab54d2]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-53ab54d2]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-53ab54d2]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-53ab54d2]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-53ab54d2]:before {\n  content: \"\\E907\";\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 267 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+    created: function created() {
+        var textareaList = document.getElementsByTagName("textarea");
+
+        var _loop = function _loop(i) {
+            var el = textareaList[i];
+            setTimeout(function () {
+                el.style.cssText = 'height:auto !important; padding:0 !important;';
+                var scrollHeight = el.scrollHeight + 10;
+                el.style.cssText = 'height:' + scrollHeight + 'px !important; ';
+                if (el.value === "") {
+                    el.style.cssText = 'height:100% !important; ';
+                }
+            }, 0);
+        };
+
+        for (var i = 0; i < textareaList.length; i++) {
+            _loop(i);
+        }
+    },
+    mounted: function mounted() {},
+
+    computed: {},
+    methods: {}
+});
+
+/***/ }),
+/* 268 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "modal" } }, [
+    _c("div", { staticClass: "modal-mask" }, [
+      _c("div", { staticClass: "modal-wrapper" }, [
+        _c(
+          "div",
+          {
+            staticClass: "modal-container",
+            style: {
+              backgroundImage: "url(/assets/img/undraw_mail_box_kd5i.svg)"
+            }
+          },
+          [
+            _c("button", {
+              staticClass: "btn-close",
+              attrs: {
+                type: "button",
+                "aria-label": "Fermer la fenêtre modale"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.$emit("close")
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-header" },
+              [
+                _vm._t("header", [
+                  _vm._v(
+                    "\n                        default header\n                    "
+                  )
+                ])
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-body" },
+              [
+                _vm._t("body", [
+                  _vm._v(
+                    "\n                        default body\n                    "
+                  )
+                ])
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-footer" },
+              [
+                _vm._t("footer", [
+                  _vm._v(
+                    "\n                        default footer\n                    "
+                  )
+                ])
+              ],
+              2
+            )
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-53ab54d2", module.exports)
+  }
+}
+
+/***/ }),
+/* 269 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ValidationObserver; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ValidationProvider; });
+/* unused harmony export configure */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return extend; });
+/* unused harmony export install */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return localize; });
+/* unused harmony export setInteractionMode */
+/* unused harmony export validate */
+/* unused harmony export version */
+/* unused harmony export withValidation */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/**
+  * vee-validate v3.0.11
+  * (c) 2019 Abdelrahman Awad
+  * @license MIT
+  */
+
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}
+
+var isNaN = function (value) {
+    // NaN is the one value that does not equal itself.
+    // eslint-disable-next-line
+    return value !== value;
+};
+/**
+ * Checks if the values are either null or undefined.
+ */
+var isNullOrUndefined = function (value) {
+    return value === null || value === undefined;
+};
+/**
+ * Creates the default flags object.
+ */
+var createFlags = function () { return ({
+    untouched: true,
+    touched: false,
+    dirty: false,
+    pristine: true,
+    valid: false,
+    invalid: false,
+    validated: false,
+    pending: false,
+    required: false,
+    changed: false
+}); };
+/**
+ * Checks if the value is an object.
+ */
+var isObject = function (obj) {
+    return obj !== null && obj && typeof obj === 'object' && !Array.isArray(obj);
+};
+function identity(x) {
+    return x;
+}
+/**
+ * Shallow object comparison.
+ */
+var isEqual = function (lhs, rhs) {
+    if (lhs instanceof RegExp && rhs instanceof RegExp) {
+        return isEqual(lhs.source, rhs.source) && isEqual(lhs.flags, rhs.flags);
+    }
+    if (Array.isArray(lhs) && Array.isArray(rhs)) {
+        if (lhs.length !== rhs.length)
+            return false;
+        for (var i = 0; i < lhs.length; i++) {
+            if (!isEqual(lhs[i], rhs[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+    // if both are objects, compare each key recursively.
+    if (isObject(lhs) && isObject(rhs)) {
+        return (Object.keys(lhs).every(function (key) {
+            return isEqual(lhs[key], rhs[key]);
+        }) &&
+            Object.keys(rhs).every(function (key) {
+                return isEqual(lhs[key], rhs[key]);
+            }));
+    }
+    if (isNaN(lhs) && isNaN(rhs)) {
+        return true;
+    }
+    return lhs === rhs;
+};
+var includes = function (collection, item) {
+    return collection.indexOf(item) !== -1;
+};
+/**
+ * Parses a rule string expression.
+ */
+var parseRule = function (rule) {
+    var params = [];
+    var name = rule.split(':')[0];
+    if (includes(rule, ':')) {
+        params = rule
+            .split(':')
+            .slice(1)
+            .join(':')
+            .split(',');
+    }
+    return { name: name, params: params };
+};
+/**
+ * Debounces a function.
+ */
+var debounce = function (fn, wait, token) {
+    if (wait === void 0) { wait = 0; }
+    if (token === void 0) { token = { cancelled: false }; }
+    if (wait === 0) {
+        return fn;
+    }
+    var timeout;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var later = function () {
+            timeout = undefined;
+            // check if the fn call was cancelled.
+            if (!token.cancelled)
+                fn.apply(void 0, args);
+        };
+        // because we might want to use Node.js setTimout for SSR.
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+/**
+ * Emits a warning to the console.
+ */
+var warn = function (message) {
+    console.warn("[vee-validate] " + message);
+};
+/**
+ * Normalizes the given rules expression.
+ */
+var normalizeRules = function (rules) {
+    // if falsy value return an empty object.
+    var acc = {};
+    Object.defineProperty(acc, '_$$isNormalized', {
+        value: true,
+        writable: false,
+        enumerable: false,
+        configurable: false
+    });
+    if (!rules) {
+        return acc;
+    }
+    // Object is already normalized, skip.
+    if (isObject(rules) && rules._$$isNormalized) {
+        return rules;
+    }
+    if (isObject(rules)) {
+        return Object.keys(rules).reduce(function (prev, curr) {
+            var params = [];
+            if (rules[curr] === true) {
+                params = [];
+            }
+            else if (Array.isArray(rules[curr])) {
+                params = rules[curr];
+            }
+            else if (isObject(rules[curr])) {
+                params = rules[curr];
+            }
+            else {
+                params = [rules[curr]];
+            }
+            if (rules[curr] !== false) {
+                prev[curr] = params;
+            }
+            return prev;
+        }, acc);
+    }
+    /* istanbul ignore if */
+    if (typeof rules !== 'string') {
+        warn('rules must be either a string or an object.');
+        return acc;
+    }
+    return rules.split('|').reduce(function (prev, rule) {
+        var parsedRule = parseRule(rule);
+        if (!parsedRule.name) {
+            return prev;
+        }
+        prev[parsedRule.name] = parsedRule.params;
+        return prev;
+    }, acc);
+};
+/**
+ * Checks if a function is callable.
+ */
+var isCallable = function (func) { return typeof func === 'function'; };
+function computeClassObj(names, flags) {
+    var acc = {};
+    var keys = Object.keys(flags);
+    var length = keys.length;
+    var _loop_1 = function (i) {
+        var flag = keys[i];
+        var className = (names && names[flag]) || flag;
+        var value = flags[flag];
+        if (isNullOrUndefined(value)) {
+            return "continue";
+        }
+        if ((flag === 'valid' || flag === 'invalid') && !flags.validated) {
+            return "continue";
+        }
+        if (typeof className === 'string') {
+            acc[className] = value;
+        }
+        else if (Array.isArray(className)) {
+            className.forEach(function (cls) {
+                acc[cls] = value;
+            });
+        }
+    };
+    for (var i = 0; i < length; i++) {
+        _loop_1(i);
+    }
+    return acc;
+}
+/* istanbul ignore next */
+function _copyArray(arrayLike) {
+    var array = [];
+    var length = arrayLike.length;
+    for (var i = 0; i < length; i++) {
+        array.push(arrayLike[i]);
+    }
+    return array;
+}
+/**
+ * Converts an array-like object to array, provides a simple polyfill for Array.from
+ */
+function toArray(arrayLike) {
+    if (isCallable(Array.from)) {
+        return Array.from(arrayLike);
+    }
+    /* istanbul ignore next */
+    return _copyArray(arrayLike);
+}
+function findIndex(arrayLike, predicate) {
+    var array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike);
+    if (isCallable(array.findIndex)) {
+        return array.findIndex(predicate);
+    }
+    /* istanbul ignore next */
+    for (var i = 0; i < array.length; i++) {
+        if (predicate(array[i], i)) {
+            return i;
+        }
+    }
+    /* istanbul ignore next */
+    return -1;
+}
+/**
+ * finds the first element that satisfies the predicate callback, polyfills array.find
+ */
+function find(arrayLike, predicate) {
+    var array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike);
+    var idx = findIndex(array, predicate);
+    return idx === -1 ? undefined : array[idx];
+}
+function merge(target, source) {
+    Object.keys(source).forEach(function (key) {
+        if (isObject(source[key])) {
+            if (!target[key]) {
+                target[key] = {};
+            }
+            merge(target[key], source[key]);
+            return;
+        }
+        target[key] = source[key];
+    });
+    return target;
+}
+function values(obj) {
+    if (isCallable(Object.values)) {
+        return Object.values(obj);
+    }
+    // fallback to keys()
+    /* istanbul ignore next */
+    return Object.keys(obj).map(function (k) { return obj[k]; });
+}
+var isEmptyArray = function (arr) {
+    return Array.isArray(arr) && arr.length === 0;
+};
+var interpolate = function (template, values) {
+    return template.replace(/\{([^}]+)\}/g, function (_, p) {
+        return p in values ? values[p] : "{" + p + "}";
+    });
+};
+// Checks if a given value is not an empty string or null or undefined.
+var isSpecified = function (val) {
+    if (val === '') {
+        return false;
+    }
+    return !isNullOrUndefined(val);
+};
+
+var RULES = {};
+function normalizeSchema(schema) {
+    if (schema.params && schema.params.length) {
+        schema.params = schema.params.map(function (param) {
+            if (typeof param === 'string') {
+                return { name: param };
+            }
+            return param;
+        });
+    }
+    return schema;
+}
+var RuleContainer = /** @class */ (function () {
+    function RuleContainer() {
+    }
+    RuleContainer.extend = function (name, schema) {
+        // if rule already exists, overwrite it.
+        var rule = normalizeSchema(schema);
+        if (RULES[name]) {
+            RULES[name] = merge(RULES[name], schema);
+            return;
+        }
+        RULES[name] = __assign({ lazy: false, computesRequired: false }, rule);
+    };
+    RuleContainer.iterate = function (fn) {
+        var keys = Object.keys(RULES);
+        var length = keys.length;
+        for (var i = 0; i < length; i++) {
+            fn(keys[i], RULES[keys[i]]);
+        }
+    };
+    RuleContainer.isLazy = function (name) {
+        return !!(RULES[name] && RULES[name].lazy);
+    };
+    RuleContainer.isRequireRule = function (name) {
+        return !!(RULES[name] && RULES[name].computesRequired);
+    };
+    RuleContainer.isTargetRule = function (name) {
+        var definition = RuleContainer.getRuleDefinition(name);
+        if (!definition || !definition.params) {
+            return false;
+        }
+        return definition.params.some(function (param) { return !!param.isTarget; });
+    };
+    RuleContainer.getTargetParamNames = function (rule, params) {
+        var definition = RuleContainer.getRuleDefinition(rule);
+        if (Array.isArray(params)) {
+            return params.filter(function (_, idx) {
+                return definition.params && find(definition.params, function (p, i) { return !!p.isTarget && i === idx; });
+            });
+        }
+        return Object.keys(params)
+            .filter(function (key) {
+            return definition.params && find(definition.params, function (p) { return !!p.isTarget && p.name === key; });
+        })
+            .map(function (key) { return params[key]; });
+    };
+    RuleContainer.getRuleDefinition = function (ruleName) {
+        return RULES[ruleName];
+    };
+    return RuleContainer;
+}());
+/**
+ * Adds a custom validator to the list of validation rules.
+ */
+function extend(name, schema) {
+    // makes sure new rules are properly formatted.
+    guardExtend(name, schema);
+    // Full schema object.
+    if (typeof schema === 'object') {
+        RuleContainer.extend(name, schema);
+        return;
+    }
+    RuleContainer.extend(name, {
+        validate: schema
+    });
+}
+/**
+ * Guards from extension violations.
+ */
+function guardExtend(name, validator) {
+    if (isCallable(validator)) {
+        return;
+    }
+    if (isCallable(validator.validate)) {
+        return;
+    }
+    if (RuleContainer.getRuleDefinition(name)) {
+        return;
+    }
+    throw new Error("Extension Error: The validator '" + name + "' must be a function or have a 'validate' method.");
+}
+
+var DEFAULT_CONFIG = {
+    defaultMessage: "{_field_} is not valid.",
+    skipOptional: true,
+    classes: {
+        touched: 'touched',
+        untouched: 'untouched',
+        valid: 'valid',
+        invalid: 'invalid',
+        pristine: 'pristine',
+        dirty: 'dirty' // control has been interacted with
+    },
+    bails: true,
+    mode: 'aggressive',
+    useConstraintAttrs: true
+};
+var currentConfig = __assign({}, DEFAULT_CONFIG);
+var getConfig = function () { return currentConfig; };
+var setConfig = function (newConf) {
+    currentConfig = __assign(__assign({}, currentConfig), newConf);
+};
+var configure = function (cfg) {
+    setConfig(cfg);
+};
+
+/**
+ * Validates a value against the rules.
+ */
+function validate(value, rules, options) {
+    if (options === void 0) { options = {}; }
+    return __awaiter(this, void 0, void 0, function () {
+        var shouldBail, skipIfEmpty, field, result, errors, ruleMap;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    shouldBail = options && options.bails;
+                    skipIfEmpty = options && options.skipIfEmpty;
+                    field = {
+                        name: (options && options.name) || '{field}',
+                        rules: normalizeRules(rules),
+                        bails: isNullOrUndefined(shouldBail) ? true : shouldBail,
+                        skipIfEmpty: isNullOrUndefined(skipIfEmpty) ? true : skipIfEmpty,
+                        forceRequired: false,
+                        crossTable: (options && options.values) || {},
+                        names: (options && options.names) || {},
+                        customMessages: (options && options.customMessages) || {}
+                    };
+                    return [4 /*yield*/, _validate(field, value, options)];
+                case 1:
+                    result = _a.sent();
+                    errors = [];
+                    ruleMap = {};
+                    result.errors.forEach(function (e) {
+                        errors.push(e.msg);
+                        ruleMap[e.rule] = e.msg;
+                    });
+                    return [2 /*return*/, {
+                            valid: result.valid,
+                            errors: errors,
+                            failedRules: ruleMap
+                        }];
+            }
+        });
+    });
+}
+/**
+ * Starts the validation process.
+ */
+function _validate(field, value, _a) {
+    var _b = (_a === void 0 ? {} : _a).isInitial, isInitial = _b === void 0 ? false : _b;
+    return __awaiter(this, void 0, void 0, function () {
+        var _c, shouldSkip, errors, rules, length, i, rule, result;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0: return [4 /*yield*/, _shouldSkip(field, value)];
+                case 1:
+                    _c = _d.sent(), shouldSkip = _c.shouldSkip, errors = _c.errors;
+                    if (shouldSkip) {
+                        return [2 /*return*/, {
+                                valid: !errors.length,
+                                errors: errors
+                            }];
+                    }
+                    rules = Object.keys(field.rules).filter(function (rule) { return !RuleContainer.isRequireRule(rule); });
+                    length = rules.length;
+                    i = 0;
+                    _d.label = 2;
+                case 2:
+                    if (!(i < length)) return [3 /*break*/, 5];
+                    if (isInitial && RuleContainer.isLazy(rules[i])) {
+                        return [3 /*break*/, 4];
+                    }
+                    rule = rules[i];
+                    return [4 /*yield*/, _test(field, value, {
+                            name: rule,
+                            params: field.rules[rule]
+                        })];
+                case 3:
+                    result = _d.sent();
+                    if (!result.valid && result.error) {
+                        errors.push(result.error);
+                        if (field.bails) {
+                            return [2 /*return*/, {
+                                    valid: false,
+                                    errors: errors
+                                }];
+                        }
+                    }
+                    _d.label = 4;
+                case 4:
+                    i++;
+                    return [3 /*break*/, 2];
+                case 5: return [2 /*return*/, {
+                        valid: !errors.length,
+                        errors: errors
+                    }];
+            }
+        });
+    });
+}
+function _shouldSkip(field, value) {
+    return __awaiter(this, void 0, void 0, function () {
+        var requireRules, length, errors, isEmpty, isEmptyAndOptional, isRequired, i, rule, result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    requireRules = Object.keys(field.rules).filter(RuleContainer.isRequireRule);
+                    length = requireRules.length;
+                    errors = [];
+                    isEmpty = isNullOrUndefined(value) || value === '' || isEmptyArray(value);
+                    isEmptyAndOptional = isEmpty && field.skipIfEmpty;
+                    isRequired = false;
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < length)) return [3 /*break*/, 4];
+                    rule = requireRules[i];
+                    return [4 /*yield*/, _test(field, value, {
+                            name: rule,
+                            params: field.rules[rule]
+                        })];
+                case 2:
+                    result = _a.sent();
+                    if (!isObject(result)) {
+                        throw new Error('Require rules has to return an object (see docs)');
+                    }
+                    if (result.required) {
+                        isRequired = true;
+                    }
+                    if (!result.valid && result.error) {
+                        errors.push(result.error);
+                        // Exit early as the field is required and failed validation.
+                        if (field.bails) {
+                            return [2 /*return*/, {
+                                    shouldSkip: true,
+                                    errors: errors
+                                }];
+                        }
+                    }
+                    _a.label = 3;
+                case 3:
+                    i++;
+                    return [3 /*break*/, 1];
+                case 4:
+                    if (isEmpty && !isRequired && !field.skipIfEmpty) {
+                        return [2 /*return*/, {
+                                shouldSkip: false,
+                                errors: errors
+                            }];
+                    }
+                    // field is configured to run through the pipeline regardless
+                    if (!field.bails && !isEmptyAndOptional) {
+                        return [2 /*return*/, {
+                                shouldSkip: false,
+                                errors: errors
+                            }];
+                    }
+                    // skip if the field is not required and has an empty value.
+                    return [2 /*return*/, {
+                            shouldSkip: !isRequired && isEmpty,
+                            errors: errors
+                        }];
+            }
+        });
+    });
+}
+/**
+ * Tests a single input value against a rule.
+ */
+function _test(field, value, rule) {
+    return __awaiter(this, void 0, void 0, function () {
+        var ruleSchema, params, normalizedValue, result, values;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    ruleSchema = RuleContainer.getRuleDefinition(rule.name);
+                    if (!ruleSchema || !ruleSchema.validate) {
+                        throw new Error("No such validator '" + rule.name + "' exists.");
+                    }
+                    params = _buildParams(rule.params, ruleSchema.params, field.crossTable);
+                    normalizedValue = ruleSchema.castValue ? ruleSchema.castValue(value) : value;
+                    return [4 /*yield*/, ruleSchema.validate(normalizedValue, params)];
+                case 1:
+                    result = _a.sent();
+                    if (typeof result === 'string') {
+                        values = __assign(__assign({}, (params || {})), { _field_: field.name, _value_: value, _rule_: rule.name });
+                        return [2 /*return*/, {
+                                valid: false,
+                                error: { rule: rule.name, msg: interpolate(result, values) }
+                            }];
+                    }
+                    if (!isObject(result)) {
+                        result = { valid: result, data: {} };
+                    }
+                    return [2 /*return*/, {
+                            valid: result.valid,
+                            required: result.required,
+                            data: result.data || {},
+                            error: result.valid ? undefined : _generateFieldError(field, value, ruleSchema, rule.name, params, result.data)
+                        }];
+            }
+        });
+    });
+}
+/**
+ * Generates error messages.
+ */
+function _generateFieldError(field, value, ruleSchema, ruleName, params, data) {
+    var values = __assign(__assign(__assign(__assign({}, (params || {})), (data || {})), { _field_: field.name, _value_: value, _rule_: ruleName }), _getTargetNames(field, ruleSchema, ruleName));
+    if (Object.prototype.hasOwnProperty.call(field.customMessages, ruleName) &&
+        typeof field.customMessages[ruleName] === 'string') {
+        return {
+            msg: _normalizeMessage(field.customMessages[ruleName], field.name, values),
+            rule: ruleName
+        };
+    }
+    if (ruleSchema.message) {
+        return {
+            msg: _normalizeMessage(ruleSchema.message, field.name, values),
+            rule: ruleName
+        };
+    }
+    return {
+        msg: _normalizeMessage(getConfig().defaultMessage, field.name, values),
+        rule: ruleName
+    };
+}
+function _getTargetNames(field, ruleSchema, ruleName) {
+    if (ruleSchema.params) {
+        var numTargets = ruleSchema.params.filter(function (param) { return param.isTarget; }).length;
+        if (numTargets > 0) {
+            var names = {};
+            for (var index = 0; index < ruleSchema.params.length; index++) {
+                var param = ruleSchema.params[index];
+                if (param.isTarget) {
+                    var key = field.rules[ruleName][index];
+                    var name_1 = field.names[key] || key;
+                    if (numTargets === 1) {
+                        names._target_ = name_1;
+                        break;
+                    }
+                    else {
+                        names["_" + param.name + "Target_"] = name_1;
+                    }
+                }
+            }
+            return names;
+        }
+    }
+    return {};
+}
+function _normalizeMessage(template, field, values) {
+    if (typeof template === 'function') {
+        return template(field, values);
+    }
+    return interpolate(template, __assign(__assign({}, values), { _field_: field }));
+}
+function _buildParams(provided, defined, crossTable) {
+    var params = {};
+    if (!defined && !Array.isArray(provided)) {
+        throw new Error('You provided an object params to a rule that has no defined schema.');
+    }
+    // Rule probably uses an array for their args, keep it as is.
+    if (Array.isArray(provided) && !defined) {
+        return provided;
+    }
+    var definedRules;
+    // collect the params schema.
+    if (!defined || (defined.length < provided.length && Array.isArray(provided))) {
+        var lastDefinedParam_1;
+        // collect any additional parameters in the last item.
+        definedRules = provided.map(function (_, idx) {
+            var param = defined && defined[idx];
+            lastDefinedParam_1 = param || lastDefinedParam_1;
+            if (!param) {
+                param = lastDefinedParam_1;
+            }
+            return param;
+        });
+    }
+    else {
+        definedRules = defined;
+    }
+    // Match the provided array length with a temporary schema.
+    for (var i = 0; i < definedRules.length; i++) {
+        var options = definedRules[i];
+        var value = options.default;
+        // if the provided is an array, map element value.
+        if (Array.isArray(provided)) {
+            if (i in provided) {
+                value = provided[i];
+            }
+        }
+        else {
+            // If the param exists in the provided object.
+            if (options.name in provided) {
+                value = provided[options.name];
+                // if the provided is the first param value.
+            }
+            else if (definedRules.length === 1) {
+                value = provided;
+            }
+        }
+        // if the param is a target, resolve the target value.
+        if (options.isTarget) {
+            value = crossTable[value];
+        }
+        // If there is a transformer defined.
+        if (options.cast) {
+            value = options.cast(value);
+        }
+        // already been set, probably multiple values.
+        if (params[options.name]) {
+            params[options.name] = Array.isArray(params[options.name]) ? params[options.name] : [params[options.name]];
+            params[options.name].push(value);
+        }
+        else {
+            // set the value.
+            params[options.name] = value;
+        }
+    }
+    return params;
+}
+
+function install(_, config) {
+    setConfig(config);
+}
+
+var aggressive = function () { return ({
+    on: ['input', 'blur']
+}); };
+var lazy = function () { return ({
+    on: ['change']
+}); };
+var eager = function (_a) {
+    var errors = _a.errors;
+    if (errors.length) {
+        return {
+            on: ['input', 'change']
+        };
+    }
+    return {
+        on: ['change', 'blur']
+    };
+};
+var passive = function () { return ({
+    on: []
+}); };
+var modes = {
+    aggressive: aggressive,
+    eager: eager,
+    passive: passive,
+    lazy: lazy
+};
+var setInteractionMode = function (mode, implementation) {
+    setConfig({ mode: mode });
+    if (!implementation) {
+        return;
+    }
+    if (!isCallable(implementation)) {
+        throw new Error('A mode implementation must be a function');
+    }
+    modes[mode] = implementation;
+};
+
+var Dictionary = /** @class */ (function () {
+    function Dictionary(locale, dictionary) {
+        this.container = {};
+        this.locale = locale;
+        this.merge(dictionary);
+    }
+    Dictionary.prototype.resolve = function (field, rule, values) {
+        return this.format(this.locale, field, rule, values);
+    };
+    Dictionary.prototype._hasLocale = function (locale) {
+        return !!this.container[locale];
+    };
+    Dictionary.prototype.format = function (locale, field, rule, values) {
+        var message;
+        // find if specific message for that field was specified.
+        var dict = this.container[locale] && this.container[locale].fields && this.container[locale].fields[field];
+        if (dict && dict[rule]) {
+            message = dict[rule];
+        }
+        if (!message && this._hasLocale(locale) && this._hasMessage(locale, rule)) {
+            message = this.container[locale].messages[rule];
+        }
+        if (!message) {
+            message = getConfig().defaultMessage;
+        }
+        if (this._hasName(locale, field)) {
+            field = this.getName(locale, field);
+        }
+        return isCallable(message) ? message(field, values) : interpolate(message, __assign(__assign({}, values), { _field_: field }));
+    };
+    Dictionary.prototype.merge = function (dictionary) {
+        merge(this.container, dictionary);
+    };
+    Dictionary.prototype.hasRule = function (name) {
+        var locale = this.container[this.locale];
+        if (!locale)
+            return false;
+        return !!(locale.messages && locale.messages[name]);
+    };
+    Dictionary.prototype.getName = function (locale, key) {
+        return this.container[locale].names[key];
+    };
+    Dictionary.prototype._hasMessage = function (locale, key) {
+        return !!(this._hasLocale(locale) && this.container[locale].messages && this.container[locale].messages[key]);
+    };
+    Dictionary.prototype._hasName = function (locale, key) {
+        return !!(this._hasLocale(locale) && this.container[locale].names && this.container[locale].names[key]);
+    };
+    return Dictionary;
+}());
+var DICTIONARY;
+var INSTALLED = false;
+function updateRules() {
+    if (INSTALLED) {
+        return;
+    }
+    RuleContainer.iterate(function (name, schema) {
+        var _a, _b;
+        if (schema.message && !DICTIONARY.hasRule(name)) {
+            DICTIONARY.merge((_a = {},
+                _a[DICTIONARY.locale] = {
+                    messages: (_b = {},
+                        _b[name] = schema.message,
+                        _b)
+                },
+                _a));
+        }
+        extend(name, {
+            message: function (field, values) {
+                return DICTIONARY.resolve(field, name, values || {});
+            }
+        });
+    });
+    INSTALLED = true;
+}
+function localize(locale, dictionary) {
+    var _a;
+    if (!DICTIONARY) {
+        DICTIONARY = new Dictionary('en', {});
+    }
+    if (typeof locale === 'string') {
+        DICTIONARY.locale = locale;
+        if (dictionary) {
+            DICTIONARY.merge((_a = {}, _a[locale] = dictionary, _a));
+        }
+        updateRules();
+        return;
+    }
+    DICTIONARY.merge(locale);
+    updateRules();
+}
+
+var isEvent = function (evt) {
+    if (!evt) {
+        return false;
+    }
+    if (typeof Event !== 'undefined' && isCallable(Event) && evt instanceof Event) {
+        return true;
+    }
+    // this is for IE
+    /* istanbul ignore next */
+    if (evt && evt.srcElement) {
+        return true;
+    }
+    return false;
+};
+function normalizeEventValue(value) {
+    if (!isEvent(value)) {
+        return value;
+    }
+    var input = value.target;
+    if (input.type === 'file' && input.files) {
+        return toArray(input.files);
+    }
+    // If the input has a `v-model.number` modifier applied.
+    if (input._vModifiers && input._vModifiers.number) {
+        // as per the spec the v-model.number uses parseFloat
+        var valueAsNumber = parseFloat(input.value);
+        if (isNaN(valueAsNumber)) {
+            return input.value;
+        }
+        return valueAsNumber;
+    }
+    if (input._vModifiers && input._vModifiers.trim) {
+        var trimmedValue = typeof input.value === 'string' ? input.value.trim() : input.value;
+        return trimmedValue;
+    }
+    return input.value;
+}
+
+var isTextInput = function (vnode) {
+    var attrs = (vnode.data && vnode.data.attrs) || vnode.elm;
+    // it will fallback to being a text input per browsers spec.
+    if (vnode.tag === 'input' && (!attrs || !attrs.type)) {
+        return true;
+    }
+    if (vnode.tag === 'textarea') {
+        return true;
+    }
+    return includes(['text', 'password', 'search', 'email', 'tel', 'url', 'number'], attrs && attrs.type);
+};
+// export const isCheckboxOrRadioInput = (vnode: VNode): boolean => {
+//   const attrs = (vnode.data && vnode.data.attrs) || vnode.elm;
+//   return includes(['radio', 'checkbox'], attrs && attrs.type);
+// };
+// Gets the model object on the vnode.
+function findModel(vnode) {
+    if (!vnode.data) {
+        return undefined;
+    }
+    // Component Model
+    // THIS IS NOT TYPED IN OFFICIAL VUE TYPINGS
+    // eslint-disable-next-line
+    var nonStandardVNodeData = vnode.data;
+    if ('model' in nonStandardVNodeData) {
+        return nonStandardVNodeData.model;
+    }
+    if (!vnode.data.directives) {
+        return undefined;
+    }
+    return find(vnode.data.directives, function (d) { return d.name === 'model'; });
+}
+function findValue(vnode) {
+    var model = findModel(vnode);
+    if (model) {
+        return { value: model.value };
+    }
+    var config = findModelConfig(vnode);
+    var prop = (config && config.prop) || 'value';
+    if (vnode.componentOptions && vnode.componentOptions.propsData && prop in vnode.componentOptions.propsData) {
+        var propsDataWithValue = vnode.componentOptions.propsData;
+        return { value: propsDataWithValue[prop] };
+    }
+    if (vnode.data && vnode.data.domProps && 'value' in vnode.data.domProps) {
+        return { value: vnode.data.domProps.value };
+    }
+    return undefined;
+}
+function extractChildren(vnode) {
+    if (Array.isArray(vnode)) {
+        return vnode;
+    }
+    if (Array.isArray(vnode.children)) {
+        return vnode.children;
+    }
+    /* istanbul ignore next */
+    if (vnode.componentOptions && Array.isArray(vnode.componentOptions.children)) {
+        return vnode.componentOptions.children;
+    }
+    return [];
+}
+function extractVNodes(vnode) {
+    if (!Array.isArray(vnode) && findValue(vnode) !== undefined) {
+        return [vnode];
+    }
+    var children = extractChildren(vnode);
+    return children.reduce(function (nodes, node) {
+        var candidates = extractVNodes(node);
+        if (candidates.length) {
+            nodes.push.apply(nodes, candidates);
+        }
+        return nodes;
+    }, []);
+}
+// Resolves v-model config if exists.
+function findModelConfig(vnode) {
+    /* istanbul ignore next */
+    if (!vnode.componentOptions)
+        return null;
+    // This is also not typed in the standard Vue TS.
+    return vnode.componentOptions.Ctor.options.model;
+}
+// Adds a listener to vnode listener object.
+function mergeVNodeListeners(obj, eventName, handler) {
+    // no listener at all.
+    if (isNullOrUndefined(obj[eventName])) {
+        obj[eventName] = [handler];
+        return;
+    }
+    // Is an invoker.
+    if (isCallable(obj[eventName]) && obj[eventName].fns) {
+        var invoker = obj[eventName];
+        invoker.fns = Array.isArray(invoker.fns) ? invoker.fns : [invoker.fns];
+        if (!includes(invoker.fns, handler)) {
+            invoker.fns.push(handler);
+        }
+        return;
+    }
+    if (isCallable(obj[eventName])) {
+        var prev = obj[eventName];
+        obj[eventName] = [prev];
+    }
+    if (Array.isArray(obj[eventName]) && !includes(obj[eventName], handler)) {
+        obj[eventName].push(handler);
+    }
+}
+// Adds a listener to a native HTML vnode.
+function addNativeNodeListener(node, eventName, handler) {
+    /* istanbul ignore next */
+    if (!node.data) {
+        node.data = {};
+    }
+    if (isNullOrUndefined(node.data.on)) {
+        node.data.on = {};
+    }
+    mergeVNodeListeners(node.data.on, eventName, handler);
+}
+// Adds a listener to a Vue component vnode.
+function addComponentNodeListener(node, eventName, handler) {
+    /* istanbul ignore next */
+    if (!node.componentOptions) {
+        return;
+    }
+    /* istanbul ignore next */
+    if (!node.componentOptions.listeners) {
+        node.componentOptions.listeners = {};
+    }
+    mergeVNodeListeners(node.componentOptions.listeners, eventName, handler);
+}
+function addVNodeListener(vnode, eventName, handler) {
+    if (vnode.componentOptions) {
+        addComponentNodeListener(vnode, eventName, handler);
+        return;
+    }
+    addNativeNodeListener(vnode, eventName, handler);
+}
+// Determines if `change` should be used over `input` for listeners.
+function getInputEventName(vnode, model) {
+    // Is a component.
+    if (vnode.componentOptions) {
+        var event_1 = (findModelConfig(vnode) || { event: 'input' }).event;
+        return event_1;
+    }
+    // Lazy Models typically use change event
+    if (model && model.modifiers && model.modifiers.lazy) {
+        return 'change';
+    }
+    // is a textual-type input.
+    if (isTextInput(vnode)) {
+        return 'input';
+    }
+    return 'change';
+}
+// TODO: Type this one properly.
+function normalizeSlots(slots, ctx) {
+    var acc = [];
+    return Object.keys(slots).reduce(function (arr, key) {
+        slots[key].forEach(function (vnode) {
+            if (!vnode.context) {
+                slots[key].context = ctx;
+                if (!vnode.data) {
+                    vnode.data = {};
+                }
+                vnode.data.slot = key;
+            }
+        });
+        return arr.concat(slots[key]);
+    }, acc);
+}
+function resolveTextualRules(vnode) {
+    var attrs = vnode.data && vnode.data.attrs;
+    var rules = {};
+    if (!attrs)
+        return rules;
+    if (attrs.type === 'email') {
+        rules.email = ['multiple' in attrs];
+    }
+    if (attrs.pattern) {
+        rules.regex = attrs.pattern;
+    }
+    if (attrs.maxlength >= 0) {
+        rules.max = attrs.maxlength;
+    }
+    if (attrs.minlength >= 0) {
+        rules.min = attrs.minlength;
+    }
+    if (attrs.type === 'number') {
+        if (isSpecified(attrs.min)) {
+            rules.min_value = Number(attrs.min);
+        }
+        if (isSpecified(attrs.max)) {
+            rules.max_value = Number(attrs.max);
+        }
+    }
+    return rules;
+}
+function resolveRules(vnode) {
+    var htmlTags = ['input', 'select'];
+    var attrs = vnode.data && vnode.data.attrs;
+    if (!includes(htmlTags, vnode.tag) || !attrs) {
+        return {};
+    }
+    var rules = {};
+    if ('required' in attrs && attrs.required !== false) {
+        rules.required = attrs.type === 'checkbox' ? [true] : true;
+    }
+    if (isTextInput(vnode)) {
+        return normalizeRules(__assign(__assign({}, rules), resolveTextualRules(vnode)));
+    }
+    return normalizeRules(rules);
+}
+function normalizeChildren(context, slotProps) {
+    if (context.$scopedSlots.default) {
+        return context.$scopedSlots.default(slotProps) || [];
+    }
+    return context.$slots.default || [];
+}
+
+/**
+ * Determines if a provider needs to run validation.
+ */
+function shouldValidate(ctx, value) {
+    // when an immediate/initial validation is needed and wasn't done before.
+    if (!ctx._ignoreImmediate && ctx.immediate) {
+        return true;
+    }
+    // when the value changes for whatever reason.
+    if (ctx.value !== value && ctx.normalizedEvents.length) {
+        return true;
+    }
+    // when it needs validation due to props/cross-fields changes.
+    if (ctx._needsValidation) {
+        return true;
+    }
+    // when the initial value is undefined and the field wasn't rendered yet.
+    if (!ctx.initialized && value === undefined) {
+        return true;
+    }
+    return false;
+}
+function createValidationCtx(ctx) {
+    return __assign(__assign({}, ctx.flags), { errors: ctx.messages, classes: ctx.classes, failedRules: ctx.failedRules, reset: function () { return ctx.reset(); }, validate: function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return ctx.validate.apply(ctx, args);
+        }, ariaInput: {
+            'aria-invalid': ctx.flags.invalid ? 'true' : 'false',
+            'aria-required': ctx.isRequired ? 'true' : 'false',
+            'aria-errormessage': "vee_" + ctx.id
+        }, ariaMsg: {
+            id: "vee_" + ctx.id,
+            'aria-live': ctx.messages.length ? 'assertive' : 'off'
+        } });
+}
+function onRenderUpdate(vm, value) {
+    if (!vm.initialized) {
+        vm.initialValue = value;
+    }
+    var validateNow = shouldValidate(vm, value);
+    vm._needsValidation = false;
+    vm.value = value;
+    vm._ignoreImmediate = true;
+    if (!validateNow) {
+        return;
+    }
+    vm.validateSilent().then(vm.immediate || vm.flags.validated ? vm.applyResult : identity);
+}
+function computeModeSetting(ctx) {
+    var compute = (isCallable(ctx.mode) ? ctx.mode : modes[ctx.mode]);
+    return compute({
+        errors: ctx.messages,
+        value: ctx.value,
+        flags: ctx.flags
+    });
+}
+// Creates the common handlers for a validatable context.
+function createCommonHandlers(vm) {
+    if (!vm.$veeOnInput) {
+        vm.$veeOnInput = function (e) {
+            vm.syncValue(e); // track and keep the value updated.
+            vm.setFlags({ dirty: true, pristine: false });
+        };
+    }
+    var onInput = vm.$veeOnInput;
+    if (!vm.$veeOnBlur) {
+        vm.$veeOnBlur = function () {
+            vm.setFlags({ touched: true, untouched: false });
+        };
+    }
+    // Blur event listener.
+    var onBlur = vm.$veeOnBlur;
+    var onValidate = vm.$veeHandler;
+    var mode = computeModeSetting(vm);
+    // Handle debounce changes.
+    if (!onValidate || vm.$veeDebounce !== vm.debounce) {
+        onValidate = debounce(function () {
+            vm.$nextTick(function () {
+                var pendingPromise = vm.validateSilent();
+                // avoids race conditions between successive validations.
+                vm._pendingValidation = pendingPromise;
+                pendingPromise.then(function (result) {
+                    if (pendingPromise === vm._pendingValidation) {
+                        vm.applyResult(result);
+                        vm._pendingValidation = undefined;
+                    }
+                });
+            });
+        }, mode.debounce || vm.debounce);
+        // Cache the handler so we don't create it each time.
+        vm.$veeHandler = onValidate;
+        // cache the debounce value so we detect if it was changed.
+        vm.$veeDebounce = vm.debounce;
+    }
+    return { onInput: onInput, onBlur: onBlur, onValidate: onValidate };
+}
+// Adds all plugin listeners to the vnode.
+function addListeners(vm, node) {
+    var value = findValue(node);
+    // cache the input eventName.
+    vm._inputEventName = vm._inputEventName || getInputEventName(node, findModel(node));
+    onRenderUpdate(vm, value && value.value);
+    var _a = createCommonHandlers(vm), onInput = _a.onInput, onBlur = _a.onBlur, onValidate = _a.onValidate;
+    addVNodeListener(node, vm._inputEventName, onInput);
+    addVNodeListener(node, 'blur', onBlur);
+    // add the validation listeners.
+    vm.normalizedEvents.forEach(function (evt) {
+        addVNodeListener(node, evt, onValidate);
+    });
+    vm.initialized = true;
+}
+
+var PROVIDER_COUNTER = 0;
+function data() {
+    var messages = [];
+    var defaultValues = {
+        messages: messages,
+        value: undefined,
+        initialized: false,
+        initialValue: undefined,
+        flags: createFlags(),
+        failedRules: {},
+        isDeactivated: false,
+        id: ''
+    };
+    return defaultValues;
+}
+var ValidationProvider = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
+    inject: {
+        $_veeObserver: {
+            from: '$_veeObserver',
+            default: function () {
+                if (!this.$vnode.context.$_veeObserver) {
+                    this.$vnode.context.$_veeObserver = createObserver();
+                }
+                return this.$vnode.context.$_veeObserver;
+            }
+        }
+    },
+    props: {
+        vid: {
+            type: String,
+            default: ''
+        },
+        name: {
+            type: String,
+            default: null
+        },
+        mode: {
+            type: [String, Function],
+            default: function () {
+                return getConfig().mode;
+            }
+        },
+        rules: {
+            type: [Object, String],
+            default: null
+        },
+        immediate: {
+            type: Boolean,
+            default: false
+        },
+        persist: {
+            type: Boolean,
+            default: false
+        },
+        bails: {
+            type: Boolean,
+            default: function () { return getConfig().bails; }
+        },
+        skipIfEmpty: {
+            type: Boolean,
+            default: function () { return getConfig().skipOptional; }
+        },
+        debounce: {
+            type: Number,
+            default: 0
+        },
+        tag: {
+            type: String,
+            default: 'span'
+        },
+        slim: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        customMessages: {
+            type: Object,
+            default: function () {
+                return {};
+            }
+        }
+    },
+    watch: {
+        rules: {
+            deep: true,
+            handler: function (val, oldVal) {
+                this._needsValidation = !isEqual(val, oldVal);
+            }
+        }
+    },
+    data: data,
+    computed: {
+        fieldDeps: function () {
+            var _this = this;
+            return Object.keys(this.normalizedRules)
+                .filter(RuleContainer.isTargetRule)
+                .reduce(function (acc, rule) {
+                var deps = RuleContainer.getTargetParamNames(rule, _this.normalizedRules[rule]);
+                acc.push.apply(acc, deps);
+                deps.forEach(function (depName) {
+                    watchCrossFieldDep(_this, depName);
+                });
+                return acc;
+            }, []);
+        },
+        normalizedEvents: function () {
+            var _this = this;
+            var on = computeModeSetting(this).on;
+            return (on || []).map(function (e) {
+                if (e === 'input') {
+                    return _this._inputEventName;
+                }
+                return e;
+            });
+        },
+        isRequired: function () {
+            var rules = __assign(__assign({}, this._resolvedRules), this.normalizedRules);
+            var isRequired = Object.keys(rules).some(RuleContainer.isRequireRule);
+            this.flags.required = !!isRequired;
+            return isRequired;
+        },
+        classes: function () {
+            var names = getConfig().classes;
+            return computeClassObj(names, this.flags);
+        },
+        normalizedRules: function () {
+            return normalizeRules(this.rules);
+        }
+    },
+    render: function (h) {
+        var _this = this;
+        this.registerField();
+        var ctx = createValidationCtx(this);
+        var children = normalizeChildren(this, ctx);
+        // Handle single-root slot.
+        extractVNodes(children).forEach(function (input) {
+            _this._resolvedRules = getConfig().useConstraintAttrs ? resolveRules(input) : {};
+            addListeners(_this, input);
+        });
+        return this.slim && children.length <= 1 ? children[0] : h(this.tag, children);
+    },
+    beforeDestroy: function () {
+        // cleanup reference.
+        this.$_veeObserver.unsubscribe(this.id);
+    },
+    activated: function () {
+        this.$_veeObserver.subscribe(this);
+        this.isDeactivated = false;
+    },
+    deactivated: function () {
+        this.$_veeObserver.unsubscribe(this.id);
+        this.isDeactivated = true;
+    },
+    methods: {
+        setFlags: function (flags) {
+            var _this = this;
+            Object.keys(flags).forEach(function (flag) {
+                _this.flags[flag] = flags[flag];
+            });
+        },
+        syncValue: function (v) {
+            var value = normalizeEventValue(v);
+            this.value = value;
+            this.flags.changed = this.initialValue !== value;
+        },
+        reset: function () {
+            this.messages = [];
+            this.initialValue = this.value;
+            var flags = createFlags();
+            flags.required = this.isRequired;
+            this.setFlags(flags);
+            this.validateSilent();
+        },
+        validate: function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return __awaiter(this, void 0, void 0, function () {
+                var result;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (args.length > 0) {
+                                this.syncValue(args[0]);
+                            }
+                            return [4 /*yield*/, this.validateSilent()];
+                        case 1:
+                            result = _a.sent();
+                            this.applyResult(result);
+                            return [2 /*return*/, result];
+                    }
+                });
+            });
+        },
+        validateSilent: function () {
+            return __awaiter(this, void 0, void 0, function () {
+                var rules, result;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            this.setFlags({ pending: true });
+                            rules = __assign(__assign({}, this._resolvedRules), this.normalizedRules);
+                            Object.defineProperty(rules, '_$$isNormalized', {
+                                value: true,
+                                writable: false,
+                                enumerable: false,
+                                configurable: false
+                            });
+                            return [4 /*yield*/, validate(this.value, rules, {
+                                    name: this.name,
+                                    values: createValuesLookup(this),
+                                    bails: this.bails,
+                                    skipIfEmpty: this.skipIfEmpty,
+                                    isInitial: !this.initialized,
+                                    customMessages: this.customMessages
+                                })];
+                        case 1:
+                            result = _a.sent();
+                            this.setFlags({ pending: false });
+                            this.setFlags({ valid: result.valid, invalid: !result.valid });
+                            return [2 /*return*/, result];
+                    }
+                });
+            });
+        },
+        setErrors: function (errors) {
+            this.applyResult({ errors: errors, failedRules: {} });
+        },
+        applyResult: function (_a) {
+            var errors = _a.errors, failedRules = _a.failedRules;
+            this.messages = errors;
+            this.failedRules = __assign({}, (failedRules || {}));
+            this.setFlags({
+                valid: !errors.length,
+                changed: this.value !== this.initialValue,
+                invalid: !!errors.length,
+                validated: true
+            });
+        },
+        registerField: function () {
+            updateRenderingContextRefs(this);
+        }
+    }
+});
+function createValuesLookup(vm) {
+    var providers = vm.$_veeObserver.refs;
+    var reduced = {};
+    return vm.fieldDeps.reduce(function (acc, depName) {
+        if (!providers[depName]) {
+            return acc;
+        }
+        acc[depName] = providers[depName].value;
+        return acc;
+    }, reduced);
+}
+function extractId(vm) {
+    if (vm.vid) {
+        return vm.vid;
+    }
+    if (vm.name) {
+        return vm.name;
+    }
+    if (vm.id) {
+        return vm.id;
+    }
+    PROVIDER_COUNTER++;
+    return "_vee_" + PROVIDER_COUNTER;
+}
+function updateRenderingContextRefs(vm) {
+    var providedId = extractId(vm);
+    var id = vm.id;
+    // Nothing has changed.
+    if (vm.isDeactivated || (id === providedId && vm.$_veeObserver.refs[id])) {
+        return;
+    }
+    // vid was changed.
+    if (id !== providedId && vm.$_veeObserver.refs[id] === vm) {
+        vm.$_veeObserver.unsubscribe(id);
+    }
+    vm.id = providedId;
+    vm.$_veeObserver.subscribe(vm);
+}
+function createObserver() {
+    return {
+        refs: {},
+        subscribe: function (vm) {
+            this.refs[vm.id] = vm;
+        },
+        unsubscribe: function (id) {
+            delete this.refs[id];
+        }
+    };
+}
+function watchCrossFieldDep(ctx, depName, withHooks) {
+    if (withHooks === void 0) { withHooks = true; }
+    var providers = ctx.$_veeObserver.refs;
+    if (!ctx._veeWatchers) {
+        ctx._veeWatchers = {};
+    }
+    if (!providers[depName] && withHooks) {
+        return ctx.$once('hook:mounted', function () {
+            watchCrossFieldDep(ctx, depName, false);
+        });
+    }
+    if (!isCallable(ctx._veeWatchers[depName]) && providers[depName]) {
+        ctx._veeWatchers[depName] = providers[depName].$watch('value', function () {
+            if (ctx.flags.validated) {
+                ctx._needsValidation = true;
+                ctx.validate();
+            }
+        });
+    }
+}
+
+var flagMergingStrategy = {
+    pristine: 'every',
+    dirty: 'some',
+    touched: 'some',
+    untouched: 'every',
+    valid: 'every',
+    invalid: 'some',
+    pending: 'some',
+    validated: 'every',
+    changed: 'some'
+};
+function mergeFlags(lhs, rhs, strategy) {
+    var stratName = flagMergingStrategy[strategy];
+    return [lhs, rhs][stratName](function (f) { return f; });
+}
+var OBSERVER_COUNTER = 0;
+function data$1() {
+    var refs = {};
+    var refsByName = {};
+    var inactiveRefs = {};
+    // FIXME: Not sure of this one can be typed, circular type reference.
+    var observers = [];
+    return {
+        id: '',
+        refs: refs,
+        refsByName: refsByName,
+        observers: observers,
+        inactiveRefs: inactiveRefs
+    };
+}
+var ValidationObserver = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
+    name: 'ValidationObserver',
+    provide: function () {
+        return {
+            $_veeObserver: this
+        };
+    },
+    inject: {
+        $_veeObserver: {
+            from: '$_veeObserver',
+            default: function () {
+                if (!this.$vnode.context.$_veeObserver) {
+                    return null;
+                }
+                return this.$vnode.context.$_veeObserver;
+            }
+        }
+    },
+    props: {
+        tag: {
+            type: String,
+            default: 'span'
+        },
+        vid: {
+            type: String,
+            default: function () {
+                return "obs_" + OBSERVER_COUNTER++;
+            }
+        },
+        slim: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data: data$1,
+    computed: {
+        ctx: function () {
+            var _this = this;
+            var ctx = {
+                errors: {},
+                passes: function (cb) {
+                    return _this.validate().then(function (result) {
+                        if (result) {
+                            return cb();
+                        }
+                    });
+                },
+                validate: function () {
+                    var args = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        args[_i] = arguments[_i];
+                    }
+                    return _this.validate.apply(_this, args);
+                },
+                reset: function () { return _this.reset(); }
+            };
+            return __spreadArrays(values(this.refs), Object.keys(this.inactiveRefs).map(function (key) {
+                return {
+                    vid: key,
+                    flags: _this.inactiveRefs[key].flags,
+                    messages: _this.inactiveRefs[key].errors
+                };
+            }), this.observers).reduce(function (acc, provider) {
+                Object.keys(flagMergingStrategy).forEach(function (flag) {
+                    var flags = provider.flags || provider.ctx;
+                    if (!(flag in acc)) {
+                        acc[flag] = flags[flag];
+                        return;
+                    }
+                    acc[flag] = mergeFlags(acc[flag], flags[flag], flag);
+                });
+                acc.errors[provider.id] =
+                    provider.messages ||
+                        values(provider.ctx.errors).reduce(function (errs, obsErrors) {
+                            return errs.concat(obsErrors);
+                        }, []);
+                return acc;
+            }, ctx);
+        }
+    },
+    created: function () {
+        this.id = this.vid;
+        if (this.$_veeObserver) {
+            this.$_veeObserver.subscribe(this, 'observer');
+        }
+    },
+    activated: function () {
+        if (this.$_veeObserver) {
+            this.$_veeObserver.subscribe(this, 'observer');
+        }
+    },
+    deactivated: function () {
+        if (this.$_veeObserver) {
+            this.$_veeObserver.unsubscribe(this.id, 'observer');
+        }
+    },
+    beforeDestroy: function () {
+        if (this.$_veeObserver) {
+            this.$_veeObserver.unsubscribe(this.id, 'observer');
+        }
+    },
+    render: function (h) {
+        var children = normalizeChildren(this, this.ctx);
+        return this.slim && children.length <= 1 ? children[0] : h(this.tag, { on: this.$listeners }, children);
+    },
+    methods: {
+        subscribe: function (subscriber, kind) {
+            var _a, _b;
+            if (kind === void 0) { kind = 'provider'; }
+            if (kind === 'observer') {
+                this.observers.push(subscriber);
+                return;
+            }
+            this.refs = __assign(__assign({}, this.refs), (_a = {}, _a[subscriber.id] = subscriber, _a));
+            this.refsByName = __assign(__assign({}, this.refsByName), (_b = {}, _b[subscriber.name] = subscriber, _b));
+            if (subscriber.persist) {
+                this.restoreProviderState(subscriber);
+            }
+        },
+        unsubscribe: function (id, kind) {
+            if (kind === void 0) { kind = 'provider'; }
+            if (kind === 'provider') {
+                this.removeProvider(id);
+                return;
+            }
+            var idx = findIndex(this.observers, function (o) { return o.id === id; });
+            if (idx !== -1) {
+                this.observers.splice(idx, 1);
+            }
+        },
+        validate: function (_a) {
+            var _b = (_a === void 0 ? {} : _a).silent, silent = _b === void 0 ? false : _b;
+            return __awaiter(this, void 0, void 0, function () {
+                var results;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0: return [4 /*yield*/, Promise.all(__spreadArrays(values(this.refs)
+                                .filter(function (r) { return !r.disabled; })
+                                .map(function (ref) { return ref[silent ? 'validateSilent' : 'validate']().then(function (r) { return r.valid; }); }), this.observers.filter(function (o) { return !o.disabled; }).map(function (obs) { return obs.validate({ silent: silent }); })))];
+                        case 1:
+                            results = _c.sent();
+                            return [2 /*return*/, results.every(function (r) { return r; })];
+                    }
+                });
+            });
+        },
+        reset: function () {
+            var _this = this;
+            Object.keys(this.inactiveRefs).forEach(function (key) {
+                _this.$delete(_this.inactiveRefs, key);
+            });
+            return __spreadArrays(values(this.refs), this.observers).forEach(function (ref) { return ref.reset(); });
+        },
+        restoreProviderState: function (provider) {
+            var id = provider.id;
+            var state = this.inactiveRefs[id];
+            if (!state) {
+                return;
+            }
+            provider.setFlags(state.flags);
+            provider.applyResult(state);
+            this.$delete(this.inactiveRefs, provider.id);
+        },
+        removeProvider: function (id) {
+            var provider = this.refs[id];
+            if (!provider) {
+                // FIXME: inactive refs are not being cleaned up.
+                return;
+            }
+            if (provider.persist) {
+                /* istanbul ignore next */
+                if (true) {
+                    if (id.indexOf('_vee_') === 0) {
+                        warn('Please provide a `vid` or a `name` prop when using `persist`, there might be unexpected issues otherwise.');
+                    }
+                }
+                // save it for the next time.
+                this.inactiveRefs[id] = {
+                    flags: provider.flags,
+                    errors: provider.messages,
+                    failedRules: provider.failedRules
+                };
+            }
+            this.$delete(this.refs, id);
+            this.$delete(this.refsByName, provider.name);
+        },
+        setErrors: function (errors) {
+            var _this = this;
+            Object.keys(errors).forEach(function (key) {
+                var provider = _this.refs[key] || _this.refsByName[key];
+                if (!provider)
+                    return;
+                provider.setErrors(errors[key] || []);
+            });
+            this.observers.forEach(function (observer) {
+                observer.setErrors(errors);
+            });
+        }
+    }
+});
+
+function withValidation(component, mapProps) {
+    if (mapProps === void 0) { mapProps = identity; }
+    var options = 'options' in component ? component.options : component;
+    var providerOpts = ValidationProvider.options;
+    var hoc = {
+        name: (options.name || 'AnonymousHoc') + "WithValidation",
+        props: __assign({}, providerOpts.props),
+        data: providerOpts.data,
+        computed: __assign({}, providerOpts.computed),
+        methods: __assign({}, providerOpts.methods),
+        beforeDestroy: providerOpts.beforeDestroy,
+        inject: providerOpts.inject
+    };
+    var eventName = (options.model && options.model.event) || 'input';
+    hoc.render = function (h) {
+        var _a;
+        this.registerField();
+        var vctx = createValidationCtx(this);
+        var listeners = __assign({}, this.$listeners);
+        var model = findModel(this.$vnode);
+        this._inputEventName = this._inputEventName || getInputEventName(this.$vnode, model);
+        var value = findValue(this.$vnode);
+        onRenderUpdate(this, value && value.value);
+        var _b = createCommonHandlers(this), onInput = _b.onInput, onBlur = _b.onBlur, onValidate = _b.onValidate;
+        mergeVNodeListeners(listeners, eventName, onInput);
+        mergeVNodeListeners(listeners, 'blur', onBlur);
+        this.normalizedEvents.forEach(function (evt) {
+            mergeVNodeListeners(listeners, evt, onValidate);
+        });
+        // Props are any attrs not associated with ValidationProvider Plus the model prop.
+        // WARNING: Accidental prop overwrite will probably happen.
+        var prop = (findModelConfig(this.$vnode) || { prop: 'value' }).prop;
+        var props = __assign(__assign(__assign({}, this.$attrs), (_a = {}, _a[prop] = model && model.value, _a)), mapProps(vctx));
+        return h(options, {
+            attrs: this.$attrs,
+            props: props,
+            on: listeners
+        }, normalizeSlots(this.$slots, this.$vnode.context));
+    };
+    return hoc;
+}
+
+var version = '3.0.11';
+
+
+
+
+/***/ }),
+/* 270 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export alpha */
+/* unused harmony export alpha_dash */
+/* unused harmony export alpha_num */
+/* unused harmony export alpha_spaces */
+/* unused harmony export between */
+/* unused harmony export confirmed */
+/* unused harmony export digits */
+/* unused harmony export dimensions */
+/* unused harmony export email */
+/* unused harmony export excluded */
+/* unused harmony export ext */
+/* unused harmony export image */
+/* unused harmony export integer */
+/* unused harmony export is */
+/* unused harmony export is_not */
+/* unused harmony export length */
+/* unused harmony export max */
+/* unused harmony export max_value */
+/* unused harmony export mimes */
+/* unused harmony export min */
+/* unused harmony export min_value */
+/* unused harmony export numeric */
+/* unused harmony export oneOf */
+/* unused harmony export regex */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return required; });
+/* unused harmony export required_if */
+/* unused harmony export size */
+/**
+  * vee-validate v3.0.11
+  * (c) 2019 Abdelrahman Awad
+  * @license MIT
+  */
+/**
+ * Some Alpha Regex helpers.
+ * https://github.com/chriso/validator.js/blob/master/src/lib/alpha.js
+ */
+var alpha = {
+    en: /^[A-Z]*$/i,
+    cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+    da: /^[A-ZÆØÅ]*$/i,
+    de: /^[A-ZÄÖÜß]*$/i,
+    es: /^[A-ZÁÉÍÑÓÚÜ]*$/i,
+    fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+    it: /^[A-Z\xC0-\xFF]*$/i,
+    lt: /^[A-ZĄČĘĖĮŠŲŪŽ]*$/i,
+    nl: /^[A-ZÉËÏÓÖÜ]*$/i,
+    hu: /^[A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+    pl: /^[A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+    pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+    ru: /^[А-ЯЁ]*$/i,
+    sk: /^[A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ]*$/i,
+    sr: /^[A-ZČĆŽŠĐ]*$/i,
+    sv: /^[A-ZÅÄÖ]*$/i,
+    tr: /^[A-ZÇĞİıÖŞÜ]*$/i,
+    uk: /^[А-ЩЬЮЯЄІЇҐ]*$/i,
+    ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
+    az: /^[A-ZÇƏĞİıÖŞÜ]*$/i
+};
+var alphaSpaces = {
+    en: /^[A-Z\s]*$/i,
+    cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ\s]*$/i,
+    da: /^[A-ZÆØÅ\s]*$/i,
+    de: /^[A-ZÄÖÜß\s]*$/i,
+    es: /^[A-ZÁÉÍÑÓÚÜ\s]*$/i,
+    fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ\s]*$/i,
+    it: /^[A-Z\xC0-\xFF\s]*$/i,
+    lt: /^[A-ZĄČĘĖĮŠŲŪŽ\s]*$/i,
+    nl: /^[A-ZÉËÏÓÖÜ\s]*$/i,
+    hu: /^[A-ZÁÉÍÓÖŐÚÜŰ\s]*$/i,
+    pl: /^[A-ZĄĆĘŚŁŃÓŻŹ\s]*$/i,
+    pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ\s]*$/i,
+    ru: /^[А-ЯЁ\s]*$/i,
+    sk: /^[A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ\s]*$/i,
+    sr: /^[A-ZČĆŽŠĐ\s]*$/i,
+    sv: /^[A-ZÅÄÖ\s]*$/i,
+    tr: /^[A-ZÇĞİıÖŞÜ\s]*$/i,
+    uk: /^[А-ЩЬЮЯЄІЇҐ\s]*$/i,
+    ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ\s]*$/,
+    az: /^[A-ZÇƏĞİıÖŞÜ\s]*$/i
+};
+var alphanumeric = {
+    en: /^[0-9A-Z]*$/i,
+    cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+    da: /^[0-9A-ZÆØÅ]$/i,
+    de: /^[0-9A-ZÄÖÜß]*$/i,
+    es: /^[0-9A-ZÁÉÍÑÓÚÜ]*$/i,
+    fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+    it: /^[0-9A-Z\xC0-\xFF]*$/i,
+    lt: /^[0-9A-ZĄČĘĖĮŠŲŪŽ]*$/i,
+    hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+    nl: /^[0-9A-ZÉËÏÓÖÜ]*$/i,
+    pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+    pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+    ru: /^[0-9А-ЯЁ]*$/i,
+    sk: /^[0-9A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ]*$/i,
+    sr: /^[0-9A-ZČĆŽŠĐ]*$/i,
+    sv: /^[0-9A-ZÅÄÖ]*$/i,
+    tr: /^[0-9A-ZÇĞİıÖŞÜ]*$/i,
+    uk: /^[0-9А-ЩЬЮЯЄІЇҐ]*$/i,
+    ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
+    az: /^[0-9A-ZÇƏĞİıÖŞÜ]*$/i
+};
+var alphaDash = {
+    en: /^[0-9A-Z_-]*$/i,
+    cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_-]*$/i,
+    da: /^[0-9A-ZÆØÅ_-]*$/i,
+    de: /^[0-9A-ZÄÖÜß_-]*$/i,
+    es: /^[0-9A-ZÁÉÍÑÓÚÜ_-]*$/i,
+    fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ_-]*$/i,
+    it: /^[0-9A-Z\xC0-\xFF_-]*$/i,
+    lt: /^[0-9A-ZĄČĘĖĮŠŲŪŽ_-]*$/i,
+    nl: /^[0-9A-ZÉËÏÓÖÜ_-]*$/i,
+    hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ_-]*$/i,
+    pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ_-]*$/i,
+    pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ_-]*$/i,
+    ru: /^[0-9А-ЯЁ_-]*$/i,
+    sk: /^[0-9A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ_-]*$/i,
+    sr: /^[0-9A-ZČĆŽŠĐ_-]*$/i,
+    sv: /^[0-9A-ZÅÄÖ_-]*$/i,
+    tr: /^[0-9A-ZÇĞİıÖŞÜ_-]*$/i,
+    uk: /^[0-9А-ЩЬЮЯЄІЇҐ_-]*$/i,
+    ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ_-]*$/,
+    az: /^[0-9A-ZÇƏĞİıÖŞÜ_-]*$/i
+};
+
+var validate = function (value, _a) {
+    var _b = (_a === void 0 ? {} : _a).locale, locale = _b === void 0 ? '' : _b;
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate(val, { locale: locale }); });
+    }
+    // Match at least one locale.
+    if (!locale) {
+        return Object.keys(alpha).some(function (loc) { return alpha[loc].test(value); });
+    }
+    return (alpha[locale] || alpha.en).test(value);
+};
+var params = [
+    {
+        name: 'locale'
+    }
+];
+var alpha$1 = {
+    validate: validate,
+    params: params
+};
+
+var validate$1 = function (value, _a) {
+    var _b = (_a === void 0 ? {} : _a).locale, locale = _b === void 0 ? '' : _b;
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$1(val, { locale: locale }); });
+    }
+    // Match at least one locale.
+    if (!locale) {
+        return Object.keys(alphaDash).some(function (loc) { return alphaDash[loc].test(value); });
+    }
+    return (alphaDash[locale] || alphaDash.en).test(value);
+};
+var params$1 = [
+    {
+        name: 'locale'
+    }
+];
+var alpha_dash = {
+    validate: validate$1,
+    params: params$1
+};
+
+var validate$2 = function (value, _a) {
+    var _b = (_a === void 0 ? {} : _a).locale, locale = _b === void 0 ? '' : _b;
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$2(val, { locale: locale }); });
+    }
+    // Match at least one locale.
+    if (!locale) {
+        return Object.keys(alphanumeric).some(function (loc) { return alphanumeric[loc].test(value); });
+    }
+    return (alphanumeric[locale] || alphanumeric.en).test(value);
+};
+var params$2 = [
+    {
+        name: 'locale'
+    }
+];
+var alpha_num = {
+    validate: validate$2,
+    params: params$2
+};
+
+var validate$3 = function (value, _a) {
+    var _b = (_a === void 0 ? {} : _a).locale, locale = _b === void 0 ? '' : _b;
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$3(val, { locale: locale }); });
+    }
+    // Match at least one locale.
+    if (!locale) {
+        return Object.keys(alphaSpaces).some(function (loc) { return alphaSpaces[loc].test(value); });
+    }
+    return (alphaSpaces[locale] || alphaSpaces.en).test(value);
+};
+var params$3 = [
+    {
+        name: 'locale'
+    }
+];
+var alpha_spaces = {
+    validate: validate$3,
+    params: params$3
+};
+
+var validate$4 = function (value, _a) {
+    var _b = _a === void 0 ? {} : _a, min = _b.min, max = _b.max;
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return !!validate$4(val, { min: min, max: max }); });
+    }
+    return Number(min) <= value && Number(max) >= value;
+};
+var params$4 = [
+    {
+        name: 'min'
+    },
+    {
+        name: 'max'
+    }
+];
+var between = {
+    validate: validate$4,
+    params: params$4
+};
+
+var validate$5 = function (value, _a) {
+    var target = _a.target;
+    return String(value) === String(target);
+};
+var params$5 = [
+    {
+        name: 'target',
+        isTarget: true
+    }
+];
+var confirmed = {
+    validate: validate$5,
+    params: params$5
+};
+
+var validate$6 = function (value, _a) {
+    var length = _a.length;
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$6(val, { length: length }); });
+    }
+    var strVal = String(value);
+    return /^[0-9]*$/.test(strVal) && strVal.length === length;
+};
+var params$6 = [
+    {
+        name: 'length',
+        cast: function (value) {
+            return Number(value);
+        }
+    }
+];
+var digits = {
+    validate: validate$6,
+    params: params$6
+};
+
+var validateImage = function (file, width, height) {
+    var URL = window.URL || window.webkitURL;
+    return new Promise(function (resolve) {
+        var image = new Image();
+        image.onerror = function () { return resolve(false); };
+        image.onload = function () { return resolve(image.width === width && image.height === height); };
+        image.src = URL.createObjectURL(file);
+    });
+};
+var validate$7 = function (files, _a) {
+    var width = _a.width, height = _a.height;
+    var list = [];
+    files = Array.isArray(files) ? files : [files];
+    for (var i = 0; i < files.length; i++) {
+        // if file is not an image, reject.
+        if (!/\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(files[i].name)) {
+            return Promise.resolve(false);
+        }
+        list.push(files[i]);
+    }
+    return Promise.all(list.map(function (file) { return validateImage(file, width, height); })).then(function (values) {
+        return values.every(function (v) { return v; });
+    });
+};
+var params$7 = [
+    {
+        name: 'width',
+        cast: function (value) {
+            return Number(value);
+        }
+    },
+    {
+        name: 'height',
+        cast: function (value) {
+            return Number(value);
+        }
+    }
+];
+var dimensions = {
+    validate: validate$7,
+    params: params$7
+};
+
+var validate$8 = function (value, _a) {
+    var multiple = (_a === void 0 ? {} : _a).multiple;
+    // eslint-disable-next-line
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (multiple && !Array.isArray(value)) {
+        value = String(value)
+            .split(',')
+            .map(function (emailStr) { return emailStr.trim(); });
+    }
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return re.test(String(val)); });
+    }
+    return re.test(String(value));
+};
+var params$8 = [
+    {
+        name: 'multiple',
+        default: false
+    }
+];
+var email = {
+    validate: validate$8,
+    params: params$8
+};
+
+/**
+ * Checks if the values are either null or undefined.
+ */
+var isNullOrUndefined = function (value) {
+    return value === null || value === undefined;
+};
+var includes = function (collection, item) {
+    return collection.indexOf(item) !== -1;
+};
+/**
+ * Checks if a function is callable.
+ */
+var isCallable = function (func) { return typeof func === 'function'; };
+/* istanbul ignore next */
+function _copyArray(arrayLike) {
+    var array = [];
+    var length = arrayLike.length;
+    for (var i = 0; i < length; i++) {
+        array.push(arrayLike[i]);
+    }
+    return array;
+}
+/**
+ * Converts an array-like object to array, provides a simple polyfill for Array.from
+ */
+function toArray(arrayLike) {
+    if (isCallable(Array.from)) {
+        return Array.from(arrayLike);
+    }
+    /* istanbul ignore next */
+    return _copyArray(arrayLike);
+}
+var isEmptyArray = function (arr) {
+    return Array.isArray(arr) && arr.length === 0;
+};
+
+var validate$9 = function (value, options) {
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$9(val, options); });
+    }
+    return toArray(options).some(function (item) {
+        // eslint-disable-next-line
+        return item == value;
+    });
+};
+var oneOf = {
+    validate: validate$9
+};
+
+var validate$a = function (value, args) {
+    return !validate$9(value, args);
+};
+var excluded = {
+    validate: validate$a
+};
+
+var validate$b = function (files, extensions) {
+    var regex = new RegExp(".(" + extensions.join('|') + ")$", 'i');
+    if (Array.isArray(files)) {
+        return files.every(function (file) { return regex.test(file.name); });
+    }
+    return regex.test(files.name);
+};
+var ext = {
+    validate: validate$b
+};
+
+var validate$c = function (files) {
+    var regex = /\.(jpg|svg|jpeg|png|bmp|gif)$/i;
+    if (Array.isArray(files)) {
+        return files.every(function (file) { return regex.test(file.name); });
+    }
+    return regex.test(files.name);
+};
+var image = {
+    validate: validate$c
+};
+
+var validate$d = function (value) {
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return /^-?[0-9]+$/.test(String(val)); });
+    }
+    return /^-?[0-9]+$/.test(String(value));
+};
+var integer = {
+    validate: validate$d
+};
+
+var validate$e = function (value, _a) {
+    var other = _a.other;
+    return value === other;
+};
+var params$9 = [
+    {
+        name: 'other'
+    }
+];
+var is = {
+    validate: validate$e,
+    params: params$9
+};
+
+var validate$f = function (value, _a) {
+    var other = _a.other;
+    return value !== other;
+};
+var params$a = [
+    {
+        name: 'other'
+    }
+];
+var is_not = {
+    validate: validate$f,
+    params: params$a
+};
+
+var validate$g = function (value, _a) {
+    var length = _a.length;
+    if (isNullOrUndefined(value)) {
+        return false;
+    }
+    if (typeof value === 'number') {
+        value = String(value);
+    }
+    if (!value.length) {
+        value = toArray(value);
+    }
+    return value.length === length;
+};
+var params$b = [
+    {
+        name: 'length',
+        cast: function (value) { return Number(value); }
+    }
+];
+var length = {
+    validate: validate$g,
+    params: params$b
+};
+
+var validate$h = function (value, _a) {
+    var length = _a.length;
+    if (isNullOrUndefined(value)) {
+        return length >= 0;
+    }
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$h(val, { length: length }); });
+    }
+    return String(value).length <= length;
+};
+var params$c = [
+    {
+        name: 'length',
+        cast: function (value) {
+            return Number(value);
+        }
+    }
+];
+var max = {
+    validate: validate$h,
+    params: params$c
+};
+
+var validate$i = function (value, _a) {
+    var max = _a.max;
+    if (isNullOrUndefined(value) || value === '') {
+        return false;
+    }
+    if (Array.isArray(value)) {
+        return value.length > 0 && value.every(function (val) { return validate$i(val, { max: max }); });
+    }
+    return Number(value) <= max;
+};
+var params$d = [
+    {
+        name: 'max',
+        cast: function (value) {
+            return Number(value);
+        }
+    }
+];
+var max_value = {
+    validate: validate$i,
+    params: params$d
+};
+
+var validate$j = function (files, mimes) {
+    var regex = new RegExp(mimes.join('|').replace('*', '.+') + "$", 'i');
+    if (Array.isArray(files)) {
+        return files.every(function (file) { return regex.test(file.type); });
+    }
+    return regex.test(files.type);
+};
+var mimes = {
+    validate: validate$j
+};
+
+var validate$k = function (value, _a) {
+    var length = _a.length;
+    if (isNullOrUndefined(value)) {
+        return false;
+    }
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$k(val, { length: length }); });
+    }
+    return String(value).length >= length;
+};
+var params$e = [
+    {
+        name: 'length',
+        cast: function (value) {
+            return Number(value);
+        }
+    }
+];
+var min = {
+    validate: validate$k,
+    params: params$e
+};
+
+var validate$l = function (value, _a) {
+    var min = _a.min;
+    if (isNullOrUndefined(value) || value === '') {
+        return false;
+    }
+    if (Array.isArray(value)) {
+        return value.length > 0 && value.every(function (val) { return validate$l(val, { min: min }); });
+    }
+    return Number(value) >= min;
+};
+var params$f = [
+    {
+        name: 'min',
+        cast: function (value) {
+            return Number(value);
+        }
+    }
+];
+var min_value = {
+    validate: validate$l,
+    params: params$f
+};
+
+var ar = /^[٠١٢٣٤٥٦٧٨٩]+$/;
+var en = /^[0-9]+$/;
+var validate$m = function (value) {
+    var testValue = function (val) {
+        var strValue = String(val);
+        return en.test(strValue) || ar.test(strValue);
+    };
+    if (Array.isArray(value)) {
+        return value.every(testValue);
+    }
+    return testValue(value);
+};
+var numeric = {
+    validate: validate$m
+};
+
+var validate$n = function (value, _a) {
+    var regex = _a.regex;
+    if (Array.isArray(value)) {
+        return value.every(function (val) { return validate$n(val, { regex: regex }); });
+    }
+    return regex.test(String(value));
+};
+var params$g = [
+    {
+        name: 'regex',
+        cast: function (value) {
+            if (typeof value === 'string') {
+                return new RegExp(value);
+            }
+            return value;
+        }
+    }
+];
+var regex = {
+    validate: validate$n,
+    params: params$g
+};
+
+var validate$o = function (value, _a) {
+    var allowFalse = (_a === void 0 ? { allowFalse: true } : _a).allowFalse;
+    var result = {
+        valid: false,
+        required: true
+    };
+    if (isNullOrUndefined(value) || isEmptyArray(value)) {
+        return result;
+    }
+    // incase a field considers `false` as an empty value like checkboxes.
+    if (value === false && !allowFalse) {
+        return result;
+    }
+    result.valid = !!String(value).trim().length;
+    return result;
+};
+var computesRequired = true;
+var params$h = [
+    {
+        name: 'allowFalse',
+        default: true
+    }
+];
+var required = {
+    validate: validate$o,
+    params: params$h,
+    computesRequired: computesRequired
+};
+
+var testEmpty = function (value) {
+    return isEmptyArray(value) || includes([false, null, undefined], value) || !String(value).trim().length;
+};
+var validate$p = function (value, _a) {
+    var target = _a.target, values = _a.values;
+    var required;
+    if (values && values.length) {
+        if (!Array.isArray(values) && typeof values === 'string') {
+            values = [values];
+        }
+        // eslint-disable-next-line
+        required = values.some(function (val) { return val == String(target).trim(); });
+    }
+    else {
+        required = !testEmpty(target);
+    }
+    if (!required) {
+        return {
+            valid: true,
+            required: required
+        };
+    }
+    return {
+        valid: !testEmpty(value),
+        required: required
+    };
+};
+var params$i = [
+    {
+        name: 'target',
+        isTarget: true
+    },
+    {
+        name: 'values'
+    }
+];
+var computesRequired$1 = true;
+var required_if = {
+    validate: validate$p,
+    params: params$i,
+    computesRequired: computesRequired$1
+};
+
+var validate$q = function (files, _a) {
+    var size = _a.size;
+    if (isNaN(size)) {
+        return false;
+    }
+    var nSize = size * 1024;
+    if (!Array.isArray(files)) {
+        return files.size <= nSize;
+    }
+    for (var i = 0; i < files.length; i++) {
+        if (files[i].size > nSize) {
+            return false;
+        }
+    }
+    return true;
+};
+var params$j = [
+    {
+        name: 'size',
+        cast: function (value) {
+            return Number(value);
+        }
+    }
+];
+var size = {
+    validate: validate$q,
+    params: params$j
+};
+
+
+
+
+/***/ }),
+/* 271 */
+/***/ (function(module, exports) {
+
+module.exports = {"code":"en","messages":{"alpha":"The {_field_} field may only contain alphabetic characters","alpha_num":"The {_field_} field may only contain alpha-numeric characters","alpha_dash":"The {_field_} field may contain alpha-numeric characters as well as dashes and underscores","alpha_spaces":"The {_field_} field may only contain alphabetic characters as well as spaces","between":"The {_field_} field must be between {min} and {max}","confirmed":"The {_field_} field confirmation does not match","digits":"The {_field_} field must be numeric and exactly contain {length} digits","dimensions":"The {_field_} field must be {width} pixels by {height} pixels","email":"The {_field_} field must be a valid email","excluded":"The {_field_} field is not a valid value","ext":"The {_field_} field is not a valid file","image":"The {_field_} field must be an image","integer":"The {_field_} field must be an integer","length":"The {_field_} field must be {length} long","max_value":"The {_field_} field must be {max} or less","max":"The {_field_} field may not be greater than {length} characters","mimes":"The {_field_} field must have a valid file type","min_value":"The {_field_} field must be {min} or more","min":"The {_field_} field must be at least {length} characters","numeric":"The {_field_} field may only contain numeric characters","oneOf":"The {_field_} field is not a valid value","regex":"The {_field_} field format is invalid","required_if":"The {_field_} field is required","required":"The {_field_} field is required","size":"The {_field_} field size must be less than {size}KB"}}
+
+/***/ }),
+/* 272 */
+/***/ (function(module, exports) {
+
+module.exports = {"code":"fr","messages":{"alpha":"Le champ {_field_} ne peut contenir que des lettres","alpha_num":"Le champ {_field_} ne peut contenir que des caractères alpha-numériques","alpha_dash":"Le champ {_field_} ne peut contenir que des caractères alpha-numériques, tirets ou soulignés","alpha_spaces":"Le champ {_field_} ne peut contenir que des lettres ou des espaces","between":"Le champ {_field_} doit être compris entre {min} et {max}","confirmed":"Le champ {_field_} ne correspond pas à {target}","digits":"Le champ {_field_} doit être un nombre entier de {length} chiffres","dimensions":"Le champ {_field_} doit avoir une taille de {width} pixels par {height} pixels","email":"Le champ {_field_} doit être une adresse e-mail valide","excluded":"Le champ {_field_} doit être une valeur valide","ext":"Le champ {_field_} doit être un fichier valide","image":"Le champ {_field_} doit être une image","integer":"Le champ {_field_} doit être un entier","length":"Le champ {_field_} doit contenir {length} caractères","max_value":"Le champ {_field_} doit avoir une valeur de {max} ou moins","max":"Le champ {_field_} ne peut pas contenir plus de {length} caractères","mimes":"Le champ {_field_} doit avoir un type MIME valide","min_value":"Le champ {_field_} doit avoir une valeur de {min} ou plus","min":"Le champ {_field_} doit contenir au minimum {length} caractères","numeric":"Le champ {_field_} ne peut contenir que des chiffres","oneOf":"Le champ {_field_} doit être une valeur valide","regex":"Le champ {_field_} est invalide","required":"Le champ {_field_} est obligatoire","required_if":"Le champ {_field_} est obligatoire lorsque {target} possède cette valeur","size":"Le champ {_field_} doit avoir un poids inférieur à {size}KB"}}
 
 /***/ })
 /******/ ]);
