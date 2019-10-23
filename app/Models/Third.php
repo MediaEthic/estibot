@@ -17,6 +17,7 @@ class Third extends Model
         'address_line2',
         'address_line3',
         'zipcode',
+        'settlement_id',
         'city',
         'country_id',
     ];
@@ -64,6 +65,14 @@ class Third extends Model
     public function setCityAttribute($value)
     {
         $this->attributes['city'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    /**
+     * Get the settlement of the third.
+     */
+    public function settlement()
+    {
+        return $this->belongsTo(Settlement::class)->withDefault();
     }
 
     /**

@@ -25,27 +25,32 @@ class CreateCompaniesTable extends Migration
             $table->string('address_line3', 38)->nullable()->default(null);
             $table->string('zipcode', 38)->nullable()->default(null);
             $table->string('city', 38)->nullable()->default(null);
-            $table->unsignedInteger('country_id')->nullable()->default('75');
+            $table->unsignedInteger('country_id')->nullable()->default(75);
 //            $table->foreign('country_id')
 //                ->references('id')
 //                ->on('countries')
 //                ->onDelete('restrict')
 //                ->onUpdate('restrict');
-            $table->unsignedInteger('language_id')->nullable()->default('47');
+            $table->unsignedInteger('language_id')->nullable()->default(47);
 //            $table->foreign('language_id')
 //                ->references('id')
 //                ->on('languages')
 //                ->onDelete('restrict')
 //                ->onUpdate('restrict');
-            $table->unsignedInteger('time_zone_id')->nullable()->default('40');
+            $table->unsignedInteger('time_zone_id')->nullable()->default(40);
 //            $table->foreign('time_zone_id')
 //                ->references('id')
 //                ->on('time_zones')
 //                ->onDelete('restrict')
 //                ->onUpdate('restrict');
             $table->string('legal_form', 45)->nullable()->default(null);
+            $table->string('capital', 45)->nullable()->default(null);
+            $table->string('register', 45)->nullable()->default(null);
             $table->string('siret', 45)->nullable()->default(null);
             $table->string('tva', 45)->nullable()->default(null);
+            $table->unsignedTinyInteger('settlement_id')->nullable()->default('1');
+            $table->unsignedInteger('duration_number')->nullable()->default(1);
+            $table->enum('duration_format', ['month', 'day'])->default('month');
             $table->text('head_quotation')->nullable()->default(null);
             $table->text('foot_quotation')->nullable()->default(null);
             $table->text('gsc')->nullable()->default(null);
@@ -61,11 +66,11 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-//        Schema::table('companies', function (Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
 //            $table->dropForeign(['country_id']);
 //            $table->dropForeign(['language_id']);
 //            $table->dropForeign(['time_zone_id']);
-//        });
+        });
 
         Schema::dropIfExists('companies');
     }

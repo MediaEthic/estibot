@@ -23,12 +23,19 @@ class CreateThirdsTable extends Migration
             $table->string('address_line3', 38)->nullable()->default(null);
             $table->string('zipcode', 38)->nullable()->default(null);
             $table->string('city', 38)->nullable()->default(null);
-            $table->unsignedInteger('country_id')->nullable()->default('74');
-            $table->boolean('active')->default(true);
-
+            $table->unsignedTinyInteger('settlement_id')->nullable()->default(1);
+//            $table->foreign('settlement_id')
+//                ->references('id')
+//                ->on('settlements')
+//                ->onDelete('restrict')
+//                ->onUpdate('restrict');
+            $table->unsignedInteger('country_id')->nullable()->default(74);
 //            $table->foreign('country_id')
 //                ->references('id')
-//                ->on('countries');
+//                ->on('countries')
+//                ->onDelete('restrict')
+//                ->onUpdate('restrict');
+            $table->boolean('active')->default(true);
         });
     }
 
@@ -39,9 +46,10 @@ class CreateThirdsTable extends Migration
      */
     public function down()
     {
-//        Schema::table('thirds', function (Blueprint $table) {
+        Schema::table('thirds', function (Blueprint $table) {
+//            $table->dropForeign(['settlement_id']);
 //            $table->dropForeign(['country_id']);
-//        });
+        });
 
         Schema::dropIfExists('thirds');
     }

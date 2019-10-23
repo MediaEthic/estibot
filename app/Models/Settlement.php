@@ -38,6 +38,22 @@ class Settlement extends Model
 
 
     /**
+     * Get all of the thirds for the settlement.
+     */
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
+    }
+
+    /**
+     * Get all of the thirds for the settlement.
+     */
+    public function thirds()
+    {
+        return $this->hasMany(Third::class);
+    }
+
+    /**
      * Get all of the quotations for the settlement.
      */
     public function quotations()

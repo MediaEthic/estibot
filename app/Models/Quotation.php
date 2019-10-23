@@ -22,7 +22,10 @@ class Quotation extends Model
         'label_type',
         'label_id',
         'delivery_date',
+        'duration_number',
+        'duration_format',
         'validity',
+        'settlement_id',
         'cost',
         'thousand',
         'quantity',
@@ -32,7 +35,6 @@ class Quotation extends Model
         'price',
         'workflow',
         'datas_price',
-        'settlement_id',
         'status_id',
     ];
 

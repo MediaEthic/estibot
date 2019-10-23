@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call('QuotesTableSeeder');
         $this->call('CompaniesTableSeeder');
         $this->call('UsersTableSeeder');
+        $this->call('SettlementsTableSeeder');
         $this->call('ThirdsTableSeeder');
         $this->call('ContactsTableSeeder');
         $this->call('PrepressesTableSeeder');
@@ -26,7 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call('SubstratesTableSeeder');
         $this->call('LabelsTableSeeder');
         $this->call('StatusesTableSeeder');
-        $this->call('SettlementsTableSeeder');
         $this->call('QuotationsTableSeeder');
 
 

@@ -24,6 +24,10 @@ class StatusesTableSeeder extends Seeder
         ]);
 
         DB::table('statuses')->insert([
+            'name' => 'Devis transformé',
+        ]);
+
+        DB::table('statuses')->insert([
             'name' => 'Devis archivé',
         ]);
     }

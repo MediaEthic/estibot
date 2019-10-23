@@ -43,8 +43,13 @@ class Company extends Model
         'language_id',
         'time_zone_id',
         'legal_form',
+        'capital',
+        'register',
         'siret',
         'tva',
+        'settlement_id',
+        'duration_number',
+        'duration_format',
         'head_quotation',
         'foot_quotation',
         'gsc',
@@ -130,6 +135,14 @@ class Company extends Model
     public function timezone()
     {
         return $this->belongsTo(TimeZone::class);
+    }
+
+    /**
+     * Get the settlement of the company.
+     */
+    public function settlement()
+    {
+        return $this->belongsTo(Settlement::class);
     }
 
     /**
