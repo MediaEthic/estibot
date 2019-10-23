@@ -171,7 +171,6 @@ export default new Vuex.Store({
                     email: credentials.email,
                     password: credentials.password
                 }).then(response => {
-                    console.log(response);
                     localStorage.setItem("token", response.data.token);
                     context.commit("login", response.data.token);
                     localStorage.setItem("user", response.data.user.name);
@@ -186,10 +185,14 @@ export default new Vuex.Store({
         },
         logout(context) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            console.log(context.getters.loggedIn);
             if (context.getters.loggedIn) {
                 return new Promise((resolve, reject) => {
-                    axios.post('/api/auth/logout').then(response => {
+                    axios.post('/api/auth/logout', { // quotations.price
+                        token: context.state.token,
+                    }).then(response => {
                         localStorage.removeItem("token");
+                        localStorage.removeItem("user");
                         context.commit("logout");
                         resolve(response);
                     }).catch(error => {
@@ -293,8 +296,16 @@ export default new Vuex.Store({
         },
         async generatePDF(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = await axios.get('/api/auth/quotations/' + credentials.id + '/pdf'); // quotations.edit
+            let data = await axios.get('/api/auth/quotations/' + credentials.id + '/pdf'); // quotations.generatePDF
             console.log(data)
+        },
+        async sendEmail(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            let data = await axios.post('/api/auth/quotations/' + credentials.quotation.id + '/email', { // quotations.sendEmail
+                quotation: credentials.quotation
+            });
+            console.log("sendEmail data");
+            console.log(data.data);
         },
     },
 })

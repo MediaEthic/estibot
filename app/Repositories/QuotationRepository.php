@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\{Consumable,
+use App\Models\{
+    Consumable,
     Contact,
     Cutting,
     Finishing,
@@ -12,10 +13,14 @@ use App\Models\{Consumable,
     Printing,
     Quantity,
     Quotation,
+    Settlement,
     Substrate,
     Third};
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMailable;
 
 class QuotationRepository
 {
@@ -35,10 +40,11 @@ class QuotationRepository
 
     public function getById($id)
     {
-        $quotation = $this->model->with('user', 'third', 'contact', 'quantities')
+        $quotation = $this->model->with('user', 'third', 'contact', 'label', 'quantities', 'status')
             ->findOrFail($id);
 
         $quotation['contacts'] = Contact::where('third_id', $quotation->third_id)->get();
+        $quotation['settlements'] = Settlement::get();
         return $quotation;
     }
 
@@ -50,6 +56,8 @@ class QuotationRepository
         if (!empty($inputs['addressLine3'])) $model->address_line3 = $inputs['addressLine3'];
         if (!empty($inputs['zipcode'])) $model->zipcode = $inputs['zipcode'];
         if (!empty($inputs['city'])) $model->city = $inputs['city'];
+        $modelCompany = Auth::user()->company;
+        $model->settlement_id = $modelCompany->settlement_id;
         $model->save();
 
         return $model;
@@ -145,8 +153,19 @@ class QuotationRepository
         if (!empty($contact)) $model->contact_id = $contact;
         if ($inputs['description']['label']['ethic']) $model->label_type = "ethic";
         if (!empty($label)) $model->label_id = $label;
+//        TODO : to add duration
         $validityDate = date('Y-m-d', strtotime("+3 months"));
         $model->validity = $validityDate;
+
+        $modelCompany = $user->company;
+        $settlementID = $modelCompany->settlement_id;
+
+        if (!$inputs['identification']['third']['ethic']) {
+            $modelThird = Third::findOrFail($third);
+            $settlementID = $modelThird->settlement_id;
+        }
+
+        $model->settlement_id = $settlementID;
 
         $allTotalCosts = array();
         $allQuantities = array();
@@ -170,6 +189,8 @@ class QuotationRepository
         $model->price = round($subtotal + $vat_price, 2);
         $model->workflow = json_encode($inputs);
         $model->datas_price = json_encode($price);
+        $model->body_email = $modelCompany->body_email;
+
         $model->save();
         return $model;
     }
@@ -180,7 +201,7 @@ class QuotationRepository
         $model->quantity = $inputs['datas']['copies'];
         $model->models = $inputs['datas']['models'];
         $model->plates = $inputs['datas']['plates'];
-        $model->prepress = $inputs['datas']['prepress'];
+        if (floatval($inputs['datas']['prepress']) > 0) $model->prepress = $inputs['datas']['prepress'];
         $model->time = $inputs['totals']['totalTimes'];
         $model->weight = $inputs['totals']['weight'];
         $model->cost = $inputs['totals']['totalCosts']; // prix de revient
@@ -552,6 +573,8 @@ class QuotationRepository
                                 }
                             }
                         }
+                    } else {
+                        $results['quantities'][$copies]['datas']['prepress'] = 0;
                     }
 
 
@@ -849,10 +872,13 @@ class QuotationRepository
         $model->update([
             'description' => $description,
             'validity' => $validityDate,
+            'settlement_id' => $inputs['quotation']['settlement_id'],
             'cost' => $inputs['quotation']['cost'],
             'thousand' => $inputs['quotation']['thousand'],
             'vat_price' => $inputs['quotation']['vat_price'],
             'price' => $inputs['quotation']['price'],
+            'subject_email' => $inputs['quotation']['subject_email'],
+            'body_email' => $inputs['quotation']['body_email'],
         ]);
 
         $vat = $model->vat;
@@ -886,5 +912,72 @@ class QuotationRepository
         }
         Quotation::findOrFail($id)->delete();
         return $this->getPaginate();
+    }
+
+    public function sendEmail($id, Array $inputs)
+    {
+        $modelQuotation = Quotation::find($id);
+
+        $inputsQuotation = $inputs['quotation'];
+
+        $validator = \Validator::make($inputsQuotation, [
+            'subject_email'    => 'required|string',
+            'body_email' => 'required|string',
+        ]);
+
+
+        // TODO : ask if register if email changed
+        $inputsQuotationContact = $inputsQuotation['contact'];
+
+        $validatorEmail = \Validator::make($inputsQuotationContact, [
+            'email'    => 'required|email',
+        ]);
+
+        $validatorErrors = array();
+        if ($validator->fails() || $validatorEmail->fails()) {
+            if ($validator->fails()) {
+                $validatorErrors[] = $validator->errors();
+            }
+
+            if ($validatorEmail->fails()) {
+                $validatorErrors[] = $validatorEmail->errors();
+            }
+            return response()->json($validatorErrors, 500);;
+        } else {
+            if ($modelQuotation->status_id === 1) {
+                $status = 2;
+            } else if ($modelQuotation->status_id === 2) {
+                $status = 3;
+            } else {
+                $status = 3;
+            }
+
+            if ($modelQuotation) {
+                $modelQuotation->subject_email = $inputsQuotation['subject_email'];
+                $modelQuotation->body_email = $inputsQuotation['body_email'];
+                $modelQuotation->status_id = $status;
+                $modelQuotation->save();
+            }
+
+            $emailTo = $inputsQuotation['contact']['email'];
+
+            $quotation = $this->getById($id);
+
+            try {
+                Mail::to($emailTo)->send(new SendMailable($quotation));
+            } catch(\Tymon\JWTAuth\Exceptions\JWTException $exception) {
+                $this->serverstatuscode = "0";
+                $this->serverstatusdes = $exception->getMessage();
+            }
+            if (Mail::failures()) {
+                $this->statusdesc  =   "Error sending mail";
+                $this->statuscode  =   "0";
+
+            } else{
+                $this->statusdesc  =   "Message sent Succesfully";
+                $this->statuscode  =   "1";
+            }
+            return response()->json(compact('this'), 200);
+        }
     }
 }

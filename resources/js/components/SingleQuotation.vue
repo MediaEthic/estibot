@@ -1,9 +1,9 @@
 <template>
     <div>
         <main class="wrap-main-content">
+            <Loader v-if="loading" />
             <div class="wrap-head-page">
-                <header class="wrap-main-header"
-                        :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
+                <header class="wrap-main-header">
                     <router-link class="go-back"
                                  tag="a"
                                  :to="{ name: 'quotations.index' }">
@@ -16,44 +16,82 @@
                         <label for="options-toggler" class="fas fa-cog"></label>
                         <ul class="list-actions">
                             <li class="action-item"><a :href="'/api/auth/quotations/' + quotation.id + '/pdf'" target="_blank"><i class="fas fa-print action-event"></i><span>Imprimer</span></a></li>
+                            <li class="action-item" @click="showModal = true"><i class="fas fa-paper-plane action-event"></i><span>Envoyer par e-mail</span></li>
                             <router-link tag="li" :to="{ name: 'quotations.edit', params: { id: quotation.id } }" class="action-item"><i class="fas fa-edit action-event"></i><span>Modifier</span></router-link>
 <!--                            <li class="action-item"><i class="fas fa-copy action-event"></i><span>Dupliquer</span></li>-->
                             <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt action-event"></i><span>Supprimer</span></li>
                         </ul>
                     </div>
-                    <ul class="list-details-quotation">
-                        <li class="item-detail-quotation">
-                            <i class="fas fa-user-tie"></i>
-                            <address>
-                                <span v-for="line in third">
-                                    {{ line }}
-                                    <br>
-                                </span>
-                            </address>
-                        </li>
-                        <li class="item-detail-quotation">
-                            <i class="far fa-calendar-plus"></i>
-                            <p>Date de création : <time :datetime="quotation.created_at">{{ getHumanDate(quotation.created_at) }}</time></p>
-                        </li>
-                        <li class="item-detail-quotation">
-                            <i class="far fa-calendar-check"></i>
-                            <p>Date de modification : <time :datetime="quotation.created_at">{{ getHumanDate(quotation.updated_at) }}</time></p>
-                        </li>
-                        <li class="item-detail-quotation">
-                            <i class="fas fa-hourglass-half"></i>
-                            <p>Fin de validité  : <time :datetime="quotation.validity">{{ getHumanDate(quotation.validity) }}</time></p>
-                        </li>
-                        <li class="item-detail-quotation">
-                            <i class="fas fa-user"></i>
-                            <p>Suivi par {{ quotation.user.name }} {{ quotation.user.surname }}</p>
-                        </li>
-                    </ul>
+                    <div class="wrap-list-details-quotation">
+                        <ul class="list-details-quotation">
+                            <li class="item-detail-quotation">
+                                <i class="fas fa-user-tie"></i>
+                                <address>
+                                    <span v-for="line in third">
+                                        {{ line }}
+                                        <br>
+                                    </span>
+                                </address>
+                            </li>
+                            <li class="item-detail-quotation">
+                                <div class="wrap-field h-50">
+                                    <select v-model="quotation.settlement_id"
+                                            @focus="form.hasFocus = true"
+                                            @blur="form.hasFocus = false"
+                                            @animationstart="checkAnimation"
+                                            class="field select"
+                                            :class="{ hasValue: quotation.settlement_id }">
+                                        <option v-for="settlement in quotation.settlements"
+                                                v-bind:value="settlement.id">
+                                            {{ settlement.name }}
+                                        </option>
+                                    </select>
+                                    <span class="focus-field"></span>
+                                    <label class="label-field">Conditions de règlement</label>
+                                    <span class="symbol-left-field"><i class="fas fa-money-check"></i></span>
+                                </div>
+                            </li>
+                            <li class="item-detail-quotation">
+                                <i class="fas fa-user"></i>
+                                <p>Suivi par {{ user.name }} {{ user.surname }}</p>
+                            </li>
+
+    <!--                        <li class="item-detail-quotation">-->
+    <!--                            <i class="fas fa-spinner"></i>-->
+    <!--                            <p>État : {{ quotation.status.name }}</p>-->
+    <!--                        </li>-->
+                        </ul>
+                        <ul class="list-details-quotation">
+                            <li class="item-detail-quotation">
+                                <i class="far fa-calendar-plus"></i>
+                                <p>Date de création : <time :datetime="quotation.created_at">{{ getHumanDate(quotation.created_at) }}</time></p>
+                            </li>
+                            <li class="item-detail-quotation">
+                                <i class="far fa-calendar-check"></i>
+                                <p>Date de modification : <time :datetime="quotation.updated_at">{{ getHumanDate(quotation.updated_at) }}</time></p>
+                            </li>
+    <!--                        <li class="item-detail-quotation">-->
+    <!--                            <i class="fas fa-hourglass-half"></i>-->
+    <!--                            <label>Durée de validité :</label>-->
+    <!--                            <input type="number" class="editable" step="1">-->
+    <!--                            <select id="settlement"-->
+    <!--                                    class="editable">-->
+    <!--                                <option value="month">mois</option>-->
+    <!--                                <option value="day">mois</option>-->
+    <!--                            </select>-->
+    <!--                        </li>-->
+                            <li class="item-detail-quotation">
+                                <i class="far fa-calendar-alt"></i>
+                                <p>Fin de validité  : <time :datetime="quotation.validity">{{ getHumanDate(quotation.validity) }}</time></p>
+                            </li>
+                        </ul>
+                    </div>
                 </header>
             </div>
 
             <div class="wrap-central">
                 <div class="left-part">
-                    <table class="responsive-table">
+                    <table class="table-responsive">
                         <thead>
                             <tr>
                                 <th scope="col">Quantité</th>
@@ -131,31 +169,116 @@
                 </aside>
             </div>
 
-            <Notification v-show="isModalVisible"
-                          @close="closeModal">
-                <p slot="body">{{ notification.body }}</p>
-            </Notification>
+            <Modal v-if="showModal" @close="showModal = false">
+                <h3 slot="header" class="page-main-title">Envoyer par e-mail</h3>
+
+                <div slot="body">
+                    <ValidationProvider class="wrap-field h-50"
+                                        name="subject email"
+                                        v-slot="{ errors }">
+                        <input v-model.trim="quotation.contact.email"
+                               class="field"
+                               :class="[{ hasValue: quotation.contact.email }]"
+                               type="email"
+                               autocomplete="off"
+                               required>
+                        <span class="focus-field"></span>
+                        <label class="label-field">E-mail</label>
+                        <span class="symbol-left-field"><i class="fas fa-at"></i></span>
+                        <span class="v-validate">{{ errors[0] }}</span>
+                    </ValidationProvider>
+
+                    <ValidationProvider class="wrap-field h-50"
+                                        name="subject email"
+                                        v-slot="{ errors }">
+                        <input v-model.trim="quotation.subject_email"
+                               class="field"
+                               :class="[{ hasValue: quotation.subject_email }]"
+                               type="text"
+                               autocomplete="off"
+                               required>
+                        <span class="focus-field"></span>
+                        <label class="label-field">Sujet</label>
+                        <span class="symbol-left-field"><i class="fas fa-comment-dots"></i></span>
+                        <span class="v-validate">{{ errors[0] }}</span>
+                    </ValidationProvider>
+
+
+                    <ValidationProvider class="wrap-field h-50"
+                                        style="height: auto !important; min-height: 5rem;"
+                                        name="body email"
+                                        v-slot="{ errors }">
+                        <textarea v-model.trim="quotation.body_email"
+                                  @keydown="textareaAutosize"
+                                  class="field editable"
+                                  :class="[{ hasValue: quotation.body_email }]"
+                                  autocomplete="off"
+                                  required>
+                        </textarea>
+
+                        <span class="focus-field"></span>
+                        <label class="label-field">Message</label>
+                        <span class="symbol-left-field"><i class="fas fa-align-justify"></i></span>
+                        <span class="v-validate">{{ errors[0] }}</span>
+                    </ValidationProvider>
+
+                    <transition name="modal-fade" mode="out-in">
+                        <div v-if="serverErrors" class="notification notification-secondary notification-wrapper" role="alert">
+                            <div class="notification-container">
+                                <div class="notification-body">
+                                    <p v-for="(value, key) in serverErrors" :key="key">
+                                        {{ value[0] }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
+
+                <div slot="footer">
+                    <button type="button"
+                            class="button button-small button-primary"
+                            style="margin-left: auto;"
+                            @click="sendEmail()">
+                        Envoyer
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </Modal>
         </main>
     </div>
 </template>
 
 <script>
     import moment from 'moment';
-    import Notification from "./Notification";
+    import Loader from './Loader';
+    import Modal from "./Modal";
 
     export default {
+        props: {
+            id: Number,
+        },
         components: {
-            Notification
+            Loader,
+            Modal
         },
         data() {
             return {
+                loading: true,
+                showModal: false,
                 isModalVisible: false,
-                notification: {
-                    body: "",
-                },
+                image: "",
                 third: [],
                 summaryPulled: false,
                 indexMinValue: "",
+                user: {
+                    name: "",
+                    surname: "",
+                },
+                form: {
+                    hasFocus: false,
+                },
+                serverErrors: ""
             }
         },
         created() {
@@ -164,21 +287,33 @@
             }).then(() => {
                 console.log(this.quotation);
                 this.generateThird();
+                document.getElementsByClassName('wrap-main-header')[0].style.backgroundImage = 'url(/assets/img/quotations/' + this.quotation.image + ')';
+                this.user.name = this.quotation.user.name;
+                this.user.surname = this.quotation.user.surname;
 
-                let el = document.querySelector('textarea');
-                setTimeout(function(){
-                    el.style.cssText = 'height:auto; padding:0';
-                    let scrollHeight = el.scrollHeight + 10;
-                    el.style.cssText = 'height:' + scrollHeight + 'px';
-                },0);
+                let textareaList = document.getElementsByTagName("textarea");
+                for(let i = 0; i < textareaList.length; i++) {
+                    let el = textareaList[i];
+                    setTimeout(() => {
+                        el.style.cssText = 'height:auto !important; padding:0 !important;';
+                        let scrollHeight = el.scrollHeight + 10;
+                        el.style.cssText = 'height:' + scrollHeight + 'px !important';
+                        if (el.value === "") {
+                            el.style.cssText = 'height:100% !important; ';
+                        }
+                    }, 0);
+                }
 
                 let quantities = [];
                 this.quotation.quantities.forEach(element => {
                     quantities.push(element.quantity);
                 });
-                let index = quantities.indexOf(Math.min(...quantities));
-                this.indexMinValue = index;
-            });
+                let indexQuantity = quantities.indexOf(Math.min(...quantities));
+                this.indexMinValue = indexQuantity;
+
+                this.quotation.subject_email = "Votre demande de devis #" + this.quotation.id;
+                this.loading = false;
+           });
         },
         computed: {
             quotation: {
@@ -191,11 +326,10 @@
             },
         },
         methods: {
-            showModal() {
-                this.isModalVisible = true;
-            },
-            closeModal() {
-                this.isModalVisible = false;
+            checkAnimation({ target, animationName }) {
+                if(animationName.startsWith("onAutoFillStart")) {
+                    target.classList.add("hasValue");
+                }
             },
             getHumanDate(date) {
                 return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
@@ -236,39 +370,82 @@
                 if (this.quotation.contact.email !== undefined && this.quotation.contact.email !== null) this.third.push(this.quotation.contact.email);
             },
             textareaAutosize() {
-                let el = document.querySelector('textarea');
-                setTimeout(function(){
-                    el.style.cssText = 'height:auto; padding:0';
-                    let scrollHeight = el.scrollHeight + 10;
-                    el.style.cssText = 'height:' + scrollHeight + 'px';
-                },0);
+                let textareaList = document.getElementsByTagName("textarea");
+                for (let i = 0; i < textareaList.length; i++) {
+                    let el = textareaList[i];
+                    setTimeout(() => {
+                        el.style.cssText = 'height:auto !important; padding:0 !important;';
+                        let scrollHeight = el.scrollHeight + 10;
+                        el.style.cssText = 'height:' + scrollHeight + 'px !important; ';
+                        if (el.value === "") {
+                            el.style.cssText = 'height:100% !important; ';
+                        }
+                    }, 0);
+                }
             },
             generatePDF(id) {
+                this.loading = true;
                 this.$store.dispatch("generatePDF", {
                     id: id
                 }).then(resp => {
                     console.log(resp);
-                }).catch(err => console.log(err));
+                    this.loading = false;
+                }).catch(err => {
+                    console.log(err.response);
+                    this.loading = false;
+                });
+            },
+            sendEmail() {
+                this.loading = true;
+                this.$store.dispatch("sendEmail", {
+                    quotation: this.quotation,
+                }).then(() => {
+                    this.loading = false;
+                    console.log("response");
+                    this.showModal = false;
+                    this.$toast.success({
+                        title: "Devis envoyé",
+                        message: "Votre devis a bien été envoyé"
+                    });
+                }).catch(error => {
+                    // TODO: handle server errors
+                    console.log("error");
+                    console.log(error.response.data);
+                    this.serverErrors = [];
+                    for (let i = 0; i < error.response.data.length; i++) {
+                        this.serverErrors.push(error.response.data[i]);
+                    }
+                    this.loading = false;
+                });
             },
             destroyQuotation(id) {
+                this.loading = true;
                 this.$store.dispatch("destroyQuotation", {
                     id: id
                 }).then(() => {
-                    this.$router.push({ name: "quotations.index" });
-                }).catch(err => console.log(err));
+                    this.loading = false;
+                    this.$router.push({ name: "quotations.index", params: { dataSuccessMessage: "Devis supprimé" } });
+                }).catch(err => {
+                    console.log(err.response);
+                    this.loading = false;
+                });
             },
             updateQuotation(quotation) {
                 console.log(quotation);
+                this.loading = true;
                 this.$store.dispatch("updateQuotation", {
                     quotation: quotation,
                 }).then(() => {
-                    this.showModal();
                     this.quotation = this.$store.state.quotation;
-                    this.notification.body = "Le devis a bien été modifié.";
-                    setTimeout(() => {
-                        this.closeModal();
-                    }, 5000);
-                }).catch(err => console.log(err));
+                    this.loading = false;
+                    this.$toast.success({
+                        title: "Devis modifié",
+                        message: "Votre devis a bien été modifié"
+                    });
+                }).catch(err => {
+                    console.log(err.response);
+                    this.loading = false;
+                });
             },
             calculateCost(element, quantityID) {
                 let quantity = this.quotation.quantities[quantityID].quantity;
@@ -439,16 +616,21 @@
                 }
             }
 
-            .list-details-quotation {
+            .wrap-list-details-quotation {
+                display: flex;
+                flex-flow: row wrap;
                 margin-top: 3rem;
 
-                .item-detail-quotation {
-                    display: flex;
-                    margin: 1rem 0;
+                .list-details-quotation {
+                    padding: 0 2rem;
+                    .item-detail-quotation {
+                        display: flex;
+                        margin: 1rem 0;
 
-                    [class^="fa"] {
-                        color: $primary-color;
-                        margin-right: 1.5rem;
+                        [class^="fa"] {
+                            color: $primary-color;
+                            margin-right: 1.5rem;
+                        }
                     }
                 }
             }

@@ -25,6 +25,7 @@ const routes = [
         path: '/quotations',
         name: 'quotations.index',
         component: Home,
+        props: true,
         meta: {
             title: 'Liste de devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true
@@ -44,6 +45,7 @@ const routes = [
         path: '/quotations/:id',
         name: 'quotations.show',
         component: SingleQuotation,
+        props: true,
         meta: {
             title: 'Devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true,
@@ -54,6 +56,7 @@ const routes = [
         path: '/quotations/:id/edit',
         name: 'quotations.edit',
         component: Quotation,
+        props: true,
         meta: {
             title: 'Modification d\'un devis Estibot - Application de devis simple et rapide pour les imprimeurs',
             requiresAuth: true,

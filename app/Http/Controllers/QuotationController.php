@@ -7,14 +7,10 @@ use App\Models\ {
     Consumable,
     Cutting,
     Finishing,
-    Label,
     Printing,
     Quote,
-    Substrate,
-    Third,
-    Quotation
+    Substrate
 };
-use Barryvdh\DomPDF\Facade as PDF;
 
 use Illuminate\Http\Request;
 
@@ -161,12 +157,17 @@ class QuotationController extends Controller
 
     public function generatePDF($id)
     {
-        $quotation = Quotation::with('third', 'contact', 'label', 'quantities')->findOrFail($id);
+        $quotation = $this->repository->getById($id);
 
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
-        $pdf->loadView('quotation', compact('quotation'));
+        $pdf->loadView('pdf.quotation', compact('quotation'));
         $name = "Devis#-" . $quotation->id . ".pdf";
         return $pdf->stream($name);
+    }
+
+    public function sendEmail(Request $request, $id)
+    {
+        return $this->repository->sendEmail($id, $request->all());
     }
 }

@@ -29,7 +29,7 @@ $router->group(['prefix' => 'api'], function ($router) {
                 $router->post('/{id}', 'QuotationController@update');
                 $router->delete('/{id}', 'QuotationController@destroy');
 
-                $router->get('/{id}/email', 'QuotationController@sendEmail');
+                $router->post('/{id}/email', 'QuotationController@sendEmail');
 
 
                 $router->get('/printings', 'QuotationController@getPrintings');
