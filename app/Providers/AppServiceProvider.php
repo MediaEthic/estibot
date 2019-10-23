@@ -19,5 +19,10 @@ class AppServiceProvider extends ServiceProvider
         if(config('app.env') === 'production') {
             \URL::forceScheme('https');
         }
+
+        $this->app->singleton('mailer', function ($app) {
+            $app->configure('services');
+            return $app->loadComponent('mail', 'Illuminate\Mail\MailServiceProvider', 'mailer');
+        });
     }
 }

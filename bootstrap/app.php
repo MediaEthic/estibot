@@ -35,6 +35,11 @@ $app->withEloquent();
 $app->configure('database');
 $app->configure('dompdf');
 
+$app->configure('mail');
+$app->alias('mailer', Illuminate\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -72,7 +77,7 @@ $app->singleton(
 // ]);
 
  $app->routeMiddleware([
-     'jwt.auth' => App\Http\Middleware\JwtMiddleware::class,
+     'auth' => App\Http\Middleware\Authenticate::class,
  ]);
 
 /*
@@ -91,6 +96,7 @@ $app->singleton(
  $app->register(App\Providers\AuthServiceProvider::class);
  $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
  $app->register(\Barryvdh\DomPDF\ServiceProvider::class);
+ $app->register(Illuminate\Mail\MailServiceProvider::class);
 
 // $app->register(App\Providers\EventServiceProvider::class);
 
