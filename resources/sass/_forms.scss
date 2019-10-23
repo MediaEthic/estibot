@@ -224,7 +224,8 @@ textarea {
       display: none;
     }
 
-    &:focus {
+    &:focus,
+    &.input-error {
       height: 4rem;
       color: $secondary-color-dark !important;
 
@@ -307,6 +308,7 @@ textarea {
       line-height: 1.8rem;
 
       &:focus,
+      &.input-error,
       &.hasValue,
       &.select {
         height: 3.5rem !important;
@@ -667,6 +669,7 @@ textarea {
             padding: 0 2.5rem 0 5rem;
 
             &:focus,
+            &.input-error,
             &.hasValue {
               & + .label-field {
                 top: 2.5rem;
@@ -787,6 +790,8 @@ progress[value]::-moz-progress-bar {
 
     &:disabled,
     &[disabled] {
+        cursor: not-allowed;
+
         .cta {
             &:before {
                 background: rgba($primary-color-light, 0.5);
@@ -803,10 +808,6 @@ progress[value]::-moz-progress-bar {
     }
 }
 
-.wrap-button-submit,
-.cta {
-
-}
 
 .cta {
   position: relative;
@@ -856,6 +857,8 @@ progress[value]::-moz-progress-bar {
 
   &:disabled,
   &[disabled] {
+      cursor: not-allowed;
+
     &:before {
       background: rgba($primary-color-light, 0.5);
     }

@@ -481,19 +481,22 @@ textarea {
   display: none;
 }
 
-.wrap-field .field:focus {
+.wrap-field .field:focus,
+.wrap-field .field.input-error {
   height: 4rem;
   color: #6D4C41 !important;
 }
 
-.wrap-field .field:focus + .focus-field {
+.wrap-field .field:focus + .focus-field,
+.wrap-field .field.input-error + .focus-field {
   visibility: visible;
   opacity: 1;
   -webkit-transform: scale(1);
   transform: scale(1);
 }
 
-.wrap-field .field:focus + .focus-field + .label-field {
+.wrap-field .field:focus + .focus-field + .label-field,
+.wrap-field .field.input-error + .focus-field + .label-field {
   top: 1rem;
   font-size: 1.2rem;
   line-height: 1.6rem;
@@ -501,7 +504,8 @@ textarea {
   text-transform: uppercase;
 }
 
-.wrap-field .field:focus + .focus-field + .label-field + .symbol-left-field {
+.wrap-field .field:focus + .focus-field + .label-field + .symbol-left-field,
+.wrap-field .field.input-error + .focus-field + .label-field + .symbol-left-field {
   color: #F7CAC9;
   padding-left: 2.3rem;
 }
@@ -553,12 +557,14 @@ textarea {
 }
 
 .wrap-field.h-50 .field:focus,
+.wrap-field.h-50 .field.input-error,
 .wrap-field.h-50 .field.hasValue,
 .wrap-field.h-50 .field.select {
   height: 3.5rem !important;
 }
 
 .wrap-field.h-50 .field:focus.editable,
+.wrap-field.h-50 .field.input-error.editable,
 .wrap-field.h-50 .field.hasValue.editable,
 .wrap-field.h-50 .field.select.editable {
   padding-top: 2rem;
@@ -566,6 +572,7 @@ textarea {
 }
 
 .wrap-field.h-50 .field:focus ~ .label-field,
+.wrap-field.h-50 .field.input-error ~ .label-field,
 .wrap-field.h-50 .field.hasValue ~ .label-field,
 .wrap-field.h-50 .field.select ~ .label-field {
   top: .5rem;
@@ -575,6 +582,7 @@ textarea {
 }
 
 .wrap-field.h-50 .field:focus ~ .label-field + .symbol-left-field,
+.wrap-field.h-50 .field.input-error ~ .label-field + .symbol-left-field,
 .wrap-field.h-50 .field.hasValue ~ .label-field + .symbol-left-field,
 .wrap-field.h-50 .field.select ~ .label-field + .symbol-left-field {
   padding-left: 1.8rem;
@@ -875,6 +883,7 @@ textarea {
 }
 
 .wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50 .field:focus + .label-field,
+.wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50 .field.input-error + .label-field,
 .wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50 .field.hasValue + .label-field {
   top: 2.5rem;
 }
@@ -977,6 +986,11 @@ progress[value]::-moz-progress-bar {
   cursor: pointer;
 }
 
+.wrap-button-submit:disabled,
+.wrap-button-submit[disabled] {
+  cursor: not-allowed;
+}
+
 .wrap-button-submit:disabled .cta:before,
 .wrap-button-submit[disabled] .cta:before {
   background: rgba(194, 217, 255, 0.5);
@@ -1047,6 +1061,11 @@ progress[value]::-moz-progress-bar {
 .cta:active {
   -webkit-transform: scale(0.96);
           transform: scale(0.96);
+}
+
+.cta:disabled,
+.cta[disabled] {
+  cursor: not-allowed;
 }
 
 .cta:disabled:before,
