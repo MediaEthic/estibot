@@ -98,6 +98,15 @@
                     </div>
                 </aside>
             </div>
+
+            <Notification v-show="isModalVisible"
+                          @close="closeNotification">
+                <ul slot="body">
+                    <li v-for="error in notification.body">
+                        {{ error }}
+                    </li>
+                </ul>
+            </Notification>
         </main>
     </div>
 </template>
@@ -109,6 +118,7 @@
     import Finishing from './Quotation/Finishing';
     import Packing from './Quotation/Packing';
     import Result from './Quotation/Result';
+    import Notification from "./Notification";
 
     export default {
         components: {
@@ -118,9 +128,14 @@
             Finishing,
             Packing,
             Result,
+            Notification,
         },
         data() {
             return {
+                isModalVisible: false,
+                notification: {
+                    body: [],
+                },
                 step: 1,
                 steps: [
                     {
@@ -181,6 +196,12 @@
             },
         },
         methods: {
+            showNotification() {
+                this.isModalVisible = true;
+            },
+            closeNotification() {
+                this.isModalVisible = false;
+            },
             prev() {
                 this.step--;
                 this.progress = (this.step * 100) / 6;
@@ -281,7 +302,11 @@
                     if (resp.errors === undefined) {
                         this.$router.push({ name: "quotations.show", params: { id: resp.data.id } });
                     } else {
-                        console.log(resp);
+                        this.showNotification();
+                        this.notification.body = resp.errors;
+                        setTimeout(() => {
+                            this.closeNotification();
+                        }, 5000);
                     }
                 }).catch(error => {
                     console.log(error);

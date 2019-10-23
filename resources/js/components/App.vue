@@ -43,6 +43,7 @@
 </template>
 
 <script>
+    import '!!vue-style-loader!css-loader!cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
     import Spinner from './Spinner.vue';
     const DEFAULT_TRANSITION = 'fade';
 
@@ -127,6 +128,7 @@
 </script>
 
 <style lang="scss">
+    /*@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');*/
     @import '~@/_variables.scss';
 
     body {
@@ -308,6 +310,7 @@
     }
 
 
+    // Modal component
     .modal-mask {
         position: fixed;
         z-index: 9998;
@@ -318,6 +321,98 @@
         background-color: rgba(0, 0, 0, .5);
         display: table;
         transition: opacity .3s ease;
+    }
+
+    .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+        padding: 0 10rem;
+    }
+
+    .modal-container {
+        position: relative;
+        width: 100%;
+        max-width: 150rem;
+        margin: 0 auto;
+        padding: 3rem;
+        background-position: bottom right;
+        background-size: auto 25rem;
+        background-repeat: no-repeat;
+        background-color: #fff;
+        border-top: 3rem solid $primary-color;
+        border-radius: 2rem 1rem 3rem 1rem;
+        box-shadow: 0 0 1rem rgba($primary-color-dark, .4);
+        transition: all .3s ease;
+
+        .btn-close {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background-color: $primary-color-dark;
+            border: none;
+            border-radius: 290486px;
+            cursor: pointer;
+            pointer-events: auto;
+            display: inline-block;
+            flex-grow: 0;
+            flex-shrink: 0;
+            font-size: 1rem;
+            width: 2rem;
+            height: 2rem;
+            max-height: 2rem;
+            max-width: 2rem;
+            min-height: 2rem;
+            min-width: 2rem;
+            outline: 0;
+            vertical-align: top;
+            position: absolute;
+            right: .5rem;
+            top: -2.5rem;
+            font-weight: $bold;
+            color: #fff;
+
+            &:before {
+                background-color: #fff;
+                content: "";
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                height: .2rem;
+                width: 50%;
+                -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                -webkit-transform-origin: center center;
+                transform-origin: center center;
+            }
+
+            &:after {
+                background-color: #fff;
+                content: "";
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                height: 50%;
+                width: .2rem;
+                -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                -webkit-transform-origin: center center;
+                transform-origin: center center;
+            }
+        }
+
+        .modal-header {
+            padding-bottom: 1rem;
+            border-bottom: .1rem solid $primary-color-dark;
+        }
+
+        .modal-body {
+            margin: 20px 0;
+        }
+
+        .modal-default-button {
+            float: right;
+        }
     }
 
 
@@ -364,6 +459,45 @@
         to {
         }
     }
+
+
+    // css spinner
+    .lds-ring {
+        display: inline-block;
+        position: relative;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: .3rem solid $primary-color;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: $primary-color transparent transparent transparent;
+    }
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
 
 
 

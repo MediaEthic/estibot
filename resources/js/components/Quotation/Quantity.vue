@@ -16,7 +16,7 @@
 <!--                <li><i class="fas fa-weight-hanging"></i>{{ (quantities[copies].totals.totalVariableCosts / copies) * 1000 }}</li>-->
 <!--            </ul>-->
             <button type="button" v-on:click="$emit('goBack')" class="arrow-return"><i class="fas fa-arrow-left"></i>Retour</button>
-            <table class="responsive-table">
+            <table class="table-responsive">
                 <caption>{{ copies }} exemplaires</caption>
                 <thead>
                     <tr>
@@ -71,6 +71,7 @@
     @import '~@/_variables.scss';
 
     .arrow-return {
+        cursor: pointer;
         display: block;
         margin-right: auto;
         font-size: 1.2rem;
@@ -82,22 +83,6 @@
         [class^="fa"] {
             font-size: 1.5rem;
             margin-right: .5rem;
-        }
-    }
-
-    .responsive-table {
-        display: initial;
-
-        tr {
-            display: initial;
-        }
-
-        tbody {
-            display: initial;
-
-            tr {
-                display: initial;
-            }
         }
     }
 </style>

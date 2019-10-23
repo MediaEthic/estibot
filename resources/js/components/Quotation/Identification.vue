@@ -22,7 +22,7 @@
                 <i class="fas fa-search"></i>
             </span>
             <input v-model.trim="form.identification.third.name"
-                   class="field "
+                   class="field"
                    :class="{ hasValue: form.identification.third.name }"
                    type="text"
                    required>
@@ -140,7 +140,7 @@
                        @blur="form.identification.contact.hasFocus = false"
                        class="field"
                        :class="[{ hasValue: form.identification.contact.email }]"
-                       type="text"
+                       type="email"
                        autocomplete="off"
                        required>
                 <label class="label-field">E-mail</label>
@@ -208,7 +208,7 @@
                        @blur="form.identification.contact.hasFocus = false"
                        class="field"
                        :class="[{ hasValue: form.identification.contact.email }]"
-                       type="text"
+                       type="email"
                        autocomplete="off"
                        required>
                 <label class="label-field">E-mail</label>

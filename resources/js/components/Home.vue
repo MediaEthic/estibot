@@ -42,7 +42,12 @@
 
                     <router-link tag="article"
                                  v-for="quotation in quotations.data"
-                                 :to="{ name: 'quotations.show', params: { id: quotation.id }}"
+                                 :to="{
+                                     name: 'quotations.show',
+                                     params: {
+                                        id: quotation.id
+                                     }
+                                 }"
                                  :key="quotation.id"
                                  class="wrap-quotation"
                                  :style="{ backgroundImage: 'url(/assets/img/quotations/' + quotation.image + ')' }">
@@ -100,7 +105,7 @@
                              src="/assets/img/undraw_welcome_3gvl.svg"
                              alt="Illustration montrant qu'il n'existe encore aucun devis"/>
 
-                        <h2 class="page-subtitle">Bonjour {{ user }}, <br>bienvenue sur Estibot</h2>
+                        <h2 class="page-subtitle">Bonjour, <br>bienvenue sur Estibot</h2>
                         <p class="baseline-main-title">Commencez par créer un nouveau devis.</p>
                     </div>
 
@@ -114,6 +119,7 @@
             </div>
 
             <div v-else class="wrap-list-quotations">
+                <Loader />
                 <router-link v-if="!isMobile"
                              class="create-new-quotation"
                              tag="div"
@@ -149,20 +155,20 @@
                     </div>
                 </article>
             </div>
-
-            <!--<Loader v-else />-->
         </main>
     </div>
 </template>
 
 <script>
-    import Loader from './Loader.vue';
+    import Loader from './Loader';
     import moment from 'moment';
 
     export default {
-        props: [
-            'user',
-        ],
+        props: {
+            dataSuccessMessage: {
+                type: String,
+            },
+        },
         components: {
             Loader
         },
@@ -173,13 +179,6 @@
                 pagination: {},
             }
         },
-        created() {
-            this.$store.dispatch('getQuotations', {
-                url: '/api/auth/quotations'
-            }).then(res => {
-                this.makePagination(this.quotations);
-            });
-        },
         computed: {
             quotations: {
                 get() {
@@ -189,6 +188,21 @@
                     return this.$store.state.quotations;
                 }
             }
+        },
+        created() {
+            console.log("Home component created");
+            if (this.dataSuccessMessage !== undefined) {
+                this.$toast.success({
+                    title: this.dataSuccessMessage,
+                    message: "Votre devis a bien été supprimé"
+                });
+            }
+
+            this.$store.dispatch('getQuotations', {
+                url: '/api/auth/quotations'
+            }).then(res => {
+                this.makePagination(this.quotations);
+            });
         },
         methods: {
             clearSearch() {
@@ -221,7 +235,6 @@
                 }).then(res => {
                     this.quotations = this.$store.state.quotations;
                     this.makePagination(this.$store.state.quotations);
-                    this.loading = false;
                 }).catch(err => console.log(err));
             },
             randomBgImage() {
