@@ -2,14 +2,14 @@
     <div>
         <div class="wrap-radio">
             <div class="wrap-field">
-                <input type="radio" id="third_old" v-model="form.identification.third.type" value="old">
+                <input type="radio" id="third_old" v-model="form.identification.third.type" value="old" @click="resetIdentification">
                 <label for="third_old">
                     <i class="fas fa-user-secret"></i>
                     <span>Rechercher un client</span>
                 </label>
             </div>
             <div class="wrap-field">
-                <input type="radio" id="third_new" v-model="form.identification.third.type" value="new">
+                <input type="radio" id="third_new" v-model="form.identification.third.type" value="new" @click="resetIdentification">
                 <label for="third_new">
                     <i class="fas fa-user-plus"></i>
                     <span>Créer un prospect</span>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="wrap-field h-50">
-            <span v-if="form.identification.third.type === 'old'" class="btn-right-field" @click="">
+            <span v-if="form.identification.third.type === 'old'" class="btn-right-field" @click="show">
                 <i class="fas fa-search"></i>
             </span>
             <input v-model.trim="form.identification.third.name"
@@ -108,25 +108,26 @@
             <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
         </div>
 
-        <div v-if="form.identification.third.type === 'old'"
+        <div v-if="form.identification.third.type === 'old' && third.contacts.length"
              class="wrap-group-field"
-             :class="[{ hasValue: form.identification.contact.civility },
-                      { hasValue: form.identification.contact.name },
-                      { hasValue: form.identification.contact.surname },
-                      { hasValue: form.identification.contact.service },
+             :class="[{ hasValue: form.identification.contact.id },
                       { hasValue: form.identification.contact.email },
                       { hasFocus: form.identification.contact.hasFocus }]">
 
             <div class="wrap-field h-50">
+                <span class="btn-right-field" v-if="contactsAreLoading">
+                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                </span>
                 <select v-model="form.identification.contact.id"
                         @focus="form.identification.contact.hasFocus = true"
                         @blur="form.identification.contact.hasFocus = false"
                         @animationstart="checkAnimation"
                         class="field select"
                         :class="{ hasValue: form.identification.contact.id }"
+                        @change="setContactEmail(contact.email)"
                         required>
                     <option disabled value="">Choisir</option>
-                    <option v-for="contact in form.identification.third.contacts"
+                    <option v-for="contact in third.contacts"
                             v-bind:value="contact.id">
                         {{ generateContact(contact) }}
                     </option>
@@ -154,7 +155,6 @@
              :class="[{ hasValue: form.identification.contact.civility },
                       { hasValue: form.identification.contact.name },
                       { hasValue: form.identification.contact.surname },
-                      { hasValue: form.identification.contact.service },
                       { hasValue: form.identification.contact.email },
                       { hasFocus: form.identification.contact.hasFocus }]">
             <div class="wrap-field-inline">
@@ -193,16 +193,6 @@
                 <label class="label-field">Prénom du contact</label>
             </div>
             <div class="wrap-field h-50">
-                <input v-model.trim="form.identification.contact.service"
-                       @focus="form.identification.contact.hasFocus = true"
-                       @blur="form.identification.contact.hasFocus = false"
-                       class="field"
-                       :class="{ hasValue: form.identification.contact.service }"
-                       type="text"
-                       autocomplete="off">
-                <label class="label-field">Service</label>
-            </div>
-            <div class="wrap-field h-50">
                 <input v-model.trim="form.identification.contact.email"
                        @focus="form.identification.contact.hasFocus = true"
                        @blur="form.identification.contact.hasFocus = false"
@@ -216,19 +206,145 @@
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-id-card-alt"></i></span>
         </div>
+
+        <modal name="search-customer" @opened="opened" :adaptive="true" :width="1180" :height="640">
+            <div>
+                <button type="button"
+                        class="modal-close"
+                        aria-label="Fermer la fenêtre modale"
+                        @click="hide">
+                </button>
+                <Loader v-if="loading" />
+                <h3 class="page-main-title modal-header">Rechercher un client</h3>
+
+                <div class="modal-body">
+                    <transition name="modal-fade" mode="out-in">
+                        <div v-if="serverErrors" class="notification notification-secondary notification-wrapper" role="alert">
+                            <div class="notification-container">
+                                <div class="notification-body">
+                                    <p v-for="(value, key) in serverErrors" :key="key">
+                                        {{ value[0] }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+
+                    <form action="#" method="post" class="form-filters">
+                        <div class="inline">
+                            <Autocomplete :items="autocomplete.customers"
+                                          :isAsync="true"
+                                          :label="`Abrégé/Nom`"
+                                          :focus="true"
+                                          v-on:search="searchCustomersForAutocomplete"
+                                          v-on:input="setCustomerName"
+                            />
+
+                            <ValidationProvider class="wrap-field h-50"
+                                                name="zipcode"
+                                                v-slot="{ errors }">
+                                <input v-model.trim="filters.zipcode"
+                                       class="field"
+                                       :class="[{ hasValue: filters.zipcode }]"
+                                       type="text"
+                                       autocomplete="off">
+                                <span class="focus-field"></span>
+                                <label class="label-field">Département/Code postal</label>
+                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="v-validate">{{ errors[0] }}</span>
+                            </ValidationProvider>
+
+    <!--                        <ValidationProvider class="wrap-field h-50"-->
+    <!--                                            name="contact"-->
+    <!--                                            v-slot="{ errors }">-->
+    <!--                            <input v-model.trim="filters.contact"-->
+    <!--                                   class="field"-->
+    <!--                                   :class="[{ hasValue: filters.contact }]"-->
+    <!--                                   type="text"-->
+    <!--                                   autocomplete="off">-->
+    <!--                            <span class="focus-field"></span>-->
+    <!--                            <label class="label-field">Contact</label>-->
+    <!--                            <span class="symbol-left-field"><i class="fas fa-id-card-alt"></i></span>-->
+    <!--                            <span class="v-validate">{{ errors[0] }}</span>-->
+    <!--                        </ValidationProvider>-->
+                        </div>
+
+                        <button type="submit"
+                                class="button button-small button-primary"
+                                style="margin-left: auto;"
+                                @click.prevent="getCustomers(1)"
+                                @keydown.tab.exact.prevent="">
+                            Rechercher
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+
+                    <div class="container-table" v-if="customers.length || Object.keys(customers).length">
+                        <table class="wrap-table">
+                            <thead class="table-header">
+                                <tr class="table-row">
+                                    <th scope="col" class="table-cell">Base Ethic</th>
+                                    <th scope="col" class="table-cell">Type de compte</th>
+                                    <th scope="col" class="table-cell">N° de compte</th>
+                                    <th scope="col" class="table-cell">Raison sociale</th>
+                                    <th scope="col" class="table-cell">Code postal</th>
+                                    <th scope="col" class="table-cell">Ville</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <tr class="table-row" v-for="(customer, index) in customers" :key="index" @click="selectedCustomer(customer)">
+                                    <td class="table-cell" data-title="Base Ethic">{{ customer.ethic ? "Oui" : "Non" }}</td>
+                                    <td class="table-cell" data-title="Type de compte">{{ customer.type }}</td>
+                                    <td class="table-cell" data-title="N° de compte">{{ customer.id }}</td>
+                                    <td class="table-cell" data-title="Raison sociale">{{ customer.alias }} // {{ customer.name }}</td>
+                                    <td class="table-cell" data-title="Code postal">{{ customer.zipcode }}</td>
+                                    <td class="table-cell" data-title="Ville">{{ customer.city }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <Pagination :pagination="pagination" v-on:fetchResults="getCustomers"></Pagination>
+                    </div>
+                    <div v-else class="wrap-empty-result">
+                        <p class="text-no-data">Aucun résultat trouvé</p>
+                        <img class="image-no-data"
+                             src="/assets/img/undraw_no_data_qbuo.svg"
+                             alt="Illustration montrant qu'aucun résultat n'a été trouvé"/>
+                    </div>
+                </div>
+            </div>
+        </modal>
     </div>
 </template>
 
 <script>
+    import Loader from '../Loader';
     import VueGoogleAutocomplete from 'vue-google-autocomplete'
+    import Autocomplete from "./Autocomplete";
+    import Pagination from "./Pagination";
 
     export default {
         components: {
+            Pagination,
+            Autocomplete,
+            Loader,
             VueGoogleAutocomplete
         },
         data() {
             return {
-
+                loading: false,
+                filters: {
+                    ethic: "",
+                    name: "",
+                    zipcode: "",
+                    contact: "",
+                },
+                autocomplete: {
+                    customers: [],
+                },
+                customers: [],
+                pagination: {},
+                contactsAreLoading: false,
+                serverErrors: ""
             }
         },
         created() {
@@ -238,27 +354,152 @@
             form() {
                 return this.$store.state.workflow;
             },
+            third() {
+                return this.$store.state.third;
+            },
         },
         methods: {
+            show() {
+                this.$modal.show('search-customer');
+            },
+            opened() {
+
+            },
+            hide() {
+                this.$modal.hide('search-customer');
+            },
             checkAnimation({ target, animationName }) {
                 if(animationName.startsWith("onAutoFillStart")) {
                     target.classList.add("hasValue");
                 }
             },
             generateContact(contact) {
-                let $contact = ``;
-                if (contact.civility === "Mr") {
-                    $contact += `M. `;
+                if (contact.default) {
+                    this.form.identification.contact.id = contact.id;
+                }
+                if (contact.name !== null || contact.surname !== null) {
+                    let $contact = ``;
+                    if (contact.civility === "Mr" || contact.civility === "1") {
+                        $contact += `M. `;
+                    } else if (contact.civility === "Mrs" || contact.civility === "2") {
+                        $contact += `Mme `;
+                    } else if (contact.civility === "3") {
+                        $contact += `Mlle `;
+                    }
+
+                    if (contact.name !== null) {
+                        $contact += contact.name + ` `;
+                    }
+                    if (contact.surname !== null) {
+                        $contact += contact.surname;
+                    }
+                    return $contact;
                 } else {
-                    $contact += `Mme `;
+                    this.form.identification.contact.id = "";
                 }
-                if (contact.name !== null) {
-                    $contact += contact.name + ` `;
+            },
+            setContactEmail(email) {
+                if (this.form.identification.contact.email !== null || this.form.identification.contact.email !== "") {
+                    this.form.identification.contact.email = email;
                 }
-                if (contact.surname !== null) {
-                    $contact += contact.surname + ` `;
+            },
+            searchCustomersForAutocomplete(query) {
+                this.filters.name = query.toUpperCase();
+                this.$store.dispatch("searchCustomersForAutocomplete", {
+                    queryString: query,
+                }).then(response => {
+                    this.autocomplete.customers = response.data;
+                }).catch(error => {
+                    this.autocomplete.customers = [];
+                });
+            },
+            setCustomerName(value) {
+                this.filters.name = value.toUpperCase();
+            },
+            getCustomers(page) {
+                this.customers = [];
+                // this.serverErrors = "";
+                this.loading = true;
+
+                page = page || 1;
+                this.$store.dispatch("getCustomers", {
+                    filters: this.filters,
+                    page: parseInt(page)
+                }).then(response => {
+                    this.customers = response.data;
+                    this.makePagination(response);
+                }).catch(error => {
+                    // TODO: handle server errors
+                    this.customers = [];
+                    // this.serverErrors = [];
+                    // for (let i = 0; i < error.response.data.length; i++) {
+                    //     this.serverErrors.push(error.response.data[i]);
+                    // }
+                    this.$toast.error({
+                        title: "Erreur",
+                        message: "Oups, un problème est survenu pour charger les donneurs d'ordre"
+                    });
+                    this.loading = false;
+                });
+            },
+            makePagination(meta) {
+                let pagination = {
+                    current_page: meta.current_page,
+                    last_page: meta.last_page,
+                    next_page: meta.next_page_url,
+                    previous_page: meta.prev_page_url,
+                };
+
+                this.pagination = pagination;
+                this.loading = false;
+            },
+            selectedCustomer(customer) {
+                this.contactsAreLoading = true;
+                this.form.identification.contact.id = "";
+                this.third.contacts = [];
+                this.$store.dispatch("getThirdContacts", {
+                    ethic: customer.ethic,
+                    third: customer.id,
+                }).then(() => {
+                    this.contactsAreLoading = false;
+                }).catch(() => {
+                    this.contactsAreLoading = false;
+                });
+
+                this.form.identification.third.ethic = customer.ethic;
+                this.form.identification.third.id = customer.id;
+                this.form.identification.third.name = customer.name;
+                this.form.identification.third.addressLine1 = customer.addressLine1;
+                this.form.identification.third.addressLine2 = customer.addressLine2;
+                this.form.identification.third.addressLine3 = customer.addressLine3;
+                this.form.identification.third.zipcode = customer.zipcode;
+                this.form.identification.third.city = customer.city;
+                if (customer.email !== undefined && (customer.email !== null || customer.email !== "")) {
+                    this.form.identification.contact.email = customer.email;
                 }
-                return $contact;
+                this.hide();
+
+
+                this.$store.dispatch("getThirdLabels", {
+                    ethic: customer.ethic,
+                    third: customer.id,
+                });
+            },
+            resetIdentification() {
+                this.form.identification.third.ethic = false;
+                this.form.identification.third.id = "";
+                this.form.identification.third.name = "";
+                this.form.identification.third.addressLine1 = "";
+                this.form.identification.third.addressLine2 = "";
+                this.form.identification.third.addressLine3 = "";
+                this.form.identification.third.zipcode = "";
+                this.form.identification.third.city = "";
+                this.form.identification.contact.id = "";
+                this.form.identification.contact.civility = "";
+                this.form.identification.contact.name = "";
+                this.form.identification.contact.surname = "";
+                this.form.identification.contact.email = "";
+                this.third.contacts = [];
             }
         }
     }
@@ -266,4 +507,24 @@
 
 <style lang="scss" scoped>
     @import '~@/_variables.scss';
+
+    .inline {
+        display: flex;
+        flex-flow: row nowrap;
+
+        > *:not(:last-child) {
+            margin-right: 2rem;
+        }
+    }
+
+    .wrap-empty-result {
+        margin-top: 2rem;
+        text-align: center;
+
+        .image-no-data {
+            width: 25rem;
+            display: block;
+            margin: 1rem auto 0 auto;
+        }
+    }
 </style>

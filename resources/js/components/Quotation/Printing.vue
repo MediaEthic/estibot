@@ -6,6 +6,9 @@
                       { hasValue: form.printing.quadri },
                       { hasFocus: form.printing.hasFocus }]">
             <div class="wrap-field h-50">
+                <span class="btn-right-field" v-if="printingsAreLoading">
+                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                </span>
                 <select v-model="form.printing.press"
                         @focus="form.printing.hasFocus = true"
                         @blur="form.printing.hasFocus = false"
@@ -135,23 +138,29 @@
     export default {
         data() {
             return {
-                showModal: false,
+                printings: [],
+                printingsAreLoading: false
             }
         },
         created() {
-            this.$store.dispatch('getPrintings');
+            this.printingsAreLoading = true;
+            this.$store.dispatch('getPrintings').then(response => {
+                this.printings = response.data;
+                this.printingsAreLoading = false;
+            }).catch(error => {
+                console.log(error.response);
+                this.printingsAreLoading = false;
+                this.$toast.error({
+                    title: "Erreur",
+                    message: "Oups, un problème est survenu pour charger les machines"
+                });
+            });
             // this.$store.dispatch('getSubstrates');
         },
         computed: {
             form() {
                 return this.$store.state.workflow;
-            },
-            printings() {
-                return this.$store.state.printings;
-            },
-            // substrates() {
-            //     return this.$store.state.substrates;
-            // }
+            }
         },
         methods: {
             checkAnimation({ target, animationName }) {
@@ -160,6 +169,7 @@
                 }
             },
             handlePressChange(event) {
+                // get the name of the printing press for summary
                 if (event.target.options.selectedIndex > 0) {
                     this.form.printing.name = event.target.options[event.target.options.selectedIndex].dataset.name;
                 }

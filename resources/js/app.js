@@ -3,6 +3,7 @@ import Vue from 'vue'; // Importing Vue Library
 import VueRouter from 'vue-router'; // importing Vue router library
 import router from './router';
 import store from './store';
+import VModal from 'vue-js-modal'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
 import { localize } from 'vee-validate';
@@ -14,6 +15,7 @@ import CxltToastr from 'cxlt-vue2-toastr';
 window.Vue = Vue;
 
 Vue.use(VueRouter);
+Vue.use(VModal);
 
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);

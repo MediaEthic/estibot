@@ -2,7 +2,7 @@
     <div>
         <div v-for="(item, index) in form.finishing.finishings">
             <div class="wrap-group-field"
-                 :class="[{ hasValue: item.type },
+                 :class="[{ hasValue: item.id },
                           { hasValue: item.shape },
                           { hasValue: (item.presence_consumable && item.consumable.name !== '') },
                           { hasValue: (item.presence_consumable && item.consumable.width !== '') },
@@ -13,12 +13,15 @@
                         <i class="fas fa-times"></i>
                     </span>
                 <div class="wrap-field h-50">
-                    <select v-model="item.type"
+                    <span class="btn-right-field" v-if="finishingsAreLoading">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </span>
+                    <select v-model="item.id"
                             @focus="item.hasFocus = true"
                             @blur="item.hasFocus = false"
                             @animationstart="checkAnimation"
                             class="field select"
-                            :class="{ hasValue: item.type }"
+                            :class="{ hasValue: item.id }"
                             @change="handleFinishingChanging($event, index)"
                             required>
                         <option disabled value="">Choisir</option>
@@ -63,7 +66,7 @@
 <!--                    <label class="label-field">Reprise</label>-->
 <!--                </div>-->
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.type !== ''">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== ''">
                     <input v-model.trim="item.consumable.name"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
@@ -74,7 +77,7 @@
                     <label class="label-field">Désignation du consommable</label>
                 </div>
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.type !== ''">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== ''">
                     <input v-model="item.consumable.width"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
@@ -86,7 +89,7 @@
                     <label class="label-field">Laize du consommable (mm)</label>
                 </div>
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.type !== ''">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== ''">
                     <input v-model="item.consumable.price"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
@@ -251,21 +254,31 @@
     export default {
         data() {
             return {
-
+                finishings: [],
+                finishingsAreLoading: false
             }
         },
         created() {
             this.form.finishing.cutting.dimension_width = this.form.description.label.width;
             this.form.finishing.cutting.dimension_length = this.form.description.label.length;
-            this.$store.dispatch('getFinishings');
+
+            this.finishingsAreLoading = true;
+            this.$store.dispatch('getFinishings').then(response => {
+                console.log(response);
+                this.finishings = response.data;
+                this.finishingsAreLoading = false;
+            }).catch(error => {
+                this.finishingsAreLoading = false;
+                this.$toast.error({
+                    title: "Erreur",
+                    message: "Oups, un problème est survenu pour charger les finitions"
+                });
+            });
         },
         computed: {
             form() {
                 return this.$store.state.workflow;
-            },
-            finishings() {
-                return this.$store.state.finishings;
-            },
+            }
         },
         methods: {
             checkAnimation({ target, animationName }) {
@@ -275,7 +288,6 @@
             },
             addFinishing() {
                 this.form.finishing.finishings.push({
-                    type: "",
                     id: "",
                     name: "",
                     shape: false,
@@ -291,9 +303,8 @@
                 if (event.target.options.selectedIndex > 0) {
                     this.form.finishing.finishings[index].name = event.target.options[event.target.options.selectedIndex].dataset.name;
                 }
-                let finishingID = this.form.finishing.finishings[index].type;
+                let finishingID = this.form.finishing.finishings[index].id;
                 let finishingConsumable = this.finishings.find(finishing => finishing.id === finishingID);
-
                 if (finishingConsumable.consumable) {
                     let newConsumable = {
                         id: "",

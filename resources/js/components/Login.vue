@@ -31,17 +31,17 @@
                         </transition>
 
                         <ValidationProvider class="wrap-field"
-                                            name="email"
+                                            name="username"
                                             v-slot="{ errors }">
-                            <input v-model.trim="form.email"
+                            <input v-model.trim="form.username"
                                    class="field"
-                                   :class="{ 'hasValue': form.email, 'input-error': errors[0] }"
-                                   type="email"
+                                   :class="{ 'hasValue': form.username, 'input-error': errors[0] }"
+                                   type="text"
                                    @animationstart="checkAnimation"
                                    autofocus
                                    required>
                             <span class="focus-field"></span>
-                            <label class="label-field">Adresse e-mail</label>
+                            <label class="label-field">Identifiant</label>
                             <span class="symbol-left-field"><i class="fas fa-at"></i></span>
                             <span class="v-validate">{{ errors[0] }}</span>
                         </ValidationProvider>
@@ -88,7 +88,7 @@
             return {
                 loading: false,
                 form: {
-                    email: '',
+                    username: '',
                     password: '',
                 },
                 serverError: "",
@@ -107,7 +107,7 @@
             login () {
                 this.loading = true;
                 this.$store.dispatch('login', {
-                    email: this.form.email,
+                    username: this.form.username,
                     password: this.form.password,
                 }).then(resp => {
                     this.loading = false;
