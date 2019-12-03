@@ -34,8 +34,12 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         'company_id',
         'name',
         'surname',
+        'profession',
+        'email',
+        'phone',
         'email',
         'password',
+        'signature_quotation',
     ];
 
     /**

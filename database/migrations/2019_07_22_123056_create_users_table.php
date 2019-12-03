@@ -22,11 +22,15 @@ class CreateUsersTable extends Migration
                 ->on('companies')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
-            $table->string('name');
-            $table->string('surname');
+            $table->string('name')->nullable()->default(null);
+            $table->string('surname')->nullable()->default(null);
+            $table->string('surname')->nullable()->default(null);
+            $table->string('profession', 35)->nullable()->default(null);
             $table->string('email', 100)->unique();
+            $table->string('phone', 35)->nullable()->default(null);
             $table->string('password');
             $table->rememberToken();
+            $table->string('signature_quotation', 200)->nullable()->default(null);
         });
     }
 

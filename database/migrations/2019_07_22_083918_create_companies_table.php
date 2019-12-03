@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->timestamps();
             $table->string('name', 38);
             $table->string('logo', 200)->nullable()->default(null);
-            $table->string('phone', 20)->nullable()->default(null);
+            $table->string('phone', 35)->nullable()->default(null);
             $table->string('email')->nullable()->default(null);
             $table->string('address_line1', 38)->nullable()->default(null);
             $table->string('address_line2', 38)->nullable()->default(null);
@@ -53,9 +53,19 @@ class CreateCompaniesTable extends Migration
             $table->enum('duration_format', ['month', 'day'])->default('month');
             $table->text('head_quotation')->nullable()->default(null);
             $table->text('foot_quotation')->nullable()->default(null);
-            $table->text('gsc')->nullable()->default(null);
+            $table->string('signature_quotation', 200)->nullable()->default(null);
             $table->text('subject_email')->nullable()->default(null);
             $table->text('body_email')->nullable()->default(null);
+            $table->string('twitter', 200)->nullable()->default(null);
+            $table->string('facebook', 200)->nullable()->default(null);
+            $table->string('gplus', 200)->nullable()->default(null);
+            $table->string('linkedin', 200)->nullable()->default(null);
+            $table->string('instagram', 200)->nullable()->default(null);
+            $table->string('dribble', 200)->nullable()->default(null);
+            $table->string('youtube', 200)->nullable()->default(null);
+            $table->string('vimeo', 200)->nullable()->default(null);
+            $table->string('github', 200)->nullable()->default(null);
+            $table->string('blog', 200)->nullable()->default(null);
         });
     }
 

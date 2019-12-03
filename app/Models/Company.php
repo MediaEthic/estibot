@@ -33,7 +33,6 @@ class Company extends Model
         'logo',
         'phone',
         'email',
-        'email',
         'address_line1',
         'address_line2',
         'address_line3',
@@ -52,9 +51,19 @@ class Company extends Model
         'duration_format',
         'head_quotation',
         'foot_quotation',
-        'gsc',
+        'signature_quotation',
         'subject_email',
         'body_email',
+        'twitter',
+        'facebook',
+        'gplus',
+        'linkedin',
+        'instagram',
+        'dribble',
+        'youtube',
+        'vimeo',
+        'github',
+        'blog',
     ];
 
     /**

@@ -24,7 +24,7 @@ class CreateQuotationsTable extends Migration
                 ->onUpdate('restrict');
             $table->string('name')->nullable()->default(null);
             $table->text('description')->nullable()->default(null);
-            $table->string('image')->nullable()->default(null);
+            $table->string('image', 200)->nullable()->default(null);
             $table->enum('third_type', ['ethic', 'estibot'])->default('estibot');
             $table->unsignedBigInteger('third_id')->nullable()->default(null);
             $table->foreign('third_id')

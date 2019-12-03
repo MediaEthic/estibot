@@ -25,8 +25,8 @@ class CompaniesTableSeeder extends Seeder
             'siret' => '429 542 764 00031',
             'tva' => 'FR85 429542764',
             'head_quotation' => 'Nous vous remercions de votre demande de prix et vous prions de bien vouloir trouver ci-après nos meilleures conditions pour la réalisation de :',
-            'foot_quotation' => 'Nous vous remercions de votre demande de prix et vous prions de bien vouloir trouver ci-après nos meilleures conditions pour la réalisation de :',
-            'gsc' => '',
+            'foot_quotation' => 'Nous espérons que cette proposition retiendra favorablement votre attention et vous prions de croîre en l\'assurance de nos courtoises salutations.',
+            'body_email' => 'Madame, Monsieur,\n\nNous vous remercions de la confiance que vous nous avez témoigné en nous confiant l\'étude du document que vous trouverez en pièce jointe.',
         ]);
     }
 }
