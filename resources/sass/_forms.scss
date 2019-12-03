@@ -80,7 +80,7 @@ textarea {
 
       &:checked + label {
         background: $secondary-color;
-        border: .15rem solid $secondary-color;
+        border: .1rem solid $secondary-color;
         color: $white;
 
         &::after {
@@ -116,7 +116,7 @@ textarea {
       display: block;
       margin: 0 auto;
       background: white;
-      border: .15rem solid $primary-color-dark;
+      border: .1rem solid $primary-color-dark;
       font-size: 1.2rem;
       line-height: 1.6rem;
       font-weight: $bold;
@@ -208,9 +208,9 @@ textarea {
     font-size: 1.6rem;
     line-height: 2rem;
     color: $secondary-color-dark;
+    margin: .1rem;
     padding: 0 2.5rem 0 6rem;
     outline: none;
-      box-shadow: none !important;
     -webkit-transition: all .4s;
     -o-transition: all .4s;
     -moz-transition: all .4s;

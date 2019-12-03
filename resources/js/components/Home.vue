@@ -6,32 +6,10 @@
                     <h1 class="page-main-title">Devis</h1>
                     <div class="tag tag-info">{{ quotations.total }}</div>
                 </header>
-
-                <div class="wrap-filters">
-                    <div class="wrap-field h-50">
-                        <span v-if="search" class="btn-right-field" @click="clearSearch">
-                            <i class="fas fa-times"></i>
-                        </span>
-                        <input v-model.trim="search"
-                               class="field"
-                               :class="{ hasValue: search }"
-                               name="search"
-                               type="search"
-                               autocomplete="off">
-
-                        <span class="focus-field"></span>
-                        <label class="label-field">Rechercher un client</label>
-                        <span class="symbol-left-field"><i class="fas fa-search"></i></span>
-                    </div>
-
-                    <div class="wrap-icon-filter">
-                        <i class="fas fa-sliders-h"></i>
-                    </div>
-                </div>
             </div>
 
             <div v-if="!loading">
-                <div v-if="quotations.data && quotations.data.length > 0" class="wrap-list-quotations">
+                <section v-if="quotations.data && quotations.data.length > 0" class="wrap-list-quotations">
                     <router-link v-if="!isMobile"
                                  class="create-new-quotation"
                                  tag="div"
@@ -95,7 +73,29 @@
                             </li>
                         </ul>
                     </nav>
-                </div>
+                    <aside v-if="windowWidth < 576" class="wrap-filters">
+                        <input id="filters-toggler" class="filters-toggler" v-model="filtersChecked" type="checkbox">
+                        <label for="filters-toggler" :class="this.filtersChecked ? 'fas fa-times' : 'fas fa-sliders-h'"></label>
+                        <div class="content-filters">
+                            <h3 class="page-subtitle">Filtres</h3>
+                            <div class="wrap-field h-50">
+                                <span v-if="search" class="btn-right-field" @click="clearSearch">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                                <input v-model.trim="search"
+                                       v-on:keyup="getCustomers()"
+                                       class="field"
+                                       :class="{ hasValue: search }"
+                                       type="text"
+                                       autocomplete="off">
+
+                                <span class="focus-field"></span>
+                                <label class="label-field">Rechercher un client</label>
+                                <span class="symbol-left-field"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </aside>
+                </section>
                 <router-link v-else
                              :to="{ name: 'quotations.create' }"
                              tag="div"
@@ -177,6 +177,7 @@
                 loading: true,
                 search: "",
                 pagination: {},
+                filtersChecked: false
             }
         },
         computed: {
@@ -187,6 +188,9 @@
                 set() {
                     return this.$store.state.quotations;
                 }
+            },
+            windowWidth() {
+                return this.$store.state.windowWidth;
             }
         },
         created() {
@@ -205,6 +209,9 @@
             });
         },
         methods: {
+            getCustomers() {
+
+            },
             clearSearch() {
                 this.search = "";
             },
@@ -235,7 +242,7 @@
                 }).then(res => {
                     this.quotations = this.$store.state.quotations;
                     this.makePagination(this.$store.state.quotations);
-                }).catch(err => console.log(err));
+                }).catch(error => console.log(error.response));
             },
             randomBgImage() {
                 let random_images_array = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
@@ -248,8 +255,6 @@
                     id: id
                 }).then(res => {
                     console.log(res);
-                    // this.quotations = this.$store.state.quotations;
-                    // this.makePagination(this.$store.state.quotations);
                 }).catch(err => console.log(err));
             }
         }
@@ -273,22 +278,6 @@
 
                 .page-main-title {
                     margin-right: 1rem;
-                }
-            }
-
-            .wrap-filters {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                .wrap-field {
-                    margin-bottom: 0;
-                }
-
-                .wrap-icon-filter {
-                    font-size: 3rem;
-                    color: $secondary-color;
-                    margin-left: 2rem;
                 }
             }
         }
@@ -467,57 +456,6 @@
                     }
                 }
             }
-
-            .wrap-pagination {
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                margin-top: 1rem;
-
-                .list-paginate {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 100%;
-
-                    .controls-paginate {
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        width: 3.5rem;
-                        height: 3.5rem;
-                        margin: 0 1rem;
-                        border: .15rem solid $primary-color;
-                        border-radius: 50%;
-                        font-size: 2rem;
-                        color: $primary-color;
-                        text-align: center;
-                        line-height: 3.25rem;
-                        transition: all .4s;
-
-                        &:hover {
-                            background-color: rgba($secondary-color, 0.25);
-                            border: .15rem solid $secondary-color;
-                            color: $secondary-color;
-
-                            .link-paginate {
-                                color: $secondary-color;
-                            }
-                        }
-
-                        .link-paginate {
-                            cursor: pointer;
-                            color: inherit;
-                        }
-
-                        &.disabled {
-                            display: none;
-                        }
-                    }
-                }
-
-            }
         }
 
         .wrap-empty-result {
@@ -573,6 +511,62 @@
             .text-new-quotation {
                 width: 100%;
                 text-transform: uppercase;
+            }
+        }
+
+
+        .wrap-filters {
+            width: 100%;
+            z-index: 2;
+
+            .filters-toggler {
+                position: absolute;
+                left: -9999px;
+
+                & + label {
+                    position: fixed;
+                    right: 2rem;
+                    bottom: 9rem;
+                    font-size: 2rem;
+                    color: $white;
+                    background-color: $secondary-color;
+                    border-radius: 50%;
+                    box-shadow: 0 0 1rem rgba($secondary-color, 0.25);
+                    width: 5rem;
+                    height: 5rem;
+                    z-index: 3;
+                    cursor: pointer;
+                    float: right;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    opacity: 1;
+                    transition: .2s;
+                    transition-delay: 0.6s;
+                    -webkit-user-select: none;
+                    user-select: none;
+                }
+
+                & ~ .content-filters {
+                    position: fixed;
+                    width: calc(100% - 3rem);
+                    height: 100%;
+                    padding: 2rem;
+                    box-shadow: 0 0 .5rem rgba($primary-color-dark, 0.2);
+                    background-color: $secondary-color-light;
+                    border-top-left-radius: 2rem;
+                    -webkit-font-smoothing: antialiased;
+                    transform-origin: 0% 0%;
+                    transform: translate(100%, 0);
+                    transition: transform 0.5s cubic-bezier(0.1,0.1,0.05,0.1);
+                }
+
+                &:checked {
+                    & ~ .content-filters {
+                        top: 0;
+                        right: 0;
+                    }
+                }
             }
         }
     }

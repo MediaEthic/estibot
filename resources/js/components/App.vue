@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading" class="wrap-padding">
-        <nav v-if="!isMobile" class="wrap-main-navigation">
+        <nav v-if="windowWidth >= 576" class="wrap-main-navigation">
             <router-link :to="{ name: 'quotations.index' }"
                          tag="a"
                          title="Retour sur la page d'accueil">
@@ -20,7 +20,7 @@
             <router-view :user="user"></router-view>
         </transition>
 
-        <footer v-if="isMobile" class="wrap-main-mobile-footer">
+        <footer v-if="windowWidth < 576" class="wrap-main-mobile-footer">
             <nav>
                 <ul class="wrap-main-menu">
                     <li v-for="(route, key) in routes">
@@ -77,6 +77,8 @@
         created() {
             // this.loading = true;
 
+            window.addEventListener("resize", this.handleWindowResize);
+
             this.$store.dispatch('getQuote').then(() => {
                 this.isViewed();
             });
@@ -95,7 +97,18 @@
                 next();
             });
         },
+        destroyed() {
+            window.removeEventListener("resize", this.handleWindowResize);
+        },
         computed: {
+            windowWidth: {
+                get() {
+                    return this.$store.state.windowWidth;
+                },
+                set() {
+                    return this.$store.state.windowWidth;
+                }
+            },
             quote() {
                 return this.$store.state.quote;
             },
@@ -107,6 +120,11 @@
             }
         },
         methods: {
+            handleWindowResize(e) {
+                this.$store.dispatch('getWindowWidth', {
+                    windowSize: e.currentTarget.innerWidth
+                });
+            },
             isViewed() {
                 let quote = this.quote.quote;
                 let numberWords = quote.split(' ');
