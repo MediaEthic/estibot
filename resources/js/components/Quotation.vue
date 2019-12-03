@@ -193,7 +193,7 @@
                 set() {
                     return this.$store.state.workflow;
                 },
-            },
+            }
         },
         methods: {
             showNotification() {

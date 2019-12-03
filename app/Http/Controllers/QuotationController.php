@@ -4,12 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\QuotationRepository;
 use App\Models\ {
-    Consumable,
-    Cutting,
-    Finishing,
-    Printing,
-    Quote,
-    Substrate
+    Quote
 };
 
 use Illuminate\Http\Request;
@@ -39,6 +34,7 @@ class QuotationController extends Controller
         return Quote::inRandomOrder()->first();
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -49,55 +45,6 @@ class QuotationController extends Controller
         return $this->repository->getPaginate();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getPrintings()
-    {
-        return Printing::get();
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function getSubstrates()
-//    {
-//        return Substrate::get();
-//    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getFinishings()
-    {
-        return Finishing::get();
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function getConsumables()
-//    {
-//        return Consumable::get();
-//    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function getCuttings()
-//    {
-//        return Cutting::get();
-//    }
 
     /**
      * Display a listing of the resource.
@@ -108,6 +55,7 @@ class QuotationController extends Controller
     {
         return $this->repository->getPrice($request->all());
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -120,6 +68,7 @@ class QuotationController extends Controller
         return $this->repository->store($request->all());
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -130,6 +79,7 @@ class QuotationController extends Controller
     {
         return $this->repository->getById($id);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -142,6 +92,7 @@ class QuotationController extends Controller
     {
         return $this->repository->update($id, $request->all());
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -165,6 +116,7 @@ class QuotationController extends Controller
         $name = "Devis#-" . $quotation->id . ".pdf";
         return $pdf->stream($name);
     }
+
 
     public function sendEmail(Request $request, $id)
     {

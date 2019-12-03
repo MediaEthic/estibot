@@ -396,6 +396,7 @@
                 });
             },
             sendEmail() {
+                this.serverErrors = "";
                 this.loading = true;
                 this.$store.dispatch("sendEmail", {
                     quotation: this.quotation,

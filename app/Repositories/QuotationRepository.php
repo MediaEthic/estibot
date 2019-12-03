@@ -43,7 +43,7 @@ class QuotationRepository
         $quotation = $this->model->with('user', 'third', 'contact', 'label', 'quantities', 'status')
             ->findOrFail($id);
 
-        $quotation['contacts'] = Contact::where('third_id', $quotation->third_id)->get();
+        $quotation['third']['contacts'] = Contact::where('third_id', $quotation->third_id)->get();
         $quotation['settlements'] = Settlement::get();
         return $quotation;
     }
@@ -122,7 +122,7 @@ class QuotationRepository
 
     private function saveFinishingLabel(FinishingLabel $model, Array $inputs, $label)
     {
-        if (!empty($inputs['type'])) $model->finishing_id = $inputs['type'];
+        if (!empty($inputs['type'])) $model->finishing_id = $inputs['id'];
         if (!empty($label)) $model->label_id = $label;
         if (floatval($inputs['shape']) > 0) $model->shape = $inputs['shape'];
 //        if (!empty($inputs['reworking'])) return $inputs['reworking'];
@@ -499,7 +499,7 @@ class QuotationRepository
             $slowerCadence = $pressCadence;
             $finishings = $finishing['finishings'];
             foreach ($finishings as $finishing) {
-                $finishingPress = Finishing::find($finishing['type']);
+                $finishingPress = Finishing::find($finishing['id']);
 //                    TODO : voir si gestion des finitions sur autre machine
                     if ($finishingPress->cadence < $slowerCadence) {
                         $slowerCadence = $finishingPress->cadence;
@@ -660,7 +660,7 @@ class QuotationRepository
                     $marginFinishing = $margin;
                     foreach ($finishings as $finishing) {
 //                        TODO : reworking reprise sur machine
-                        $finishingID = intval($finishing['type']);
+                        $finishingID = intval($finishing['id']);
                         $finishingPress = Finishing::find($finishingID);
                         $meterMakereadyFinishing = $finishingPress->overlay_sheet;
                         $meterMakereadyPress += $meterMakereadyFinishing;

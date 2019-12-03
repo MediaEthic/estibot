@@ -21,20 +21,25 @@ $router->group(['prefix' => 'api'], function ($router) {
 
 //        $router->group(['middleware' => 'auth'], function ($router) {
             $router->group(['prefix' => 'quotations'], function ($router) {
+                $router->post('/customers', 'ApiController@getCustomers');
+                $router->post('/search/autocomplete/customers', 'ApiController@searchCustomers');
+                $router->post('/search/contacts', 'ApiController@getThirdContacts');
+                $router->post('/third/labels', 'ApiController@getThirdLabels');
+                $router->post('/finishings', 'ApiController@getFinishings');
+                $router->post('/printings', 'ApiController@getPrintings');
                 $router->get('/', 'QuotationController@index');
                 $router->post('/', 'QuotationController@store');
-    //            $router->get('/{id}', 'QuotationController@show');
+                //            $router->get('/{id}', 'QuotationController@show');
                 $router->post('/price', 'QuotationController@getPrice');
                 $router->get('/{id}/edit', 'QuotationController@edit');
                 $router->post('/{id}', 'QuotationController@update');
                 $router->delete('/{id}', 'QuotationController@destroy');
 
+
                 $router->post('/{id}/email', 'QuotationController@sendEmail');
 
 
-                $router->get('/printings', 'QuotationController@getPrintings');
-                $router->get('/finishings', 'QuotationController@getFinishings');
-    //            $router->get('/substrates', 'QuotationController@getSubstrates');
+                //            $router->get('/substrates', 'QuotationController@getSubstrates');
     //            $router->get('/consumables', 'QuotationController@getConsumables');
     //            $router->get('/cuttings', 'QuotationController@getCuttings');
             });
