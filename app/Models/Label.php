@@ -12,6 +12,8 @@ class Label extends Model
      * @var array
      */
     protected $fillable = [
+        'third_type',
+        'third_id',
         'name',
         'width',
         'length',

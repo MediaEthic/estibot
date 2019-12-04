@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
                 ->onUpdate('restrict');
             $table->string('name')->nullable()->default(null);
             $table->string('surname')->nullable()->default(null);
-            $table->string('surname')->nullable()->default(null);
             $table->string('profession', 35)->nullable()->default(null);
             $table->string('email', 100)->unique();
             $table->string('phone', 35)->nullable()->default(null);

@@ -16,6 +16,8 @@ class CreateLabelsTable extends Migration
         Schema::create('labels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->nullableTimestamps();
+            $table->enum('third_type', ['ethic', 'estibot'])->default('estibot');
+            $table->unsignedBigInteger('third_id')->nullable()->default(null);
             $table->string('name', 200)->nullable()->default(null);
             $table->unsignedInteger('width');
             $table->unsignedInteger('length');
@@ -28,6 +30,10 @@ class CreateLabelsTable extends Migration
             $table->unsignedBigInteger('cutting_id')->nullable()->default(null);
             $table->enum('winding', ['ihead', 'ifoot', 'iright', 'ileft', 'ehead', 'efoot', 'eright', 'eleft'])->default('ihead');
             $table->unsignedInteger('packing')->nullable()->default(null);
+
+            $table->foreign('third_id')
+                ->references('id')
+                ->on('thirds');
 
             $table->foreign('substrate_id')
                 ->references('id')
@@ -43,6 +49,7 @@ class CreateLabelsTable extends Migration
     public function down()
     {
         Schema::table('labels', function (Blueprint $table) {
+            $table->dropForeign(['third_idv']);
             $table->dropForeign(['substrate_id']);
         });
 
