@@ -124,7 +124,7 @@
                         @animationstart="checkAnimation"
                         class="field select"
                         :class="{ hasValue: form.identification.contact.id }"
-                        @change="setContactEmail(contact.email)"
+                        @change="setContact(contact)"
                         required>
                     <option disabled value="">Choisir</option>
                     <option v-for="contact in third.contacts"
@@ -374,9 +374,6 @@
                 }
             },
             generateContact(contact) {
-                if (contact.default) {
-                    this.form.identification.contact.id = contact.id;
-                }
                 if (contact.name !== null || contact.surname !== null) {
                     let $contact = ``;
                     if (contact.civility === "Mr" || contact.civility === "1") {
@@ -398,9 +395,10 @@
                     this.form.identification.contact.id = "";
                 }
             },
-            setContactEmail(email) {
+            setContact(contact) {
+                this.form.identification.contact.ethic = contact.ethic;
                 if (this.form.identification.contact.email !== null || this.form.identification.contact.email !== "") {
-                    this.form.identification.contact.email = email;
+                    this.form.identification.contact.email = contact.email;
                 }
             },
             searchCustomersForAutocomplete(query) {
@@ -461,6 +459,13 @@
                     ethic: customer.ethic,
                     third: customer.id,
                 }).then(() => {
+                    this.third.contacts.forEach(element => {
+                        if (element.default) {
+                            this.form.identification.contact.id = element.id;
+                        }
+                        this.form.identification.contact.type = "old";
+                        this.form.identification.contact.ethic = element.ethic;
+                    });
                     this.contactsAreLoading = false;
                 }).catch(() => {
                     this.contactsAreLoading = false;
@@ -494,6 +499,8 @@
                 this.form.identification.third.addressLine3 = "";
                 this.form.identification.third.zipcode = "";
                 this.form.identification.third.city = "";
+                this.form.identification.contact.type = "new";
+                this.form.identification.contact.ethic = false;
                 this.form.identification.contact.id = "";
                 this.form.identification.contact.civility = "";
                 this.form.identification.contact.name = "";

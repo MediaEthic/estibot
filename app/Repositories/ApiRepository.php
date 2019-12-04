@@ -2,8 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Contact;
-use App\Models\Third;
+use App\Models\ {
+    Contact,
+    Label,
+    Third
+};
 use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -89,24 +92,35 @@ class ApiRepository
 
     public function getThirdContacts(Array $datas)
     {
+        $filteredEthicContacts = collect();
         if ($datas['ethic']) {
-            $filteredContacts = $this->findByIdThirdContact($datas['company'], $datas['third']);
-        } else {
-            $filteredContacts = Contact::where('third_id', $datas['third']);
+            $filteredEthicContacts = $this->findByIdThirdContact($datas['company'], $datas['third']);
         }
+        $filteredEstibotContacts = Contact::where('third_id', $datas['third'])->get();
+        $filteredEstibotContacts = $filteredEstibotContacts->map(function($item) {
+            $item['ethic'] = false;
+            return $item;
+        });
 
-        return $filteredContacts;
+        $merged = $filteredEthicContacts->merge($filteredEstibotContacts);
+        return $merged->sortBy('name');
     }
 
     public function getThirdLabels(Array $datas)
     {
+        $filteredEthicLabels = collect();
         if ($datas['ethic']) {
-            $filteredLabels = $this->findByIdThirdLabel($datas['company'], $datas['third']);
-        } else {
-            $filteredLabels = Contact::where('third_id', $datas['third']);
+            $filteredEthicLabels = $this->findByIdThirdLabel($datas['company'], $datas['third']);
         }
+        $filteredEstibotLabels = Label::where('third_id', $datas['third'])->get();
+        $filteredEstibotLabels = $filteredEstibotLabels->map(function($item) {
+            $item['ethic'] = false;
+            return $item;
+        });
 
-        return $filteredLabels;
+        $merged = $filteredEthicLabels->merge($filteredEstibotLabels);
+
+        return $merged;
     }
 
     public function getFinishings(Array $datas)
@@ -216,12 +230,12 @@ class ApiRepository
 
     private function findByIdThirdContact($company, $third)
     {
-
         $response = $this->client->request('GET', 'http://89.92.37.229/API/CONTACT/'.$company.'/'.$third);
         if ($response->getStatusCode() === 200) {
             $contacts = array();
             return collect(json_decode($response->getBody()))->map(function($item) use ($contacts) {
-                $contacts['id'] = utf8_encode($item->NOCONTACT);
+                $contacts['ethic'] = true;
+                $contacts['id'] = $item->NOCONTACT;
                 $contacts['civility'] = utf8_encode($item->CIVILITE);
                 $contacts['name'] = utf8_encode($item->NOMPRENOM);
                 $contacts['surname'] = "";
@@ -245,18 +259,11 @@ class ApiRepository
         $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTE/'.$company.'/'.$third);
         if ($response->getStatusCode() === 200) {
             return collect(json_decode($response->getBody()));
-            $contacts = array();
-            return collect(json_decode($response->getBody()))->map(function($item) use ($contacts) {
-                $contacts['id'] = utf8_encode($item->NOCONTACT);
-                $contacts['civility'] = $item->CIVILITE;
-                $contacts['name'] = utf8_encode($item->NOMPRENOM);
-                $contacts['surname'] = "";
-                $contacts['profession'] = utf8_encode($item->FONCTIONCONTACT);
-                $contacts['email'] = utf8_encode($item->EMAIL);
-                $contacts['mobile'] = utf8_encode($item->TELEPHONEMOBILE);
-                $contacts['phone'] = utf8_encode($item->TELEPHONE);
-                $contacts['default'] = $item->PRINCIPAL;
-                return $contacts;
+            $labels = array();
+            return collect(json_decode($response->getBody()))->map(function($item) use ($labels) {
+                $labels['ethic'] = true;
+                $labels['id'] = utf8_encode($item->REFARTICLE);
+                return $labels;
             });
         } else {
             return response()->json([
