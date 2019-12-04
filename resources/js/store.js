@@ -30,6 +30,8 @@ export default new Vuex.Store({
                     hasFocus: false,
                 },
                 contact: {
+                    type: "new",
+                    ethic: false,
                     id: "",
                     civility: "",
                     name: "",
@@ -119,7 +121,8 @@ export default new Vuex.Store({
     },
     getters: {
         loggedIn(state) {
-            return state.token !== null;
+            // return state.token !== null;
+            return state.user !== null;
         }
     },
     mutations: {
@@ -177,29 +180,37 @@ export default new Vuex.Store({
     },
     actions: {
         login(context, credentials) {
-            axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/login', {
-                // axios.post('http://89.92.37.229/API/AUTHENTIFICATION', {
-                    email: credentials.username,
+                    username: credentials.username,
                     password: credentials.password
                 }).then(response => {
-                    localStorage.setItem("token", response.data.token);
-                    context.commit("login", response.data.token);
+                    // localStorage.setItem("token", response.data.token);
+                    // context.commit("login", response.data.token);
+                    //
+                    localStorage.setItem("company", response.data[0].CODESOCIETE);
+                    context.commit("setCompany", response.data[0].CODESOCIETE);
 
-                    localStorage.setItem("company", "001");
-                    context.commit("setCompany", "001");
+                    localStorage.setItem("establishment", response.data[0].CODEETABLISSEMENT);
+                    context.commit("setEstablishment", response.data[0].CODEETABLISSEMENT);
 
-                    localStorage.setItem("establishment", "001");
-                    context.commit("setEstablishment", "001");
-
-                    localStorage.setItem("user", response.data.user.name);
-                    context.commit("setUser", response.data.user.name);
+                    localStorage.setItem("user", response.data[0].NOM);
+                    context.commit("setUser", response.data[0].NOM);
 
                     resolve(response);
                 }).catch(error => {
-                    localStorage.removeItem("token");
+                    console.log(error);
+                    if (error.response) {
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log(error.message);
+                    }
+                    // localStorage.removeItem("token");
                     localStorage.removeItem("user");
+                    localStorage.removeItem("company");
+                    localStorage.removeItem("establishment");
                     reject(error);
                 });
             });
@@ -340,6 +351,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
                 axios.post('/api/auth/quotations', { // quotations.store
+                    company: context.state.company,
                     price: context.state.price,
                     workflow: context.state.workflow,
                     quotation: credentials.quotation,
