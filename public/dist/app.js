@@ -23305,7 +23305,7 @@ __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to
     })) {
         if (__WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */].getters.loggedIn) {
             next({
-                name: 'home'
+                name: 'quotations.index'
             });
         } else {
             next();
@@ -39795,9 +39795,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         generateContact: function generateContact(contact) {
-            if (contact.default) {
-                this.form.identification.contact.id = contact.id;
-            }
             if (contact.name !== null || contact.surname !== null) {
                 var $contact = '';
                 if (contact.civility === "Mr" || contact.civility === "1") {
@@ -39819,9 +39816,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.form.identification.contact.id = "";
             }
         },
-        setContactEmail: function setContactEmail(email) {
+        setContact: function setContact(contact) {
+            this.form.identification.contact.ethic = contact.ethic;
             if (this.form.identification.contact.email !== null || this.form.identification.contact.email !== "") {
-                this.form.identification.contact.email = email;
+                this.form.identification.contact.email = contact.email;
             }
         },
         searchCustomersForAutocomplete: function searchCustomersForAutocomplete(query) {
@@ -39888,6 +39886,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ethic: customer.ethic,
                 third: customer.id
             }).then(function () {
+                _this3.third.contacts.forEach(function (element) {
+                    if (element.default) {
+                        _this3.form.identification.contact.id = element.id;
+                    }
+                    _this3.form.identification.contact.type = "old";
+                    _this3.form.identification.contact.ethic = element.ethic;
+                });
                 _this3.contactsAreLoading = false;
             }).catch(function () {
                 _this3.contactsAreLoading = false;
@@ -39920,6 +39925,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.identification.third.addressLine3 = "";
             this.form.identification.third.zipcode = "";
             this.form.identification.third.city = "";
+            this.form.identification.contact.type = "new";
+            this.form.identification.contact.ethic = false;
             this.form.identification.contact.id = "";
             this.form.identification.contact.civility = "";
             this.form.identification.contact.name = "";
@@ -40916,7 +40923,7 @@ var render = function() {
                           )
                         },
                         function($event) {
-                          return _vm.setContactEmail(_vm.contact.email)
+                          return _vm.setContact(_vm.contact)
                         }
                       ]
                     }
@@ -48337,6 +48344,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     hasFocus: false
                 },
                 contact: {
+                    type: "new",
+                    ethic: false,
                     id: "",
                     civility: "",
                     name: "",
@@ -48422,7 +48431,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
     },
     getters: {
         loggedIn: function loggedIn(state) {
-            return state.token !== null;
+            // return state.token !== null;
+            return state.user !== null;
         }
     },
     mutations: {
@@ -48481,29 +48491,37 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
     },
     actions: {
         login: function login(context, credentials) {
-            __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Content-Type'] = 'multipart/form-data';
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/login', {
-                    // axios.post('http://89.92.37.229/API/AUTHENTIFICATION', {
-                    email: credentials.username,
+                    username: credentials.username,
                     password: credentials.password
                 }).then(function (response) {
-                    localStorage.setItem("token", response.data.token);
-                    context.commit("login", response.data.token);
+                    // localStorage.setItem("token", response.data.token);
+                    // context.commit("login", response.data.token);
+                    //
+                    localStorage.setItem("company", response.data[0].CODESOCIETE);
+                    context.commit("setCompany", response.data[0].CODESOCIETE);
 
-                    localStorage.setItem("company", "001");
-                    context.commit("setCompany", "001");
+                    localStorage.setItem("establishment", response.data[0].CODEETABLISSEMENT);
+                    context.commit("setEstablishment", response.data[0].CODEETABLISSEMENT);
 
-                    localStorage.setItem("establishment", "001");
-                    context.commit("setEstablishment", "001");
-
-                    localStorage.setItem("user", response.data.user.name);
-                    context.commit("setUser", response.data.user.name);
+                    localStorage.setItem("user", response.data[0].NOM);
+                    context.commit("setUser", response.data[0].NOM);
 
                     resolve(response);
                 }).catch(function (error) {
-                    localStorage.removeItem("token");
+                    console.log(error);
+                    if (error.response) {
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log(error.message);
+                    }
+                    // localStorage.removeItem("token");
                     localStorage.removeItem("user");
+                    localStorage.removeItem("company");
+                    localStorage.removeItem("establishment");
                     reject(error);
                 });
             });
@@ -48795,6 +48813,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotations', { // quotations.store
+                    company: context.state.company,
                     price: context.state.price,
                     workflow: context.state.workflow,
                     quotation: credentials.quotation
