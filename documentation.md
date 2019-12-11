@@ -171,7 +171,6 @@ FROM PSTOCKMATIERESENTETE T1,
      PAPPELLATIONS T5,
      PCOULEURS T6,
      PMASSESADHESIVES T7
-
 WHERE T1.CODESOCIETE = :company_id
       AND T1.CODEETABLISSEMENT = :establishment_id
       AND T1.CODESOCIETE = T2.CODESOCIETE
@@ -332,7 +331,7 @@ WHERE T1.CODESOCIETE = :company_id
       AND T2.DATEAPPLICATION = (SELECT MAX(DATEAPPLICATION)
                                 FROM PTAUX T3
                                 WHERE CODESOCIETE = :company_id
-                                  AND CODEPOSTE = :class
+                                  AND CODEPOSTE IN (:class)
                                   AND CODECONFIGURATION = :configuration)
 ORDER BY T1.LIBELLE
 ````
@@ -354,7 +353,7 @@ ORDER BY T1.LIBELLE
 - Success :
     - 200 : Retourne un tableau d'objets avec la liste des étiquettes d'un client
 - Failure :
-    - 400 : Le champs passés en paramètre sont manquants et/ou mauvais
+    - 400 : Les champs passés en paramètre sont manquants et/ou mauvais
     - 404 : Ressource inexistante ou non trouvée
     - 500 : Erreur serveur
 ````
@@ -363,7 +362,6 @@ ORDER BY T1.LIBELLE
 ````
 SELECT DISTINCT T1.REFARTICLE,
        T1.VARARTICLE,
-       T1.CLIENTFINAL,
        T1.LIBELLEVARIANTE,
        T2.LAIZEDIMENSION,
        T2.AVANCEDIMENSION,
@@ -382,8 +380,10 @@ WHERE T1.CODESOCIETE = :company_id
       AND T1.DATESUSPENSION IS NULL
       AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.REFARTICLE = T2.REFARTICLE
+      AND T1.VARARTICLE = T2.VARARTICLE
       AND T1.CODESOCIETE = T3.CODESOCIETE
       AND T1.NOCOMPTE = T3.NOCOMPTE
+      AND T1.TYPECOMPTE = T3.TYPECOMPTE
       AND T3.TYPECOMPTE = 'C'
 ORDER BY T1.REFARTICLE,
          T1.VARARTICLE
@@ -722,17 +722,105 @@ SELECT T1.IDREFSTOCK,
        T1.LIBELLE,
        T1.PRIXDEVIS
 FROM PSTOCKMATIERESENTETE T1
-WHERE T1.CODESOCIETE = :noSociety
-      AND T1.CODEETABLISSEMENT = :noAgency
+WHERE T1.CODESOCIETE = :company_id
+      AND T1.CODEETABLISSEMENT = :establishment_id
       AND T1.CODECLASSE IN (:class)
       AND T1.DATESUSPENSION IS NULL
 ORDER BY T1.LIBELLE
 ````
 
 
-
 ## 16. Outils de découpe (R21)
 #### Endpoint : `POST /cuttings`
+
+**Parameters: Body**
+````
+{
+    company_id: String (required),
+    establishment_id: String (required),
+    class: String (required)
+}
+````
+
+**Out**
+````
+- Success :
+    - 200 : Retourne un tableau d'objets avec la liste des outils de découpe d'une finition
+- Failure :
+    - 400 : Les champs passés en paramètre sont manquants et/ou mauvais
+    - 404 : Ressource inexistante ou non trouvée
+    - 500 : Erreur serveur
+````
+
+**Request**
+````
+SELECT T1.IDREFSTOCK,
+       T1.REFSTOCK,
+       T1.LIBELLE,
+       T2.LAIZEDIMENSION,
+       T2.AVANCEDIMENSION,
+       T2.LISTEDESPOSTES
+FROM PSTOCKMATIERESENTETE T1,
+     PSTOCKMATIERESOUTILS T2
+WHERE T1.CODESOCIETE = :company_id
+      AND T1.CODEETABLISSEMENT = :establishment_id
+      AND T1.SUSPENSION = 0
+      AND T1.CODECLASSE IN (:class)
+      AND T2.CODESOCIETE = T1.CODESOCIETE
+      AND T2.IDREFSTOCK = T1.IDREFSTOCK
+      AND T2.OUTILDECOUPE = '1'
+ORDER BY T1.LIBELLE
+````
+
+## 17. Machines d'impression (R22)
+#### Endpoint : `POST /printings`
+
+**Parameters: Body**
+````
+{
+    company_id: String (required)
+}
+````
+
+**Out**
+````
+- Success :
+    - 200 : Retourne un tableau d'objets avec la liste des machines d'impression
+- Failure :
+    - 400 : Le champ passé en paramètre est manquant et/ou mauvais
+    - 404 : Ressource inexistante ou non trouvée
+    - 500 : Erreur serveur
+````
+
+**Request**
+````
+SELECT CODEPOSTE,
+       CODECONFIGURATION,
+       LIBELLE,
+       LAIZEMAXIMUM,
+       LAIZEIMPRESSION,
+       AVANCEMAXIMUM,
+       CELLULEDEREPRISE,
+       CADENCE,
+       CADENCELIBELLEUNITE,
+       CADENCELIBELLETEMPS,
+       NBGROUPES,
+       TYPEDEPOSTE,
+       PASSECALAGE1,
+       PRIXPLAQUEOUCLICHE,
+       TEMPSREGLAGEBOBINE,
+       TEMPSCALAGEPLAQUEOUCLICHE,
+       TEMPSLAVAGEPARGROUPE
+FROM PPOSTES
+WHERE CODESOCIETE = :company_id
+      AND DATESUSPENSION IS NULL
+      AND TYPEDEPOSTE = '3'
+ORDER BY LIBELLE
+````
+
+
+## 18. Postes de reprise (R12)
+#### Endpoint : `POST /reworkings`
 
 **Parameters: Body**
 ````
