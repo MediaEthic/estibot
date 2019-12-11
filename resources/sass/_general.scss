@@ -380,8 +380,29 @@
 
     .modal-body {
         margin: 2rem 0;
+
+        .inline {
+            display: flex;
+            flex-flow: row nowrap;
+
+            > *:not(:last-child) {
+                margin-right: 2rem;
+            }
+        }
+
+        .wrap-empty-result {
+            margin-top: 2rem;
+            text-align: center;
+
+            .image-no-data {
+                width: 25rem;
+                display: block;
+                margin: 1rem auto 0 auto;
+            }
+        }
     }
 }
+
 
 
 
