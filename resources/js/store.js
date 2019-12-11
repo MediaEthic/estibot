@@ -13,108 +13,132 @@ export default new Vuex.Store({
         windowWidth: window.innerWidth,
         quote: [],
         quotations: [],
-        printings: [],
         workflow: {
-            summary: "",
-            identification: {
-                third: {
-                    type: "old",
-                    ethic: false,
-                    id: "",
-                    name: "",
-                    addressLine1: "",
-                    addressLine2: "",
-                    addressLine3: "",
-                    zipcode: "",
-                    city: "",
-                    hasFocus: false,
-                },
-                contact: {
-                    type: "new",
-                    ethic: false,
-                    id: "",
-                    civility: "",
-                    name: "",
-                    surname: "",
-                    service: "",
-                    email: "",
-                    hasFocus: false,
-                }
-            },
-            description: {
-                label: {
-                    type: "new",
-                    ethic: false,
-                    id: "",
-                    name: "",
-                    width: "",
-                    length: "",
-                    hasFocus: false,
-                },
-                quantities: [
-                    {
-                        id: "",
-                        quantity: "",
-                        model: "",
-                        plate: "",
-                        hour: "",
-                        minute: "",
-                        hasFocus: false,
-                    }
-                ]
-            },
-            printing: {
-                press: "",
-                name: "",
-                colors: "",
-                quadri: false,
-                hasFocus: false,
-                substrate: {
-                    type: "new",
-                    ethic: false,
-                    id: "",
-                    name: "",
-                    width: "",
-                    weight: "",
-                    price: "",
-                    hasFocus: false,
-                },
-            },
-            finishing: {
-                finishings: [
-                    {
+            form: {
+                summary: "",
+                identification: {
+                    third: {
+                        type: "old",
+                        ethic: false,
                         id: "",
                         name: "",
-                        shape: false,
-                        reworking: "",
-                        presence_consumable: false,
+                        addressLine1: "",
+                        addressLine2: "",
+                        addressLine3: "",
+                        zipcode: "",
+                        city: "",
                         hasFocus: false,
-                        consumable: ""
+                    },
+                    contact: {
+                        type: "new",
+                        ethic: false,
+                        id: "",
+                        civility: "",
+                        name: "",
+                        surname: "",
+                        service: "",
+                        email: "",
+                        hasFocus: false,
                     }
-                ],
-                cutting: {
-                    type: "new",
-                    ethic: false,
-                    id: "",
+                },
+                description: {
+                    label: {
+                        type: "old",
+                        ethic: false,
+                        id: "",
+                        variant: "",
+                        name: "",
+                        width: "",
+                        length: "",
+                        hasFocus: false,
+                    },
+                    quantities: [
+                        {
+                            id: "",
+                            quantity: "",
+                            model: "",
+                            plate: "",
+                            hour: "",
+                            minute: "",
+                            hasFocus: false,
+                        }
+                    ]
+                },
+                printing: {
+                    press: "",
                     name: "",
-                    dimension_width: "",
-                    dimension_length: "",
-                    bleed_width: "",
-                    bleed_length: "",
-                    pose_width: "",
-                    pose_length: "",
-                    shape: "",
+                    colors: "",
+                    quadri: false,
                     hasFocus: false,
+                    substrate: {
+                        type: "old",
+                        ethic: false,
+                        id: "",
+                        name: "",
+                        width: "",
+                        weight: "",
+                        price: "",
+                        hasFocus: false,
+                    },
+                },
+                finishing: {
+                    finishings: [
+                        {
+                            id: "",
+                            name: "",
+                            shape: false,
+                            reworking: "",
+                            presence_consumable: false,
+                            hasFocus: false,
+                            consumable: ""
+                        }
+                    ],
+                    cutting: {
+                        type: "old",
+                        ethic: false,
+                        id: "",
+                        name: "",
+                        dimension_width: "",
+                        dimension_length: "",
+                        bleed_width: "",
+                        bleed_length: "",
+                        pose_width: "",
+                        pose_length: "",
+                        shape: "",
+                        hasFocus: false,
+                    }
+                },
+                packing: {
+                    packing: "",
+                    direction: "",
+                },
+            },
+            database: {
+                identification: {
+                    contacts: [],
+                },
+                description: {
+                    labels: [],
+                },
+                printing: {
+                    printings: [],
+                    substrates: {
+                        search: {
+                            criteria: {
+                                isLoading: false,
+                                families: [],
+                                types: [],
+                                colors: [],
+                                weights: [],
+                                // suppliers: [],
+                            },
+                        },
+                    },
+                },
+                finishing: {
+                    cuttings: []
                 }
             },
-            packing: {
-                packing: "",
-                direction: "",
-            },
-        },
-        third: {
-            contacts: [],
-            labels: [],
         },
         price: [],
         quotation: [],
@@ -153,14 +177,14 @@ export default new Vuex.Store({
         setPrintings(state, data) {
             state.printings = data;
         },
-        setSubstrates(state, data) {
-            state.substrates = data;
+        setSubstratesSearchCriteria(state, data) {
+            state.workflow.database.printing.substrates.search.criteria = data;
         },
         // setCuttings(state, data) {
         //     state.cuttings = data;
         // },
         setQuotationSummary(state, data) {
-            state.workflow.summary = data;
+            state.workflow.form.summary = data;
         },
         setQuotationPrice(state, data) {
             state.price = data;
@@ -172,11 +196,14 @@ export default new Vuex.Store({
             state.workflow = data;
         },
         setThirdContacts(state, data) {
-            state.third.contacts = data;
+            state.workflow.database.identification.contacts = data;
         },
         setThirdLabels(state, data) {
-            state.third.labels = data;
-        }
+            state.workflow.database.description.labels = data;
+        },
+        // setLabelSubstrates(state, data) {
+        //     state.workflow.database.printing.substrates = data;
+        // }
     },
     actions: {
         login(context, credentials) {
@@ -270,7 +297,7 @@ export default new Vuex.Store({
         },
         searchCustomersForAutocomplete(context, credentials) {
             return new Promise((resolve, reject) => {
-                axios.post('/api/auth/quotations/search/autocomplete/customers', {
+                axios.post('/api/auth/quotations/autocomplete/customers', {
                     company: context.state.company,
                     queryString: credentials.queryString
                 }).then(response => {
@@ -315,11 +342,55 @@ export default new Vuex.Store({
                 });
             });
         },
-        async getSubstrates(context) {
-            let data = (await axios.get('http://89.92.37.229/API/SUPPORT/001/001')).data;
-            console.log("getSubstrates");
+        async getSubstratesSearchCriteria(context) {
+            console.log(context.state.workflow.form.description.label.ethic);
+            console.log(context.state.workflow.form.description.label.id);
+            console.log(context.state.workflow.form.description.label.variant);
+            let data = (await axios.post('/api/auth/quotations/substrates/search/criteria', {
+                company: context.state.company,
+                establishment: context.state.establishment,
+                ethic: context.state.workflow.form.description.label.ethic,
+                label: context.state.workflow.form.description.label.id,
+                variant: context.state.workflow.form.description.label.variant
+            })).data;
             console.log(data);
-            context.commit("setSubstrates", data);
+            context.commit("setSubstratesSearchCriteria", data);
+        },
+        searchSubstratesForAutocomplete(context, credentials) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/auth/quotations/substrates/search/autocomplete', {
+                    company: context.state.company,
+                    establishment: context.state.establishment,
+                    queryString: credentials.queryString,
+                    ethic: context.state.workflow.form.description.label.ethic,
+                    label: context.state.workflow.form.description.label.id,
+                    variant: context.state.workflow.form.description.label.variant
+                }).then(response => {
+                    resolve(response.data);
+                }).catch(error => {
+                    reject(error);
+                });
+            });
+        },
+        getFilteredSubstrates(context, credentials) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/auth/quotations/substrates', {
+                    company: context.state.company,
+                    establishment: context.state.establishment,
+                    filters: credentials.filters,
+                    page: credentials.page,
+                    ethic: context.state.workflow.form.description.label.ethic,
+                    label: context.state.workflow.form.description.label.id,
+                    variant: context.state.workflow.form.description.label.variant
+                }).then(response => {
+                    console.log("getFilteredSubstrates");
+                    console.log(response.data);
+                    resolve(response.data);
+                }).catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });
         },
         getFinishings(context) {
             return new Promise((resolve, reject) => {
@@ -343,7 +414,7 @@ export default new Vuex.Store({
         async getQuotationPrice(context) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.post('/api/auth/quotations/price', { // quotations.price
-                workflow: context.state.workflow,
+                workflow: context.state.workflow.form,
             })).data;
             context.commit("setQuotationPrice", data);
         },
@@ -353,7 +424,7 @@ export default new Vuex.Store({
                 axios.post('/api/auth/quotations', { // quotations.store
                     company: context.state.company,
                     price: context.state.price,
-                    workflow: context.state.workflow,
+                    workflow: context.state.workflow.form,
                     quotation: credentials.quotation,
                 }).then(response => {
                     console.log("SaveQuotation :");

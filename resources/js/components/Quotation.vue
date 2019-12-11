@@ -26,15 +26,17 @@
             <div class="wrap-central">
                 <form class="wrap-main-form left-part">
                     <fieldset class="wrap-step">
-                        <img class="image-step"
-                             :src="steps[step-1].img"
-                             alt="Illustration d'un donneur d'ordre"/>
-                        <h2 class="page-subtitle main-title-step">{{ steps[step-1].title }}</h2>
-                        <progress class="progress" :value="progress" max="100">
-                            <div class="progress-bar">
-                                <span :style="{ width: progress + '%' }">Progress: {{ progress }}%</span>
-                            </div>
-                        </progress>
+                        <div class="wrap-progress-form">
+                            <img class="image-step"
+                                 :src="steps[step-1].img"
+                                 alt="Illustration d'un donneur d'ordre"/>
+                            <h2 class="page-subtitle main-title-step">{{ steps[step-1].title }}</h2>
+                            <progress class="progress" :value="progress" max="100">
+                                <div class="progress-bar">
+                                    <span :style="{ width: progress + '%' }">Progress: {{ progress }}%</span>
+                                </div>
+                            </progress>
+                        </div>
                         <section class="wrap-content-step">
                             <transition name="fade"
                                         mode="out-in">
@@ -188,10 +190,10 @@
         computed: {
             form: {
                 get() {
-                    return this.$store.state.workflow;
+                    return this.$store.state.workflow.form;
                 },
                 set() {
-                    return this.$store.state.workflow;
+                    return this.$store.state.workflow.form;
                 },
             }
         },

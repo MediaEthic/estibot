@@ -35,9 +35,9 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchCustomers(Request $request)
+    public function searchCustomersForAutocomplete(Request $request)
     {
-        return $this->repository->searchCustomers($request->all());
+        return $this->repository->searchCustomersForAutocomplete($request->all());
     }
 
     /**
@@ -68,6 +68,36 @@ class ApiController extends Controller
     public function getFinishings(Request $request)
     {
         return $this->repository->getFinishings($request->all());
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSubstratesSearchCriteria(Request $request)
+    {
+        return $this->repository->getSubstratesSearchCriteria($request->all());
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchSubstratesForAutocomplete(Request $request)
+    {
+        return $this->repository->searchSubstratesForAutocomplete($request->all());
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getFilteredSubstrates(Request $request)
+    {
+        return $this->repository->getFilteredSubstrates($request->all());
     }
 
     /**

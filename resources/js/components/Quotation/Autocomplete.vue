@@ -90,7 +90,8 @@
         },
         watch: {
             items(value, oldValue) {
-                if (this.isAsync) {
+                if (value.length !== oldValue.length) {
+                    console.log(value);
                     this.matches = value;
                     this.isOpen = true;
                     this.isLoading = false;
@@ -120,19 +121,18 @@
                 this.arrowCounter = -1;
             },
             onChange() {
+                this.$emit('search', this.search);
                 if (this.search.length > 2) {
-                    this.$emit('search', this.search);
-
                     if (this.isAsync) {
                         this.isLoading = true;
                     } else {
-                        this.isOpen = true;
                         this.filterResults();
+                        this.isOpen = true;
                     }
                 }
             },
             filterResults() {
-                this.matches = this.items.filter(item => item.toUpperCase().indexOf(this.search.toUpperCase()) > -1);
+                this.matches = this.items.filter(item => item.toLowerCase().indexOf(this.search.toLowerCase()) > -1);
             },
             setResult(result) {
                 this.$emit('input', result.name);

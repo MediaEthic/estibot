@@ -21,12 +21,16 @@ $router->group(['prefix' => 'api'], function ($router) {
 
 //        $router->group(['middleware' => 'auth'], function ($router) {
             $router->group(['prefix' => 'quotations'], function ($router) {
+                $router->post('/autocomplete/customers', 'ApiController@searchCustomersForAutocomplete');
                 $router->post('/customers', 'ApiController@getCustomers');
-                $router->post('/search/autocomplete/customers', 'ApiController@searchCustomers');
                 $router->post('/search/contacts', 'ApiController@getThirdContacts');
                 $router->post('/third/labels', 'ApiController@getThirdLabels');
-                $router->post('/finishings', 'ApiController@getFinishings');
                 $router->post('/printings', 'ApiController@getPrintings');
+                $router->post('/substrates/search/criteria', 'ApiController@getSubstratesSearchCriteria');
+                $router->post('/substrates/search/autocomplete', 'ApiController@searchSubstratesForAutocomplete');
+                $router->post('/autocomplete/substrates', 'ApiController@autocompleteSubstrates');
+                $router->post('/substrates', 'ApiController@getFilteredSubstrates');
+                $router->post('/finishings', 'ApiController@getFinishings');
                 $router->get('/', 'QuotationController@index');
                 $router->post('/', 'QuotationController@store');
                 //            $router->get('/{id}', 'QuotationController@show');

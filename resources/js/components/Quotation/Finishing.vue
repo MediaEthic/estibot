@@ -277,7 +277,7 @@
         },
         computed: {
             form() {
-                return this.$store.state.workflow;
+                return this.$store.state.workflow.form;
             }
         },
         methods: {
