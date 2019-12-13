@@ -3,7 +3,8 @@
         <div class="wrap-loader">
             <div class="overlay"></div>
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-    <!--        <img class="image-loading"-->
+            <p class="text-wait">Veuillez patienter pendant que<br>nous chargeons vos données...</p>
+            <!--        <img class="image-loading"-->
     <!--             src="/assets/img/undraw_loading_frh4.svg"-->
     <!--             alt="Illustration du contenu qui charge"/>-->
         </div>
@@ -28,6 +29,13 @@
             width: 100%;
             height: 100%;
             background-color: rgba($white, .75);
+        }
+
+        .text-wait {
+            z-index: 10000;
+            position: fixed;
+            top: calc(50% + 3.5rem);
+            left: calc(50% - 11.58125rem);
         }
 
         .lds-ring {
