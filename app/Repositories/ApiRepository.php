@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\{Contact, Label, Substrate, Third};
+use App\Models\{Contact, FinishingLabel, Label, Substrate, Third};
 use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -14,6 +14,12 @@ class ApiRepository
     {
         $this->client = $client;
     }
+
+    public function getWebServiceDatas(Array $datas)
+    {
+        return $this->allCustomers($datas['company']);
+
+}
 
     public function getCustomers(Array $datas)
     {
@@ -108,9 +114,8 @@ class ApiRepository
 
     public function getPrintings(Array $datas)
     {
-        $response = $this->client->request('GET', 'http://89.92.37.229/API/POSTEPRODUCTION/001/null/null');
-
-        if ($response->getStatusCode() === 200) {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/POSTEPRODUCTION/001/null/null');
             $collection = collect(json_decode($response->getBody()))->map(function($item) {
                 $printing = collect();
                 $printing->offsetSet('id', $item->CODEPOSTE);
@@ -119,11 +124,8 @@ class ApiRepository
                 return $printing;
             });
             return collect($collection->where('type', 3));
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the content cannot be loaded'
-            ], $response->getStatusCode());
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            return [];
         }
     }
 
@@ -230,22 +232,23 @@ class ApiRepository
 
     public function getFinishings(Array $datas)
     {
-        $response = $this->client->request('GET', 'http://89.92.37.229/API/FINITION/'.$datas['company']);
-
-        if ($response->getStatusCode() === 200) {
-            $finishings = array();
-            return collect(json_decode($response->getBody()))->map(function($item) use ($finishings) {
-                $finishings['id'] = utf8_encode($item->CODEOPEFAB);
-                $finishings['name'] = utf8_encode($item->LIBELLE);
-                $finishings['consumable'] = utf8_encode($item->CONSOMMABLE);
-                return $finishings;
-            });
+        // If label is from ethic database
+        if ($datas['ethic']) {
+            $finishings = $this->getLabelDies($datas);
         } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the content cannot be loaded'
-            ], $response->getStatusCode());
+            if (!empty($datas['label'])) $finishings = FinishingLabel::where('label_id', $datas['label'])->all();
+            if (empty($finishings)) {
+                $finishings = $this->getAllFinishings($datas);
+            }
         }
+
+        return $finishings;
+    }
+
+    public function getReworkings(Array $datas)
+    {
+        $workstations = $this->getWorkstations($datas);
+        return $workstations->where('reworking', 1)->all();
     }
 
     private function searchByCustomerName($estibot, $ethic, $queryString) {
@@ -286,61 +289,55 @@ class ApiRepository
 
     private function allCustomers($company)
     {
-        $response = $this->client->request('GET', 'http://89.92.37.229/API/CLIENT/' . $company);
-        if ($response->getStatusCode() === 200) {
-            $customer = array();
-            return collect(json_decode($response->getBody()))->map(function($item) use ($customer) {
-                $customer['ethic'] = true;
-                $customer['type'] = "C";
-                $customer['id'] = utf8_encode($item->NOCOMPTE);
-                $customer['alias'] = utf8_encode($item->MOTCLE);
-                $customer['name'] = utf8_encode($item->RAISONSOCIALE);
-                $customer['addressLine1'] = utf8_encode($item->ADRESSE1);
-                $customer['addressLine2'] = utf8_encode($item->ADRESSE2);
-                $customer['addressLine3'] = utf8_encode($item->ADRESSE3);
-                $customer['zipcode'] = utf8_encode($item->CODEPOSTAL);
-                $customer['city'] = utf8_encode($item->VILLE);
-                $customer['email'] = utf8_encode($item->EMAIL);
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/CLIENT/' . $company);
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $customer = collect();
+                $customer->offsetSet('ethic', true);
+                $customer->offsetSet('type', $item->TYPECOMPTE);
+                $customer->offsetSet('id', $item->NOCOMPTE);
+                $customer->offsetSet('alias', $item->MOTCLE);
+                $customer->offsetSet('name', $item->RAISONSOCIALE);
+                $customer->offsetSet('addressLine1', $item->ADRESSE1);
+                $customer->offsetSet('addressLine2', $item->ADRESSE2);
+                $customer->offsetSet('addressLine3', $item->ADRESSE3);
+                $customer->offsetSet('zipcode', $item->CODEPOSTAL);
+                $customer->offsetSet('city', $item->VILLE);
+                $customer->offsetSet('email', $item->EMAIL);
                 return $customer;
             });
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the content cannot be loaded'
-            ], $response->getStatusCode());
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            return [];
         }
     }
 
     private function findByIdThirdContact($company, $third)
     {
-        $response = $this->client->request('GET', 'http://89.92.37.229/API/CONTACT/'.$company.'/'.$third);
-        if ($response->getStatusCode() === 200) {
-            $contacts = array();
-            return collect(json_decode($response->getBody()))->map(function($item) use ($contacts) {
-                $contacts['ethic'] = true;
-                $contacts['id'] = $item->NOCONTACT;
-                $contacts['civility'] = utf8_encode($item->CIVILITE);
-                $contacts['name'] = utf8_encode($item->NOMPRENOM);
-                $contacts['surname'] = "";
-                $contacts['profession'] = utf8_encode($item->FONCTIONCONTACT);
-                $contacts['email'] = utf8_encode($item->EMAIL);
-                $contacts['mobile'] = utf8_encode($item->TELEPHONEMOBILE);
-                $contacts['phone'] = utf8_encode($item->TELEPHONE);
-                $contacts['default'] = $item->PRINCIPAL;
-                return $contacts;
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/CONTACT/'.$company.'/'.$third);
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $contact = collect();
+                $contact->offsetSet('ethic', true);
+                $contact->offsetSet('id', $item->NOCONTACT);
+                $contact->offsetSet('civility', $item->CIVILITE);
+                $contact->offsetSet('name', $item->NOMPRENOM);
+                $contact->offsetSet('surname', '');
+                $contact->offsetSet('profession', $item->FONCTIONCONTACT);
+                $contact->offsetSet('email', $item->EMAIL);
+                $contact->offsetSet('mobile', $item->TELEPHONEMOBILE);
+                $contact->offsetSet('phone', $item->TELEPHONE);
+                $contact->offsetSet('default', $item->PRINCIPAL);
+                return $contact;
             });
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the content cannot be loaded'
-            ], $response->getStatusCode());
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            return [];
         }
     }
 
     private function findByIdThirdLabel($company, $third)
     {
-        $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTE/'.$company.'/'.$third);
-        if ($response->getStatusCode() === 200) {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTE/'.$company.'/'.$third);
             return collect(json_decode($response->getBody()))->map(function($item) {
                 $label = collect();
                 $label->offsetSet('ethic', true);
@@ -354,11 +351,41 @@ class ApiRepository
                 $label->offsetSet('packing', $item->ROULEAUXDE);
                 return $label;
             });
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the content cannot be loaded'
-            ], $response->getStatusCode());
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+        return [];
+    }
+    }
+
+    private function getWorkstations(Array $datas)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/POSTEPRODUCTION/001/null/null');
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $workstation = collect();
+                $workstation->offsetSet('id', $item->CODEPOSTE);
+                $workstation->offsetSet('name', $item->LIBELLE);
+                $workstation->offsetSet('size_papermaxx', $item->LAIZEMAXIMUM);
+                $workstation->offsetSet('size_papermaxy', $item->TEMPSLAVAGEPARGROUPE);
+                $workstation->offsetSet('printable_areax', $item->LAIZEIMPRESSION);
+                $workstation->offsetSet('reworking', $item->CELLULEDEREPRISE);
+                $workstation->offsetSet('cadence', $item->CADENCE);
+                $workstation->offsetSet('unit_cadence', $item->CADENCELIBELLEUNITE);
+                $workstation->offsetSet('time_cadence', $item->CADENCELIBELLETEMPS);
+                $workstation->offsetSet('number_units', $item->NBGROUPES);
+                $workstation->offsetSet('type', $item->TYPEDEPOSTE);
+                $workstation->offsetSet('overlay_sheet', $item->PASSAGECALAGE1);
+                $workstation->offsetSet('wastage', "");
+                $workstation->offsetSet('plate', $item->PRIXPLAQUEOUCLICHE);
+                $workstation->offsetSet('makeready_times', $item->TEMPSREGLAGEBOBINE);
+                $workstation->offsetSet('makeready_plate', $item->TEMPSCALAGEPLAQUEOUCLICHE);
+                $workstation->offsetSet('washing_times', $item->TEMPSLAVAGEPARGROUPE);
+                return $workstation;
+            });
+
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            $response = $exception->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
         }
     }
 
@@ -472,5 +499,222 @@ class ApiRepository
                 return $element;
             }
         });
+    }
+
+    private function getLabelDies($datas)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTEOUTIL/' . $datas['company'] . '/' . $datas['label'] . '/' . $datas['variant']);
+            $collection = collect(json_decode($response->getBody()))->map(function($item) {
+                $finishing = collect();
+                $finishing->offsetSet('id', $item->CODEOPEFAB);
+                $finishing->offsetSet('name', $item->LIBELLE_OPEFAB);
+                $finishing->offsetSet('reference', $item->IDREFSTOCK);
+                $finishing->offsetSet('list_consumable', $item->LISTECODECLASSECONSO);
+                $finishing->offsetSet('list_cutting', $item->LISTECODECLASSEOUTIL);
+                $finishing->offsetSet('cutting', 0);
+                $finishing->offsetSet('class', $item->CLASSE_BASE);
+                return $finishing;
+            });
+
+            $finishings = collect($collection->where('cutting', '0')->all());
+            $labelFinishings = array();
+            foreach ($finishings as $finishing) {
+                $labelFinishing = collect();
+                $labelFinishing->offsetSet('id', $finishing['id']);
+                $labelFinishing->offsetSet('name', $finishing['name']);
+                if ($finishing['class'] === "Outil") {
+                    $labelFinishingDie = collect($this->getFinishingDieLabel($datas['company'], $finishing['reference']));
+                    $labelFinishing->offsetSet('die', $labelFinishingDie[0]);
+                    $labelFinishing->offsetSet('presence_consumable', false);
+                } else if ($finishing['class'] === "Consommable") {
+                    $labelFinishing->offsetSet('presence_consumable', true);
+                    $labelFinishingConsumable = $this->getFinishingConsumableLabel($datas['company'], $finishing['reference']);
+                    $labelFinishing->offsetSet('consumable', $labelFinishingConsumable[0]);
+                }
+                $labelFinishing->offsetSet('reworking', '');
+                $labelFinishing->offsetSet('hasFocus', false);
+                $labelFinishings['form'][] = $labelFinishing;
+            }
+            return $labelFinishings;
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            $this->getLabelFinishings($datas);
+        }
+    }
+
+    private function getFinishingDieLabel($company, $reference)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTEOUTILDECOUPE/' . $company . '/' . $reference);
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $finishingDie = collect();
+                $finishingDie->offsetSet('id', $item->IDREFSTOCK);
+//                $finishingDie->offsetSet('stock', $item->REFSTOCK);
+                $finishingDie->offsetSet('name', $item->LIBELLE);
+                $finishingDie->offsetSet('width', $item->LAIZEDIMENSION);
+                $finishingDie->offsetSet('length', $item->AVANCEDIMENSION);
+//                $finishingDie->offsetSet('list_workstation', $item->LISTEDESPOSTES);
+                $finishingDie->offsetSet('price', 0);
+                return $finishingDie;
+            });
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            $response = $exception->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+        }
+    }
+
+    private function getFinishingConsumableLabel($company, $reference)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTECONSOMMABLE/' . $company . '/' . $reference);
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $finishingConsumable = collect();
+                $finishingConsumable->offsetSet('id', $item->IDREFSTOCK);
+                $finishingConsumable->offsetSet('name', $item->LIBELLE);
+                $finishingConsumable->offsetSet('price', $item->PRXDEVIS);
+                return $finishingConsumable;
+            });
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            $response = $exception->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+        }
+    }
+
+    private function getLabelFinishings($datas)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTEFINITION/' . $datas['company'] . '/' . $datas['label'] . '/' . $datas['variant']);
+            $finishings = collect(json_decode($response->getBody()))->map(function($item) {
+                $finishing = collect();
+                $finishing->offsetSet('id', $item->CODEOPEFAB);
+                $finishing->offsetSet('name', $item->LIBELLE);
+                $finishing->offsetSet('presence_die', $item->OUTIL);
+                $finishing->offsetSet('list_die', $item->LISTECODECLASSEOUTIL);
+                $finishing->offsetSet('presence_consumable', $item->CONSOMMABLE);
+                $finishing->offsetSet('list_consumable', $item->LISTECODECLASSECONSO);
+                return $finishing;
+            });
+
+            $labelFinishings = array();
+            foreach ($finishings as $finishing) {
+                $labelFinishing = collect();
+                $labelFinishing->offsetSet('id', $finishing['id']);
+                $labelFinishing->offsetSet('name', $finishing['name']);
+                if ($finishing['presence_die'] === 1) {
+                    $labelFinishing->offsetSet('presence_die', true);
+                    $listDies = explode(",", $finishing['list_die']);
+                    $listDies = "'" . implode("','", $listDies) . "'";
+                    $labelFinishingDie = collect($this->getFinishingDies($datas, $listDies));
+                    $labelFinishing->offsetSet('die', $labelFinishingDie);
+                } else {
+                    $labelFinishing->offsetSet('presence_die', false);
+                }
+                if ($finishing['presence_consumable'] === 1) {
+                    $labelFinishing->offsetSet('presence_consumable', true);
+                    $listConsumables = explode(",", $finishing['list_consumable']);
+                    $listConsumables = "'" . implode("','", $listConsumables) . "'";
+                    $labelFinishingConsumable = collect($this->getFinishingConsumables($datas, $listConsumables));
+                    $labelFinishing->offsetSet('consumable', $labelFinishingConsumable);
+                } else {
+                    $labelFinishing->offsetSet('presence_consumable', false);
+                }
+
+                $labelFinishings['database'][] = $labelFinishing;
+            }
+
+            return $labelFinishings;
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            $this->getAllFinishings($datas);
+        }
+    }
+
+    private function getAllFinishings($datas)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/FINITION/' . $datas['company']);
+            $finishings = collect(json_decode($response->getBody()))->map(function($item) {
+                $finishing = collect();
+                $finishing->offsetSet('id', $item->CODEOPEFAB);
+                $finishing->offsetSet('name', $item->LIBELLE);
+                $finishing->offsetSet('presence_die', $item->OUTIL);
+                $finishing->offsetSet('list_die', $item->LISTECODECLASSEOUTIL);
+                $finishing->offsetSet('presence_consumable', $item->CONSOMMABLE);
+                $finishing->offsetSet('list_consumable', $item->LISTECODECLASSECONSO);
+                return $finishing;
+            });
+
+            $labelFinishings = array();
+            foreach ($finishings as $finishing) {
+                $labelFinishing = collect();
+                $labelFinishing->offsetSet('id', $finishing['id']);
+                $labelFinishing->offsetSet('name', $finishing['name']);
+                if ($finishing['presence_die'] === 1) {
+                    $labelFinishing->offsetSet('presence_die', true);
+                    $listDies = explode(",", $finishing['list_die']);
+                    $listDies = "'" . implode("','", $listDies) . "'";
+                    $labelFinishingDie = collect($this->getFinishingDies($datas, $listDies));
+                    $labelFinishing->offsetSet('die', $labelFinishingDie);
+                } else {
+                    $labelFinishing->offsetSet('presence_die', false);
+                }
+                if ($finishing['presence_consumable'] === 1) {
+                    $labelFinishing->offsetSet('presence_consumable', true);
+                    $listConsumables = explode(",", $finishing['list_consumable']);
+                    $listConsumables = "'" . implode("','", $listConsumables) . "'";
+                    $labelFinishingConsumable = collect($this->getFinishingConsumables($datas, $listConsumables));
+                    $labelFinishing->offsetSet('consumable', $labelFinishingConsumable);
+                } else {
+                    $labelFinishing->offsetSet('presence_consumable', false);
+                }
+
+                $labelFinishings['database'][] = $labelFinishing;
+            }
+            return $labelFinishings;
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            $response = $exception->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
+        }
+    }
+
+    private function getFinishingDies($datas, $list)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/OUTILDECOUPE/' . $datas['company'] . '/' . $datas['establishment'] . '/' . $list);
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $finishingDie = collect();
+                $finishingDie->offsetSet('id', $item->IDREFSTOCK);
+                $finishingDie->offsetSet('stock', $item->REFSTOCK);
+                $finishingDie->offsetSet('name', $item->LIBELLE);
+                $finishingDie->offsetSet('width', $item->LAIZEDIMENSION);
+                $finishingDie->offsetSet('length', $item->AVANCEDIMENSION);
+                $finishingDie->offsetSet('list_workstation', $item->LISTEDESPOSTES);
+                return $finishingDie;
+            });
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+//            $response = $exception->getResponse();
+//            $responseBodyAsString = $response->getBody()->getContents();
+//            return $responseBodyAsString;
+        }
+    }
+
+    private function getFinishingConsumables($datas, $list)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/CONSOMMABLE/' . $datas['company'] . '/' . $datas['establishment'] . '/' . $list);
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $finishingConsumable = collect();
+                $finishingConsumable->offsetSet('id', $item->IDREFSTOCK);
+                $finishingConsumable->offsetSet('name', $item->LIBELLE);
+                $finishingConsumable->offsetSet('price', $item->PRXDEVIS);
+                return $finishingConsumable;
+            });
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+//            $response = $exception->getResponse();
+//            $responseBodyAsString = $response->getBody()->getContents();
+//            return $responseBodyAsString;
+        }
     }
 }

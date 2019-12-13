@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Loader v-if="isLoading" />
         <main class="wrap-main-content">
             <div class="wrap-head-page">
                 <header v-if="!isMobile && $route.params.id !== undefined" class="wrap-main-header">
@@ -114,6 +115,7 @@
 </template>
 
 <script>
+    import Loader from './Loader';
     import Identification from './Quotation/Identification';
     import Description from './Quotation/Description';
     import Printing from './Quotation/Printing';
@@ -124,6 +126,7 @@
 
     export default {
         components: {
+            Loader,
             Identification,
             Description,
             Printing,
@@ -134,6 +137,7 @@
         },
         data() {
             return {
+                isLoading: false,
                 isModalVisible: false,
                 notification: {
                     body: [],
@@ -177,7 +181,7 @@
             }
         },
         created() {
-            console.log(this.$route.params.id);
+            this.isLoading = true;
             if (this.$route.params.id !== undefined) {
                 this.$store.dispatch('getWorkflow', {
                     id: this.$route.params.id
@@ -186,6 +190,16 @@
                     this.summary = this.form.summary;
                 });
             }
+
+            this.$store.dispatch('getPrintings').then(() => {
+                this.$store.dispatch('getReworkings').then(() => {
+                    this.isLoading = false;
+                });
+            }).catch(() => {
+                this.isLoading = false;
+            });
+
+
         },
         computed: {
             form: {

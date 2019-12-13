@@ -2,7 +2,7 @@
     <div>
         <div class="wrap-radio">
             <div class="wrap-field">
-                <input type="radio" id="label_old" v-model="form.description.label.type" value="old" :disabled="this.allThirdLabels.length < 1" @click="resetLabel">
+                <input type="radio" id="label_old" v-model="form.description.label.type" value="old" :disabled="!this.database.description.labels.length" @click="resetLabel">
                 <label for="label_old">
                     <i class="fas fa-search"></i>
                     <span>Rechercher une étiquette</span>
@@ -427,6 +427,8 @@
                     this.database.printing.substrates.search.criteria.isLoading = false;
                 });
 
+                this.$store.dispatch('getFinishings');
+
                 this.hide();
             },
             resetLabel() {
@@ -436,6 +438,8 @@
                 this.form.description.label.name = "";
                 this.form.description.label.width = "";
                 this.form.description.label.length = "";
+
+                this.$store.dispatch('getFinishings');
 
                 this.resetSubstrate();
             },

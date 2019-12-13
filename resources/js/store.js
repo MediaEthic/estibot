@@ -86,7 +86,11 @@ export default new Vuex.Store({
                         {
                             id: "",
                             name: "",
-                            shape: false,
+                            die: {
+                                id: "",
+                                name: "",
+                                price: "",
+                            },
                             reworking: "",
                             presence_consumable: false,
                             hasFocus: false,
@@ -136,6 +140,8 @@ export default new Vuex.Store({
                     },
                 },
                 finishing: {
+                    finishings: [],
+                    reworkings: [],
                     cuttings: []
                 }
             },
@@ -175,7 +181,7 @@ export default new Vuex.Store({
             state.quotations = data;
         },
         setPrintings(state, data) {
-            state.printings = data;
+            state.workflow.database.printing.printings = data;
         },
         setSubstratesSearchCriteria(state, data) {
             state.workflow.database.printing.substrates.search.criteria = data;
@@ -201,9 +207,15 @@ export default new Vuex.Store({
         setThirdLabels(state, data) {
             state.workflow.database.description.labels = data;
         },
-        // setLabelSubstrates(state, data) {
-        //     state.workflow.database.printing.substrates = data;
-        // }
+        setFinishingsLabel(state, data) {
+            state.workflow.form.finishing.finishings = data;
+        },
+        setFinishings(state, data) {
+            state.workflow.database.finishing.finishings = data;
+        },
+        setReworkings(state, data) {
+            state.workflow.database.finishing.reworkings = data;
+        }
     },
     actions: {
         login(context, credentials) {
@@ -329,18 +341,11 @@ export default new Vuex.Store({
             console.log(data);
             context.commit("setThirdLabels", data);
         },
-        getPrintings(context) {
-            return new Promise((resolve, reject) => {
-                axios.post('/api/auth/quotations/printings', {
-                    company: context.state.company
-                }).then(response => {
-                    console.log(response);
-                    resolve(response);
-                }).catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
-            });
+        async getPrintings(context) {
+            let data = (await axios.post('/api/auth/quotations/printings', {
+                company: context.state.company
+            })).data;
+            context.commit("setPrintings", data);
         },
         async getSubstratesSearchCriteria(context) {
             console.log(context.state.workflow.form.description.label.ethic);
@@ -392,16 +397,47 @@ export default new Vuex.Store({
                 });
             });
         },
-        getFinishings(context) {
-            return new Promise((resolve, reject) => {
-                axios.post('/api/auth/quotations/finishings', {
-                    company: context.state.company
-                }).then(response => {
-                    resolve(response);
-                }).catch(error => {
-                    reject(error);
-                });
-            });
+        async getFinishings(context) {
+            let data = (await axios.post('/api/auth/quotations/finishings', {
+                company: context.state.company,
+                establishment: context.state.establishment,
+                ethic: context.state.workflow.form.description.label.ethic,
+                label: context.state.workflow.form.description.label.id,
+                variant: context.state.workflow.form.description.label.variant
+            })).data;
+            // let data = response.data;
+            console.log(data);
+            if (data.form !== undefined) {
+                context.commit("setFinishingsLabel", data.form);
+                context.commit("setFinishings", data.form);
+            } else {
+                console.log("data.form undefined");
+                let singleFinishing = [{
+                    id: "",
+                    name: "",
+                    die: {
+                        id: "",
+                        name: "",
+                        price: "",
+                    },
+                    reworking: "",
+                    presence_consumable: false,
+                    hasFocus: false,
+                    consumable: ""
+                }];
+                context.commit("setFinishingsLabel", singleFinishing);
+                console.log(context.state.workflow.form.finishing.finishings);
+                if (data.database !== undefined) {
+                    context.commit("setFinishings", data.database);
+                }
+            }
+        },
+        async getReworkings(context) {
+            let data = (await axios.post('/api/auth/quotations/finishings/reworkings', {
+                company: context.state.company,
+            })).data;
+            console.log(data);
+            context.commit("setReworkings", data);
         },
         // async getCuttings(context) {
         //     let data = (await axios.get('/api/auth/quotations/cuttings')).data;

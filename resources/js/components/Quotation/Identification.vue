@@ -515,6 +515,8 @@
                 this.form.identification.contact.name = "";
                 this.form.identification.contact.surname = "";
                 this.form.identification.contact.email = "";
+
+                this.resetLabel();
             },
             resetLabel() {
                 this.database.description.labels = [];
@@ -524,6 +526,9 @@
                 this.form.description.label.name = "";
                 this.form.description.label.width = "";
                 this.form.description.label.length = "";
+
+                console.log("resetLabel");
+                this.$store.dispatch('getFinishings');
 
                 this.resetSubstrate();
             },

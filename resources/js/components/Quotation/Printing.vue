@@ -6,9 +6,6 @@
                       { hasValue: form.printing.quadri },
                       { hasFocus: form.printing.hasFocus }]">
             <div class="wrap-field h-50">
-                <span class="btn-right-field" v-if="printingsAreLoading">
-                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                </span>
                 <select v-model="form.printing.press"
                         @focus="form.printing.hasFocus = true"
                         @blur="form.printing.hasFocus = false"
@@ -18,7 +15,7 @@
                         @change="handlePressChange($event)"
                         required>
                     <option disabled value="">Choisir</option>
-                    <option v-for="printing in printings"
+                    <option v-for="printing in database.printing.printings"
                             v-bind:value="printing.id"
                             :data-name="printing.name">
                         {{ printing.name }}
@@ -342,8 +339,6 @@
         },
         data() {
             return {
-                printings: [],
-                printingsAreLoading: false,
                 searchSubstrates: {
                     criteria: {
                         isLoading: false,
@@ -361,18 +356,6 @@
             }
         },
         created() {
-            this.printingsAreLoading = true;
-            this.$store.dispatch('getPrintings').then(response => {
-                this.printings = response.data;
-                this.printingsAreLoading = false;
-            }).catch(error => {
-                console.log(error.response);
-                this.printingsAreLoading = false;
-                this.$toast.error({
-                    title: "Erreur",
-                    message: "Oups, un problème est survenu pour charger les machines"
-                });
-            });
             this.searchSubstrates.names = [];
         },
         computed: {

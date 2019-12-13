@@ -31,6 +31,7 @@ $router->group(['prefix' => 'api'], function ($router) {
                 $router->post('/autocomplete/substrates', 'ApiController@autocompleteSubstrates');
                 $router->post('/substrates', 'ApiController@getFilteredSubstrates');
                 $router->post('/finishings', 'ApiController@getFinishings');
+                $router->post('/finishings/reworkings', 'ApiController@getReworkings');
                 $router->get('/', 'QuotationController@index');
                 $router->post('/', 'QuotationController@store');
                 //            $router->get('/{id}', 'QuotationController@show');

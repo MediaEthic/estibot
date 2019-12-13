@@ -3,7 +3,7 @@
         <div v-for="(item, index) in form.finishing.finishings">
             <div class="wrap-group-field"
                  :class="[{ hasValue: item.id },
-                          { hasValue: item.shape },
+                          { hasValue: item.die.id },
                           { hasValue: (item.presence_consumable && item.consumable.name !== '') },
                           { hasValue: (item.presence_consumable && item.consumable.width !== '') },
                           { hasValue: (item.presence_consumable && item.consumable.price !== '') },
@@ -25,7 +25,7 @@
                             @change="handleFinishingChanging($event, index)"
                             required>
                         <option disabled value="">Choisir</option>
-                        <option v-for="finishing in finishings"
+                        <option v-for="finishing in database.finishing.finishings"
                                 v-bind:value="finishing.id"
                                 :data-name="finishing.name">
                             {{ finishing.name }}
@@ -34,39 +34,89 @@
                     <label class="label-field">Type de finition</label>
                 </div>
 
-                <div class="wrap-field h-50">
-                    <input v-model="item.shape"
+                <div class="wrap-field h-50" v-if="item.id !== '' && dies[index]">
+                    <select v-model="item.die.id"
+                            @focus="item.hasFocus = true"
+                            @blur="item.hasFocus = false"
+                            @animationstart="checkAnimation"
+                            class="field select"
+                            :class="{ hasValue: item.die.id }"
+                            required>
+                        <option disabled value="">Choisir</option>
+                        <option v-for="die in dies[index]"
+                                v-bind:value="die.id">
+                            {{ die.name }}
+                        </option>
+                    </select>
+                    <label class="label-field">Outil</label>
+                </div>
+
+                <div class="wrap-field h-50" v-else-if="item.id !== '' && item.die.id !== ''">
+                    <select v-model="item.die.id"
+                            @focus="item.hasFocus = true"
+                            @blur="item.hasFocus = false"
+                            @animationstart="checkAnimation"
+                            class="field select"
+                            :class="{ hasValue: item.die.id }"
+                            required>
+                        <option v-bind:value="item.die.id">
+                            {{ item.die.name }} // {{ item.die.width }} // {{ item.die.length }}
+                        </option>
+                    </select>
+                    <label class="label-field">Outil</label>
+                </div>
+
+                <div class="wrap-field h-50" v-else>
+                    <input v-model="item.die.price"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: item.shape }"
+                           :class="{ hasValue: item.die.price }"
                            type="number"
                            step="0.0001"
                            autocomplete="off">
                     <label class="label-field">Prix de l'outil à commander</label>
                 </div>
 
-<!--                TODO : mettre la liste des presses-->
-<!--                <div class="wrap-field h-50 switcher">-->
-<!--                    <input type="radio"-->
-<!--                           v-model="item.reworking"-->
-<!--                           id="toggle-on-reworking"-->
-<!--                           class="field toggle toggle-left hasValue"-->
-<!--                           value="true"-->
-<!--                           required>-->
-<!--                    <label for="toggle-on-reworking" class="toggle-btn"><i class="far fa-check-circle"></i>Oui</label>-->
+                <div class="wrap-field h-50">
+                    <span class="btn-right-field" v-if="finishingsAreLoading">
+                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    </span>
+                    <select v-model="item.reworking"
+                            @focus="item.hasFocus = true"
+                            @blur="item.hasFocus = false"
+                            @animationstart="checkAnimation"
+                            class="field select"
+                            :class="{ hasValue: item.reworking }">
+                        <option value="">Pas de reprise</option>
+                        <option v-for="reworking in database.finishing.reworkings"
+                                v-bind:value="reworking.id"
+                                :data-name="reworking.name">
+                            {{ reworking.name }}
+                        </option>
+                    </select>
+                    <label class="label-field">En reprise sur</label>
+                </div>
 
-<!--                    <input type="radio"-->
-<!--                           v-model="item.reworking"-->
-<!--                           id="toggle-off-reworking"-->
-<!--                           class="field toggle toggle-right hasValue"-->
-<!--                           value="false">-->
-<!--                    <label for="toggle-off-reworking" class="toggle-btn"><i class="far fa-times-circle"></i>Non</label>-->
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && consumables[index]">
+                    <select v-model="item.consumable.id"
+                            @focus="item.hasFocus = true"
+                            @blur="item.hasFocus = false"
+                            @animationstart="checkAnimation"
+                            class="field select"
+                            :class="{ hasValue: item.consumable.id }"
+                            @change="handleConsumableChanging($event, index)"
+                            required>
+                        <option value="">Choisir</option>
+                        <option v-for="consumable in consumables[index]"
+                                v-bind:value="consumable.id">
+                            {{ consumable.name }}
+                        </option>
+                    </select>
+                    <label class="label-field">Désignation du consommable</label>
+                </div>
 
-<!--                    <label class="label-field">Reprise</label>-->
-<!--                </div>-->
-
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== ''">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && !consumables[index]">
                     <input v-model.trim="item.consumable.name"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
@@ -77,7 +127,7 @@
                     <label class="label-field">Désignation du consommable</label>
                 </div>
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== ''">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && !consumables[index]">
                     <input v-model="item.consumable.width"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
@@ -89,7 +139,7 @@
                     <label class="label-field">Laize du consommable (mm)</label>
                 </div>
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== ''">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && !consumables[index]">
                     <input v-model="item.consumable.price"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
@@ -254,30 +304,36 @@
     export default {
         data() {
             return {
-                finishings: [],
-                finishingsAreLoading: false
+                finishingsAreLoading: false,
+                dies: [],
+                consumables: []
             }
         },
         created() {
             this.form.finishing.cutting.dimension_width = this.form.description.label.width;
             this.form.finishing.cutting.dimension_length = this.form.description.label.length;
 
-            this.finishingsAreLoading = true;
-            this.$store.dispatch('getFinishings').then(response => {
-                console.log(response);
-                this.finishings = response.data;
-                this.finishingsAreLoading = false;
-            }).catch(error => {
-                this.finishingsAreLoading = false;
-                this.$toast.error({
-                    title: "Erreur",
-                    message: "Oups, un problème est survenu pour charger les finitions"
+            console.log("Finishings :");
+            console.log(this.form.finishing.finishings);
+            console.log(this.database.finishing.finishings);
+
+            if (this.database.finishing.finishings === undefined || this.database.finishing.finishings.length < 1) {
+                this.finishingsAreLoading = true;
+                this.$store.dispatch('getFinishings').then(() => {
+                    console.log(this.database.finishing.finishings);
+                    console.log(this.form.finishing.finishings);
+                    this.finishingsAreLoading = false;
                 });
-            });
+            }
+
+
         },
         computed: {
             form() {
                 return this.$store.state.workflow.form;
+            },
+            database() {
+                return this.$store.state.workflow.database;
             }
         },
         methods: {
@@ -290,10 +346,15 @@
                 this.form.finishing.finishings.push({
                     id: "",
                     name: "",
-                    shape: false,
+                    die: {
+                        id: "",
+                        name: "",
+                        price: "",
+                    },
                     reworking: "",
                     presence_consumable: false,
                     hasFocus: false,
+                    consumable: ""
                 });
             },
             deleteFinishing(index) {
@@ -304,8 +365,30 @@
                     this.form.finishing.finishings[index].name = event.target.options[event.target.options.selectedIndex].dataset.name;
                 }
                 let finishingID = this.form.finishing.finishings[index].id;
-                let finishingConsumable = this.finishings.find(finishing => finishing.id === finishingID);
-                if (finishingConsumable.consumable) {
+                let finishing = this.database.finishing.finishings.find(finishing => finishing.id === finishingID);
+                console.log("finishing");
+                console.log(finishing);
+                if (finishing.presence_die) {
+                    this.dies[index] = finishing.die;
+                    // let newDie = {
+                    //     id: "",
+                    //     name: "",
+                    //     price: "",
+                    //     hasFocus: false,
+                    // };
+                    // this.form.finishing.finishings[index].die = newDie;
+                } else {
+                    this.form.finishing.finishings[index].die = {
+                        id: "",
+                        name: "",
+                        price: "",
+                    };
+                }
+                console.log(this.dies[index]);
+
+                if (finishing.presence_consumable) {
+                    this.consumables[index] = finishing.consumable;
+                    console.log(this.consumables[index]);
                     let newConsumable = {
                         id: "",
                         name: "",
@@ -313,6 +396,8 @@
                         price: "",
                         hasFocus: false,
                     };
+                    console.log(this.form.finishing);
+
                     this.form.finishing.finishings[index].consumable = newConsumable;
                     this.form.finishing.finishings[index].presence_consumable = true;
                 } else {

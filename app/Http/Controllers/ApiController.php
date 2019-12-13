@@ -65,16 +65,6 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getFinishings(Request $request)
-    {
-        return $this->repository->getFinishings($request->all());
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getSubstratesSearchCriteria(Request $request)
     {
         return $this->repository->getSubstratesSearchCriteria($request->all());
@@ -108,5 +98,25 @@ class ApiController extends Controller
     public function getPrintings(Request $request)
     {
         return $this->repository->getPrintings($request->all());
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getFinishings(Request $request)
+    {
+        return $this->repository->getFinishings($request->all());
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getReworkings(Request $request)
+    {
+        return $this->repository->getReworkings($request->all());
     }
 }
