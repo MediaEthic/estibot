@@ -173,6 +173,7 @@ FROM PSTOCKMATIERESENTETE T1,
      PMASSESADHESIVES T7
 WHERE T1.CODESOCIETE = :company_id
       AND T1.CODEETABLISSEMENT = :establishment_id
+      AND T1.DATESUSPENSION IS NULL
       AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.CODEETABLISSEMENT = T2.CODEETABLISSEMENT
       AND T1.IDREFSTOCK = T2.IDREFSTOCK
@@ -223,6 +224,7 @@ FROM PSTOCKMATIERESENTETE T1,
      PTIERS T5
 WHERE T1.CODESOCIETE = :company_id
       AND T1.CODEETABLISSEMENT = :establishment_id
+      AND T1.DATESUSPENSION IS NULL
       AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.CODEETABLISSEMENT = T2.CODEETABLISSEMENT
       AND T1.IDREFSTOCK = T2.IDREFSTOCK
@@ -272,6 +274,7 @@ FROM POPEFABENT T1,
      PTYPESPRODUITSFINIS T3
 WHERE T1.CODESOCIETE = :company_id
       AND T1.COULEUR = '0'
+      AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.CODEOPEFAB = T2.CODEOPEFAB
       AND T2.NOTYPEPF = T3.NOTYPEPF
       AND T3.LIBELLE = 'ADHESIF'
@@ -280,14 +283,12 @@ ORDER BY T1.LIBELLE
 
 
 ## 7. Postes de production (R11)
-#### Endpoint : `GET /workstations`
+#### Endpoint : `GET /workstations/all`
 
 **Parameters: Body**
 ````
 {
-    company_id: String (required),
-    class: String (nullable)
-    configuration: String (nullable)
+    company_id: String (required)
 }
 ````
 
@@ -324,15 +325,16 @@ SELECT DISTINCT T1.CODEPOSTE,
        T2.DATEAPPLICATION
 FROM PPOSTES T1,
      PTAUX T2
-WHERE T1.CODESOCIETE = :company_id
+WHERE T1.CODESOCIETE = '001'
       AND T1.DATESUSPENSION IS NULL
-      AND T1.CODEPOSTE IN (:class)
-      AND T1.CODECONFIGURATION = :configuration
+      AND T1.CODESOCIETE = T2.CODESOCIETE
+      AND T1.CODEPOSTE = T2.CODEPOSTE
+      AND T1.CODECONFIGURATION = T2.CODECONFIGURATION
       AND T2.DATEAPPLICATION = (SELECT MAX(DATEAPPLICATION)
-                                FROM PTAUX T3
-                                WHERE CODESOCIETE = :company_id
-                                  AND CODEPOSTE IN (:class)
-                                  AND CODECONFIGURATION = :configuration)
+                                FROM PTAUX
+                                WHERE CODESOCIETE = T1.CODESOCIETE
+                                      AND CODEPOSTE = T1.CODEPOSTE
+                                      AND CODECONFIGURATION = T1.CODECONFIGURATION)
 ORDER BY T1.LIBELLE
 ````
 
@@ -362,6 +364,7 @@ ORDER BY T1.LIBELLE
 ````
 SELECT DISTINCT T1.REFARTICLE,
        T1.VARARTICLE,
+       T1.CLIENTFINAL,
        T1.LIBELLEVARIANTE,
        T2.LAIZEDIMENSION,
        T2.AVANCEDIMENSION,
@@ -434,6 +437,7 @@ FROM PSTOCKMATIERESENTETE T1,
      PMASSESADHESIVES T8
 WHERE T1.CODESOCIETE = :company_id
       AND T1.CODEETABLISSEMENT = :establishment_id
+      AND T1.DATESUSPENSION IS NULL
       AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.CODEETABLISSEMENT = T2.CODEETABLISSEMENT
       AND T1.IDREFSTOCK = T2.IDREFSTOCK
@@ -498,6 +502,7 @@ FROM PSTOCKMATIERESENTETE T1,
      PMASSESADHESIVES T8
 WHERE T1.CODESOCIETE = :company_id
       AND T1.CODEETABLISSEMENT = :establishment_id
+      AND T1.DATESUSPENSION IS NULL
       AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.CODEETABLISSEMENT = T2.CODEETABLISSEMENT
       AND T1.IDREFSTOCK = T2.IDREFSTOCK
@@ -555,8 +560,10 @@ FROM PETIOPEFAB T1,
 WHERE T1.CODESOCIETE = :company_id
       AND T1.REFARTICLE = :label_id
       AND T1.VARARTICLE = :variant_id
+      AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.CODEOPEFAB = T2.CODEOPEFAB
       AND T2.COULEUR = '0'
+      AND T2.CODESOCIETE = T3.CODESOCIETE
       AND T2.CODEOPEFAB = T3.CODEOPEFAB
       AND T3.NOTYPEPF = T4.NOTYPEPF
       AND T4.LIBELLE = 'ADHESIF'
@@ -565,7 +572,7 @@ ORDER BY T2.LIBELLE
 
 
 ## 12. Outils d'une étiquette (R17)
-#### Endpoint : `POST /labels/tools`
+#### Endpoint : `POST /labels/dies`
 
 **Parameters: Body**
 ````
@@ -588,7 +595,7 @@ ORDER BY T2.LIBELLE
 
 **Request**
 ````
-SELECT T3.CODEOPEFAB,
+SELECT DISTINCT T3.CODEOPEFAB,
        T3.LIBELLE,
        T1.IDREFSTOCK,
        T3.LISTECODECLASSEOUTIL,
@@ -613,6 +620,7 @@ WHERE T1.CODESOCIETE = :company_id
       AND T3.COULEUR = '0'
       AND T3.CODESOCIETE = T4.CODESOCIETE
       AND T1.IDREFSTOCK = T4.IDREFSTOCK
+      AND T4.DATESUSPENSION IS NULL
       AND T4.CODESOCIETE = T5.CODESOCIETE
       AND T4.CODECLASSE = T5.CODECLASSE
       AND T5.IDCLASSEDEBASE = T6.IDCLASSEDEBASE
@@ -621,8 +629,8 @@ ORDER BY T3.CODEOPEFAB,
 ````
 
 
-## 13. Outil de découpe d'une étiquette (R18)
-#### Endpoint : `POST /labels/cutting`
+## 13. Outil de finition d'une étiquette et forme de découpe (R18)
+#### Endpoint : `POST /labels/die`
 
 **Parameters: Body**
 ````
@@ -635,7 +643,7 @@ ORDER BY T3.CODEOPEFAB,
 **Out**
 ````
 - Success :
-    - 200 : Retourne l'outil de découpe d'une étiquette
+    - 200 : Retourne l'outil de finition et forme de découpe d'une étiquette
 - Failure :
     - 400 : Les champs passés en paramètre sont manquants et/ou mauvais
     - 404 : Ressource inexistante ou non trouvée
@@ -644,24 +652,25 @@ ORDER BY T3.CODEOPEFAB,
 
 **Request**
 ````
-SELECT T1.IDREFSTOCK,
+SELECT DISTINCT T1.IDREFSTOCK,
        T1.REFSTOCK,
        T1.LIBELLE,
        T2.LAIZEDIMENSION,
        T2.AVANCEDIMENSION,
-       T2.LISTEDESPOSTES
+       T2.LISTEDESPOSTES,
+       T2.OUTILDEDECOUPE
 FROM PSTOCKMATIERESENTETE T1,
      PSTOCKMATIERESOUTILS T2
 WHERE T1.CODESOCIETE = :company_id
       AND T1.SUSPENSION = 0
-      AND T2.CODESOCIETE = T1.CODESOCIETE
+      AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T2.IDREFSTOCK = T1.IDREFSTOCK
       AND T2.IDREFSTOCK = :reference
 ORDER BY T1.LIBELLE
 ````
 
 
-## 14. Consommables d'une étiquette (R19)
+## 14. Consommable de finition d'une étiquette (R19)
 #### Endpoint : `POST /labels/finishings/consumables`
 
 **Parameters: Body**
@@ -684,12 +693,13 @@ ORDER BY T1.LIBELLE
 
 **Request**
 ````
-SELECT T1.IDREFSTOCK,
+SELECT DISTINCT T1.IDREFSTOCK,
        T1.LIBELLE,
        T1.PRIXDEVIS
 FROM PSTOCKMATIERESENTETE T1
 WHERE T1.CODESOCIETE = :company_id
       AND T1.IDREFSTOCK = :reference
+      AND T1.DATESUSPENSION IS NULL
 ORDER BY T1.LIBELLE
 ````
 
@@ -702,7 +712,7 @@ ORDER BY T1.LIBELLE
 {
     company_id: String (required),
     establishment_id: String (required),
-    class: String (required)
+    class_poste: String (required)
 }
 ````
 
@@ -724,28 +734,28 @@ SELECT T1.IDREFSTOCK,
 FROM PSTOCKMATIERESENTETE T1
 WHERE T1.CODESOCIETE = :company_id
       AND T1.CODEETABLISSEMENT = :establishment_id
-      AND T1.CODECLASSE IN (:class)
+      AND T1.CODECLASSE IN (:class_poste)
       AND T1.DATESUSPENSION IS NULL
 ORDER BY T1.LIBELLE
 ````
 
 
-## 16. Outils de découpe (R21)
-#### Endpoint : `POST /cuttings`
+## 16. Outils de finition et formes de découpe (R21)
+#### Endpoint : `POST /dies`
 
 **Parameters: Body**
 ````
 {
     company_id: String (required),
     establishment_id: String (required),
-    class: String (required)
+    class_poste: String (required)
 }
 ````
 
 **Out**
 ````
 - Success :
-    - 200 : Retourne un tableau d'objets avec la liste des outils de découpe d'une finition
+    - 200 : Retourne un tableau d'objets avec la liste de l'ensemble des outils
 - Failure :
     - 400 : Les champs passés en paramètre sont manquants et/ou mauvais
     - 404 : Ressource inexistante ou non trouvée
@@ -759,82 +769,35 @@ SELECT T1.IDREFSTOCK,
        T1.LIBELLE,
        T2.LAIZEDIMENSION,
        T2.AVANCEDIMENSION,
-       T2.LISTEDESPOSTES
+       T2.LISTEDESPOSTES,
+       T2.OUTILDECOUPE
 FROM PSTOCKMATIERESENTETE T1,
      PSTOCKMATIERESOUTILS T2
 WHERE T1.CODESOCIETE = :company_id
       AND T1.CODEETABLISSEMENT = :establishment_id
       AND T1.SUSPENSION = 0
-      AND T1.CODECLASSE IN (:class)
-      AND T2.CODESOCIETE = T1.CODESOCIETE
-      AND T2.IDREFSTOCK = T1.IDREFSTOCK
-      AND T2.OUTILDECOUPE = '1'
+      AND T1.CODECLASSE IN (:class_poste)
+      AND T1.CODESOCIETE = T2.CODESOCIETE
+      AND T1.CODEETABLISSEMENT = T2.CODEETABLISSEMENT
+      AND T1.IDREFSTOCK = T2.IDREFSTOCK
 ORDER BY T1.LIBELLE
 ````
 
-## 17. Machines d'impression (R22)
-#### Endpoint : `POST /printings`
-
-**Parameters: Body**
-````
-{
-    company_id: String (required)
-}
-````
-
-**Out**
-````
-- Success :
-    - 200 : Retourne un tableau d'objets avec la liste des machines d'impression
-- Failure :
-    - 400 : Le champ passé en paramètre est manquant et/ou mauvais
-    - 404 : Ressource inexistante ou non trouvée
-    - 500 : Erreur serveur
-````
-
-**Request**
-````
-SELECT CODEPOSTE,
-       CODECONFIGURATION,
-       LIBELLE,
-       LAIZEMAXIMUM,
-       LAIZEIMPRESSION,
-       AVANCEMAXIMUM,
-       CELLULEDEREPRISE,
-       CADENCE,
-       CADENCELIBELLEUNITE,
-       CADENCELIBELLETEMPS,
-       NBGROUPES,
-       TYPEDEPOSTE,
-       PASSECALAGE1,
-       PRIXPLAQUEOUCLICHE,
-       TEMPSREGLAGEBOBINE,
-       TEMPSCALAGEPLAQUEOUCLICHE,
-       TEMPSLAVAGEPARGROUPE
-FROM PPOSTES
-WHERE CODESOCIETE = :company_id
-      AND DATESUSPENSION IS NULL
-      AND TYPEDEPOSTE = '3'
-ORDER BY LIBELLE
-````
-
-
-## 18. Postes de reprise (R12)
-#### Endpoint : `POST /reworkings`
+## 17. Postes de production (R22)
+#### Endpoint : `POST /workstations/group`
 
 **Parameters: Body**
 ````
 {
     company_id: String (required),
-    establishment_id: String (required),
-    class: String (required)
+    class_poste: String (required)
 }
 ````
 
 **Out**
 ````
 - Success :
-    - 200 : Retourne un tableau d'objets avec la liste des outils de découpe d'une finition
+    - 200 : Retourne un tableau d'objets avec la liste des postes de production
 - Failure :
     - 400 : Les champs passés en paramètre sont manquants et/ou mauvais
     - 404 : Ressource inexistante ou non trouvée
@@ -843,24 +806,37 @@ ORDER BY LIBELLE
 
 **Request**
 ````
-SELECT T1.IDREFSTOCK,
-       T1.REFSTOCK,
+SELECT DISTINCT T1.CODEPOSTE,
+       T1.CODECONFIGURATION,
        T1.LIBELLE,
-       T2.LAIZEDIMENSION,
-       T2.AVANCEDIMENSION,
-       T2.LISTEDESPOSTES
-FROM PSTOCKMATIERESENTETE T1,
-     PSTOCKMATIERESOUTILS T2
-WHERE T1.CODESOCIETE = :company_id
-      AND T1.CODEETABLISSEMENT = :establishment_id
-      AND T1.SUSPENSION = 0
-      AND T1.CODECLASSE IN (:class)
-      AND T2.CODESOCIETE = T1.CODESOCIETE
-      AND T2.IDREFSTOCK = T1.IDREFSTOCK
-      AND T2.OUTILDECOUPE = '1'
+       T1.LAIZEMAXIMUM,
+       T1.LAIZEIMPRESSION,
+       T1.AVANCEMAXIMUM,
+       T1.CELLULEDEREPRISE,
+       T1.CADENCE,
+       T1.CADENCELIBELLEUNITE,
+       T1.CADENCELIBELLETEMPS,
+       T1.NBGROUPES,
+       T1.TYPEDEPOSTE,
+       T1.PASSECALAGE1,
+       T1.PRIXPLAQUEOUCLICHE,
+       T1.TEMPSREGLAGEBOBINE,
+       T1.TEMPSCALAGEPLAQUEOUCLICHE,
+       T1.TEMPSLAVAGEPARGROUPE,
+       T2.TAUX2,
+       T2.DATEAPPLICATION
+FROM PPOSTES T1,
+     PTAUX T2
+WHERE T1.CODESOCIETE = '001'
+      AND T1.DATESUSPENSION IS NULL
+      AND T1.CODEPOSTE IN (:class_poste)
+      AND T1.CODESOCIETE = T2.CODESOCIETE
+      AND T1.CODEPOSTE = T2.CODEPOSTE
+      AND T1.CODECONFIGURATION = T2.CODECONFIGURATION
+      AND T2.DATEAPPLICATION = (SELECT MAX(DATEAPPLICATION)
+                                FROM PTAUX
+                                WHERE CODESOCIETE = T1.CODESOCIETE
+                                      AND CODEPOSTE = T1.CODEPOSTE
+                                      AND CODECONFIGURATION = T1.CODECONFIGURATION)
 ORDER BY T1.LIBELLE
 ````
-
-
-
-
