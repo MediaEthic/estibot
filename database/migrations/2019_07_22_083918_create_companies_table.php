@@ -66,6 +66,8 @@ class CreateCompaniesTable extends Migration
             $table->string('vimeo', 200)->nullable()->default(null);
             $table->string('github', 200)->nullable()->default(null);
             $table->string('blog', 200)->nullable()->default(null);
+            $table->string('prepress', 5)->nullable()->default(null);
+            $table->string('winder', 5)->nullable()->default(null);
         });
     }
 

@@ -13,11 +13,13 @@ class Quotation extends Model
      */
     protected $fillable = [
         'user_id',
-        'name',
+        'user_name',
+        'user_surname',
         'description',
         'image',
         'third_type',
         'third_id',
+        'contact_ethic',
         'contact_id',
         'label_type',
         'label_id',

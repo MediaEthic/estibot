@@ -64,6 +64,8 @@ class Company extends Model
         'vimeo',
         'github',
         'blog',
+        'prepress',
+        'packing',
     ];
 
     /**

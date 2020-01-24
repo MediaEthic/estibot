@@ -21,7 +21,7 @@ class CreateLabelsTable extends Migration
             $table->string('name', 200)->nullable()->default(null);
             $table->unsignedInteger('width');
             $table->unsignedInteger('length');
-            $table->unsignedBigInteger('printing_id')->nullable()->default(null);
+            $table->string('printing_id', 5)->nullable()->default(null);
             $table->unsignedTinyInteger('number_colors')->nullable()->default(null);
             $table->boolean('quadri')->default(false);
             $table->enum('substrate_type', ['ethic', 'estibot'])->default('estibot');
@@ -31,13 +31,6 @@ class CreateLabelsTable extends Migration
             $table->enum('winding', ['ihead', 'ifoot', 'iright', 'ileft', 'ehead', 'efoot', 'eright', 'eleft'])->default('ihead');
             $table->unsignedInteger('packing')->nullable()->default(null);
 
-            $table->foreign('third_id')
-                ->references('id')
-                ->on('thirds');
-
-            $table->foreign('substrate_id')
-                ->references('id')
-                ->on('substrates');
         });
     }
 
@@ -48,11 +41,6 @@ class CreateLabelsTable extends Migration
      */
     public function down()
     {
-        Schema::table('labels', function (Blueprint $table) {
-            $table->dropForeign(['third_idv']);
-            $table->dropForeign(['substrate_id']);
-        });
-
         Schema::dropIfExists('labels');
     }
 }
