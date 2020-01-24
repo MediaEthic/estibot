@@ -5099,7 +5099,6 @@ module.exports = function normalizeComponent (
 
 
 var bind = __webpack_require__(139);
-var isBuffer = __webpack_require__(257);
 
 /*global toString:true*/
 
@@ -5115,6 +5114,27 @@ var toString = Object.prototype.toString;
  */
 function isArray(val) {
   return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
+    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
 }
 
 /**
@@ -5171,16 +5191,6 @@ function isString(val) {
  */
 function isNumber(val) {
   return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
 }
 
 /**
@@ -5819,8 +5829,8 @@ module.exports = Component.exports
 
 "use strict";
 /*!
-  * vue-router v3.1.3
-  * (c) 2019 Evan You
+  * vue-router v3.1.5
+  * (c) 2020 Evan You
   * @license MIT
   */
 /*  */
@@ -5886,14 +5896,12 @@ var View = {
     var depth = 0;
     var inactive = false;
     while (parent && parent._routerRoot !== parent) {
-      var vnodeData = parent.$vnode && parent.$vnode.data;
-      if (vnodeData) {
-        if (vnodeData.routerView) {
-          depth++;
-        }
-        if (vnodeData.keepAlive && parent._inactive) {
-          inactive = true;
-        }
+      var vnodeData = parent.$vnode ? parent.$vnode.data : {};
+      if (vnodeData.routerView) {
+        depth++;
+      }
+      if (vnodeData.keepAlive && parent._directInactive && parent._inactive) {
+        inactive = true;
       }
       parent = parent.$parent;
     }
@@ -5901,17 +5909,32 @@ var View = {
 
     // render previous view if the tree is inactive and kept-alive
     if (inactive) {
-      return h(cache[name], data, children)
+      var cachedData = cache[name];
+      var cachedComponent = cachedData && cachedData.component;
+      if (cachedComponent) {
+        // #2301
+        // pass props
+        if (cachedData.configProps) {
+          fillPropsinData(cachedComponent, data, cachedData.route, cachedData.configProps);
+        }
+        return h(cachedComponent, data, children)
+      } else {
+        // render previous empty view
+        return h()
+      }
     }
 
     var matched = route.matched[depth];
-    // render empty node if no matched route
-    if (!matched) {
+    var component = matched && matched.components[name];
+
+    // render empty node if no matched route or no config component
+    if (!matched || !component) {
       cache[name] = null;
       return h()
     }
 
-    var component = cache[name] = matched.components[name];
+    // cache component
+    cache[name] = { component: component };
 
     // attach instance registration hook
     // this will be called in the instance's injected lifecycle hooks
@@ -5943,24 +5966,36 @@ var View = {
       }
     };
 
-    // resolve props
-    var propsToPass = data.props = resolveProps(route, matched.props && matched.props[name]);
-    if (propsToPass) {
-      // clone to prevent mutation
-      propsToPass = data.props = extend({}, propsToPass);
-      // pass non-declared props as attrs
-      var attrs = data.attrs = data.attrs || {};
-      for (var key in propsToPass) {
-        if (!component.props || !(key in component.props)) {
-          attrs[key] = propsToPass[key];
-          delete propsToPass[key];
-        }
-      }
+    var configProps = matched.props && matched.props[name];
+    // save route and configProps in cachce
+    if (configProps) {
+      extend(cache[name], {
+        route: route,
+        configProps: configProps
+      });
+      fillPropsinData(component, data, route, configProps);
     }
 
     return h(component, data, children)
   }
 };
+
+function fillPropsinData (component, data, route, configProps) {
+  // resolve props
+  var propsToPass = data.props = resolveProps(route, configProps);
+  if (propsToPass) {
+    // clone to prevent mutation
+    propsToPass = data.props = extend({}, propsToPass);
+    // pass non-declared props as attrs
+    var attrs = data.attrs = data.attrs || {};
+    for (var key in propsToPass) {
+      if (!component.props || !(key in component.props)) {
+        attrs[key] = propsToPass[key];
+        delete propsToPass[key];
+      }
+    }
+  }
+}
 
 function resolveProps (route, config) {
   switch (typeof config) {
@@ -6742,7 +6777,8 @@ function fillParams (
     return filler(params, { pretty: true })
   } catch (e) {
     if (true) {
-      warn(false, ("missing param for " + routeMsg + ": " + (e.message)));
+      // Fix #3072 no warn if `pathMatch` is string
+      warn(typeof params.pathMatch === 'string', ("missing param for " + routeMsg + ": " + (e.message)));
     }
     return ''
   } finally {
@@ -6764,20 +6800,25 @@ function normalizeLocation (
   if (next._normalized) {
     return next
   } else if (next.name) {
-    return extend({}, raw)
+    next = extend({}, raw);
+    var params = next.params;
+    if (params && typeof params === 'object') {
+      next.params = extend({}, params);
+    }
+    return next
   }
 
   // relative params
   if (!next.path && next.params && current) {
     next = extend({}, next);
     next._normalized = true;
-    var params = extend(extend({}, current.params), next.params);
+    var params$1 = extend(extend({}, current.params), next.params);
     if (current.name) {
       next.name = current.name;
-      next.params = params;
+      next.params = params$1;
     } else if (current.matched.length) {
       var rawPath = current.matched[current.matched.length - 1].path;
-      next.path = fillParams(rawPath, params, ("path " + (current.path)));
+      next.path = fillParams(rawPath, params$1, ("path " + (current.path)));
     } else if (true) {
       warn(false, "relative params navigation requires a current route.");
     }
@@ -6917,7 +6958,7 @@ var Link = {
         if (true) {
           warn(
             false,
-            ("RouterLink with to=\"" + (this.props.to) + "\" is trying to use a scoped slot but it didn't provide exactly one child.")
+            ("RouterLink with to=\"" + (this.to) + "\" is trying to use a scoped slot but it didn't provide exactly one child. Wrapping the content with a span element.")
           );
         }
         return scopedSlot.length === 0 ? h() : h('span', {}, scopedSlot)
@@ -7642,7 +7683,10 @@ function pushState (url, replace) {
   var history = window.history;
   try {
     if (replace) {
-      history.replaceState({ key: getStateKey() }, '', url);
+      // preserve existing history state as it could be overriden by the user
+      var stateCopy = extend({}, history.state);
+      stateCopy.key = getStateKey();
+      history.replaceState(stateCopy, '', url);
     } else {
       history.pushState({ key: setStateKey(genStateKey()) }, '', url);
     }
@@ -8357,9 +8401,7 @@ function getHash () {
       href = decodeURI(href.slice(0, hashIndex)) + href.slice(hashIndex);
     } else { href = decodeURI(href); }
   } else {
-    if (searchIndex > -1) {
-      href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex);
-    }
+    href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex);
   }
 
   return href
@@ -8693,7 +8735,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.1.3';
+VueRouter.version = '3.1.5';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -21016,7 +21058,7 @@ module.exports = function isCancel(value) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(4);
-var normalizeHeaderName = __webpack_require__(262);
+var normalizeHeaderName = __webpack_require__(261);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -21030,12 +21072,11 @@ function setContentTypeIfUnset(headers, value) {
 
 function getDefaultAdapter() {
   var adapter;
-  // Only Node.JS has a process variable that is of [[Class]] process
-  if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(143);
-  } else if (typeof XMLHttpRequest !== 'undefined') {
+  if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
+    adapter = __webpack_require__(143);
+  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
+    // For node use HTTP adapter
     adapter = __webpack_require__(143);
   }
   return adapter;
@@ -21122,10 +21163,11 @@ module.exports = defaults;
 
 
 var utils = __webpack_require__(4);
-var settle = __webpack_require__(263);
+var settle = __webpack_require__(262);
 var buildURL = __webpack_require__(140);
-var parseHeaders = __webpack_require__(265);
-var isURLSameOrigin = __webpack_require__(266);
+var buildFullPath = __webpack_require__(264);
+var parseHeaders = __webpack_require__(267);
+var isURLSameOrigin = __webpack_require__(268);
 var createError = __webpack_require__(144);
 
 module.exports = function xhrAdapter(config) {
@@ -21146,7 +21188,8 @@ module.exports = function xhrAdapter(config) {
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+    var fullPath = buildFullPath(config.baseURL, config.url);
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
 
     // Set the request timeout in MS
     request.timeout = config.timeout;
@@ -21207,7 +21250,11 @@ module.exports = function xhrAdapter(config) {
 
     // Handle timeout
     request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+      var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+      reject(createError(timeoutErrorMessage, config, 'ECONNABORTED',
         request));
 
       // Clean up request
@@ -21218,10 +21265,10 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(267);
+      var cookies = __webpack_require__(269);
 
       // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
         cookies.read(config.xsrfCookieName) :
         undefined;
 
@@ -21244,8 +21291,8 @@ module.exports = function xhrAdapter(config) {
     }
 
     // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
     }
 
     // Add responseType to request if needed
@@ -21302,7 +21349,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(264);
+var enhanceError = __webpack_require__(263);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -21342,13 +21389,23 @@ module.exports = function mergeConfig(config1, config2) {
   config2 = config2 || {};
   var config = {};
 
-  utils.forEach(['url', 'method', 'params', 'data'], function valueFromConfig2(prop) {
+  var valueFromConfig2Keys = ['url', 'method', 'params', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy'];
+  var defaultToConfig2Keys = [
+    'baseURL', 'url', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress',
+    'maxContentLength', 'validateStatus', 'maxRedirects', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath'
+  ];
+
+  utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
     if (typeof config2[prop] !== 'undefined') {
       config[prop] = config2[prop];
     }
   });
 
-  utils.forEach(['headers', 'auth', 'proxy'], function mergeDeepProperties(prop) {
+  utils.forEach(mergeDeepPropertiesKeys, function mergeDeepProperties(prop) {
     if (utils.isObject(config2[prop])) {
       config[prop] = utils.deepMerge(config1[prop], config2[prop]);
     } else if (typeof config2[prop] !== 'undefined') {
@@ -21360,13 +21417,25 @@ module.exports = function mergeConfig(config1, config2) {
     }
   });
 
-  utils.forEach([
-    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
-    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
-    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'maxContentLength',
-    'validateStatus', 'maxRedirects', 'httpAgent', 'httpsAgent', 'cancelToken',
-    'socketPath'
-  ], function defaultToConfig2(prop) {
+  utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
+
+  var axiosKeys = valueFromConfig2Keys
+    .concat(mergeDeepPropertiesKeys)
+    .concat(defaultToConfig2Keys);
+
+  var otherKeys = Object
+    .keys(config2)
+    .filter(function filterAxiosKeys(key) {
+      return axiosKeys.indexOf(key) === -1;
+    });
+
+  utils.forEach(otherKeys, function otherKeysDefaultToConfig2(prop) {
     if (typeof config2[prop] !== 'undefined') {
       config[prop] = config2[prop];
     } else if (typeof config1[prop] !== 'undefined') {
@@ -21423,8 +21492,8 @@ module.exports = Cancel;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /**
-  * vee-validate v3.1.3
-  * (c) 2019 Abdelrahman Awad
+  * vee-validate v3.2.2
+  * (c) 2020 Abdelrahman Awad
   * @license MIT
   */
 
@@ -21709,13 +21778,6 @@ var RuleContainer = /** @class */ (function () {
         }
         RULES[name] = __assign({ lazy: false, computesRequired: false }, rule);
     };
-    RuleContainer.iterate = function (fn) {
-        var keys = Object.keys(RULES);
-        var length = keys.length;
-        for (var i = 0; i < length; i++) {
-            fn(keys[i], RULES[keys[i]]);
-        }
-    };
     RuleContainer.isLazy = function (name) {
         var _a;
         return !!((_a = RULES[name]) === null || _a === void 0 ? void 0 : _a.lazy);
@@ -21723,14 +21785,6 @@ var RuleContainer = /** @class */ (function () {
     RuleContainer.isRequireRule = function (name) {
         var _a;
         return !!((_a = RULES[name]) === null || _a === void 0 ? void 0 : _a.computesRequired);
-    };
-    RuleContainer.isTargetRule = function (name) {
-        var _a;
-        var definition = RuleContainer.getRuleDefinition(name);
-        if (!((_a = definition) === null || _a === void 0 ? void 0 : _a.params)) {
-            return false;
-        }
-        return definition.params.some(function (param) { return !!param.isTarget; });
     };
     RuleContainer.getRuleDefinition = function (ruleName) {
         return RULES[ruleName];
@@ -22145,13 +22199,12 @@ function _test(field, value, rule) {
                             }];
                     }
                     if (!isObject(result)) {
-                        result = { valid: result, data: {} };
+                        result = { valid: result };
                     }
                     return [2 /*return*/, {
                             valid: result.valid,
                             required: result.required,
-                            data: result.data || {},
-                            error: result.valid ? undefined : _generateFieldError(field, value, ruleSchema, rule.name, params, result.data)
+                            error: result.valid ? undefined : _generateFieldError(field, value, ruleSchema, rule.name, params)
                         }];
             }
         });
@@ -22160,11 +22213,12 @@ function _test(field, value, rule) {
 /**
  * Generates error messages.
  */
-function _generateFieldError(field, value, ruleSchema, ruleName, params, data) {
-    var message = field.customMessages[ruleName] || ruleSchema.message;
+function _generateFieldError(field, value, ruleSchema, ruleName, params) {
+    var _a;
+    var message = (_a = field.customMessages[ruleName], (_a !== null && _a !== void 0 ? _a : ruleSchema.message));
     var ruleTargets = _getRuleTargets(field, ruleSchema, ruleName);
-    var _a = _getUserTargets(field, ruleSchema, ruleName, message), userTargets = _a.userTargets, userMessage = _a.userMessage;
-    var values = __assign(__assign(__assign(__assign(__assign({}, (params || {})), (data || {})), { _field_: field.name, _value_: value, _rule_: ruleName }), ruleTargets), userTargets);
+    var _b = _getUserTargets(field, ruleSchema, ruleName, message), userTargets = _b.userTargets, userMessage = _b.userMessage;
+    var values = __assign(__assign(__assign(__assign({}, (params || {})), { _field_: field.name, _value_: value, _rule_: ruleName }), ruleTargets), userTargets);
     return {
         msg: function () { return _normalizeMessage(userMessage || getConfig().defaultMessage, field.name, values); },
         rule: ruleName
@@ -22188,19 +22242,14 @@ function _getRuleTargets(field, ruleSchema, ruleName) {
     }
     for (var index = 0; index < params.length; index++) {
         var param = params[index];
-        if (!param.isTarget) {
+        var key = ruleConfig[index];
+        if (!isLocator(key)) {
             continue;
         }
-        var key = ruleConfig[index];
-        if (isLocator(key)) {
-            key = key.__locatorRef;
-        }
+        key = key.__locatorRef;
         var name_1 = field.names[key] || key;
-        if (numTargets === 1) {
-            names._target_ = name_1;
-            break;
-        }
-        names["_" + param.name + "Target_"] = name_1;
+        names[param.name] = name_1;
+        names["_" + param.name + "_"] = field.crossTable[key];
     }
     return names;
 }
@@ -22226,14 +22275,8 @@ function _getUserTargets(field, ruleSchema, ruleName, userMessage) {
         }
         // grab the name of the target
         var name = rule.__locatorRef;
-        var placeholder = "_" + name + "Target_";
-        userTargets[placeholder] = field.names[name] || name;
-        userTargets[name] = field.names[name] || name;
-        // update template if it's a string
-        if (typeof userMessage === 'string') {
-            var rx = new RegExp("{" + param.name + "}", 'g');
-            userMessage = userMessage.replace(rx, "{" + placeholder + "}");
-        }
+        userTargets[param.name] = field.names[name] || name;
+        userTargets["_" + param.name + "_"] = field.crossTable[name];
     });
     return {
         userTargets: userTargets,
@@ -22320,7 +22363,7 @@ var Dictionary = /** @class */ (function () {
         // find if specific message for that field was specified.
         message = ((_c = (_b = (_a = this.container[locale]) === null || _a === void 0 ? void 0 : _a.fields) === null || _b === void 0 ? void 0 : _b[field]) === null || _c === void 0 ? void 0 : _c[rule]) || ((_e = (_d = this.container[locale]) === null || _d === void 0 ? void 0 : _d.messages) === null || _e === void 0 ? void 0 : _e[rule]);
         if (!message) {
-            message = getConfig().defaultMessage;
+            message = '{field} is not valid';
         }
         field = (_h = (_g = (_f = this.container[locale]) === null || _f === void 0 ? void 0 : _f.names) === null || _g === void 0 ? void 0 : _g[field], (_h !== null && _h !== void 0 ? _h : field));
         return isCallable(message) ? message(field, values) : interpolate(message, __assign(__assign({}, values), { _field_: field }));
@@ -22335,46 +22378,26 @@ var Dictionary = /** @class */ (function () {
     return Dictionary;
 }());
 var DICTIONARY;
-var INSTALLED = false;
-function updateRules() {
-    if (INSTALLED) {
-        return;
-    }
-    RuleContainer.iterate(function (name, schema) {
-        var _a, _b;
-        if (schema.message && !DICTIONARY.hasRule(name)) {
-            DICTIONARY.merge((_a = {},
-                _a[DICTIONARY.locale] = {
-                    messages: (_b = {},
-                        _b[name] = schema.message,
-                        _b)
-                },
-                _a));
-        }
-        extend(name, {
-            message: function (field, values) {
-                return DICTIONARY.resolve(field, name, values || {});
-            }
-        });
-    });
-    INSTALLED = true;
-}
 function localize(locale, dictionary) {
     var _a;
     if (!DICTIONARY) {
         DICTIONARY = new Dictionary('en', {});
+        setConfig({
+            defaultMessage: function (field, values) {
+                var _a;
+                return DICTIONARY.resolve(field, (_a = values) === null || _a === void 0 ? void 0 : _a._rule_, values || {});
+            }
+        });
     }
     if (typeof locale === 'string') {
         DICTIONARY.locale = locale;
         if (dictionary) {
             DICTIONARY.merge((_a = {}, _a[locale] = dictionary, _a));
         }
-        updateRules();
         localeChanged();
         return;
     }
     DICTIONARY.merge(locale);
-    updateRules();
 }
 
 var isEvent = function (evt) {
@@ -22594,23 +22617,23 @@ function resolveTextualRules(vnode) {
     var rules = {};
     if (!attrs)
         return rules;
-    if (attrs.type === 'email') {
+    if (attrs.type === 'email' && RuleContainer.getRuleDefinition('email')) {
         rules.email = ['multiple' in attrs];
     }
-    if (attrs.pattern) {
+    if (attrs.pattern && RuleContainer.getRuleDefinition('regex')) {
         rules.regex = attrs.pattern;
     }
-    if (attrs.maxlength >= 0) {
+    if (attrs.maxlength >= 0 && RuleContainer.getRuleDefinition('max')) {
         rules.max = attrs.maxlength;
     }
-    if (attrs.minlength >= 0) {
+    if (attrs.minlength >= 0 && RuleContainer.getRuleDefinition('min')) {
         rules.min = attrs.minlength;
     }
     if (attrs.type === 'number') {
-        if (isSpecified(attrs.min)) {
+        if (isSpecified(attrs.min) && RuleContainer.getRuleDefinition('min_value')) {
             rules.min_value = Number(attrs.min);
         }
-        if (isSpecified(attrs.max)) {
+        if (isSpecified(attrs.max) && RuleContainer.getRuleDefinition('max_value')) {
             rules.max_value = Number(attrs.max);
         }
     }
@@ -22618,13 +22641,13 @@ function resolveTextualRules(vnode) {
 }
 function resolveRules(vnode) {
     var _a;
-    var htmlTags = ['input', 'select'];
+    var htmlTags = ['input', 'select', 'textarea'];
     var attrs = (_a = vnode.data) === null || _a === void 0 ? void 0 : _a.attrs;
     if (!includes(htmlTags, vnode.tag) || !attrs) {
         return {};
     }
     var rules = {};
-    if ('required' in attrs && attrs.required !== false) {
+    if ('required' in attrs && attrs.required !== false && RuleContainer.getRuleDefinition('required')) {
         rules.required = attrs.type === 'checkbox' ? [true] : true;
     }
     if (isTextInput(vnode)) {
@@ -22688,11 +22711,33 @@ function onRenderUpdate(vm, value) {
     if (!validateNow) {
         return;
     }
-    vm.validateSilent().then(vm.immediate || vm.flags.validated ? vm.applyResult : identity);
+    var validate = function () {
+        if (vm.immediate || vm.flags.validated) {
+            return triggerThreadSafeValidation(vm);
+        }
+        vm.validateSilent();
+    };
+    if (vm.initialized) {
+        validate();
+        return;
+    }
+    vm.$once('hook:mounted', function () { return validate(); });
 }
 function computeModeSetting(ctx) {
     var compute = (isCallable(ctx.mode) ? ctx.mode : modes[ctx.mode]);
     return compute(ctx);
+}
+function triggerThreadSafeValidation(vm) {
+    var pendingPromise = vm.validateSilent();
+    // avoids race conditions between successive validations.
+    vm._pendingValidation = pendingPromise;
+    return pendingPromise.then(function (result) {
+        if (pendingPromise === vm._pendingValidation) {
+            vm.applyResult(result);
+            vm._pendingValidation = undefined;
+        }
+        return result;
+    });
 }
 // Creates the common handlers for a validatable context.
 function createCommonHandlers(vm) {
@@ -22716,15 +22761,10 @@ function createCommonHandlers(vm) {
     if (!onValidate || vm.$veeDebounce !== vm.debounce) {
         onValidate = debounce(function () {
             vm.$nextTick(function () {
-                var pendingPromise = vm.validateSilent();
-                // avoids race conditions between successive validations.
-                vm._pendingValidation = pendingPromise;
-                pendingPromise.then(function (result) {
-                    if (pendingPromise === vm._pendingValidation) {
-                        vm.applyResult(result);
-                        vm._pendingValidation = undefined;
-                    }
-                });
+                if (!vm._pendingReset) {
+                    triggerThreadSafeValidation(vm);
+                }
+                vm._pendingReset = false;
             });
         }, mode.debounce || vm.debounce);
         // Cache the handler so we don't create it each time.
@@ -22923,7 +22963,7 @@ var ValidationProvider = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
     },
     beforeDestroy: function () {
         // cleanup reference.
-        this.$_veeObserver.unsubscribe(this.id);
+        this.$_veeObserver.unobserve(this.id);
     },
     activated: function () {
         this.isActive = true;
@@ -22944,12 +22984,19 @@ var ValidationProvider = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
             this.flags.changed = this.initialValue !== value;
         },
         reset: function () {
+            var _this = this;
             this.errors = [];
             this.initialValue = this.value;
             var flags = createFlags();
             flags.required = this.isRequired;
             this.setFlags(flags);
+            this.failedRules = {};
             this.validateSilent();
+            this._pendingValidation = undefined;
+            this._pendingReset = true;
+            setTimeout(function () {
+                _this._pendingReset = false;
+            }, this.debounce);
         },
         validate: function () {
             var args = [];
@@ -22957,19 +23004,11 @@ var ValidationProvider = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
                 args[_i] = arguments[_i];
             }
             return __awaiter(this, void 0, void 0, function () {
-                var result;
                 return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (args.length > 0) {
-                                this.syncValue(args[0]);
-                            }
-                            return [4 /*yield*/, this.validateSilent()];
-                        case 1:
-                            result = _a.sent();
-                            this.applyResult(result);
-                            return [2 /*return*/, result];
+                    if (args.length > 0) {
+                        this.syncValue(args[0]);
                     }
+                    return [2 /*return*/, triggerThreadSafeValidation(this)];
                 });
             });
         },
@@ -23087,18 +23126,18 @@ function updateRenderingContextRefs(vm) {
     }
     // vid was changed.
     if (id !== providedId && vm.$_veeObserver.refs[id] === vm) {
-        vm.$_veeObserver.unsubscribe(id);
+        vm.$_veeObserver.unobserve(id);
     }
     vm.id = providedId;
-    vm.$_veeObserver.subscribe(vm);
+    vm.$_veeObserver.observe(vm);
 }
 function createObserver() {
     return {
         refs: {},
-        subscribe: function (vm) {
+        observe: function (vm) {
             this.refs[vm.id] = vm;
         },
-        unsubscribe: function (id) {
+        unobserve: function (id) {
             delete this.refs[id];
         }
     };
@@ -23141,7 +23180,8 @@ var OBSERVER_COUNTER = 0;
 function data$1() {
     var refs = {};
     var errors = {};
-    var flags = {};
+    var flags = createObserverFlags();
+    var fields = {};
     // FIXME: Not sure of this one can be typed, circular type reference.
     var observers = [];
     return {
@@ -23149,7 +23189,8 @@ function data$1() {
         refs: refs,
         observers: observers,
         errors: errors,
-        flags: flags
+        flags: flags,
+        fields: fields
     };
 }
 function provideSelf() {
@@ -23197,25 +23238,12 @@ var ValidationObserver = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
         this.id = this.vid;
         register(this);
         var onChange = debounce(function (_a) {
-            var errors = _a.errors, flags = _a.flags;
+            var errors = _a.errors, flags = _a.flags, fields = _a.fields;
             _this.errors = errors;
             _this.flags = flags;
+            _this.fields = fields;
         }, 16);
-        this.$watch(function () {
-            var vms = __spreadArrays(values(_this.refs), _this.observers);
-            var errors = {};
-            var flags = {};
-            var length = vms.length;
-            for (var i = 0; i < length; i++) {
-                var vm = vms[i];
-                errors[vm.id] = vm.errors;
-            }
-            FLAGS_STRATEGIES.forEach(function (_a) {
-                var flag = _a[0], method = _a[1];
-                flags[flag] = vms[method](function (vm) { return vm.flags[flag]; });
-            });
-            return { errors: errors, flags: flags };
-        }, onChange);
+        this.$watch(computeObserverState, onChange);
     },
     activated: function () {
         register(this);
@@ -23231,7 +23259,7 @@ var ValidationObserver = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
         return this.slim && children.length <= 1 ? children[0] : h(this.tag, { on: this.$listeners }, children);
     },
     methods: {
-        subscribe: function (subscriber, kind) {
+        observe: function (subscriber, kind) {
             var _a;
             if (kind === void 0) { kind = 'provider'; }
             if (kind === 'observer') {
@@ -23240,7 +23268,7 @@ var ValidationObserver = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
             }
             this.refs = __assign(__assign({}, this.refs), (_a = {}, _a[subscriber.id] = subscriber, _a));
         },
-        unsubscribe: function (id, kind) {
+        unobserve: function (id, kind) {
             if (kind === void 0) { kind = 'provider'; }
             if (kind === 'provider') {
                 var provider = this.refs[id];
@@ -23296,7 +23324,9 @@ var ValidationObserver = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
                 var provider = _this.refs[key];
                 if (!provider)
                     return;
-                provider.setErrors(errors[key] || []);
+                var errorArr = errors[key] || [];
+                errorArr = typeof errorArr === 'string' ? [errorArr] : errorArr;
+                provider.setErrors(errorArr);
             });
             this.observers.forEach(function (observer) {
                 observer.setErrors(errors);
@@ -23306,16 +23336,44 @@ var ValidationObserver = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.extend({
 });
 function unregister(vm) {
     if (vm.$_veeObserver) {
-        vm.$_veeObserver.unsubscribe(vm.id, 'observer');
+        vm.$_veeObserver.unobserve(vm.id, 'observer');
     }
 }
 function register(vm) {
     if (vm.$_veeObserver) {
-        vm.$_veeObserver.subscribe(vm, 'observer');
+        vm.$_veeObserver.observe(vm, 'observer');
     }
 }
 function prepareSlotProps(vm) {
-    return __assign(__assign({}, vm.flags), { errors: vm.errors, validate: vm.validate, passes: vm.handleSubmit, handleSubmit: vm.handleSubmit, reset: vm.reset });
+    return __assign(__assign({}, vm.flags), { errors: vm.errors, fields: vm.fields, validate: vm.validate, passes: vm.handleSubmit, handleSubmit: vm.handleSubmit, reset: vm.reset });
+}
+// Creates a modified version of validation flags
+function createObserverFlags() {
+    return __assign(__assign({}, createFlags()), { valid: true, invalid: false });
+}
+function computeObserverState() {
+    var vms = __spreadArrays(values(this.refs), this.observers);
+    var errors = {};
+    var flags = createObserverFlags();
+    var fields = {};
+    var length = vms.length;
+    for (var i = 0; i < length; i++) {
+        var vm = vms[i];
+        // validation provider
+        if (Array.isArray(vm.errors)) {
+            errors[vm.id] = vm.errors;
+            fields[vm.id] = __assign({ id: vm.id, name: vm.name, failedRules: vm.failedRules }, vm.flags);
+            continue;
+        }
+        // Nested observer, merge errors and fields
+        errors = __assign(__assign({}, errors), vm.errors);
+        fields = __assign(__assign({}, fields), vm.fields);
+    }
+    FLAGS_STRATEGIES.forEach(function (_a) {
+        var flag = _a[0], method = _a[1];
+        flags[flag] = vms[method](function (vm) { return vm.flags[flag]; });
+    });
+    return { errors: errors, flags: flags, fields: fields };
 }
 
 function withValidation(component, mapProps) {
@@ -23362,7 +23420,7 @@ function withValidation(component, mapProps) {
     return hoc;
 }
 
-var version = '3.1.3';
+var version = '3.2.2';
 
 
 
@@ -24747,7 +24805,7 @@ return Promise$1;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.10
+ * Vue.js v2.6.11
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -26713,7 +26771,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
   isUsingMicroTask = true;
 } else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   // Fallback to setImmediate.
-  // Techinically it leverages the (macro) task queue,
+  // Technically it leverages the (macro) task queue,
   // but it is still a better choice than setTimeout.
   timerFunc = function () {
     setImmediate(flushCallbacks);
@@ -26802,7 +26860,7 @@ var initProxy;
     warn(
       "Property \"" + key + "\" must be accessed with \"$data." + key + "\" because " +
       'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
-      'prevent conflicts with Vue internals' +
+      'prevent conflicts with Vue internals. ' +
       'See: https://vuejs.org/v2/api/#data',
       target
     );
@@ -27662,7 +27720,7 @@ function bindDynamicKeys (baseObj, values) {
     if (typeof key === 'string' && key) {
       baseObj[values[i]] = values[i + 1];
     } else if (key !== '' && key !== null) {
-      // null is a speical value for explicitly removing a binding
+      // null is a special value for explicitly removing a binding
       warn(
         ("Invalid value for dynamic directive argument (expected string or null): " + key),
         this
@@ -28157,6 +28215,12 @@ function _createElement (
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
       // platform built-in elements
+      if (isDef(data) && isDef(data.nativeOn)) {
+        warn(
+          ("The .native modifier for v-on is only valid on components but it was used on <" + tag + ">."),
+          context
+        );
+      }
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
@@ -28282,7 +28346,7 @@ function renderMixin (Vue) {
     // render self
     var vnode;
     try {
-      // There's no need to maintain a stack becaues all render fns are called
+      // There's no need to maintain a stack because all render fns are called
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm;
@@ -30181,7 +30245,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.10';
+Vue.version = '2.6.11';
 
 /*  */
 
@@ -30854,7 +30918,7 @@ function createPatchFunction (backend) {
     }
   }
 
-  function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
+  function removeVnodes (vnodes, startIdx, endIdx) {
     for (; startIdx <= endIdx; ++startIdx) {
       var ch = vnodes[startIdx];
       if (isDef(ch)) {
@@ -30965,7 +31029,7 @@ function createPatchFunction (backend) {
       refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
       addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
     } else if (newStartIdx > newEndIdx) {
-      removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+      removeVnodes(oldCh, oldStartIdx, oldEndIdx);
     }
   }
 
@@ -31057,7 +31121,7 @@ function createPatchFunction (backend) {
         if (isDef(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
         addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
       } else if (isDef(oldCh)) {
-        removeVnodes(elm, oldCh, 0, oldCh.length - 1);
+        removeVnodes(oldCh, 0, oldCh.length - 1);
       } else if (isDef(oldVnode.text)) {
         nodeOps.setTextContent(elm, '');
       }
@@ -31286,7 +31350,7 @@ function createPatchFunction (backend) {
 
         // destroy old node
         if (isDef(parentElm)) {
-          removeVnodes(parentElm, [oldVnode], 0, 0);
+          removeVnodes([oldVnode], 0, 0);
         } else if (isDef(oldVnode.tag)) {
           invokeDestroyHook(oldVnode);
         }
@@ -33992,7 +34056,7 @@ var startTagOpen = new RegExp(("^<" + qnameCapture));
 var startTagClose = /^\s*(\/?)>/;
 var endTag = new RegExp(("^<\\/" + qnameCapture + "[^>]*>"));
 var doctype = /^<!DOCTYPE [^>]+>/i;
-// #7298: escape - to avoid being pased as HTML comment when inlined in page
+// #7298: escape - to avoid being passed as HTML comment when inlined in page
 var comment = /^<!\--/;
 var conditionalComment = /^<!\[/;
 
@@ -34277,7 +34341,7 @@ function parseHTML (html, options) {
 /*  */
 
 var onRE = /^@|^v-on:/;
-var dirRE = /^v-|^@|^:/;
+var dirRE = /^v-|^@|^:|^#/;
 var forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
 var stripParensRE = /^\(|\)$/g;
@@ -34901,7 +34965,7 @@ function processSlotContent (el) {
           if (el.parent && !maybeComponent(el.parent)) {
             warn$2(
               "<template v-slot> can only appear at the root level inside " +
-              "the receiving the component",
+              "the receiving component",
               el
             );
           }
@@ -35464,7 +35528,7 @@ function isDirectChildOfTemplateFor (node) {
 
 /*  */
 
-var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*(?:[\w$]+)?\s*\(/;
+var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function(?:\s+[\w$]+)?\s*\(/;
 var fnInvokeRE = /\([^)]*?\);*$/;
 var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 
@@ -36233,6 +36297,8 @@ function checkNode (node, warn) {
           var range = node.rawAttrsMap[name];
           if (name === 'v-for') {
             checkFor(node, ("v-for=\"" + value + "\""), warn, range);
+          } else if (name === 'v-slot' || name[0] === '#') {
+            checkFunctionParameterExpression(value, (name + "=\"" + value + "\""), warn, range);
           } else if (onRE.test(name)) {
             checkEvent(value, (name + "=\"" + value + "\""), warn, range);
           } else {
@@ -36252,9 +36318,9 @@ function checkNode (node, warn) {
 }
 
 function checkEvent (exp, text, warn, range) {
-  var stipped = exp.replace(stripStringRE, '');
-  var keywordMatch = stipped.match(unaryOperatorsRE);
-  if (keywordMatch && stipped.charAt(keywordMatch.index - 1) !== '$') {
+  var stripped = exp.replace(stripStringRE, '');
+  var keywordMatch = stripped.match(unaryOperatorsRE);
+  if (keywordMatch && stripped.charAt(keywordMatch.index - 1) !== '$') {
     warn(
       "avoid using JavaScript unary operator as property name: " +
       "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim()),
@@ -36306,6 +36372,19 @@ function checkExpression (exp, text, warn, range) {
         range
       );
     }
+  }
+}
+
+function checkFunctionParameterExpression (exp, text, warn, range) {
+  try {
+    new Function(exp, '');
+  } catch (e) {
+    warn(
+      "invalid function parameter expression: " + (e.message) + " in\n\n" +
+      "    " + exp + "\n\n" +
+      "  Raw expression: " + (text.trim()) + "\n",
+      range
+    );
   }
 }
 
@@ -57107,7 +57186,7 @@ module.exports = __webpack_require__(256);
 
 var utils = __webpack_require__(4);
 var bind = __webpack_require__(139);
-var Axios = __webpack_require__(258);
+var Axios = __webpack_require__(257);
 var mergeConfig = __webpack_require__(145);
 var defaults = __webpack_require__(142);
 
@@ -57160,23 +57239,6 @@ module.exports.default = axios;
 
 /***/ }),
 /* 257 */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-
-/***/ }),
-/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57184,8 +57246,8 @@ module.exports = function isBuffer (obj) {
 
 var utils = __webpack_require__(4);
 var buildURL = __webpack_require__(140);
-var InterceptorManager = __webpack_require__(259);
-var dispatchRequest = __webpack_require__(260);
+var InterceptorManager = __webpack_require__(258);
+var dispatchRequest = __webpack_require__(259);
 var mergeConfig = __webpack_require__(145);
 
 /**
@@ -57217,7 +57279,15 @@ Axios.prototype.request = function request(config) {
   }
 
   config = mergeConfig(this.defaults, config);
-  config.method = config.method ? config.method.toLowerCase() : 'get';
+
+  // Set config.method
+  if (config.method) {
+    config.method = config.method.toLowerCase();
+  } else if (this.defaults.method) {
+    config.method = this.defaults.method.toLowerCase();
+  } else {
+    config.method = 'get';
+  }
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -57269,7 +57339,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 259 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57328,18 +57398,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 260 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(4);
-var transformData = __webpack_require__(261);
+var transformData = __webpack_require__(260);
 var isCancel = __webpack_require__(141);
 var defaults = __webpack_require__(142);
-var isAbsoluteURL = __webpack_require__(268);
-var combineURLs = __webpack_require__(269);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -57359,11 +57427,6 @@ function throwIfCancellationRequested(config) {
 module.exports = function dispatchRequest(config) {
   throwIfCancellationRequested(config);
 
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
-
   // Ensure headers exist
   config.headers = config.headers || {};
 
@@ -57378,7 +57441,7 @@ module.exports = function dispatchRequest(config) {
   config.headers = utils.merge(
     config.headers.common || {},
     config.headers[config.method] || {},
-    config.headers || {}
+    config.headers
   );
 
   utils.forEach(
@@ -57421,7 +57484,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 261 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57448,7 +57511,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 262 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57467,7 +57530,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 263 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57499,7 +57562,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 264 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57548,7 +57611,76 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isAbsoluteURL = __webpack_require__(265);
+var combineURLs = __webpack_require__(266);
+
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */
+module.exports = function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+  return requestedURL;
+};
+
+
+/***/ }),
 /* 265 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57608,7 +57740,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 266 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57683,7 +57815,7 @@ module.exports = (
 
 
 /***/ }),
-/* 267 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57740,48 +57872,6 @@ module.exports = (
       };
     })()
 );
-
-
-/***/ }),
-/* 268 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Determines whether the specified URL is absolute
- *
- * @param {string} url The URL to test
- * @returns {boolean} True if the specified URL is absolute, otherwise false
- */
-module.exports = function isAbsoluteURL(url) {
-  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
-  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
-  // by any combination of letters, digits, plus, period, or hyphen.
-  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
-};
-
-
-/***/ }),
-/* 269 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */
-module.exports = function combineURLs(baseURL, relativeURL) {
-  return relativeURL
-    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-    : baseURL;
-};
 
 
 /***/ }),
@@ -57922,8 +58012,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "required_if", function() { return required_if; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "size", function() { return size; });
 /**
-  * vee-validate v3.1.3
-  * (c) 2019 Abdelrahman Awad
+  * vee-validate v3.2.2
+  * (c) 2020 Abdelrahman Awad
   * @license MIT
   */
 /**
