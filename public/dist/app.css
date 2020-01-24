@@ -330,6 +330,12 @@ textarea {
   display: none;
 }
 
+.wrap-radio .wrap-field input[type="radio"]:disabled ~ label,
+.wrap-radio .wrap-field input[type="radio"][disabled] ~ label {
+  border-color: #C2D9FF !important;
+  color: #C2D9FF !important;
+}
+
 .wrap-radio .wrap-field input[type="radio"]:not(:disabled) ~ label {
   cursor: pointer;
 }
@@ -587,11 +593,23 @@ textarea {
   padding-left: 1.8rem;
 }
 
+.wrap-field.h-50 .field:focus ~ .label-field + .symbol-left-field,
+.wrap-field.h-50 .field.input-error ~ .label-field + .symbol-left-field,
+.wrap-field.h-50 .field.hasValue ~ .label-field + .symbol-left-field,
+.wrap-field.h-50 .field.select ~ .label-field + .symbol-left-field {
+  padding-left: 1.8rem;
+}
+
 .wrap-field.h-50 .label-field {
   top: 1.5rem;
   padding-left: 5rem;
   font-size: 1.4rem;
   line-height: 1.8rem;
+}
+
+.wrap-field.h-50 .label-field + .v-validate {
+  padding: 0 2.5rem 0 5rem;
+  bottom: 0;
 }
 
 .wrap-field.h-50 .symbol-left-field {
@@ -738,6 +756,7 @@ textarea {
 }
 
 .v-validate {
+  z-index: 1;
   position: absolute;
   bottom: -1.75rem;
   padding-left: .5rem;
@@ -877,8 +896,16 @@ textarea {
   height: 7rem;
 }
 
+.wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50:nth-of-type(1) .field {
+  padding-left: 5rem !important;
+}
+
+.wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50:nth-of-type(1) .field + .label-field {
+  padding-left: 5rem !important;
+}
+
 .wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50 .field {
-  padding: 0 2.5rem 0 5rem;
+  padding: 0 2.5rem;
 }
 
 .wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50 .field:focus + .label-field,
@@ -889,7 +916,6 @@ textarea {
 
 .wrap-group-field > .wrap-field-inline > .legend-line ~ .wrap-field.h-50 .field + .label-field {
   top: 3.5rem;
-  padding-left: 5rem !important;
 }
 
 .wrap-group-field > .wrap-field-inline > .wrap-field {
@@ -1195,6 +1221,13 @@ progress[value]::-moz-progress-bar {
   color: #FFFDFC;
 }
 
+.button.button-primary:disabled,
+.button.button-primary[disabled] {
+  cursor: not-allowed;
+  border-color: rgba(194, 217, 255, 0.5);
+  color: #C2D9FF;
+}
+
 .button.button-secondary {
   border-color: #91A8D0;
   color: #91A8D0;
@@ -1447,9 +1480,13 @@ progress[value]::-moz-progress-bar {
   }
 
   .wrap-central .left-part {
-    width: calc(100% - 45rem);
+    min-width: calc(100% - 45rem);
     margin: 0;
     padding-right: 2rem;
+  }
+
+  .wrap-central .right-part {
+    min-width: 35rem;
   }
 }
 
