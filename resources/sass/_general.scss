@@ -204,9 +204,13 @@
         }
 
         .left-part {
-            width: calc(100% - 45rem);
+            min-width: calc(100% - 45rem);
             margin: 0;
             padding-right: 2rem;
+        }
+
+        .right-part {
+            min-width: 35rem;
         }
     }
 }

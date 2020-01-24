@@ -74,6 +74,14 @@ textarea {
     input[type="radio"] {
       display: none;
 
+        &:disabled,
+        &[disabled] {
+            ~ label {
+                border-color: $primary-color-light !important;
+                color: $primary-color-light !important;
+            }
+        }
+
       &:not(:disabled) ~ label {
         cursor: pointer;
       }
@@ -327,6 +335,10 @@ textarea {
           &+ .symbol-left-field {
             padding-left: 1.8rem;
           }
+
+          &+ .symbol-left-field {
+            padding-left: 1.8rem;
+          }
         }
       }
     }
@@ -336,6 +348,11 @@ textarea {
       padding-left: 5rem;
       font-size: 1.4rem;
       line-height: 1.8rem;
+
+        &+ .v-validate {
+            padding: 0 2.5rem 0 5rem;
+            bottom: 0;
+        }
     }
 
     .symbol-left-field {
@@ -503,6 +520,7 @@ textarea {
 }
 
 .v-validate {
+    z-index: 1;
     position: absolute;
     bottom: -1.75rem;
     padding-left: .5rem;
@@ -665,8 +683,18 @@ textarea {
         &.h-50 {
           height: 7rem;
 
+            &:nth-of-type(1) {
+                .field {
+                    padding-left: 5rem !important;
+
+                    & + .label-field {
+                        padding-left: 5rem !important;
+                    }
+                }
+            }
+
           .field {
-            padding: 0 2.5rem 0 5rem;
+            padding: 0 2.5rem;
 
             &:focus,
             &.input-error,
@@ -678,7 +706,6 @@ textarea {
 
             & + .label-field {
               top: 3.5rem;
-              padding-left: 5rem !important;
             }
           }
         }
@@ -975,6 +1002,13 @@ progress[value]::-moz-progress-bar {
       background-color: $secondary-color;
       color: $white;
     }
+
+      &:disabled,
+      &[disabled] {
+          cursor: not-allowed;
+          border-color: rgba($primary-color-light, 0.5);
+          color: $primary-color-light;
+      }
   }
 
   &.button-secondary {
