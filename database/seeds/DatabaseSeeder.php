@@ -20,16 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call('SettlementsTableSeeder');
         $this->call('ThirdsTableSeeder');
         $this->call('ContactsTableSeeder');
-        $this->call('PrepressesTableSeeder');
-        $this->call('PrintingsTableSeeder');
-        $this->call('FinishingsTableSeeder');
-        $this->call('PackingsTableSeeder');
         $this->call('SubstratesTableSeeder');
         $this->call('LabelsTableSeeder');
         $this->call('StatusesTableSeeder');
         $this->call('QuotationsTableSeeder');
-
-
-//        factory(App\Models\Copy::class, 40)->create();
     }
 }
