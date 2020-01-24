@@ -1,5 +1,6 @@
 <template>
-    <ValidationProvider class="wrap-field h-50"
+    <ValidationProvider tag="div"
+                        class="wrap-field h-50"
                         name="name"
                         v-slot="{ errors }">
         <span class="btn-right-field" v-if="isLoading">
@@ -13,7 +14,7 @@
             @keydown.up="onArrowUp"
             @keydown.enter="onEnter"
             class="field"
-            :class="[{ hasValue: search }]"
+            :class="[{ hasValue: search, 'input-error': errors[0] }]"
             autocomplete="off"
             @keydown.shift.tab.prevent=""
             ref="search">
@@ -90,13 +91,13 @@
         },
         watch: {
             items(value, oldValue) {
+                this.isLoading = false;
                 if (value.length !== oldValue.length) {
                     console.log(value);
                     this.matches = value;
                     this.isOpen = true;
-                    this.isLoading = false;
                 }
-            }
+            },
         },
         methods: {
             handleClickOutside(evt) {

@@ -6,10 +6,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        token: localStorage.getItem('token') || null,
-        company: localStorage.getItem('company') || null,
-        establishment: localStorage.getItem('establishment') || null,
-        user: localStorage.getItem('user') || null,
+        user: {
+            token: localStorage.getItem('token') || null,
+            company: localStorage.getItem('company') || null,
+            establishment: localStorage.getItem('establishment') || null,
+            alias: localStorage.getItem('alias') || null,
+            name: localStorage.getItem('name') || null,
+            surname: localStorage.getItem('surname') || null,
+            admin: localStorage.getItem('admin') || null,
+        },
         windowWidth: window.innerWidth,
         quote: [],
         quotations: [],
@@ -148,28 +153,29 @@ export default new Vuex.Store({
         },
         price: [],
         quotation: [],
+        company: [],
     },
     getters: {
         loggedIn(state) {
             // return state.token !== null;
-            return state.user !== null;
+            return state.user.alias !== null;
         }
     },
     mutations: {
-        login(state, token) {
-            state.token = token;
-        },
-        setCompany(state, company) {
-            state.company = company;
-        },
-        setEstablishment(state, establishment) {
-            state.establishment = establishment;
-        },
+        // login(state, token) {
+        //     state.user.token = token;
+        // },
+        // setCompany(state, company) {
+        //     state.user.company = company;
+        // },
+        // setEstablishment(state, establishment) {
+        //     state.user.establishment = establishment;
+        // },
         setUser(state, user) {
             state.user = user;
         },
-        logout(state) {
-            state.token = null;
+        logout(state, user) {
+            state.user = user;
         },
         setWindowWidth(state, data) {
             state.windowWidth = data;
@@ -199,7 +205,7 @@ export default new Vuex.Store({
             state.quotation = data;
         },
         setWorkflow(state, data) {
-            state.workflow = data;
+            state.workflow.form = data;
         },
         setThirdContacts(state, data) {
             state.workflow.database.identification.contacts = data;
@@ -215,6 +221,12 @@ export default new Vuex.Store({
         },
         setReworkings(state, data) {
             state.workflow.database.finishing.reworkings = data;
+        },
+        setCuttings(state, data) {
+            state.workflow.database.finishing.cuttings = data;
+        },
+        setCompany(state, data) {
+            state.company = data;
         }
     },
     actions: {
@@ -227,14 +239,22 @@ export default new Vuex.Store({
                     // localStorage.setItem("token", response.data.token);
                     // context.commit("login", response.data.token);
                     //
-                    localStorage.setItem("company", response.data[0].CODESOCIETE);
-                    context.commit("setCompany", response.data[0].CODESOCIETE);
+                    // localStorage.setItem("company", response.data[0].CODESOCIETE);
+                    // context.commit("setCompany", response.data[0].CODESOCIETE);
+                    //
+                    // localStorage.setItem("establishment", response.data[0].CODEETABLISSEMENT);
+                    // context.commit("setEstablishment", response.data[0].CODEETABLISSEMENT);
 
-                    localStorage.setItem("establishment", response.data[0].CODEETABLISSEMENT);
-                    context.commit("setEstablishment", response.data[0].CODEETABLISSEMENT);
 
-                    localStorage.setItem("user", response.data[0].NOM);
-                    context.commit("setUser", response.data[0].NOM);
+                    localStorage.setItem("token", null);
+                    localStorage.setItem("company", response.data[0].company);
+                    localStorage.setItem("establishment", response.data[0].establishment);
+                    localStorage.setItem("alias", response.data[0].alias);
+                    localStorage.setItem("name", response.data[0].name);
+                    localStorage.setItem("surname", response.data[0].surname);
+                    localStorage.setItem("admin", response.data[0].admin);
+                    context.commit("setUser", response.data[0]);
+                    console.log(response.data[0]);
 
                     resolve(response);
                 }).catch(error => {
@@ -246,10 +266,13 @@ export default new Vuex.Store({
                     } else {
                         console.log(error.message);
                     }
-                    // localStorage.removeItem("token");
-                    localStorage.removeItem("user");
+                    localStorage.removeItem("token");
                     localStorage.removeItem("company");
                     localStorage.removeItem("establishment");
+                    localStorage.removeItem("alias");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("surname");
+                    localStorage.removeItem("admin");
                     reject(error);
                 });
             });
@@ -265,15 +288,40 @@ export default new Vuex.Store({
                         localStorage.removeItem("token");
                         localStorage.removeItem("company");
                         localStorage.removeItem("establishment");
-                        localStorage.removeItem("user");
-                        context.commit("logout");
+                        localStorage.removeItem("alias");
+                        localStorage.removeItem("name");
+                        localStorage.removeItem("surname");
+                        localStorage.removeItem("admin");
+                        let user = {
+                            token: null,
+                            company: null,
+                            establishment: null,
+                            alias: null,
+                            name: null,
+                            surname: null,
+                            admin: null,
+                        };
+                        context.commit("logout", user);
                         resolve(response);
                     }).catch(error => {
                         localStorage.removeItem("token");
                         localStorage.removeItem("company");
                         localStorage.removeItem("establishment");
-                        localStorage.removeItem("user");
-                        context.commit("logout");
+                        localStorage.removeItem("alias");
+                        localStorage.removeItem("name");
+                        localStorage.removeItem("surname");
+                        localStorage.removeItem("admin");
+
+                        let user = {
+                            token: null,
+                            company: null,
+                            establishment: null,
+                            alias: null,
+                            name: null,
+                            surname: null,
+                            admin: null,
+                        };
+                        context.commit("logout", user);
                         reject(error);
                     });
                 });
@@ -288,14 +336,14 @@ export default new Vuex.Store({
         },
         async getQuotations(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            const url = credentials.url;
-            let data = (await axios.get(url)).data;
+            let data = (await axios.get('/api/auth/quotations/' + credentials.page)).data; // quotations.index
+            console.log(data);
             context.commit("setQuotations", data);
         },
         getCustomers(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.post('api/auth/quotations/customers', {
-                    company: context.state.company,
+                    company: context.state.user.company,
                     filters: credentials.filters,
                     page: credentials.page
                 }).then(response => {
@@ -310,7 +358,7 @@ export default new Vuex.Store({
         searchCustomersForAutocomplete(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/quotations/autocomplete/customers', {
-                    company: context.state.company,
+                    company: context.state.user.company,
                     queryString: credentials.queryString
                 }).then(response => {
                     resolve(response);
@@ -324,7 +372,7 @@ export default new Vuex.Store({
         async getThirdContacts(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.post('/api/auth/quotations/search/contacts', {
-                company: context.state.company,
+                company: context.state.user.company,
                 ethic: credentials.ethic,
                 third: credentials.third,
             })).data;
@@ -334,17 +382,21 @@ export default new Vuex.Store({
         async getThirdLabels(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.post('/api/auth/quotations/third/labels', {
-                company: context.state.company,
+                company: context.state.user.company,
                 ethic: credentials.ethic,
                 third: credentials.third,
             })).data;
+            console.log("getThirdLabels");
             console.log(data);
             context.commit("setThirdLabels", data);
         },
         async getPrintings(context) {
             let data = (await axios.post('/api/auth/quotations/printings', {
-                company: context.state.company
+                company: context.state.user.company,
+                class: 'null',
             })).data;
+            console.log("getPrintings");
+            console.log(data);
             context.commit("setPrintings", data);
         },
         async getSubstratesSearchCriteria(context) {
@@ -352,8 +404,8 @@ export default new Vuex.Store({
             console.log(context.state.workflow.form.description.label.id);
             console.log(context.state.workflow.form.description.label.variant);
             let data = (await axios.post('/api/auth/quotations/substrates/search/criteria', {
-                company: context.state.company,
-                establishment: context.state.establishment,
+                company: context.state.user.company,
+                establishment: context.state.user.establishment,
                 ethic: context.state.workflow.form.description.label.ethic,
                 label: context.state.workflow.form.description.label.id,
                 variant: context.state.workflow.form.description.label.variant
@@ -364,8 +416,8 @@ export default new Vuex.Store({
         searchSubstratesForAutocomplete(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/quotations/substrates/search/autocomplete', {
-                    company: context.state.company,
-                    establishment: context.state.establishment,
+                    company: context.state.user.company,
+                    establishment: context.state.user.establishment,
                     queryString: credentials.queryString,
                     ethic: context.state.workflow.form.description.label.ethic,
                     label: context.state.workflow.form.description.label.id,
@@ -380,8 +432,8 @@ export default new Vuex.Store({
         getFilteredSubstrates(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/quotations/substrates', {
-                    company: context.state.company,
-                    establishment: context.state.establishment,
+                    company: context.state.user.company,
+                    establishment: context.state.user.establishment,
                     filters: credentials.filters,
                     page: credentials.page,
                     ethic: context.state.workflow.form.description.label.ethic,
@@ -398,14 +450,16 @@ export default new Vuex.Store({
             });
         },
         async getFinishings(context) {
+            console.log()
             let data = (await axios.post('/api/auth/quotations/finishings', {
-                company: context.state.company,
-                establishment: context.state.establishment,
+                company: context.state.user.company,
+                establishment: context.state.user.establishment,
                 ethic: context.state.workflow.form.description.label.ethic,
                 label: context.state.workflow.form.description.label.id,
                 variant: context.state.workflow.form.description.label.variant
             })).data;
             // let data = response.data;
+            console.log("getFinishings store");
             console.log(data);
             if (data.form !== undefined) {
                 context.commit("setFinishingsLabel", data.form);
@@ -427,15 +481,24 @@ export default new Vuex.Store({
                 }];
                 context.commit("setFinishingsLabel", singleFinishing);
                 console.log(context.state.workflow.form.finishing.finishings);
-                if (data.database !== undefined) {
-                    context.commit("setFinishings", data.database);
+                if (data.database.finishings !== undefined) {
+                    context.commit("setFinishings", data.database.finishings);
                 }
+            }
+            if (data.database.cuttings !== undefined) {
+                console.log("cuttings");
+                console.log(data.database.cuttings);
+                context.commit("setCuttings", data.database.cuttings);
+            } else {
+                context.commit("setCuttings", []);
             }
         },
         async getReworkings(context) {
             let data = (await axios.post('/api/auth/quotations/finishings/reworkings', {
-                company: context.state.company,
+                company: context.state.user.company,
+                class: 'null',
             })).data;
+            console.log("getReworkings");
             console.log(data);
             context.commit("setReworkings", data);
         },
@@ -448,20 +511,27 @@ export default new Vuex.Store({
             context.commit("setQuotationSummary", summary);
         },
         async getQuotationPrice(context) {
+            console.log("getQuotationPrice");
+            console.log(context.state.workflow.form);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.post('/api/auth/quotations/price', { // quotations.price
                 workflow: context.state.workflow.form,
+                company: context.state.user.company,
+                establishment: context.state.user.establishment,
             })).data;
+            console.log("getQuotationPrice");
+            console.log(data);
             context.commit("setQuotationPrice", data);
         },
         saveQuotation(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
                 axios.post('/api/auth/quotations', { // quotations.store
-                    company: context.state.company,
+                    company: context.state.user.company,
                     price: context.state.price,
                     workflow: context.state.workflow.form,
                     quotation: credentials.quotation,
+                    user: context.state.user,
                 }).then(response => {
                     console.log("SaveQuotation :");
                     console.log(response.data);
@@ -477,7 +547,8 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
                 axios.post('/api/auth/quotations/' + credentials.quotation.id, { // quotations.update
-                    quotation: credentials.quotation
+                    quotation: credentials.quotation,
+                    company: context.state.user.company
                 }).then(response => {
                     console.log(response);
                     context.commit("setQuotation", response.data);
@@ -490,7 +561,7 @@ export default new Vuex.Store({
         },
         async getQuotation(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit')).data; // quotations.edit
+            let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit/' + context.state.user.company)).data; // quotations.edit
             console.log("getQuotation");
             console.log(data);
             context.commit("setQuotation", data);
@@ -502,7 +573,8 @@ export default new Vuex.Store({
         },
         async getWorkflow(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit')).data; // quotations.edit
+            let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit/' + context.state.user.company)).data; // quotations.edit
+            console.log(data);
             let workflow = JSON.parse(data.workflow);
             let third = data.third;
             context.commit("setWorkflow", workflow);
@@ -510,16 +582,56 @@ export default new Vuex.Store({
         },
         async generatePDF(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = await axios.get('/api/auth/quotations/' + credentials.id + '/pdf'); // quotations.generatePDF
+            let data = await axios.get('/api/auth/quotations/' + credentials.id + '/pdf/' + context.state.user.company); // quotations.generatePDF
             console.log(data)
         },
         async sendEmail(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = await axios.post('/api/auth/quotations/' + credentials.quotation.id + '/email', { // quotations.sendEmail
-                quotation: credentials.quotation
+                quotation: credentials.quotation,
+                company: context.state.user.company
             });
             console.log("sendEmail data");
             console.log(data.data);
+        },
+        async getCompany(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+            let data = (await axios.get('/api/auth/profile/company')).data; // profile.getCompany
+            console.log(data);
+            context.commit("setCompany", data);
+        },
+        async getWorkstations(context, credentials) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/auth/profile/workstations', { // profile.getWorkstations
+                    company: context.state.user.company,
+                    class: 'null',
+                }).then(response => {
+                    resolve(response);
+                }).catch(error => {
+                    reject(error);
+                });
+            });
+        },
+        saveCompany(context, credentials) {
+            // delete axios.defaults.headers.common["Content-Type"];
+            for (var key of credentials.formData.keys()) {
+                console.log(key);
+            }
+            // TODO: file doen't work
+            return new Promise((resolve, reject) => {
+                axios.post('/api/auth/profile/company', { // profile.updateCompany
+                    prepress: credentials.formData.get("prepress"),
+                    winder: credentials.formData.get("winder"),
+                    logo: credentials.formData.get("images[]"),
+                }).then(response => {
+                    console.log(response);
+                    // context.commit("setCompany", response.data);
+                    // resolve(response);
+                }).catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            });
         },
     },
 })

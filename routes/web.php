@@ -32,11 +32,11 @@ $router->group(['prefix' => 'api'], function ($router) {
                 $router->post('/substrates', 'ApiController@getFilteredSubstrates');
                 $router->post('/finishings', 'ApiController@getFinishings');
                 $router->post('/finishings/reworkings', 'ApiController@getReworkings');
-                $router->get('/', 'QuotationController@index');
+                $router->get('/{page}', 'QuotationController@index');
                 $router->post('/', 'QuotationController@store');
                 //            $router->get('/{id}', 'QuotationController@show');
                 $router->post('/price', 'QuotationController@getPrice');
-                $router->get('/{id}/edit', 'QuotationController@edit');
+                $router->get('/{id}/edit/{company}', 'QuotationController@edit');
                 $router->post('/{id}', 'QuotationController@update');
                 $router->delete('/{id}', 'QuotationController@destroy');
 
@@ -48,9 +48,16 @@ $router->group(['prefix' => 'api'], function ($router) {
     //            $router->get('/consumables', 'QuotationController@getConsumables');
     //            $router->get('/cuttings', 'QuotationController@getCuttings');
             });
-            $router->post('/logout', 'AuthController@logout');
+
+        $router->group(['prefix' => 'profile'], function ($router) {
+            $router->post('/workstations', 'ProfileController@getWorkstations');
+            $router->get('/company', 'ProfileController@getCompany');
+            $router->post('/company', 'ProfileController@updateCompany');
+        });
+        $router->post('/logout', 'AuthController@logout');
+
 //        });
-        $router->get('/quotations/{id}/pdf', 'QuotationController@generatePDF');
+        $router->get('/quotations/{id}/pdf/{company}', 'QuotationController@generatePDF');
     });
 });
 

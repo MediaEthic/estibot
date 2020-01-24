@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\{
+use App\Models\{Company,
     Consumable,
     Contact,
     Cutting,
@@ -17,33 +17,79 @@ use App\Models\{
     Substrate,
     Third};
 
-use Illuminate\Support\Facades\Auth;
+use App\Repositories\ApiRepository;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailable;
 
 class QuotationRepository
 {
-    protected $model;
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    protected $repository;
 
-    public function __construct(Quotation $model)
+    public function __construct(ApiRepository $repository)
     {
-        $this->model = $model;
+        $this->repository = $repository;
     }
 
-    public function getPaginate()
+    public function getPaginate($page)
     {
-        return $this->model->with('third')
-            ->latest()
-            ->paginate(15);
+        $totalPerPage = 15;
+
+        $collection = collect(Quotation::with('third')
+            ->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get());
+
+        return new LengthAwarePaginator(
+            $collection->forPage(
+                intval($page),
+                $totalPerPage
+            ),
+            $collection->count(),
+            $totalPerPage,
+            intval($page)
+        );
     }
 
-    public function getById($id)
+    public function getById($id, $company)
     {
-        $quotation = $this->model->with('user', 'third', 'contact', 'label', 'quantities', 'status')
-            ->findOrFail($id);
+        $quotation = Quotation::with('quantities', 'status')->findOrFail($id);
 
-        $quotation['third']['contacts'] = Contact::where('third_id', $quotation->third_id)->get();
+        $quotation['company'] = Company::findorFail(1);
+
+        if ($quotation->third_type === "ethic") {
+            $customers = $this->repository->allCustomers($company);
+            $quotation['third'] = $customers->where('id', $quotation->third_id)->first();
+        } else {
+            $quotation['third'] = Third::findOrFail($quotation->third_id);
+        }
+
+        if ($quotation->contact_ethic) {
+            $contacts = $this->repository->findByIdThirdContact($company, $quotation->third_id);
+            $quotation['contact'] = $contacts->where('id', $quotation->contact_id)->first();
+        } else {
+            $quotation['contact'] = Contact::findOrFail($quotation->contact_id);
+        }
+
+        if ($quotation->contact_ethic) {
+            $quotation['third']['contacts'] = $this->repository->findByIdThirdContact($company, $quotation->third_id);
+        } else {
+            $quotation['third']['contacts'] = Contact::where('third_id', $quotation->third_id)->get();
+        }
+
+        if ($quotation->label_type === "ethic") {
+            $labels = $this->repository->findByIdThirdLabel($company, $quotation->third_id);
+            $quotation['label'] = $labels->where('id', $quotation->label_id)->first();
+        } else {
+            $quotation['label'] = Label::findOrFail($quotation->label_id);
+        }
+
         $quotation['settlements'] = Settlement::get();
         return $quotation;
     }
@@ -56,7 +102,7 @@ class QuotationRepository
         if (!empty($inputs['addressLine3'])) $model->address_line3 = $inputs['addressLine3'];
         if (!empty($inputs['zipcode'])) $model->zipcode = $inputs['zipcode'];
         if (!empty($inputs['city'])) $model->city = $inputs['city'];
-        $modelCompany = Auth::user()->company;
+        $modelCompany = Company::findOrFail(1);
         $model->settlement_id = $modelCompany->settlement_id;
         $model->save();
 
@@ -103,6 +149,8 @@ class QuotationRepository
 
     private function saveLabel(Label $model, Array $inputs, $substrate, $cutting)
     {
+        if ($inputs['identification']['third']['ethic']) $model->third_type = "ethic";
+        if (!empty($inputs['identification']['third']['id'])) $model->third_id = $inputs['identification']['third']['id'];
         if (!empty($inputs['description']['label']['name'])) $model->name = $inputs['description']['label']['name'];
         if (!empty($inputs['description']['label']['width'])) $model->width = $inputs['description']['label']['width'];
         if (!empty($inputs['description']['label']['length'])) $model->length = $inputs['description']['label']['length'];
@@ -122,10 +170,10 @@ class QuotationRepository
 
     private function saveFinishingLabel(FinishingLabel $model, Array $inputs, $label)
     {
-        if (!empty($inputs['type'])) $model->finishing_id = $inputs['id'];
+        if (!empty($inputs['id'])) $model->finishing_id = $inputs['id'];
         if (!empty($label)) $model->label_id = $label;
         if (floatval($inputs['shape']) > 0) $model->shape = $inputs['shape'];
-//        if (!empty($inputs['reworking'])) return $inputs['reworking'];
+        if (!empty($inputs['reworking'])) $model->reworking = $inputs['reworking'];
         $model->save();
         return $model;
 
@@ -137,19 +185,23 @@ class QuotationRepository
         if (!empty($inputs['name'])) $model->name = $inputs['name'];
         if (!empty($inputs['width'])) $model->width = $inputs['width'];
         if (!empty($inputs['price'])) $model->price = $inputs['price'];
+        if (!empty($inputs['ethic'])) $model->ethic = $inputs['ethic'];
         $model->save();
         return $model;
     }
 
-    private function saveQuotation(Quotation $model, Array $inputs, $price, $third, $contact, $label)
+    private function saveQuotation(Quotation $model, Array $inputs, $price, $third, $contact, $label, $user)
     {
-        $user = Auth::user();
-        $model->user_id = $user->id;
+//        $user = Auth::user();
+//        $model->user_id = $user->id;
+        if (!empty($user['name'])) $model->user_name = $user['name'];
+        if (!empty($user['surname'])) $model->user_surname = $user['surname'];
         if (!empty($inputs['summary'])) $model->description = $inputs['summary'];
         $images = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];
         $model->image = $images[array_rand($images)];
         if ($inputs['identification']['third']['ethic']) $model->third_type = "ethic";
         if (!empty($third)) $model->third_id = $third;
+        if ($inputs['identification']['contact']['ethic']) $model->contact_ethic = "ethic";
         if (!empty($contact)) $model->contact_id = $contact;
         if ($inputs['description']['label']['ethic']) $model->label_type = "ethic";
         if (!empty($label)) $model->label_id = $label;
@@ -157,7 +209,7 @@ class QuotationRepository
         $validityDate = date('Y-m-d', strtotime("+3 months"));
         $model->validity = $validityDate;
 
-        $modelCompany = $user->company;
+        $modelCompany = Company::findOrFail(1);
         $settlementID = $modelCompany->settlement_id;
 
         if (!$inputs['identification']['third']['ethic']) {
@@ -220,105 +272,130 @@ class QuotationRepository
 
     public function store(Array $inputs)
     {
+        $workflow = $inputs['workflow'];
+
+        $identification = $workflow['identification'];
+        $third = $identification['third'];
+        $contact = $identification['contact'];
+
+        $description = $workflow['description'];
+        $label = $description['label'];
+
+        $finishing = $workflow['finishing'];
+        $finishings = $finishing['finishings'];
+        $cutting = $finishing['cutting'];
+
+        $printing = $workflow['printing'];
+        $substrate = $printing['substrate'];
         $errors = array();
-//        return $inputs['workflow']['identification']['third']['id'];
         if (isset($inputs['quotation'])) {
-            $modelThird = Third::findOrFail($inputs['workflow']['identification']['third']['id']);
-            $modelContact = Contact::findOrFail($inputs['workflow']['identification']['contact']['id']);
-            $modelSubstrate = Substrate::findOrFail($inputs['workflow']['printing']['substrate']['id']);
-            $modelCutting = Cutting::findOrFail($inputs['workflow']['finishing']['cutting']['id']);
-            $modelLabel = Label::findOrFail($inputs['workflow']['description']['label']['id']);
+            if (!$third['ethic']) $modelThird = Third::findOrFail($third['id']);
+            if (!$contact['ethic']) $modelContact = Contact::findOrFail($contact['id']);
+            if (!$substrate['ethic']) $modelSubstrate = Substrate::findOrFail($substrate['id']);
+            if (!$cutting['ethic']) $modelCutting = Cutting::findOrFail($cutting['id']);
+            if (!$label['ethic']) $modelLabel = Label::findOrFail($label['id']);
             $modelQuotation = Quotation::findOrFail($inputs['quotation']);
         } else {
-            $modelThird = new Third();
-            $modelContact = new Contact();
-            $modelSubstrate = new Substrate();
-            $modelCutting = new Cutting();
-            $modelLabel = new Label();
+            if ($third['type'] === "new") $modelThird = new Third();
+            if ($contact['type'] === "new") $modelContact = new Contact();
+            if ($substrate['type'] === "new") $modelSubstrate = new Substrate();
+            if ($cutting['type'] === "new") $modelCutting = new Cutting();
+            if ($label['type'] === "new") $modelLabel = new Label();
             $modelQuotation = new Quotation();
         }
 
 
-        $third = $this->saveProspect($modelThird, $inputs['workflow']['identification']['third']);
-        if (!isset($third)) $errors[] = "L'insertion du donneur d'ordre a échoué.";
-
-        if (empty($errors)) {
+        if (!empty($modelThird)) {
+            $third = $this->saveProspect($modelThird, $identification['third']);
             $inputs['workflow']['identification']['third']['type'] = "old";
             $inputs['workflow']['identification']['third']['id'] = $third['id'];
-            $contact = $this->saveContact($modelContact, $inputs['workflow']['identification']['contact'], $third['id']);
-            if (!isset($contact)) $errors['errors'][] = "L'insertion du contact a échoué.";
+            if (!isset($third)) $errors[] = "L'insertion du donneur d'ordre a échoué.";
         }
 
         if (empty($errors)) {
-            $inputs['workflow']['identification']['contact']['id'] = $contact['id'];
-            $substrate = $this->saveSubstrate($modelSubstrate, $inputs['workflow']['printing']['substrate']);
-            if (!isset($substrate)) $errors['errors'][] = "L'insertion du support d'impression a échoué.";
-        }
-
-        if (empty($errors)) {
-            $inputs['workflow']['printing']['substrate']['type'] = "old";
-            $inputs['workflow']['printing']['substrate']['id'] = $substrate['id'];
-            $cutting = $this->saveCutting($modelCutting, $inputs['workflow']['finishing']['cutting']);
-            if (!isset($cutting)) $errors['errors'][] = "L'insertion de l'outil de découpe a échoué.";
-        }
-
-        if (empty($errors)) {
-            $inputs['workflow']['finishing']['cutting']['type'] = "old";
-            $inputs['workflow']['finishing']['cutting']['id'] = $cutting['id'];
-            $label = $this->saveLabel($modelLabel, $inputs['workflow'], $substrate['id'], $cutting['id']);
-            if (!isset($label)) $errors['errors'][] = "L'insertion de l'étiquette a échoué.";
-        }
-
-        if (empty($errors)) {
-            $inputs['workflow']['description']['label']['type'] = "old";
-            $inputs['workflow']['description']['label']['id'] = $label['id'];
-
-            $finishingsLabel = array();
-            foreach ($inputs['workflow']['finishing']['finishings'] as $key => $finishing) {
-                if (empty($errors)) {
-                    if ($finishing['id'] === "") {
-                        $modelFinishingLabel = new FinishingLabel();
-                    } else {
-                        $modelFinishingLabel = FinishingLabel::findOrFail($finishing['id']);
-                    }
-
-                    $finishingLabel = $this->saveFinishingLabel($modelFinishingLabel, $finishing, $label['id']);
-                    if (!isset($finishingLabel)) $errors['errors'][] = "L'insertion de la finition " . $finishing['name'] . " a échoué.";
-
-                    if (empty($errors)) {
-                        $inputs['workflow']['finishing']['finishings'][$key]['id'] = $finishingLabel['id'];
-                        $finishingsLabel[] = $finishingLabel['id'];
-
-                        if ($finishing['presence_consumable']) {
-                            if ($finishing['consumable']['id'] !== "") {
-                                $modelConsumable = Consumable::findOrFail($finishing['consumable']['id']);
-                            } else {
-                                $modelConsumable = new Consumable();
-                            }
-                            $consumable = $this->saveConsumable($modelConsumable, $finishing['consumable'], $finishingLabel['id']);
-                            if (!isset($consumable)) $errors['errors'][] = "L'insertion du consommable de " . $finishing['name'] . " a échoué.";
-                            $finishing['consumable']['id'] = $consumable['id'];
-                        } else {
-//                TODO : to test
-                            if ($finishing['id'] !== "") {
-                                Consumable::where('finishing_label', $finishingLabel['id'])->delete();
-                            }
-                        }
-                    }
-                }
+            if (!empty($modelContact)) {
+                $contact = $this->saveContact($modelContact, $inputs['workflow']['identification']['contact'], $third['id']);
+                $inputs['workflow']['identification']['contact']['id'] = $contact['id'];
+                if (!isset($contact)) $errors['errors'][] = "L'insertion du contact a échoué.";
             }
         }
 
+        if (empty($errors)) {
+            if (!empty($modelSubstrate)) {
+                $substrate = $this->saveSubstrate($modelSubstrate, $inputs['workflow']['printing']['substrate']);
+                $inputs['workflow']['printing']['substrate']['type'] = "old";
+                $inputs['workflow']['printing']['substrate']['id'] = $substrate['id'];
+                if (!isset($substrate)) $errors['errors'][] = "L'insertion du support d'impression a échoué.";
+            }
+        }
+
+        if (empty($errors)) {
+            if (!empty($modelCutting)) {
+                $cutting = $this->saveCutting($modelCutting, $inputs['workflow']['finishing']['cutting']);
+                $inputs['workflow']['finishing']['cutting']['type'] = "old";
+                $inputs['workflow']['finishing']['cutting']['id'] = $cutting['id'];
+                if (!isset($cutting)) $errors['errors'][] = "L'insertion de l'outil de découpe a échoué.";
+            }
+        }
+
+        if (empty($errors)) {
+            if (!empty($modelLabel)) {
+                $label = $this->saveLabel($modelLabel, $inputs['workflow'], $substrate['id'], $cutting['id']);
+                $inputs['workflow']['description']['label']['type'] = "old";
+                $inputs['workflow']['description']['label']['id'] = $label['id'];
+                if (!isset($label)) $errors['errors'][] = "L'insertion de l'étiquette a échoué.";
+            }
+        }
+
+//        if (empty($errors)) {
+//            $finishingsLabel = array();
+//            foreach ($inputs['workflow']['finishing']['finishings'] as $key => $finishing) {
+//                if (empty($errors)) {
+//                    if ($finishing['id'] === "") {
+//                        $modelFinishingLabel = new FinishingLabel();
+//                    } else {
+//                        $modelFinishingLabel = FinishingLabel::findOrFail($finishing['id']);
+//                    }
+//
+//                    $finishingLabel = $this->saveFinishingLabel($modelFinishingLabel, $finishing, $label['id']);
+//                    if (!isset($finishingLabel)) $errors['errors'][] = "L'insertion de la finition " . $finishing['name'] . " a échoué.";
+//
+//                    if (empty($errors)) {
+//                        $inputs['workflow']['finishing']['finishings'][$key]['id'] = $finishingLabel['id'];
+//                        $finishingsLabel[] = $finishingLabel['id'];
+//
+//                        if ($finishing['presence_consumable']) {
+//                            if ($finishing['consumable']['id'] !== "") {
+//                                $modelConsumable = Consumable::findOrFail($finishing['consumable']['id']);
+//                            } else {
+//                                $modelConsumable = new Consumable();
+//                            }
+//                            if (!empty($modelConsumable)) {
+//                                $consumable = $this->saveConsumable($modelConsumable, $finishing['consumable'], $finishingLabel['id']);
+//                                if (!isset($consumable)) $errors['errors'][] = "L'insertion du consommable de " . $finishing['name'] . " a échoué.";
+//                                $finishing['consumable']['id'] = $consumable['id'];
+//                            }
+//                        } else {
+////                TODO : to test
+//                            if ($finishing['id'] !== "") {
+//                                Consumable::where('finishing_label', $finishingLabel['id'])->delete();
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
         if (empty($errors)) {
             $finishingsLabels = FinishingLabel::where('label_id', $label['id'])->pluck('id')->toArray();
 
-            $finishingsDeleted = array_diff($finishingsLabels, $finishingsLabel);
-            foreach ($finishingsDeleted as $finishingDeleted) {
-                Consumable::where('finishing_label', $finishingDeleted)->delete();
-                FinishingLabel::findOrFail($finishingDeleted)->delete();
-            }
+//            $finishingsDeleted = array_diff($finishingsLabels, $finishingsLabel);
+//            foreach ($finishingsDeleted as $finishingDeleted) {
+//                Consumable::where('finishing_label', $finishingDeleted)->delete();
+//                FinishingLabel::findOrFail($finishingDeleted)->delete();
+//            }
 
-            $quotation = $this->saveQuotation($modelQuotation, $inputs['workflow'], $inputs['price'], $third['id'], $contact['id'], $label['id']);
+            $quotation = $this->saveQuotation($modelQuotation, $inputs['workflow'], $inputs['price'], $third['id'], $contact['id'], $label['id'], $inputs['user']);
             if (!isset($quotation)) $errors['errors'][] = "L'insertion du devis a échoué.";
         }
 
@@ -361,6 +438,10 @@ class QuotationRepository
     public function getPrice($inputs) {
         $results = array();
         $errors = array();
+        $userDatas = array();
+        $userDatas['company'] = $inputs['company'];
+        $userDatas['establishment'] = $inputs['establishment'];
+
 
         $results['workflow'] = $inputs['workflow'];
 
@@ -396,18 +477,27 @@ class QuotationRepository
         */
         $pressID = $printing['press'];
         if (!empty($pressID)) {
-            $press = Printing::find($pressID);
+            $userDatas['class'] = $pressID;
+            $press = $this->repository->getPrintings($userDatas)[0];
         } else {
             $errors['errors'][] = "Vous devez choisir une machine d'impression";
         }
 
         if (empty($errors)) {
-            if (!empty($press->number_colors)) {
-                if ($printing['colors'] > $press->number_colors) { $errors['errors'][] = "La machine ne peut imprimer que $press->number_colors couleurs"; }
+            if (!empty($press['cadence'])) {
+                $pressCadence = $press['cadence'];
+            } else {
+                $errors['errors'][] = "Aucune cadence n'a été renseignée pour la machine d'impression";
             }
-            if (!empty($press->size_paperminx) && !empty($press->size_papermaxx)) {
-                if ($substrateWidth <= $press->size_paperminx) { $errors['errors'][] = "La laize du support d'impression est inférieure à la laize minimum de la machine"; }
-                if ($substrateWidth >= $press->size_papermaxx) { $errors['errors'][] = "La laize du support d'impression est supérieure à la laize maximum de la machine"; }
+        }
+
+        if (empty($errors)) {
+            if (!empty($press['number_units'])) {
+                if ($printing['colors'] > $press['number_units']) { $errors['errors'][] = "La machine ne peut imprimer que " . $press['number_units'] . " couleurs"; }
+            }
+            if (!empty($press['size_papermaxx'])) {
+//                if ($substrateWidth <= $press['cadence']->size_paperminx) { $errors['errors'][] = "La laize du support d'impression est inférieure à la laize minimum de la machine"; }
+                if ($substrateWidth >= $press['size_papermaxx']) { $errors['errors'][] = "La laize du support d'impression est supérieure à la laize maximum de la machine"; }
             } else {
                 $results['warnings'][] = "Veuillez vérifier que la laize du support d'impression correspond à celle de la machine";
             }
@@ -475,8 +565,8 @@ class QuotationRepository
             $numberPosesWidth = $labelSizeWidthWithBleed * $cuttingPoseWidth;
 //            $numberPosesLength = $labelSizeLengthWithBleed * $cuttingPoseLength;
 
-            if (!empty($press->printable_areax)) {
-                if ($numberPosesWidth > $press->printable_areax) {
+            if (!empty($press['printable_areax'])) {
+                if ($numberPosesWidth > $press['printable_areax']) {
                     $errors['errors'][] = "La laize de l'outil excède celle du support d'impression.";
                 }
             } else {
@@ -487,27 +577,6 @@ class QuotationRepository
         /*
          * Finishings
          */
-        if (empty($errors)) {
-            if (!empty($press->cadence)) {
-                $pressCadence = $press->cadence;
-            } else {
-                $errors['errors'][] = "Aucune cadence n'a été renseignée pour la machine d'impression";
-            }
-        }
-
-        if (empty($errors)) {
-            $slowerCadence = $pressCadence;
-            $finishings = $finishing['finishings'];
-            foreach ($finishings as $finishing) {
-                $finishingPress = Finishing::find($finishing['id']);
-//                    TODO : voir si gestion des finitions sur autre machine
-                    if ($finishingPress->cadence < $slowerCadence) {
-                        $slowerCadence = $finishingPress->cadence;
-                    }
-
-            }
-        }
-
         $quantities = $description['quantities'];
         if (empty($errors)) {
             $substratePriceLinearMeter = $substrateWidth / 1000 * $substratePrice;
@@ -534,52 +603,60 @@ class QuotationRepository
 
                     $prepressMinutes = intval($quantity['minute']);
                     $prepressHours = intval($quantity['hour']);
-
                     if ($prepressMinutes > 0 || $prepressHours > 0) {
-                        $prepressMinutesInHour = $prepressMinutes / 60;
-                        $totalTimePrepress = round($prepressHours + $prepressMinutesInHour, 4);
-                        $totalCostPrepress = $totalTimePrepress * 40; // update hourly rate
-                        $totalFixedCostPrepress = $totalCostPrepress;
-                        $totalVariableCostPrepress = 0;
+                        $company = Company::findOrFail(1);
 
-                        $marginPrepress = $margin;
+                        if ($company->prepress != null) {
+                            $userDatas['class'] = $company->prepress;
+                            $prepressWorkstation = $this->repository->getWorkstations($userDatas)[0];
 
-                        $results['quantities'][$copies]['datas']['prepress'] = $totalTimePrepress;
-                        $results['quantities'][$copies]['time'][] = "Prépresse : " . $totalTimePrepress . "h";
-                        $results['quantities'][$copies]['cost'][] = "Prépresse : " . $totalCostPrepress . "€";
+                            $prepressMinutesInHour = $prepressMinutes / 60;
+                            $totalTimePrepress = round($prepressHours + $prepressMinutesInHour, 4);
 
-                        $costWithMarginReturned = $this->handleMargin($marginPrepress, $totalCostPrepress, $totalFixedCostPrepress, $totalVariableCostPrepress);
-                        if (!empty($costWithMarginReturned)) {
-                            $lastElement = end($costWithMarginReturned);
-                            foreach ($costWithMarginReturned as $result) {
-                                if ($result === $lastElement) {
-                                    $totalCostsWithoutMargin += $totalCostPrepress;
-                                    $totalCostsWithMargin += $result[0];
-                                    $totalFixedCostsWithoutMargin += $totalFixedCostPrepress;
-                                    $totalVariableCostsWithoutMargin += $totalVariableCostPrepress;
-                                    $totalFixedCostsWithMargin += $result[1];
-                                    $totalVariableCostsWithMargin += $result[2];
-                                    $totalTimes += $totalTimePrepress;
+                            $totalCostPrepress = $totalTimePrepress * $prepressWorkstation['hourly_rate'];
+                            $totalFixedCostPrepress = $totalCostPrepress;
+                            $totalVariableCostPrepress = 0;
 
-                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = "Prépresse";
-                                    $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimePrepress;
-                                    $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostPrepress;
-                                    $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
-                                    $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
-                                    $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginPrepress;
-                                    $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
+                            $marginPrepress = $margin;
 
-                                    $operationId++;
+                            $results['quantities'][$copies]['datas']['prepress'] = $totalTimePrepress;
+                            $results['quantities'][$copies]['time'][] = "Prépresse : " . $totalTimePrepress . "h";
+                            $results['quantities'][$copies]['cost'][] = "Prépresse : " . $totalCostPrepress . "€";
+
+                            $costWithMarginReturned = $this->handleMargin($marginPrepress, $totalCostPrepress, $totalFixedCostPrepress, $totalVariableCostPrepress);
+                            if (!empty($costWithMarginReturned)) {
+                                $lastElement = end($costWithMarginReturned);
+                                foreach ($costWithMarginReturned as $result) {
+                                    if ($result === $lastElement) {
+                                        $totalCostsWithoutMargin += $totalCostPrepress;
+                                        $totalCostsWithMargin += $result[0];
+                                        $totalFixedCostsWithoutMargin += $totalFixedCostPrepress;
+                                        $totalVariableCostsWithoutMargin += $totalVariableCostPrepress;
+                                        $totalFixedCostsWithMargin += $result[1];
+                                        $totalVariableCostsWithMargin += $result[2];
+                                        $totalTimes += $totalTimePrepress;
+
+                                        $results['quantities'][$copies]['operations'][$operationId]['name'] = "Prépresse";
+                                        $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimePrepress;
+                                        $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostPrepress;
+                                        $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
+                                        $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
+                                        $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginPrepress;
+                                        $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
+
+                                        $operationId++;
+                                    }
                                 }
                             }
+                        } else {
+                            $errors['errors'][] = "Aucun poste de prépresse n'a été renseigné dans les paramètres entreprise.";
                         }
                     } else {
                         $results['quantities'][$copies]['datas']['prepress'] = 0;
                     }
 
-
                     // Clichés
-                    $totalCostPlates = $plates * $press->plate;
+                    $totalCostPlates = $plates * $press['plate'];
                     $results['quantities'][$copies]['cost'][] = "Clichés : " . $totalCostPlates . "€";
 
                     // Outil de découpe
@@ -592,16 +669,16 @@ class QuotationRepository
                     }
 
                     // Métrage de calage impression
-                    $meterMakereadyPrinting = $press->overlay_sheet + ($press->overlay_sheet_color * $plates);
+                    $meterMakereadyPrinting = $press['overlay_sheet'] * $plates;
                     $meterMakereadyPress = $meterMakereadyPrinting;
                     $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour l'impression : " . $meterMakereadyPrinting;
 
                     // Temps de calage impression
-                    $timeMakereadyPrinting = $press->makeready_times + ($press->makeready_times_color * $plates);
+                    $timeMakereadyPrinting = $press['makeready_plate'] * $plates;
                     $results['quantities'][$copies]['time'][] = "Calage de l'impression : " . $timeMakereadyPrinting . "h";
 
 
-                    if ($press->unit_cadence === "striking") {
+                    if ($press['unit_cadence'] === "striking") {
                         // Nombre de frappes de roulage
                         $strikingRun = $copies / ($cuttingPoseWidth * $cuttingPoseLength);
                         $results['quantities'][$copies]['wastage'][] = "Nombre de frappes : " . $strikingRun;
@@ -614,19 +691,19 @@ class QuotationRepository
 
 
                     // Temps de roulage
-                    if ($press->unit_cadence === "striking") {
-                        $timeProductionPress = $strikingRun / $slowerCadence;
+                    if ($press['unit_cadence'] === "striking") {
+                        $timeProductionPress = $strikingRun / $pressCadence;
                     } else {
-                        $timeProductionPress = $substrateLinear / $slowerCadence;
+                        $timeProductionPress = $substrateLinear / $pressCadence;
                     }
 
                     $results['quantities'][$copies]['time'][] = "Roulage : " . $timeProductionPress . "h";
 
                     $totalTimeProduction = round($timeMakereadyPrinting + $timeProductionPress, 4);
-                    $totalFixedCostProduction = $costCuttingShape + ($timeMakereadyPrinting * $press->hourly_rate) + $totalCostPlates;
-                    $totalVariableCostProduction = $timeProductionPress * $press->hourly_rate;
+                    $totalFixedCostProduction = $costCuttingShape + ($timeMakereadyPrinting * $press['hourly_rate']) + $totalCostPlates;
+                    $totalVariableCostProduction = $timeProductionPress * $press['hourly_rate'];
                     $totalCostProduction = $totalFixedCostProduction + $totalVariableCostProduction;
-                    $results['quantities'][$copies]['cost'][] = "Calage de la machine : " . $timeMakereadyPrinting * $press->hourly_rate . "€";
+                    $results['quantities'][$copies]['cost'][] = "Calage de la machine : " . $timeMakereadyPrinting * $press['hourly_rate'] . "€";
                     $results['quantities'][$copies]['cost'][] = "Roulage de la machine : " . $totalVariableCostProduction . "€";
 
                     $marginProduction = $margin;
@@ -658,28 +735,39 @@ class QuotationRepository
                     }
 
                     $marginFinishing = $margin;
+                    $finishings = $workflow['finishing']['finishings'];
                     foreach ($finishings as $finishing) {
 //                        TODO : reworking reprise sur machine
                         $finishingID = intval($finishing['id']);
-                        $finishingPress = Finishing::find($finishingID);
-                        $meterMakereadyFinishing = $finishingPress->overlay_sheet;
-                        $meterMakereadyPress += $meterMakereadyFinishing;
-                        $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour " . $finishingPress->name . " : " . $meterMakereadyFinishing;
 
-                        // Temps de calage finition
-                        $totalTimeFinishing = round($finishingPress->makeready_times, 4);
-                        $results['quantities'][$copies]['time'][] = "Calage pour " . $finishingPress->name . " : " . $totalTimeFinishing . "h";
-
-                        $finishingShape = intval($finishing['shape']);
-                        if ($finishingShape > 0) {
-                            $costFinishingShape = $finishingShape;
-                            $results['quantities'][$copies]['cost'][] = "Outil de $finishingPress->name : " . $costCuttingShape . "€";
+                        $reworking = $finishing['reworking'];
+                        if (!empty($reworking)) {
+                            $userDatas['class'] = $reworking;
+                            $finishingPress = $this->repository->getWorkstations($userDatas)[0];
                         } else {
-                            $costFinishingShape = 0;
+                            $finishingPress = $press;
                         }
 
-                        $totalFixedCostFinishing = $costFinishingShape + ($totalTimeFinishing * $press->hourly_rate);
-                        $results['quantities'][$copies]['cost'][] = "Calage pour " . $finishingPress->name . " : " . $totalFixedCostFinishing . "€";
+                        $meterMakereadyFinishing = $finishingPress['overlay_sheet'];
+                        $meterMakereadyPress += $meterMakereadyFinishing;
+                        $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour " . $finishingPress['name'] . " : " . $meterMakereadyFinishing;
+
+                        // Temps de calage finition
+                        $totalTimeFinishing = round($finishingPress['makeready_times'], 4);
+                        $results['quantities'][$copies]['time'][] = "Calage pour " . $finishingPress['name'] . " : " . $totalTimeFinishing . "h";
+
+                        $costFinishingShape = 0;
+                        if (!empty($finishing['die']['id'])) {
+                            $finishingShape = intval($finishing['die']['price']);
+                            if ($finishingShape > 0) {
+                                $costFinishingShape = $finishingShape;
+                                $results['quantities'][$copies]['cost'][] = "Outil de " . $finishingPress['name'] . " : " . $costFinishingShape . "€";
+                            }
+                        }
+
+
+                        $totalFixedCostFinishing = $costFinishingShape + ($totalTimeFinishing * $finishingPress['hourly_rate']);
+                        $results['quantities'][$copies]['cost'][] = "Calage pour " . $finishingPress['name'] . " : " . $totalFixedCostFinishing . "€";
 
                         $totalCostConsumable = 0;
                         if ($finishing['presence_consumable']) {
@@ -688,9 +776,9 @@ class QuotationRepository
                                 if (!empty($consumable['width']) && !empty($consumable['price'])) {
                                     $consumableWidth = intval($consumable['width']);
                                     $consumablePrice = floatval($consumable['price']);
-                                    if ($consumableWidth >= $press->size_paperminx && $consumableWidth <= $press->size_papermaxx) {
+                                    if ($consumableWidth <= $finishingPress['size_papermaxx']) {
                                         $totalCostConsumable = $substrateLinear * ($consumableWidth / 1000 * $consumablePrice);
-                                        $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishingPress->name . " : " . $totalCostConsumable . "€";
+                                        $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishingPress['name'] . " : " . $totalCostConsumable . "€";
                                     } else {
                                         $errors['errors'][] = "La laize du consommable n'est pas en corrélation avec celle de la machine";
                                     }
@@ -699,7 +787,7 @@ class QuotationRepository
                                     if (empty($consumable['price'])) { $errors['errors'][] = "Vous devez saisir le prix du consommable " . $consumable['name']; }
                                 }
                             } else {
-                                $errors['errors'][] = "Vous devez saisir les données relatives au consommable pour la finition " . $finishingPress->name;
+                                $errors['errors'][] = "Vous devez saisir les données relatives au consommable pour la finition " . $finishingPress['name'];
                             }
                         }
 
@@ -719,7 +807,7 @@ class QuotationRepository
                                     $totalVariableCostsWithMargin += $result[2];
                                     $totalTimes += $totalTimeFinishing;
 
-                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishingPress->name;
+                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishingPress['name'];
                                     $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeFinishing;
                                     $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostFinishing;
                                     $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
@@ -734,7 +822,9 @@ class QuotationRepository
                     }
 
 
-                    // Prix total papier
+                    /*
+                     * Paper - Substrate
+                     */
                     $totalFixedCostSubstrate = $meterMakereadyPress * $substratePriceLinearMeter;
                     $totalVariableCostSubstrate = $substrateLinear * $substratePriceLinearMeter;
                     $totalCostSubstrate = $totalFixedCostSubstrate + $totalVariableCostSubstrate;
@@ -774,50 +864,63 @@ class QuotationRepository
                     $conditioning = intval($packing['packing']);
 
                     if ($conditioning > 0) {
-                        $windingMachine = Packing::first();
-                        // Temps de calage bobineuse
-                        $timeMakereadyWinding = $windingMachine->makeready_times;
-                        $results['quantities'][$copies]['time'][] = "Calage de la bobineuse : " . $timeMakereadyWinding . "h";
+                        $company = Company::findOrFail(1);
 
-                        // Temps de production bobineuse
-                        $timeProductionWinding = $substrateLinear / $windingMachine->cadence / 60 + $copies / $conditioning * $windingMachine->duration;
-                        $results['quantities'][$copies]['time'][] = "Roulage de la bobineuse : " . $timeProductionWinding . "h";
+                        if ($company->winder != null) {
+                            $userDatas['class'] = $company->winder;
+                            $windingMachine = $this->repository->getWorkstations($userDatas)[0];
 
-                        $totalTimeWinding = round($timeMakereadyWinding + $timeProductionWinding, 4);
+                                if ($windingMachine['cadence'] > 0) {
 
-                        // Coût de production bobineuse
-                        $totalFixedCostWinding = $timeMakereadyWinding * $windingMachine->hourly_rate;
-                        $results['quantities'][$copies]['cost'][] = "Calage de la bobineuse : " . $totalFixedCostWinding . "€";
-                        $totalVariableCostWinding = $timeProductionWinding * $windingMachine->hourly_rate;
-                        $results['quantities'][$copies]['cost'][] = "Roulage de la bobineuse : " . $totalVariableCostWinding . "€";
-                        $totalCostWinding = $totalFixedCostWinding + $totalVariableCostWinding;
+                                // Temps de calage bobineuse
+                                $timeMakereadyWinding = $windingMachine['makeready_plate'];
+                                $results['quantities'][$copies]['time'][] = "Calage de la bobineuse : " . $timeMakereadyWinding . "h";
 
-                        $marginWinding = $margin;
+                                // Temps de production bobineuse
+                                $timeProductionWinding = $substrateLinear / $windingMachine['cadence'] / 60 + $copies / $conditioning * $windingMachine['makeready_times'];
+                                $results['quantities'][$copies]['time'][] = "Roulage de la bobineuse : " . $timeProductionWinding . "h";
 
-                        $costWithMarginReturned = $this->handleMargin($marginWinding, $totalCostWinding, $totalFixedCostWinding, $totalVariableCostWinding);
-                        if (!empty($costWithMarginReturned)) {
-                            $lastElement = end($costWithMarginReturned);
-                            foreach ($costWithMarginReturned as $result) {
-                                if ($result === $lastElement) {
-                                    $totalCostsWithoutMargin += $totalCostWinding;
-                                    $totalCostsWithMargin += $result[0];
-                                    $totalFixedCostsWithoutMargin += $totalFixedCostWinding;
-                                    $totalVariableCostsWithoutMargin += $totalVariableCostWinding;
-                                    $totalFixedCostsWithMargin += $result[1];
-                                    $totalVariableCostsWithMargin += $result[2];
-                                    $totalTimes += $totalTimeWinding;
+                                $totalTimeWinding = round($timeMakereadyWinding + $timeProductionWinding, 4);
 
-                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = "Conditionnement";
-                                    $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeWinding;
-                                    $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostWinding;
-                                    $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
-                                    $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
-                                    $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginWinding;
-                                    $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
+                                // Coût de production bobineuse
+                                $totalFixedCostWinding = $timeMakereadyWinding * $windingMachine['hourly_rate'];
+                                $results['quantities'][$copies]['cost'][] = "Calage de la bobineuse : " . $totalFixedCostWinding . "€";
+                                $totalVariableCostWinding = $timeProductionWinding * $windingMachine['hourly_rate'];
+                                $results['quantities'][$copies]['cost'][] = "Roulage de la bobineuse : " . $totalVariableCostWinding . "€";
+                                $totalCostWinding = $totalFixedCostWinding + $totalVariableCostWinding;
 
-                                    $operationId++;
+                                $marginWinding = $margin;
+
+                                $costWithMarginReturned = $this->handleMargin($marginWinding, $totalCostWinding, $totalFixedCostWinding, $totalVariableCostWinding);
+                                if (!empty($costWithMarginReturned)) {
+                                    $lastElement = end($costWithMarginReturned);
+                                    foreach ($costWithMarginReturned as $result) {
+                                        if ($result === $lastElement) {
+                                            $totalCostsWithoutMargin += $totalCostWinding;
+                                            $totalCostsWithMargin += $result[0];
+                                            $totalFixedCostsWithoutMargin += $totalFixedCostWinding;
+                                            $totalVariableCostsWithoutMargin += $totalVariableCostWinding;
+                                            $totalFixedCostsWithMargin += $result[1];
+                                            $totalVariableCostsWithMargin += $result[2];
+                                            $totalTimes += $totalTimeWinding;
+
+                                            $results['quantities'][$copies]['operations'][$operationId]['name'] = "Conditionnement";
+                                            $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeWinding;
+                                            $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostWinding;
+                                            $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
+                                            $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
+                                            $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginWinding;
+                                            $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
+
+                                            $operationId++;
+                                        }
+                                    }
                                 }
-                            }
+                            } else {
+                                    $errors['errors'][] = "La cadence de la bobineuse doit être supérieure à 0.";
+                                }
+                        } else {
+                            $errors['errors'][] = "Aucun poste de bobineuse n'a été renseigné dans les paramètres entreprise.";
                         }
                     }
 
@@ -864,8 +967,10 @@ class QuotationRepository
         return $resultToReturn;
     }
 
-    public function update($id, Array $inputs)
+    public function update($id, Array $datas)
     {
+        $inputs = $datas['quotation'];
+        $company = $datas['company'];
         $model = Quotation::findOrFail($id);
         $description = $inputs['quotation']['description'];
         $validityDate = date('Y-m-d', strtotime("+1 months"));
@@ -897,7 +1002,7 @@ class QuotationRepository
             ]);
         }
 
-        return $this->getById($id);
+        return $this->getById($id, $company);
     }
 
     public function destroy($id)
@@ -911,11 +1016,14 @@ class QuotationRepository
             $quantity->delete();
         }
         Quotation::findOrFail($id)->delete();
-        return $this->getPaginate();
+        return $this->getPaginate(1);
     }
 
-    public function sendEmail($id, Array $inputs)
+    public function sendEmail($id, Array $datas)
     {
+        $inputs = $datas['quotation'];
+        $company = $datas['company'];
+
         $modelQuotation = Quotation::find($id);
 
         $inputsQuotation = $inputs['quotation'];
@@ -942,7 +1050,7 @@ class QuotationRepository
             if ($validatorEmail->fails()) {
                 $validatorErrors[] = $validatorEmail->errors();
             }
-            return response()->json($validatorErrors, 500);;
+            return response()->json($validatorErrors, 500);
         } else {
             if ($modelQuotation->status_id === 1) {
                 $status = 2;
@@ -961,7 +1069,7 @@ class QuotationRepository
 
             $emailTo = $inputsQuotation['contact']['email'];
 
-            $quotation = $this->getById($id);
+            $quotation = $this->getById($id, $company);
 
             try {
                 Mail::to($emailTo)->send(new SendMailable($quotation));

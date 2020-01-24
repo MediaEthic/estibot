@@ -1,15 +1,30 @@
 <template>
     <div>
+        <Loader v-if="isLoading" />
         <div class="wrap-radio">
-            <div class="wrap-field">
-                <input type="radio" id="third_old" v-model="form.identification.third.type" value="old" @click="resetIdentification">
+            <ValidationProvider tag="div"
+                                class="wrap-field"
+                                rules="required|oneOf:old,new"
+                                name="third type"
+                                v-slot="{ errors }">
+                <input type="radio"
+                       id="third_old"
+                       :class="{ 'input-error': errors[0] }"
+                       v-model="form.identification.third.type"
+                       value="old"
+                       @click="resetIdentification">
                 <label for="third_old">
                     <i class="fas fa-user-secret"></i>
                     <span>Rechercher un client</span>
                 </label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
             <div class="wrap-field">
-                <input type="radio" id="third_new" v-model="form.identification.third.type" value="new" @click="resetIdentification">
+                <input type="radio"
+                       id="third_new"
+                       v-model="form.identification.third.type"
+                       value="new"
+                       @click="resetIdentification">
                 <label for="third_new">
                     <i class="fas fa-user-plus"></i>
                     <span>Créer un prospect</span>
@@ -17,20 +32,25 @@
             </div>
         </div>
 
-        <div class="wrap-field h-50">
+        <ValidationProvider tag="div"
+                            class="wrap-field h-50"
+                            rules="required"
+                            name="name"
+                            v-slot="{ errors }">
             <span v-if="form.identification.third.type === 'old'" class="btn-right-field" @click="show">
                 <i class="fas fa-search"></i>
             </span>
             <input v-model.trim="form.identification.third.name"
                    class="field"
-                   :class="{ hasValue: form.identification.third.name }"
+                   :class="{ hasValue: form.identification.third.name, 'input-error': errors[0] }"
                    type="text"
                    required>
             <span class="focus-field"></span>
             <label v-if="form.identification.third.type === 'old'" class="label-field">Nom du client</label>
             <label v-else class="label-field">Nom du prospect</label>
             <span class="symbol-left-field"><i class="fas fa-user-tie"></i></span>
-        </div>
+            <span class="v-validate">{{ errors[0] }}</span>
+        </ValidationProvider>
 
         <div class="wrap-group-field"
              :class="[{ hasValue: form.identification.third.addressLine1 },
@@ -39,70 +59,81 @@
                       { hasValue: form.identification.third.zipcode },
                       { hasValue: form.identification.third.city },
                       { hasFocus: form.identification.third.hasFocus }]">
-            <div class="wrap-field h-50">
-                <input v-if="form.identification.third.type === 'old'"
-                       v-model.trim="form.identification.third.addressLine2"
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                rules="required"
+                                name="address line 1"
+                                v-slot="{ errors }">
+                <input v-model.trim="form.identification.third.addressLine2"
                        @focus="form.identification.third.hasFocus = true"
                        @blur="form.identification.third.hasFocus = false"
                        class="field"
-                       :class="[{ hasValue: form.identification.third.addressLine2 }]"
+                       :class="[{ hasValue: form.identification.third.addressLine2, 'input-error': errors[0] }]"
                        type="text"
                        autocomplete="off"
                        required>
-
-                <input v-else
-                       v-model.trim="form.identification.third.addressLine2"
-                       @focus="form.identification.third.hasFocus = true"
-                       @blur="form.identification.third.hasFocus = false"
-                       class="field"
-                       :class="{ hasValue: form.identification.third.addressLine2 }"
-                       type="text"
-                       autocomplete="off">
-
                 <label class="label-field">Numéro + Libellé de la voie</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="address line 2"
+                                v-slot="{ errors }">
                 <input v-model.trim="form.identification.third.addressLine1"
                        @focus="form.identification.third.hasFocus = true"
                        @blur="form.identification.third.hasFocus = false"
                        class="field"
-                       :class="[{ hasValue: form.identification.third.addressLine1 }]"
+                       :class="[{ hasValue: form.identification.third.addressLine1, 'input-error': errors[0] }]"
                        type="text"
                        autocomplete="off">
                 <label class="label-field">Complément de localisation</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="address line 3"
+                                v-slot="{ errors }">
                 <input v-model.trim="form.identification.third.addressLine3"
                        @focus="form.identification.third.hasFocus = true"
                        @blur="form.identification.third.hasFocus = false"
                        class="field"
-                       :class="[{ hasValue: form.identification.third.addressLine3 }]"
+                       :class="[{ hasValue: form.identification.third.addressLine3, 'input-error': errors[0] }]"
                        type="text"
                        autocomplete="off">
                 <label class="label-field">BP - Lieu dit</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
             <div class="wrap-field-inline">
-                <div class="wrap-field h-50">
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    name="zipcode"
+                                    rules="required|digits:5"
+                                    v-slot="{ errors }">
                     <input v-model.trim="form.identification.third.zipcode"
                            @focus="form.identification.third.hasFocus = true"
                            @blur="form.identification.third.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: form.identification.third.zipcode }"
+                           :class="{ hasValue: form.identification.third.zipcode, 'input-error': errors[0] }"
                            type="text"
                            autocomplete="off"
                            required>
                     <label class="label-field">Code postal</label>
-                </div>
-                <div class="wrap-field h-50">
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    name="city"
+                                    v-slot="{ errors }">
                     <input v-model.trim="form.identification.third.city"
                            @focus="form.identification.third.hasFocus = true"
                            @blur="form.identification.third.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: form.identification.third.city }"
+                           :class="{ hasValue: form.identification.third.city, 'input-error': errors[0] }"
                            type="text"
                            autocomplete="off">
                     <label class="label-field">Ville</label>
-                </div>
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
             </div>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
@@ -114,7 +145,11 @@
                       { hasValue: form.identification.contact.email },
                       { hasFocus: form.identification.contact.hasFocus }]">
 
-            <div class="wrap-field h-50">
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="contact"
+                                rules="required|is_not:''"
+                                v-slot="{ errors }">
                 <span class="btn-right-field" v-if="contactsAreLoading">
                     <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                 </span>
@@ -123,7 +158,7 @@
                         @blur="form.identification.contact.hasFocus = false"
                         @animationstart="checkAnimation"
                         class="field select"
-                        :class="{ hasValue: form.identification.contact.id }"
+                        :class="{ hasValue: form.identification.contact.id, 'input-error': errors[0] }"
                         @change="setContact(contact)"
                         required>
                     <option disabled value="">Choisir</option>
@@ -133,19 +168,25 @@
                     </option>
                 </select>
                 <label class="label-field">Contact</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
 
-            <div class="wrap-field h-50">
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                rules="required"
+                                name="e-mail"
+                                v-slot="{ errors }">
                 <input v-model.trim="form.identification.contact.email"
                        @focus="form.identification.contact.hasFocus = true"
                        @blur="form.identification.contact.hasFocus = false"
                        class="field"
-                       :class="[{ hasValue: form.identification.contact.email }]"
+                       :class="[{ hasValue: form.identification.contact.email, 'input-error': errors[0] }]"
                        type="email"
                        autocomplete="off"
                        required>
                 <label class="label-field">E-mail</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-id-card-alt"></i></span>
         </div>
@@ -158,51 +199,70 @@
                       { hasValue: form.identification.contact.email },
                       { hasFocus: form.identification.contact.hasFocus }]">
             <div class="wrap-field-inline">
-                <div class="wrap-field h-50" style="width: 26rem;">
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    name="civility"
+                                    rules="is_not:''"
+                                    v-slot="{ errors }"
+                                    style="width: 26rem;">
                     <select v-model="form.identification.contact.civility"
                             @focus="form.identification.contact.hasFocus = true"
                             @blur="form.identification.contact.hasFocus = false"
                             @animationstart="checkAnimation"
                             class="field select"
-                            :class="{ hasValue: form.identification.contact.civility }">
+                            :class="{ hasValue: form.identification.contact.civility, 'input-error': errors[0] }">
                         <option disabled value="">Choisir</option>
                         <option value="Mr">M.</option>
                         <option value="Mrs">Mme</option>
                     </select>
                     <label class="label-field">Civilité</label>
-                </div>
-                <div class="wrap-field h-50">
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    name="last name"
+                                    v-slot="{ errors }">
                     <input v-model.trim="form.identification.contact.surname"
                            @focus="form.identification.contact.hasFocus = true"
                            @blur="form.identification.contact.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: form.identification.contact.surname }"
+                           :class="{ hasValue: form.identification.contact.surname, 'input-error': errors[0] }"
                            type="text"
                            autocomplete="off">
                     <label class="label-field">Nom de famille</label>
-                </div>
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
             </div>
-            <div class="wrap-field h-50">
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="first name"
+                                v-slot="{ errors }">
                 <input v-model.trim="form.identification.contact.name"
                        @focus="form.identification.contact.hasFocus = true"
                        @blur="form.identification.contact.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.identification.contact.name }"
+                       :class="{ hasValue: form.identification.contact.name, 'input-error': errors[0] }"
                        type="text"
                        autocomplete="off">
                 <label class="label-field">Prénom du contact</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                rules="required"
+                                name="e-mail"
+                                v-slot="{ errors }">
                 <input v-model.trim="form.identification.contact.email"
                        @focus="form.identification.contact.hasFocus = true"
                        @blur="form.identification.contact.hasFocus = false"
                        class="field"
-                       :class="[{ hasValue: form.identification.contact.email }]"
+                       :class="[{ hasValue: form.identification.contact.email, 'input-error': errors[0] }]"
                        type="email"
                        autocomplete="off"
                        required>
                 <label class="label-field">E-mail</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-id-card-alt"></i></span>
         </div>
@@ -215,20 +275,9 @@
                             aria-label="Fermer la fenêtre modale"
                             @click="hide">
                     </button>
-                    <Loader v-if="loading" />
                     <h3 class="page-main-title modal-header">Rechercher un client</h3>
 
                     <div class="modal-body">
-                        <div v-if="serverErrors" class="notification notification-secondary notification-wrapper" role="alert">
-                            <div class="notification-container">
-                                <div class="notification-body">
-                                    <p v-for="(value, key) in serverErrors" :key="key">
-                                        {{ value[0] }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
                         <form action="#" method="post" class="form-filters">
                             <div class="inline">
                                 <Autocomplete :items="autocomplete.customers"
@@ -239,12 +288,14 @@
                                               v-on:input="setCustomerName"
                                 />
 
-                                <ValidationProvider class="wrap-field h-50"
+                                <ValidationProvider tag="div"
+                                                    class="wrap-field h-50"
                                                     name="zipcode"
+                                                    rules="digits:2"
                                                     v-slot="{ errors }">
                                     <input v-model.trim="filters.zipcode"
                                            class="field"
-                                           :class="[{ hasValue: filters.zipcode }]"
+                                           :class="[{ hasValue: filters.zipcode, 'input-error': errors[0] }]"
                                            type="text"
                                            autocomplete="off">
                                     <span class="focus-field"></span>
@@ -320,7 +371,7 @@
     import Loader from '../Loader';
     import VueGoogleAutocomplete from 'vue-google-autocomplete'
     import Autocomplete from "./Autocomplete";
-    import Pagination from "./Pagination";
+    import Pagination from "../Pagination";
 
     export default {
         components: {
@@ -331,7 +382,7 @@
         },
         data() {
             return {
-                loading: false,
+                isLoading: false,
                 filters: {
                     ethic: "",
                     name: "",
@@ -344,7 +395,6 @@
                 customers: [],
                 pagination: {},
                 contactsAreLoading: false,
-                serverErrors: ""
             }
         },
         created() {
@@ -411,6 +461,10 @@
                         this.autocomplete.customers = response.data;
                     }).catch(error => {
                         this.autocomplete.customers = [];
+                        this.$toast.error({
+                            title: "Erreur",
+                            message: "Oups, un problème est survenu pour charger les donneurs d'ordre"
+                        });
                     });
                 }
             },
@@ -419,8 +473,7 @@
             },
             getCustomers(page) {
                 this.customers = [];
-                // this.serverErrors = "";
-                this.loading = true;
+                this.isLoading = true;
 
                 page = page || 1;
                 this.$store.dispatch("getCustomers", {
@@ -430,17 +483,13 @@
                     this.customers = response.data;
                     this.makePagination(response);
                 }).catch(error => {
-                    // TODO: handle server errors
+                    console.log(error.response);
                     this.customers = [];
-                    // this.serverErrors = [];
-                    // for (let i = 0; i < error.response.data.length; i++) {
-                    //     this.serverErrors.push(error.response.data[i]);
-                    // }
                     this.$toast.error({
                         title: "Erreur",
                         message: "Oups, un problème est survenu pour charger les donneurs d'ordre"
                     });
-                    this.loading = false;
+                    this.isLoading = false;
                 });
             },
             makePagination(meta) {
@@ -449,12 +498,14 @@
                     last_page: meta.last_page,
                     next_page: meta.next_page_url,
                     previous_page: meta.prev_page_url,
+                    total: meta.total,
                 };
 
                 this.pagination = pagination;
-                this.loading = false;
+                this.isLoading = false;
             },
             selectedCustomer(customer) {
+                this.isLoading = true;
                 this.contactsAreLoading = true;
                 this.form.identification.contact.id = "";
                 this.database.identification.contacts = [];
@@ -494,7 +545,7 @@
                 this.$store.dispatch("getThirdLabels", {
                     ethic: customer.ethic,
                     third: customer.id,
-                });
+                }).then(() => { this.isLoading = false; }).catch(() => { this.isLoading = false; });
             },
             resetIdentification() {
                 this.customers = [];
@@ -527,7 +578,8 @@
                 this.form.description.label.width = "";
                 this.form.description.label.length = "";
 
-                console.log("resetLabel");
+                console.log("resetLabel in Identification Component");
+                console.log("getFinishings");
                 this.$store.dispatch('getFinishings');
 
                 this.resetSubstrate();

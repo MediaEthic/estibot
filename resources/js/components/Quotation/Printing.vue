@@ -23,17 +23,22 @@
                 </select>
                 <label class="label-field">Machine d'impression</label>
             </div>
-            <div class="wrap-field h-50">
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                rules="numeric"
+                                name="colors"
+                                v-slot="{ errors }">
                 <input v-model="form.printing.colors"
                        @focus="form.printing.hasFocus = true"
                        @blur="form.printing.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.printing.colors }"
+                       :class="{ hasValue: form.printing.colors, 'input-error': errors[0] }"
                        type="number"
                        autocomplete="off"
                        required>
                 <label class="label-field">Nombre de couleurs</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
 
             <div class="wrap-field h-50 switcher">
                 <input type="radio"
@@ -75,7 +80,10 @@
                       { hasValue: form.printing.substrate.width },
                       { hasValue: form.printing.substrate.price },
                       { hasFocus: form.printing.substrate.hasFocus }]">
-            <div class="wrap-field h-50">
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="name"
+                                v-slot="{ errors }">
                 <button type="button"
                         v-if="form.printing.substrate.type === 'old'"
                         class="btn-right-field"
@@ -86,45 +94,61 @@
                        @focus="form.printing.substrate.hasFocus = true"
                        @blur="form.printing.substrate.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.printing.substrate.name }"
+                       :class="{ hasValue: form.printing.substrate.name, 'input-error': errors[0] }"
                        type="text"
                        autocomplete="off">
                 <label class="label-field">Désignation du support</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="width"
+                                rules="required|numeric"
+                                v-slot="{ errors }">
                 <input v-model="form.printing.substrate.width"
                        @focus="form.printing.substrate.hasFocus = true"
                        @blur="form.printing.substrate.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.printing.substrate.width }"
+                       :class="{ hasValue: form.printing.substrate.width, 'input-error': errors[0] }"
                        type="number"
                        autocomplete="off"
                        required>
                 <label class="label-field">Laize (mm)</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="weight"
+                                rules="required"
+                                v-slot="{ errors }">
                 <input v-model="form.printing.substrate.weight"
                        @focus="form.printing.substrate.hasFocus = true"
                        @blur="form.printing.substrate.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.printing.substrate.weight }"
+                       :class="{ hasValue: form.printing.substrate.weight, 'input-error': errors[0] }"
                        type="number"
                        autocomplete="off"
                        required>
                 <label class="label-field">Grammage (g/m&#xB2;)</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="price"
+                                rules="required"
+                                v-slot="{ errors }">
                 <input v-model="form.printing.substrate.price"
                        @focus="form.printing.substrate.hasFocus = true"
                        @blur="form.printing.substrate.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.printing.substrate.price }"
+                       :class="{ hasValue: form.printing.substrate.price, 'input-error': errors[0] }"
                        type="number"
                        step="0.0001"
                        autocomplete="off"
                        required>
                 <label class="label-field">Prix (€/m&#xB2;)</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-scroll"></i></span>
         </div>
@@ -152,7 +176,8 @@
 <!--                    </div>-->
                     <form action="#" method="post" class="form-filters">
                         <div class="inline">
-                            <ValidationProvider class="wrap-field h-50"
+                            <ValidationProvider tag="div"
+                                                class="wrap-field h-50"
                                                 name="family"
                                                 v-slot="{ errors }">
                                 <span class="btn-right-field" v-if="database.printing.substrates.search.criteria.isLoading">
@@ -161,7 +186,7 @@
                                 <select v-model="searchSubstrates.criteria.family"
                                         @animationstart="checkAnimation"
                                         class="field select"
-                                        :class="{ hasValue: searchSubstrates.criteria.family }">
+                                        :class="{ hasValue: searchSubstrates.criteria.family, 'input-error': errors[0] }">
                                     <option value="">Choisir</option>
                                     <option v-for="(family, index) in database.printing.substrates.search.criteria.families"
                                             v-bind:value="family.family">
@@ -174,7 +199,8 @@
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
-                            <ValidationProvider class="wrap-field h-50"
+                            <ValidationProvider tag="div"
+                                                class="wrap-field h-50"
                                                 name="type"
                                                 v-slot="{ errors }">
                                 <span class="btn-right-field" v-if="database.printing.substrates.search.criteria.isLoading">
@@ -183,7 +209,7 @@
                                 <select v-model="searchSubstrates.criteria.type"
                                         @animationstart="checkAnimation"
                                         class="field select"
-                                        :class="{ hasValue: searchSubstrates.criteria.type }">
+                                        :class="{ hasValue: searchSubstrates.criteria.type, 'input-error': errors[0] }">
                                     <option value="">Choisir</option>
                                     <option v-for="(type, index) in database.printing.substrates.search.criteria.types"
                                             v-bind:value="type.type">
@@ -196,7 +222,8 @@
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
-                            <ValidationProvider class="wrap-field h-50"
+                            <ValidationProvider tag="div"
+                                                class="wrap-field h-50"
                                                 name="color"
                                                 v-slot="{ errors }">
                                 <span class="btn-right-field" v-if="database.printing.substrates.search.criteria.isLoading">
@@ -205,7 +232,7 @@
                                 <select v-model="searchSubstrates.criteria.color"
                                         @animationstart="checkAnimation"
                                         class="field select"
-                                        :class="{ hasValue: searchSubstrates.criteria.color }">
+                                        :class="{ hasValue: searchSubstrates.criteria.color, 'input-error': errors[0] }">
                                     <option value="">Choisir</option>
                                     <option v-for="(color, index) in database.printing.substrates.search.criteria.colors"
                                             v-bind:value="color.color">
@@ -220,7 +247,8 @@
                         </div>
 
                         <div class="inline">
-                            <ValidationProvider class="wrap-field h-50"
+                            <ValidationProvider tag="div"
+                                                class="wrap-field h-50"
                                                 name="weight"
                                                 v-slot="{ errors }">
                                 <span class="btn-right-field" v-if="database.printing.substrates.search.criteria.isLoading">
@@ -230,7 +258,7 @@
                                         @animationstart="checkAnimation"
                                         @keydown.shift.tab.prevent=""
                                         class="field select"
-                                        :class="{ hasValue: searchSubstrates.criteria.weight }">
+                                        :class="{ hasValue: searchSubstrates.criteria.weight, 'input-error': errors[0] }">
                                     <option value="">Choisir</option>
                                     <option v-for="(weight, index) in database.printing.substrates.search.criteria.weights"
                                             v-bind:value="weight.weight">
@@ -328,7 +356,7 @@
 
 <script>
     import Autocomplete from "./Autocomplete";
-    import Pagination from "./Pagination";
+    import Pagination from "../Pagination";
     import Loader from '../Loader';
 
     export default {
@@ -435,6 +463,7 @@
                     last_page: meta.last_page,
                     next_page: meta.next_page_url,
                     previous_page: meta.prev_page_url,
+                    total: meta.total,
                 };
 
                 this.searchSubstrates.pagination = pagination;

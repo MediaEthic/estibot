@@ -40,9 +40,9 @@ class QuotationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($page)
     {
-        return $this->repository->getPaginate();
+        return $this->repository->getPaginate($page);
     }
 
 
@@ -75,9 +75,9 @@ class QuotationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $company)
     {
-        return $this->repository->getById($id);
+        return $this->repository->getById($id, $company);
     }
 
 
@@ -106,9 +106,9 @@ class QuotationController extends Controller
     }
 
 
-    public function generatePDF($id)
+    public function generatePDF($id, $company)
     {
-        $quotation = $this->repository->getById($id);
+        $quotation = $this->repository->getById($id, $company);
 
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);

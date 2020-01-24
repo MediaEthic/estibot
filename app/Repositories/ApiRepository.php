@@ -15,12 +15,6 @@ class ApiRepository
         $this->client = $client;
     }
 
-    public function getWebServiceDatas(Array $datas)
-    {
-        return $this->allCustomers($datas['company']);
-
-}
-
     public function getCustomers(Array $datas)
     {
         $filters = $datas['filters'];
@@ -114,19 +108,8 @@ class ApiRepository
 
     public function getPrintings(Array $datas)
     {
-        try {
-            $response = $this->client->request('GET', 'http://89.92.37.229/API/POSTEPRODUCTION/001/null/null');
-            $collection = collect(json_decode($response->getBody()))->map(function($item) {
-                $printing = collect();
-                $printing->offsetSet('id', $item->CODEPOSTE);
-                $printing->offsetSet('name', $item->LIBELLE);
-                $printing->offsetSet('type', $item->TYPEDEPOSTE);
-                return $printing;
-            });
-            return collect($collection->where('type', 3));
-        } catch (\GuzzleHttp\Exception\ClientException $exception) {
-            return [];
-        }
+        $printings = collect($this->getWorkstations($datas));
+        return $printings->where('type', 3)->all();
     }
 
     public function getSubstratesSearchCriteria(Array $datas)
@@ -236,7 +219,12 @@ class ApiRepository
         if ($datas['ethic']) {
             $finishings = $this->getLabelDies($datas);
         } else {
-            if (!empty($datas['label'])) $finishings = FinishingLabel::where('label_id', $datas['label'])->all();
+            if (!empty($datas['label'])) {
+                // TODO: to test
+                $finishings = array();
+                $finishings['form'][] = FinishingLabel::where('label_id', $datas['label'])->all();
+                $finishings['database']['cuttings'] = Label::where('id', $datas['label'])->cutting;
+            }
             if (empty($finishings)) {
                 $finishings = $this->getAllFinishings($datas);
             }
@@ -247,7 +235,7 @@ class ApiRepository
 
     public function getReworkings(Array $datas)
     {
-        $workstations = $this->getWorkstations($datas);
+        $workstations = collect($this->getWorkstations($datas));
         return $workstations->where('reworking', 1)->all();
     }
 
@@ -287,7 +275,7 @@ class ApiRepository
         return $result;
     }
 
-    private function allCustomers($company)
+    public function allCustomers($company)
     {
         try {
             $response = $this->client->request('GET', 'http://89.92.37.229/API/CLIENT/' . $company);
@@ -311,7 +299,7 @@ class ApiRepository
         }
     }
 
-    private function findByIdThirdContact($company, $third)
+    public function findByIdThirdContact($company, $third)
     {
         try {
             $response = $this->client->request('GET', 'http://89.92.37.229/API/CONTACT/'.$company.'/'.$third);
@@ -334,7 +322,7 @@ class ApiRepository
         }
     }
 
-    private function findByIdThirdLabel($company, $third)
+    public function findByIdThirdLabel($company, $third)
     {
         try {
             $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTE/'.$company.'/'.$third);
@@ -352,14 +340,19 @@ class ApiRepository
                 return $label;
             });
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
-        return [];
-    }
+            return [];
+        }
     }
 
-    private function getWorkstations(Array $datas)
+    public function getWorkstations(Array $datas)
     {
+        $listClass = $datas['class'];
+        if ($datas['class'] !== 'null') {
+            $listClass = explode(",", $datas['class']);
+            $listClass = "'" . implode("','", $listClass) . "'";
+        }
         try {
-            $response = $this->client->request('GET', 'http://89.92.37.229/API/POSTEPRODUCTION/001/null/null');
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/POSTEPRODUCTION/' . $datas['company'] . '/' . $listClass);
             return collect(json_decode($response->getBody()))->map(function($item) {
                 $workstation = collect();
                 $workstation->offsetSet('id', $item->CODEPOSTE);
@@ -369,16 +362,21 @@ class ApiRepository
                 $workstation->offsetSet('printable_areax', $item->LAIZEIMPRESSION);
                 $workstation->offsetSet('reworking', $item->CELLULEDEREPRISE);
                 $workstation->offsetSet('cadence', $item->CADENCE);
-                $workstation->offsetSet('unit_cadence', $item->CADENCELIBELLEUNITE);
+                if ($item->CADENCELIBELLEUNITE === "frappes") {
+                    $unitCadence = "striking";
+                } else {
+                    $unitCadence = "meter";
+                }
+                $workstation->offsetSet('unit_cadence', $unitCadence);
                 $workstation->offsetSet('time_cadence', $item->CADENCELIBELLETEMPS);
                 $workstation->offsetSet('number_units', $item->NBGROUPES);
                 $workstation->offsetSet('type', $item->TYPEDEPOSTE);
                 $workstation->offsetSet('overlay_sheet', $item->PASSAGECALAGE1);
-                $workstation->offsetSet('wastage', "");
                 $workstation->offsetSet('plate', $item->PRIXPLAQUEOUCLICHE);
                 $workstation->offsetSet('makeready_times', $item->TEMPSREGLAGEBOBINE);
                 $workstation->offsetSet('makeready_plate', $item->TEMPSCALAGEPLAQUEOUCLICHE);
                 $workstation->offsetSet('washing_times', $item->TEMPSLAVAGEPARGROUPE);
+                $workstation->offsetSet('hourly_rate', $item->TAUX2);
                 return $workstation;
             });
 
@@ -505,36 +503,43 @@ class ApiRepository
     {
         try {
             $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTEOUTIL/' . $datas['company'] . '/' . $datas['label'] . '/' . $datas['variant']);
-            $collection = collect(json_decode($response->getBody()))->map(function($item) {
+            $finishings = collect(json_decode($response->getBody()))->map(function($item) {
                 $finishing = collect();
                 $finishing->offsetSet('id', $item->CODEOPEFAB);
                 $finishing->offsetSet('name', $item->LIBELLE_OPEFAB);
                 $finishing->offsetSet('reference', $item->IDREFSTOCK);
                 $finishing->offsetSet('list_consumable', $item->LISTECODECLASSECONSO);
                 $finishing->offsetSet('list_cutting', $item->LISTECODECLASSEOUTIL);
-                $finishing->offsetSet('cutting', 0);
                 $finishing->offsetSet('class', $item->CLASSE_BASE);
                 return $finishing;
             });
 
-            $finishings = collect($collection->where('cutting', '0')->all());
+
             $labelFinishings = array();
             foreach ($finishings as $finishing) {
                 $labelFinishing = collect();
                 $labelFinishing->offsetSet('id', $finishing['id']);
                 $labelFinishing->offsetSet('name', $finishing['name']);
+
                 if ($finishing['class'] === "Outil") {
-                    $labelFinishingDie = collect($this->getFinishingDieLabel($datas['company'], $finishing['reference']));
-                    $labelFinishing->offsetSet('die', $labelFinishingDie[0]);
+                    $labelFinishingDie = collect($this->getFinishingDieLabel($datas['company'], $finishing['reference'])[0]);
+                    if (!$labelFinishingDie['cutting']) {
+                        $labelFinishing->offsetSet('die', $labelFinishingDie);
+                    }
                     $labelFinishing->offsetSet('presence_consumable', false);
                 } else if ($finishing['class'] === "Consommable") {
                     $labelFinishing->offsetSet('presence_consumable', true);
-                    $labelFinishingConsumable = $this->getFinishingConsumableLabel($datas['company'], $finishing['reference']);
-                    $labelFinishing->offsetSet('consumable', $labelFinishingConsumable[0]);
+                    $labelFinishingConsumable = $this->getFinishingConsumableLabel($datas['company'], $finishing['reference'])[0];
+                    $labelFinishing->offsetSet('consumable', $labelFinishingConsumable);
                 }
-                $labelFinishing->offsetSet('reworking', '');
+
+                $labelFinishing->offsetSet('reworking', ''); // for workflow form
                 $labelFinishing->offsetSet('hasFocus', false);
-                $labelFinishings['form'][] = $labelFinishing;
+                if (!$labelFinishingDie['cutting']) {
+                    $labelFinishings['form'][] = $labelFinishing;
+                } else {
+                    $labelFinishings['database']['cuttings'][] = $labelFinishingDie;
+                }
             }
             return $labelFinishings;
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
@@ -549,11 +554,13 @@ class ApiRepository
             return collect(json_decode($response->getBody()))->map(function($item) {
                 $finishingDie = collect();
                 $finishingDie->offsetSet('id', $item->IDREFSTOCK);
+                $finishingDie->offsetSet('ethic', true);
 //                $finishingDie->offsetSet('stock', $item->REFSTOCK);
                 $finishingDie->offsetSet('name', $item->LIBELLE);
                 $finishingDie->offsetSet('width', $item->LAIZEDIMENSION);
                 $finishingDie->offsetSet('length', $item->AVANCEDIMENSION);
-//                $finishingDie->offsetSet('list_workstation', $item->LISTEDESPOSTES);
+                $finishingDie->offsetSet('list_workstation', $item->LISTEDESPOSTES);
+                $finishingDie->offsetSet('cutting', $item->OUTILDEDECOUPE);
                 $finishingDie->offsetSet('price', 0);
                 return $finishingDie;
             });
@@ -607,7 +614,7 @@ class ApiRepository
                     $listDies = explode(",", $finishing['list_die']);
                     $listDies = "'" . implode("','", $listDies) . "'";
                     $labelFinishingDie = collect($this->getFinishingDies($datas, $listDies));
-                    $labelFinishing->offsetSet('die', $labelFinishingDie);
+                    if (!empty($labelFinishingDie['dies'])) $labelFinishing->offsetSet('die', $labelFinishingDie['dies']);
                 } else {
                     $labelFinishing->offsetSet('presence_die', false);
                 }
@@ -621,7 +628,11 @@ class ApiRepository
                     $labelFinishing->offsetSet('presence_consumable', false);
                 }
 
-                $labelFinishings['database'][] = $labelFinishing;
+                if (!empty($labelFinishingDie['cuttings'])) {
+                    $labelFinishings['database']['cuttings'] = $labelFinishingDie['cuttings'];
+                } else {
+                    $labelFinishings['database']['finishings'][] = $labelFinishing;
+                }
             }
 
             return $labelFinishings;
@@ -655,7 +666,7 @@ class ApiRepository
                     $listDies = explode(",", $finishing['list_die']);
                     $listDies = "'" . implode("','", $listDies) . "'";
                     $labelFinishingDie = collect($this->getFinishingDies($datas, $listDies));
-                    $labelFinishing->offsetSet('die', $labelFinishingDie);
+                    if (!empty($labelFinishingDie['dies'])) $labelFinishing->offsetSet('die', $labelFinishingDie['dies']);
                 } else {
                     $labelFinishing->offsetSet('presence_die', false);
                 }
@@ -669,7 +680,11 @@ class ApiRepository
                     $labelFinishing->offsetSet('presence_consumable', false);
                 }
 
-                $labelFinishings['database'][] = $labelFinishing;
+                if (!empty($labelFinishingDie['cuttings'])) {
+                    $labelFinishings['database']['cuttings'] = $labelFinishingDie['cuttings'];
+                } else {
+                    $labelFinishings['database']['finishings'][] = $labelFinishing;
+                }
             }
             return $labelFinishings;
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
@@ -683,20 +698,30 @@ class ApiRepository
     {
         try {
             $response = $this->client->request('GET', 'http://89.92.37.229/API/OUTILDECOUPE/' . $datas['company'] . '/' . $datas['establishment'] . '/' . $list);
-            return collect(json_decode($response->getBody()))->map(function($item) {
+            $dies = collect(json_decode($response->getBody()))->map(function($item) {
                 $finishingDie = collect();
                 $finishingDie->offsetSet('id', $item->IDREFSTOCK);
+                $finishingDie->offsetSet('ethic', true);
                 $finishingDie->offsetSet('stock', $item->REFSTOCK);
                 $finishingDie->offsetSet('name', $item->LIBELLE);
                 $finishingDie->offsetSet('width', $item->LAIZEDIMENSION);
                 $finishingDie->offsetSet('length', $item->AVANCEDIMENSION);
                 $finishingDie->offsetSet('list_workstation', $item->LISTEDESPOSTES);
+                $finishingDie->offsetSet('cutting', $item->OUTILDEDECOUPE);
                 return $finishingDie;
             });
+
+            $finishing = array();
+            foreach ($dies as $die) {
+                if ($die['cutting'] === 1) {
+                    $finishing['cuttings'][] = $die;
+                } else {
+                    $finishing['dies'][] = $die;
+                }
+            }
+            return $finishing;
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
-//            $response = $exception->getResponse();
-//            $responseBodyAsString = $response->getBody()->getContents();
-//            return $responseBodyAsString;
+            return [];
         }
     }
 
@@ -709,6 +734,7 @@ class ApiRepository
                 $finishingConsumable->offsetSet('id', $item->IDREFSTOCK);
                 $finishingConsumable->offsetSet('name', $item->LIBELLE);
                 $finishingConsumable->offsetSet('price', $item->PRXDEVIS);
+                $finishingConsumable->offsetSet('ethic', true);
                 return $finishingConsumable;
             });
         } catch (\GuzzleHttp\Exception\ClientException $exception) {

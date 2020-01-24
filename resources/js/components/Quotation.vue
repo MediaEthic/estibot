@@ -24,8 +24,8 @@
                 </header>
             </div>
 
-            <div class="wrap-central">
-                <form class="wrap-main-form left-part">
+            <ValidationObserver tag="div" class="wrap-central" v-slot="{ invalid, passes }">
+                <form class="wrap-main-form left-part" @submit.prevent="passes(next)">
                     <fieldset class="wrap-step">
                         <div class="wrap-progress-form">
                             <img class="image-step"
@@ -53,10 +53,9 @@
                             <i class="fas fa-chevron-left"></i>
                             Précédent
                         </button>
-                        <button type="button"
+                        <button type="submit" :disabled="invalid"
                                 class="button button-small button-primary next-step"
-                                v-if="step < 6"
-                                @click="next">
+                                v-if="step < 6">
                             Suivant
                             <i class="fas fa-chevron-right"></i>
                         </button>
@@ -100,7 +99,7 @@
                         </div>
                     </div>
                 </aside>
-            </div>
+            </ValidationObserver>
 
             <Notification v-show="isModalVisible"
                           @close="closeNotification">
@@ -188,6 +187,10 @@
                 }).then(() => {
                     console.log(this.form);
                     this.summary = this.form.summary;
+                    this.$store.dispatch("getThirdLabels", {
+                        ethic: this.form.identification.third.ethic,
+                        third: this.form.identification.third.id,
+                    });
                 });
             }
 

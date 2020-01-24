@@ -9,7 +9,7 @@
             </div>
 
             <div v-if="!loading">
-                <section v-if="quotations.data && quotations.data.length > 0" class="wrap-list-quotations">
+                <section v-if="quotations.data" class="wrap-list-quotations">
                     <router-link v-if="!isMobile"
                                  class="create-new-quotation"
                                  tag="div"
@@ -53,26 +53,8 @@
                         </router-link>
                     </router-link>
 
-                    <nav v-if="pagination.last_page > 1"
-                         class="wrap-pagination">
-                        <ul class="list-paginate">
-                            <li class="paginate controls-paginate"
-                                :class="[{ disabled: !pagination.previous_page }]">
-                                <button type="button" class="link-paginate" @click="fetchQuotations(pagination.previous_page)">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                            </li>
-                            <li class="paginate">
-                                Page {{ pagination.current_page }} sur {{ pagination.last_page }}
-                            </li>
-                            <li class="paginate controls-paginate"
-                                :class="[{ disabled: !pagination.next_page }]">
-                                <button type="button" class="link-paginate" @click="fetchQuotations(pagination.next_page)">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </li>
-                        </ul>
-                    </nav>
+                    <Pagination :pagination="pagination" v-on:pagechanged="fetchQuotations"></Pagination>
+
                     <aside v-if="windowWidth < 576" class="wrap-filters">
                         <input id="filters-toggler" class="filters-toggler" v-model="filtersChecked" type="checkbox">
                         <label for="filters-toggler" :class="this.filtersChecked ? 'fas fa-times' : 'fas fa-sliders-h'"></label>
@@ -105,7 +87,7 @@
                              src="/assets/img/undraw_welcome_3gvl.svg"
                              alt="Illustration montrant qu'il n'existe encore aucun devis"/>
 
-                        <h2 class="page-subtitle">Bonjour, <br>bienvenue sur Estibot</h2>
+                        <h2 class="page-subtitle">Bonjour {{ user.name }} {{ user.surname }}, <br>bienvenue sur Estibot</h2>
                         <p class="baseline-main-title">Commencez par créer un nouveau devis.</p>
                     </div>
 
@@ -161,6 +143,7 @@
 
 <script>
     import Loader from './Loader';
+    import Pagination from "./Pagination";
     import moment from 'moment';
 
     export default {
@@ -168,9 +151,15 @@
             dataSuccessMessage: {
                 type: String,
             },
+            user: {
+                type: Object,
+                required: false,
+                default: () => {}
+            },
         },
         components: {
-            Loader
+            Loader,
+            Pagination
         },
         data() {
             return {
@@ -202,11 +191,7 @@
                 });
             }
 
-            this.$store.dispatch('getQuotations', {
-                url: '/api/auth/quotations'
-            }).then(res => {
-                this.makePagination(this.quotations);
-            });
+            this.fetchQuotations();
         },
         methods: {
             getCustomers() {
@@ -224,25 +209,35 @@
                 }
             },
             makePagination(meta) {
+                console.log("makePagination");
                 let pagination = {
                     current_page: meta.current_page,
                     last_page: meta.last_page,
                     next_page: meta.next_page_url,
                     previous_page: meta.prev_page_url,
+                    total: meta.total,
                 };
+
+                console.log(pagination);
 
                 this.pagination = pagination;
                 this.loading = false;
             },
-            fetchQuotations(page_url) {
+            fetchQuotations(page) {
                 this.loading = true;
-                page_url = page_url || "/api/auth/quotations";
+                page = page || 1;
+                console.log("fetchQuotations");
+                console.log(page);
                 this.$store.dispatch("getQuotations", {
-                    url: page_url
+                    page: parseInt(page)
                 }).then(res => {
+                    console.log("fetchQuotations");
                     this.quotations = this.$store.state.quotations;
+                    console.log(this.quotations);
                     this.makePagination(this.$store.state.quotations);
-                }).catch(error => console.log(error.response));
+                }).catch(() => {
+                    this.loading = false;
+                });
             },
             randomBgImage() {
                 let random_images_array = ["undraw_Credit_card_3ed6.svg", "undraw_make_it_rain_iwk4.svg", "undraw_printing_invoices_5r4r.svg", "undraw_Savings_dwkw.svg"];

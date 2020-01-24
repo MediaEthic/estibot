@@ -5,8 +5,9 @@ import router from './router';
 import store from './store';
 import VModal from 'vue-js-modal'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
-import { required, email } from 'vee-validate/dist/rules';
+import * as rules from 'vee-validate/dist/rules';
 import { localize } from 'vee-validate';
+import { messages } from 'vee-validate/dist/locale/fr.json';
 import en from 'vee-validate/dist/locale/en.json';
 import fr from 'vee-validate/dist/locale/fr.json';
 import CxltToastr from 'cxlt-vue2-toastr';
@@ -19,11 +20,14 @@ Vue.use(VModal);
 
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
-extend('required', {
-    ...required,
-    message: 'The {_field_} field is required'
+
+Object.keys(rules).forEach(rule => {
+    extend(rule, {
+        ...rules[rule], // copies rule configuration
+        message: messages[rule] // assign message
+    });
 });
-extend('email', email);
+
 // Install English and French locales.
 localize('fr', fr);
 

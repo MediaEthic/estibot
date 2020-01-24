@@ -22,7 +22,10 @@
                       { hasValue: form.description.label.width },
                       { hasValue: form.description.label.length },
                       { hasFocus: form.description.label.hasFocus }]">
-            <div class="wrap-field h-50">
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                name="name"
+                                v-slot="{ errors }">
                 <span v-if="form.description.label.type === 'old'" class="btn-right-field" @click="show">
                     <i class="fas fa-search"></i>
                 </span>
@@ -30,34 +33,45 @@
                        @focus="form.description.label.hasFocus = true"
                        @blur="form.description.label.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: form.description.label.name }"
+                       :class="{ hasValue: form.description.label.name, 'input-error': errors[0] }"
                        type="text"
                        autocomplete="off">
                 <label class="label-field">Désignation de l'étiquette</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
             <div class="wrap-field-inline">
-                <div class="wrap-field h-50">
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    rules="required|numeric"
+                                    name="width"
+                                    v-slot="{ errors }">
                     <input v-model="form.description.label.width"
                            @focus="form.description.label.hasFocus = true"
                            @blur="form.description.label.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: form.description.label.width }"
+                           :class="{ hasValue: form.description.label.width, 'input-error': errors[0] }"
                            type="number"
                            autocomplete="off"
                            required>
                     <label class="label-field">Laize (mm)</label>
-                </div>
-                <div class="wrap-field h-50">
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    rules="required|numeric"
+                                    name="length"
+                                    v-slot="{ errors }">
                     <input v-model="form.description.label.length"
                            @focus="form.description.label.hasFocus = true"
                            @blur="form.description.label.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: form.description.label.length }"
+                           :class="{ hasValue: form.description.label.length, 'input-error': errors[0] }"
                            type="number"
                            autocomplete="off"
                            required>
                     <label class="label-field">Avance (mm)</label>
-                </div>
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
             </div>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-image"></i></span>
@@ -74,63 +88,86 @@
                 <span class="btn-right-field" @click="deleteQuantity(index)">
                     <i class="fas fa-times"></i>
                 </span>
-            <div class="wrap-field h-50">
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                rules="required|numeric"
+                                name="quantity"
+                                v-slot="{ errors }">
                 <input v-model="item.quantity"
                        @focus="item.hasFocus = true"
                        @blur="item.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: item.quantity }"
+                       :class="{ hasValue: item.quantity, 'input-error': errors[0] }"
                        type="number"
                        autocomplete="off"
                        required>
                 <label class="label-field">Nombre d'exemplaires</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                rules="required|numeric"
+                                name="model"
+                                v-slot="{ errors }">
                 <input v-model="item.model"
                        @focus="item.hasFocus = true"
                        @blur="item.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: item.model }"
+                       :class="{ hasValue: item.model, 'input-error': errors[0] }"
                        type="number"
                        autocomplete="off"
                        required>
                 <label class="label-field">Nombre de modèles</label>
-            </div>
-            <div class="wrap-field h-50">
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <ValidationProvider tag="div"
+                                class="wrap-field h-50"
+                                rules="required|numeric"
+                                name="plate"
+                                v-slot="{ errors }">
                 <input v-model="item.plate"
                        @focus="item.hasFocus = true"
                        @blur="item.hasFocus = false"
                        class="field"
-                       :class="{ hasValue: item.plate }"
+                       :class="{ hasValue: item.plate, 'input-error': errors[0] }"
                        type="number"
                        autocomplete="off"
                        required>
                 <label class="label-field">Nombre de clichés</label>
-            </div>
+                <span class="v-validate">{{ errors[0] }}</span>
+            </ValidationProvider>
             <div class="wrap-field-inline">
                 <span class="legend-line">Temps prépresse</span>
-                <div class="wrap-field h-50">
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    rules="numeric"
+                                    name="prepress hour"
+                                    v-slot="{ errors }">
                     <input v-model="item.hour"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: item.hour }"
+                           :class="{ hasValue: item.hour, 'input-error': errors[0] }"
                            type="number"
-                           autocomplete="off"
-                           required>
+                           autocomplete="off">
                     <label class="label-field">Heure(s)</label>
-                </div>
-                <div class="wrap-field h-50">
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
+                <ValidationProvider tag="div"
+                                    class="wrap-field h-50"
+                                    rules="numeric"
+                                    name="prepress minutes"
+                                    v-slot="{ errors }">
                     <input v-model="item.minute"
                            @focus="item.hasFocus = true"
                            @blur="item.hasFocus = false"
                            class="field"
-                           :class="{ hasValue: item.minute }"
+                           :class="{ hasValue: item.minute, 'input-error': errors[0] }"
                            type="number"
-                           autocomplete="off"
-                           required>
+                           autocomplete="off">
                     <label class="label-field">Minute(s)</label>
-                </div>
+                    <span class="v-validate">{{ errors[0] }}</span>
+                </ValidationProvider>
             </div>
             <span class="focus-field"></span>
             <span class="symbol-left-field"><i class="fas fa-copy"></i></span>
@@ -157,7 +194,9 @@
                 <div class="modal-body">
                     <form action="#" method="post" class="form-filters">
                         <div class="inline">
-                            <ValidationProvider class="wrap-field h-50"
+                            <ValidationProvider tag="div"
+                                                class="wrap-field h-50"
+                                                rules="numeric"
                                                 name="width"
                                                 v-slot="{ errors }">
                                 <span class="btn-right-field" v-if="searchLabels.criteria.isLoading">
@@ -168,7 +207,7 @@
                                         @keydown.shift.tab.prevent=""
                                         @animationstart="checkAnimation"
                                         class="field select"
-                                        :class="{ hasValue: searchLabels.criteria.width }">
+                                        :class="{ hasValue: searchLabels.criteria.width, 'input-error': errors[0] }">
                                     <option value="">Choisir</option>
                                     <option v-for="(width, index) in searchLabels.database.widths"
                                             v-bind:value="width">
@@ -181,7 +220,9 @@
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
-                            <ValidationProvider class="wrap-field h-50"
+                            <ValidationProvider tag="div"
+                                                class="wrap-field h-50"
+                                                rules="numeric"
                                                 name="length"
                                                 v-slot="{ errors }">
                                 <span class="btn-right-field" v-if="searchLabels.criteria.isLoading">
@@ -190,7 +231,7 @@
                                 <select v-model="searchLabels.criteria.length"
                                         @animationstart="checkAnimation"
                                         class="field select"
-                                        :class="{ hasValue: searchLabels.criteria.length }">
+                                        :class="{ hasValue: searchLabels.criteria.length, 'input-error': errors[0] }">
                                     <option value="">Choisir</option>
                                     <option v-for="(length, index) in searchLabels.database.lengths"
                                             v-bind:value="length">
@@ -204,7 +245,8 @@
                             </ValidationProvider>
                         </div>
                         <div class="inline">
-                            <ValidationProvider class="wrap-field h-50"
+                            <ValidationProvider tag="div"
+                                                class="wrap-field h-50"
                                                 name="reference"
                                                 v-slot="{ errors }">
                                 <span class="btn-right-field" v-if="searchLabels.criteria.isLoading">
@@ -213,7 +255,7 @@
                                 <select v-model="searchLabels.criteria.reference"
                                         @animationstart="checkAnimation"
                                         class="field select"
-                                        :class="{ hasValue: searchLabels.criteria.reference }">
+                                        :class="{ hasValue: searchLabels.criteria.reference, 'input-error': errors[0] }">
                                     <option value="">Choisir</option>
                                     <option v-for="(reference, index) in searchLabels.database.references"
                                             v-bind:value="reference">
@@ -284,7 +326,7 @@
 <script>
     import Loader from '../Loader';
     import Autocomplete from "./Autocomplete";
-    import Pagination from "./Pagination";
+    import Pagination from "../Pagination";
 
     export default {
         components: {
@@ -317,6 +359,7 @@
         created() {
             const labels = this.database.description.labels;
             this.allThirdLabels = labels;
+            console.log(labels);
             if (labels.length > 1) {
                 this.form.description.label.type = "old";
 
@@ -427,6 +470,8 @@
                     this.database.printing.substrates.search.criteria.isLoading = false;
                 });
 
+                console.log("selectedLabel in Description Component");
+                console.log("getFinishings");
                 this.$store.dispatch('getFinishings');
 
                 this.hide();
@@ -439,6 +484,8 @@
                 this.form.description.label.width = "";
                 this.form.description.label.length = "";
 
+                console.log("resetLabel in Description Component");
+                console.log("getFinishings");
                 this.$store.dispatch('getFinishings');
 
                 this.resetSubstrate();

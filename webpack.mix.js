@@ -14,8 +14,9 @@ const mix = require('laravel-mix');
 mix.copyDirectory('resources/assets', 'public/assets');
 
 mix.js('resources/js/app.js', 'dist')
-    .sass('resources/sass/app.scss', 'dist')
-    .webpackConfig({
+    .sass('resources/sass/app.scss', 'dist');
+
+mix.webpackConfig({
         resolve: {
             alias: {
                 '@': path.resolve('resources/sass')

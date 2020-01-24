@@ -57,13 +57,13 @@
                 </div>
                 <div class="col-xs-8">
                     <address class="small text-right">
-                        <strong>{{ $quotation->user->company->name }}</strong>,
-                        @isset($quotation->user->company->address_line1){{ $quotation->user->company->address_line1 }}, @endisset
-                        @isset($quotation->user->company->address_line2){{ $quotation->user->company->address_line2 }}, @endisset
-                        @isset($quotation->user->company->address_line3){{ $quotation->user->company->address_line3 }}, @endisset
+                        <strong>{{ $quotation->company->name }}</strong>,
+                        @isset($quotation->company->address_line1){{ $quotation->company->address_line1 }}, @endisset
+                        @isset($quotation->company->address_line2){{ $quotation->company->address_line2 }}, @endisset
+                        @isset($quotation->company->address_line3){{ $quotation->company->address_line3 }}, @endisset
                         {{ $quotation->third->zipcode }} {{ $quotation->third->city }}<br>
-                        @isset($quotation->user->company->phone)<abbr title="Téléphone">Tél.</abbr> {{ $quotation->user->company->phone }} | @endisset
-                        @isset($quotation->user->company->email)<a href="mailto:{{ $quotation->user->company->email }}" class="small">{{ $quotation->user->company->email }}</a>@endisset
+                        @isset($quotation->company->phone)<abbr title="Téléphone">Tél.</abbr> {{ $quotation->company->phone }} | @endisset
+                        @isset($quotation->company->email)<a href="mailto:{{ $quotation->company->email }}" class="small">{{ $quotation->company->email }}</a>@endisset
                     </address>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                             </tr>
                             <tr>
                                 <th>Suivi par</th>
-                                <td class="text-right">{{ $quotation->user->name }} {{ $quotation->user->surname }}</td>
+                                <td class="text-right">{{ $quotation->user_name }} {{ $quotation->user_surname }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -125,7 +125,7 @@
 
             <div style="margin-bottom: 0px">&nbsp;</div>
 
-            <p>{{ $quotation->user->company->head_quotation }}</p>
+            <p>{{ $quotation->company->head_quotation }}</p>
 
             <dl>
                 @foreach(explode("\n", $quotation->description) as $description)
@@ -178,7 +178,7 @@
             <div class="row">
                 <div class="col-xs-6">
 {{--                    <h5>Termes et conditions</h5>--}}
-{{--                    <p>{{ $quotation->user->company->gsc }}</p>--}}
+{{--                    <p>{{ $quotation->company->gsc }}</p>--}}
                 </div>
                 <div class="col-xs-5">
                     <table style="width: 100%">
@@ -204,13 +204,13 @@
 
 {{--            <div class="row">--}}
 {{--                <div class="col-xs-12">--}}
-{{--                    <p>{{ $quotation->user->company->foot_quotation }}</p>--}}
+{{--                    <p>{{ $quotation->company->foot_quotation }}</p>--}}
 {{--                </div>--}}
 {{--            </div>--}}
 
 {{--            <div class="row" style="border-top: 1px solid #ddd;">--}}
 {{--                <div class="col-xs-12">--}}
-{{--                    <p class="text-center">{{ $quotation->user->company->siret }} | {{ $quotation->user->company->tva }}</p>--}}
+{{--                    <p class="text-center">{{ $quotation->company->siret }} | {{ $quotation->company->tva }}</p>--}}
 {{--                </div>--}}
 {{--            </div>--}}
         </div>

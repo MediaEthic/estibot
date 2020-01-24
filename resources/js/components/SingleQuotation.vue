@@ -15,7 +15,7 @@
                         <input id="options-toggler" class="options-toggler" type="checkbox">
                         <label for="options-toggler" class="fas fa-cog"></label>
                         <ul class="list-actions">
-                            <li class="action-item"><a :href="'/api/auth/quotations/' + quotation.id + '/pdf'" target="_blank"><i class="fas fa-print action-event"></i><span>Imprimer</span></a></li>
+                            <li class="action-item"><a :href="'/api/auth/quotations/' + quotation.id + '/pdf/' + company" target="_blank"><i class="fas fa-print action-event"></i><span>Imprimer</span></a></li>
                             <li class="action-item" @click="showModal = true"><i class="fas fa-paper-plane action-event"></i><span>Envoyer par e-mail</span></li>
                             <router-link tag="li" :to="{ name: 'quotations.edit', params: { id: quotation.id } }" class="action-item"><i class="fas fa-edit action-event"></i><span>Modifier</span></router-link>
 <!--                            <li class="action-item"><i class="fas fa-copy action-event"></i><span>Dupliquer</span></li>-->
@@ -53,7 +53,7 @@
                             </li>
                             <li class="item-detail-quotation">
                                 <i class="fas fa-user"></i>
-                                <p>Suivi par {{ user.name }} {{ user.surname }}</p>
+                                <p>Suivi par {{ quotation.user_name }} {{ quotation.user_surname }}</p>
                             </li>
 
     <!--                        <li class="item-detail-quotation">-->
@@ -265,6 +265,7 @@
         data() {
             return {
                 loading: true,
+                company: localStorage.getItem('company'),
                 showModal: false,
                 isModalVisible: false,
                 image: "",
@@ -285,11 +286,8 @@
             this.$store.dispatch('getQuotation', {
                 id: this.$route.params.id
             }).then(() => {
-                console.log(this.quotation);
                 this.generateThird();
                 document.getElementsByClassName('wrap-main-header')[0].style.backgroundImage = 'url(/assets/img/quotations/' + this.quotation.image + ')';
-                this.user.name = this.quotation.user.name;
-                this.user.surname = this.quotation.user.surname;
 
                 let textareaList = document.getElementsByTagName("textarea");
                 for(let i = 0; i < textareaList.length; i++) {
@@ -335,7 +333,6 @@
                 return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             },
             generateThird() {
-                console.log(this.quotation.third.name);
                 this.third = [];
                 if (this.quotation.third.name !== undefined) this.third.push(this.quotation.third.name);
 
@@ -388,10 +385,8 @@
                 this.$store.dispatch("generatePDF", {
                     id: id
                 }).then(resp => {
-                    console.log(resp);
                     this.loading = false;
                 }).catch(err => {
-                    console.log(err.response);
                     this.loading = false;
                 });
             },
@@ -402,7 +397,6 @@
                     quotation: this.quotation,
                 }).then(() => {
                     this.loading = false;
-                    console.log("response");
                     this.showModal = false;
                     this.$toast.success({
                         title: "Devis envoyé",
@@ -410,8 +404,6 @@
                     });
                 }).catch(error => {
                     // TODO: handle server errors
-                    console.log("error");
-                    console.log(error.response.data);
                     this.serverErrors = [];
                     for (let i = 0; i < error.response.data.length; i++) {
                         this.serverErrors.push(error.response.data[i]);
@@ -427,12 +419,10 @@
                     this.loading = false;
                     this.$router.push({ name: "quotations.index", params: { dataSuccessMessage: "Devis supprimé" } });
                 }).catch(err => {
-                    console.log(err.response);
                     this.loading = false;
                 });
             },
             updateQuotation(quotation) {
-                console.log(quotation);
                 this.loading = true;
                 this.$store.dispatch("updateQuotation", {
                     quotation: quotation,
@@ -444,7 +434,6 @@
                         message: "Votre devis a bien été modifié"
                     });
                 }).catch(err => {
-                    console.log(err.response);
                     this.loading = false;
                 });
             },

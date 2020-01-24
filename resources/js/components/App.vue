@@ -8,11 +8,20 @@
                  alt="Logotype Ethic Software"
                  class="main-logo" />
             </router-link>
-            <form v-if="loggedIn" @submit.prevent="logout">
-                <button type="submit" class="button button-small button-outline-secondary button-submit-secondary">
-                    Déconnexion
-                </button>
-            </form>
+            <div class="wrap-right-part-navigation">
+                <router-link :to="{ name: 'profile' }"
+                             tag="a"
+                             class="link-profile"
+                             title="Accéder à mon compte">
+                    <i class="fas fa-user"></i>
+                    {{ user.name }} {{ user.surname }}
+                </router-link>
+                <form v-if="loggedIn" @submit.prevent="logout">
+                    <button type="submit" class="button button-small button-outline-secondary button-submit-secondary">
+                        Déconnexion
+                    </button>
+                </form>
+            </div>
         </nav>
 
         <transition :name="transitionName"
@@ -28,7 +37,7 @@
                                      :key="key"
                                      class="link-menu">
                             <i :class="route.icon"></i>
-                            {{route.name}}
+                            {{ route.name }}
                         </router-link>
                     </li>
                 </ul>
@@ -194,6 +203,20 @@
 
             .main-logo {
                 width: 15rem;
+            }
+
+            .wrap-right-part-navigation {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .link-profile {
+                    margin-right: 3rem;
+
+                    [class^='fa'] {
+                        margin-right: 1rem;
+                    }
+                }
             }
         }
 

@@ -74,15 +74,20 @@
             </div>
         </div>
 
-        <div class="wrap-field h-50">
+        <ValidationProvider tag="div"
+                            class="wrap-field h-50"
+                            rules="numeric"
+                            name="packing"
+                            v-slot="{ errors }">
             <input v-model="form.packing.packing"
                    class="field"
-                   :class="{ hasValue: form.packing.packing }"
+                   :class="{ hasValue: form.packing.packing, 'input-error': errors[0] }"
                    type="number">
             <span class="focus-field"></span>
             <label class="label-field">Conditionnement</label>
             <span class="symbol-left-field"><i class="fas fa-tape"></i></span>
-        </div>
+            <span class="v-validate">{{ errors[0] }}</span>
+        </ValidationProvider>
     </div>
 </template>
 
