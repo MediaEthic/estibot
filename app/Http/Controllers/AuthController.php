@@ -23,24 +23,32 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $client = new Client();
-        $response = $client->request('POST', 'http://89.92.37.229/API/AUTHENTIFICATION', [
-            'headers' => [
+        try {
+            $client = new Client();
+            $response = $client->request('POST', 'http://89.92.37.229/API/AUTHENTIFICATION', [
+                'headers' => [
 //                'Authorization' => 'Bearer '.$token,
-                'Accept' => 'application/json',
-            ],
-            'json' => [
+                    'Accept' => 'application/json',
+                ],
+                'json' => [
                     'username' => $request->username,
                     'password' => $request->password,
                 ]
-        ]);
-        if ($response->getStatusCode() === 200) {
-            return $response;
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the content cannot be loaded'
-            ], $response->getStatusCode());
+            ]);
+            return collect(json_decode($response->getBody()))->map(function($item) {
+                $user = collect();
+                $user->offsetSet('alias', $item->CODEUTILISATEUR);
+                $user->offsetSet('name', $item->PRENOM);
+                $user->offsetSet('surname', $item->NOM);
+                $user->offsetSet('admin', $item->SUPERVISEUR);
+                $user->offsetSet('company', $item->CODESOCIETE);
+                $user->offsetSet('establishment', $item->CODEETABLISSEMENT);
+                return $user;
+            });
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            $response = $exception->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return $responseBodyAsString;
         }
 
 //        $this->validate($request, [
