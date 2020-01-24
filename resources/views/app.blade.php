@@ -14,6 +14,6 @@
             <App></App>
         </div>
         <script src="https://kit.fontawesome.com/ec4ee65413.js"></script>
-        <script src="{{ url('dist/app.js') }}"></script>
+        <script src="dist/app.js"></script>
     </body>
 </html>
