@@ -68,6 +68,7 @@ class CreateCompaniesTable extends Migration
             $table->string('blog', 200)->nullable()->default(null);
             $table->string('prepress', 5)->nullable()->default(null);
             $table->string('winder', 5)->nullable()->default(null);
+            $table->string('api_url', 35)->nullable()->default(null);
         });
     }
 

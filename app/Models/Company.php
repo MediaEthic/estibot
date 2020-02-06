@@ -65,7 +65,8 @@ class Company extends Model
         'github',
         'blog',
         'prepress',
-        'packing',
+        'winder',
+        'api_url',
     ];
 
     /**
