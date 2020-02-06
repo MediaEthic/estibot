@@ -37827,7 +37827,7 @@ exports = module.exports = __webpack_require__(1)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-f2b6376c], [class*=\" icon-\"][data-v-f2b6376c] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-f2b6376c]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-f2b6376c]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-f2b6376c]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-f2b6376c]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-f2b6376c]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-f2b6376c]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.75);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > *[data-v-f2b6376c] {\n                display: block;\n                width: inherit;\n                height: inherit;\n                line-height: 3.25rem;\n                color: #C49998;\n                background: #fff;\n                border: 0.15rem solid #C49998;\n                border-radius: 50%;\n                text-align: center;\n                text-decoration: none;\n                font-size: 2rem;\n                pointer-events: none;\n                -webkit-transition: 0.2s;\n                transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > *[data-v-f2b6376c]:hover {\n                  color: #F7CAC9;\n                  border-color: #F7CAC9;\n                  -webkit-transform: scale(1.1);\n                          transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > *[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n.wrap-main-content .wrap-filters[data-v-f2b6376c] {\n    width: 100%;\n    z-index: 2;\n}\n.wrap-main-content .wrap-filters .filters-toggler[data-v-f2b6376c] {\n      position: absolute;\n      left: -9999px;\n}\n.wrap-main-content .wrap-filters .filters-toggler + label[data-v-f2b6376c] {\n        position: fixed;\n        right: 2rem;\n        bottom: 9rem;\n        font-size: 2rem;\n        color: #FFFDFC;\n        background-color: #C49998;\n        border-radius: 50%;\n        -webkit-box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n                box-shadow: 0 0 1rem rgba(196, 153, 152, 0.25);\n        width: 5rem;\n        height: 5rem;\n        z-index: 3;\n        cursor: pointer;\n        float: right;\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        opacity: 1;\n        -webkit-transition: .2s;\n        transition: .2s;\n        -webkit-transition-delay: 0.6s;\n                transition-delay: 0.6s;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n         -ms-user-select: none;\n             user-select: none;\n}\n.wrap-main-content .wrap-filters .filters-toggler ~ .content-filters[data-v-f2b6376c] {\n        position: fixed;\n        width: calc(100% - 3rem);\n        height: 100%;\n        padding: 2rem;\n        -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n                box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n        background-color: #F7CAC9;\n        border-top-left-radius: 2rem;\n        -webkit-font-smoothing: antialiased;\n        -webkit-transform-origin: 0% 0%;\n                transform-origin: 0% 0%;\n        -webkit-transform: translate(100%, 0);\n                transform: translate(100%, 0);\n        -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.1, 0.1, 0.05, 0.1);\n        transition: -webkit-transform 0.5s cubic-bezier(0.1, 0.1, 0.05, 0.1);\n        transition: transform 0.5s cubic-bezier(0.1, 0.1, 0.05, 0.1);\n        transition: transform 0.5s cubic-bezier(0.1, 0.1, 0.05, 0.1), -webkit-transform 0.5s cubic-bezier(0.1, 0.1, 0.05, 0.1);\n}\n.wrap-main-content .wrap-filters .filters-toggler:checked ~ .content-filters[data-v-f2b6376c] {\n        top: 0;\n        right: 0;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-f2b6376c], [class*=\" icon-\"][data-v-f2b6376c] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-f2b6376c]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-f2b6376c]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-f2b6376c]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-f2b6376c]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-f2b6376c]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-f2b6376c]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-f2b6376c]:before {\n  content: \"\\E907\";\n}\n.wrap-main-content[data-v-f2b6376c] {\n  max-width: 120rem;\n  min-height: calc(100vh - 15.4rem);\n  margin: 0 auto;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: end;\n        -ms-flex-align: end;\n            align-items: end;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header .page-main-title[data-v-f2b6376c] {\n      margin-right: 1rem;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: column wrap;\n            flex-flow: column wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-top: 2rem;\n}\n.wrap-main-content .wrap-list-quotations .create-new-quotation[data-v-f2b6376c] {\n      display: none;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c] {\n      width: 100%;\n      min-height: 16.5rem;\n      cursor: pointer;\n      background-position: center right;\n      background-size: auto 13.5rem;\n      background-repeat: no-repeat;\n      background-position-x: 9rem;\n      -webkit-box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n              box-shadow: 0 0 0.5rem rgba(98, 121, 159, 0.2);\n      border-radius: 2rem 1rem 3rem 1rem;\n      margin: 1rem 0;\n      -webkit-transition: all .4s;\n      transition: all .4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation[data-v-f2b6376c]:hover {\n        background-position-x: 7rem;\n        border-left: 1.5rem solid #91A8D0;\n        -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n                box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n        -webkit-transform: scale(1.1);\n                transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > *[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n            -ms-flex-flow: column wrap;\n                flex-flow: column wrap;\n        background-color: rgba(255, 255, 255, 0.75);\n        min-height: 16.5rem;\n        padding: 1.5rem 2rem;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation > * > *[data-v-f2b6376c] {\n          width: 100%;\n          -webkit-box-flex: 1;\n              -ms-flex-positive: 1;\n                  flex-grow: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .head-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .third-quotation[data-v-f2b6376c] {\n        color: #62799F;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation[data-v-f2b6376c] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        -webkit-box-align: end;\n            -ms-flex-align: end;\n                align-items: flex-end;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler[data-v-f2b6376c] {\n          position: absolute;\n          left: -9999px;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler + label[data-v-f2b6376c] {\n            font-size: 2rem;\n            color: #C49998;\n            background-color: #fff;\n            border: 0.15rem solid #C49998;\n            border-radius: 50%;\n            position: relative;\n            z-index: 1;\n            display: -webkit-box;\n            display: -ms-flexbox;\n            display: flex;\n            -webkit-box-pack: center;\n                -ms-flex-pack: center;\n                    justify-content: center;\n            -webkit-box-align: center;\n                -ms-flex-align: center;\n                    align-items: center;\n            width: 3.5rem;\n            height: 3.5rem;\n            -webkit-transition: 0.4s;\n            transition: 0.4s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions[data-v-f2b6376c] {\n            position: relative;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item[data-v-f2b6376c] {\n              position: absolute;\n              display: block;\n              top: 0;\n              bottom: 0;\n              left: 0;\n              right: 0;\n              margin: auto;\n              width: 3.5rem;\n              height: 3.5rem;\n              opacity: 0;\n              -webkit-transition: 0.5s;\n              transition: 0.5s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(1) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(0deg);\n                        transform: rotate(0deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(2) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(-60deg);\n                        transform: rotate(-60deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(3) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(-120deg);\n                        transform: rotate(-120deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item:nth-child(4) > *[data-v-f2b6376c] {\n                -webkit-transform: rotate(-180deg);\n                        transform: rotate(-180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > *[data-v-f2b6376c] {\n                display: block;\n                width: inherit;\n                height: inherit;\n                line-height: 3.25rem;\n                color: #C49998;\n                background: #fff;\n                border: 0.15rem solid #C49998;\n                border-radius: 50%;\n                text-align: center;\n                text-decoration: none;\n                font-size: 2rem;\n                pointer-events: none;\n                -webkit-transition: 0.2s;\n                transition: 0.2s;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler ~ .list-actions .action-item > *[data-v-f2b6376c]:hover {\n                  color: #F7CAC9;\n                  border-color: #F7CAC9;\n                  -webkit-transform: scale(1.1);\n                          transform: scale(1.1);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked + label[data-v-f2b6376c] {\n            color: #FFFDFC;\n            background-color: #C49998;\n            border: 0.15rem solid #C49998;\n            -webkit-transform: rotate(180deg);\n                    transform: rotate(180deg);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c] {\n            opacity: 1;\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(1) {\n              -webkit-transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n                      transform: rotate(0deg) translateX(0) translateY(-6.5rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(2) {\n              -webkit-transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n                      transform: rotate(60deg) translateX(-6rem) translateY(2rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(3) {\n              -webkit-transform: rotate(120deg) translateX(3rem) translateY(4rem);\n                      transform: rotate(120deg) translateX(3rem) translateY(4rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item[data-v-f2b6376c]:nth-child(4) {\n              -webkit-transform: rotate(180deg) translateX(0) translateY(-3rem);\n                      transform: rotate(180deg) translateX(0) translateY(-3rem);\n}\n.wrap-main-content .wrap-list-quotations .wrap-quotation .wrap-end-quotation .wrap-actions-quotation .options-toggler:checked ~ .list-actions .action-item > *[data-v-f2b6376c] {\n              pointer-events: auto;\n}\n.wrap-main-content .wrap-empty-result[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    min-height: calc(100vh - 22.4rem);\n    margin-top: 2rem;\n    text-align: center;\n}\n.wrap-main-content .wrap-empty-result .wrap-image[data-v-f2b6376c] {\n      width: 100%;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n        width: 100%;\n        max-width: 10rem;\n        display: block;\n        margin: 0 auto 2rem auto;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c] {\n    cursor: pointer;\n    background-color: #fff;\n    color: #C49998;\n    border: 0.3rem dashed #C49998;\n    border-radius: 2rem 1rem 3rem 1rem;\n    text-align: center;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -ms-flex-line-pack: center;\n        align-content: center;\n    padding: 2rem 3rem;\n    margin: 5rem auto 0 auto;\n    max-width: 20rem;\n    -webkit-transition: all .4s;\n    transition: all .4s;\n}\n.wrap-main-content .create-new-quotation[data-v-f2b6376c]:hover {\n      -webkit-transform: scale(1.1);\n              transform: scale(1.1);\n}\n.wrap-main-content .create-new-quotation i[data-v-f2b6376c] {\n      font-size: 4rem;\n      margin-bottom: 1rem;\n}\n.wrap-main-content .create-new-quotation .text-new-quotation[data-v-f2b6376c] {\n      width: 100%;\n      text-transform: uppercase;\n}\n@media (max-width: 321px) and (orientation: portrait) {\n.wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    margin-top: 1rem;\n    padding: 1rem 2rem;\n}\n}\n@media (min-width: 680px) {\n.wrap-main-content .wrap-head-page[data-v-f2b6376c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-main-content .wrap-head-page .wrap-main-header[data-v-f2b6376c] {\n      -webkit-box-pack: left;\n          -ms-flex-pack: left;\n              justify-content: left;\n      margin-bottom: 0;\n}\n.wrap-main-content .wrap-list-quotations[data-v-f2b6376c] {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row wrap;\n            flex-flow: row wrap;\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c],\n    .wrap-main-content .wrap-list-quotations > .wrap-quotation[data-v-f2b6376c] {\n      max-width: 28rem;\n      margin: 1rem;\n}\n.wrap-main-content .wrap-list-quotations > .wrap-quotation > *[data-v-f2b6376c] {\n      background-color: rgba(255, 255, 255, 0.75);\n}\n.wrap-main-content .wrap-list-quotations > .create-new-quotation[data-v-f2b6376c] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      width: 28rem;\n      min-height: 16.5rem;\n}\n.wrap-main-content .wrap-empty-result .wrap-image .image-empty-result[data-v-f2b6376c] {\n    max-width: 20rem !important;\n}\n.wrap-main-content .wrap-empty-result .create-new-quotation[data-v-f2b6376c] {\n    max-width: 28rem !important;\n    height: 18rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -37844,6 +37844,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Pagination__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+//
+//
 //
 //
 //
@@ -38010,6 +38012,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             loading: true,
+            toggle: false,
             search: "",
             pagination: {},
             filtersChecked: false
@@ -38030,7 +38033,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        console.log("Home component created");
         if (this.dataSuccessMessage !== undefined) {
             this.$toast.success({
                 title: this.dataSuccessMessage,
@@ -38050,12 +38052,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
         },
         thirdType: function thirdType(_thirdType) {
-            if (_thirdType === "new") {
-                return "P";
+            if (_thirdType === "ethic") {
+                return "E";
+            } else {
+                return "W";
             }
         },
         makePagination: function makePagination(meta) {
-            console.log("makePagination");
             var pagination = {
                 current_page: meta.current_page,
                 last_page: meta.last_page,
@@ -38063,8 +38066,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 previous_page: meta.prev_page_url,
                 total: meta.total
             };
-
-            console.log(pagination);
 
             this.pagination = pagination;
             this.loading = false;
@@ -38074,14 +38075,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.loading = true;
             page = page || 1;
-            console.log("fetchQuotations");
-            console.log(page);
             this.$store.dispatch("getQuotations", {
                 page: parseInt(page)
             }).then(function (res) {
-                console.log("fetchQuotations");
                 _this.quotations = _this.$store.state.quotations;
-                console.log(_this.quotations);
                 _this.makePagination(_this.$store.state.quotations);
             }).catch(function () {
                 _this.loading = false;
@@ -38096,10 +38093,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         destroyQuotation: function destroyQuotation(id) {
             this.$store.dispatch("destroyQuotation", {
                 id: id
-            }).then(function (res) {
-                console.log(res);
-            }).catch(function (err) {
-                return console.log(err);
+            }).then(function (res) {}).catch(function (err) {
+                return console.log(err.response);
             });
         }
     }
@@ -38851,7 +38846,8 @@ var render = function() {
         ? _c(
             "div",
             [
-              _vm.quotations.data
+              _vm.quotations.data.length ||
+              Object.keys(_vm.quotations.data).length
                 ? _c(
                     "section",
                     { staticClass: "wrap-list-quotations" },
@@ -38977,77 +38973,6 @@ var render = function() {
                                           [_vm._v("€")]
                                         )
                                       ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "wrap-actions-quotation" },
-                                      [
-                                        _c("input", {
-                                          staticClass: "options-toggler",
-                                          attrs: {
-                                            id:
-                                              "options-toggler" + quotation.id,
-                                            type: "checkbox"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("label", {
-                                          staticClass: "fas fa-cog",
-                                          attrs: {
-                                            for:
-                                              "options-toggler" + quotation.id
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "ul",
-                                          { staticClass: "list-actions" },
-                                          [
-                                            _c(
-                                              "li",
-                                              { staticClass: "action-item" },
-                                              [
-                                                _c("a", {
-                                                  staticClass: "fas fa-print",
-                                                  attrs: { href: "#" }
-                                                })
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "li",
-                                              { staticClass: "action-item" },
-                                              [
-                                                _c("a", {
-                                                  staticClass: "fas fa-edit",
-                                                  attrs: { href: "#" }
-                                                })
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "li",
-                                              {
-                                                staticClass: "action-item",
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.destroyQuotation(
-                                                      quotation.id
-                                                    )
-                                                  }
-                                                }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass:
-                                                    "fas fa-trash-alt"
-                                                })
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
                                     )
                                   ]
                                 )
@@ -39061,118 +38986,7 @@ var render = function() {
                       _c("Pagination", {
                         attrs: { pagination: _vm.pagination },
                         on: { pagechanged: _vm.fetchQuotations }
-                      }),
-                      _vm._v(" "),
-                      _vm.windowWidth < 576
-                        ? _c("aside", { staticClass: "wrap-filters" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.filtersChecked,
-                                  expression: "filtersChecked"
-                                }
-                              ],
-                              staticClass: "filters-toggler",
-                              attrs: {
-                                id: "filters-toggler",
-                                type: "checkbox"
-                              },
-                              domProps: {
-                                checked: Array.isArray(_vm.filtersChecked)
-                                  ? _vm._i(_vm.filtersChecked, null) > -1
-                                  : _vm.filtersChecked
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.filtersChecked,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.filtersChecked = $$a.concat([$$v]))
-                                    } else {
-                                      $$i > -1 &&
-                                        (_vm.filtersChecked = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
-                                    }
-                                  } else {
-                                    _vm.filtersChecked = $$c
-                                  }
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", {
-                              class: this.filtersChecked
-                                ? "fas fa-times"
-                                : "fas fa-sliders-h",
-                              attrs: { for: "filters-toggler" }
-                            }),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "content-filters" }, [
-                              _c("h3", { staticClass: "page-subtitle" }, [
-                                _vm._v("Filtres")
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "wrap-field h-50" }, [
-                                _vm.search
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass: "btn-right-field",
-                                        on: { click: _vm.clearSearch }
-                                      },
-                                      [_c("i", { staticClass: "fas fa-times" })]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model.trim",
-                                      value: _vm.search,
-                                      expression: "search",
-                                      modifiers: { trim: true }
-                                    }
-                                  ],
-                                  staticClass: "field",
-                                  class: { hasValue: _vm.search },
-                                  attrs: { type: "text", autocomplete: "off" },
-                                  domProps: { value: _vm.search },
-                                  on: {
-                                    keyup: function($event) {
-                                      return _vm.getCustomers()
-                                    },
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.search = $event.target.value.trim()
-                                    },
-                                    blur: function($event) {
-                                      return _vm.$forceUpdate()
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "focus-field" }),
-                                _vm._v(" "),
-                                _c("label", { staticClass: "label-field" }, [
-                                  _vm._v("Rechercher un client")
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(0)
-                              ])
-                            ])
-                          ])
-                        : _vm._e()
+                      })
                     ],
                     2
                   )
@@ -39285,32 +39099,13 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(1, true),
+                      _vm._m(0, true),
                       _vm._v(" "),
                       _c("p", { staticClass: "third-quotation" }, [
                         _vm._v("Nom du donneur d'ordre")
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "wrap-end-quotation" }, [
-                        _vm._m(2, true),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "wrap-actions-quotation" }, [
-                          _c("input", {
-                            staticClass: "options-toggler",
-                            attrs: {
-                              id: "options-toggler" + index,
-                              type: "checkbox"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("label", {
-                            staticClass: "fas fa-cog",
-                            attrs: { for: "options-toggler" + index }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(3, true)
-                        ])
-                      ])
+                      _vm._m(1, true)
                     ])
                   ]
                 )
@@ -39326,14 +39121,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "symbol-left-field" }, [
-      _c("i", { staticClass: "fas fa-search" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("p", { staticClass: "baseline-main-title" }, [
       _c("time", { attrs: { datetime: "2019-08-08" } }, [_vm._v("08/08/2019")])
     ])
@@ -39342,30 +39129,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "price-quotation" }, [
-      _vm._v("123.94"),
-      _c("span", { staticClass: "symbol-price" }, [_vm._v("€")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "list-actions" }, [
-      _c("li", { staticClass: "action-item" }, [
-        _c("i", { staticClass: "fas fa-print" })
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "action-item" }, [
-        _c("i", { staticClass: "fas fa-edit" })
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "action-item" }, [
-        _c("i", { staticClass: "fas fa-copy" })
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "action-item" }, [
-        _c("i", { staticClass: "fas fa-trash-alt" })
+    return _c("div", { staticClass: "wrap-end-quotation" }, [
+      _c("p", { staticClass: "price-quotation" }, [
+        _vm._v("123.94"),
+        _c("span", { staticClass: "symbol-price" }, [_vm._v("€")])
       ])
     ])
   }
@@ -47581,7 +47348,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47802,11 +47568,7 @@ var render = function() {
               _vm._v(" "),
               _c("ValidationProvider", {
                 staticClass: "wrap-field h-50",
-                attrs: {
-                  tag: "div",
-                  rules: "required",
-                  name: "finishing type"
-                },
+                attrs: { tag: "div", name: "finishing type" },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -53128,6 +52890,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -53196,23 +52991,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 target.classList.add("hasValue");
             }
         },
-        setLogo: function setLogo(files) {
-            this.form.logo = files;
+        textareaAutosize: function textareaAutosize() {
+            var textareaList = document.getElementsByTagName("textarea");
+
+            var _loop = function _loop(i) {
+                var el = textareaList[i];
+                setTimeout(function () {
+                    el.style.cssText = 'height:auto !important; padding:0 !important;';
+                    var scrollHeight = el.scrollHeight + 10;
+                    el.style.cssText = 'height:' + scrollHeight + 'px !important; ';
+                    if (el.value === "") {
+                        el.style.cssText = 'height:100% !important; ';
+                    }
+                }, 0);
+            };
+
+            for (var i = 0; i < textareaList.length; i++) {
+                _loop(i);
+            }
         },
+
+        // setLogo(files) {
+        //     this.form.logo = files;
+        // },
         saveUser: function saveUser() {},
         saveCompany: function saveCompany() {
             var _this2 = this;
 
-            var formData = new FormData();
-            formData.append('prepress', this.company.prepress);
-            formData.append('winder', this.company.winder);
-            this.form.logo.forEach(function (file) {
-                formData.append('images[]', file, file.name);
-                console.log(file.name);
-            });
+            // let formData = new FormData();
+            // formData.append('prepress', this.company.prepress);
+            // formData.append('winder', this.company.winder);
+            // this.form.logo.forEach(file => {
+            //     formData.append('images[]', file, file.name);
+            //     console.log(file.name);
+            // });
 
             this.$store.dispatch('saveCompany', {
-                formData: formData
+                company: this.company
             }).then(function (resp) {
                 _this2.$toast.success({
                     title: "Paramètres enregistrés",
@@ -53598,7 +53413,7 @@ var render = function() {
                 staticClass: "main-image",
                 attrs: {
                   src: "/assets/img/" + _vm.company.logo,
-                  alt: "Illustration de la page de connexion"
+                  alt: "Logotype de l'entreprise"
                 }
               })
             : _c("img", {
@@ -53610,585 +53425,674 @@ var render = function() {
               })
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "wrap-central" },
-          [
-            _c("ValidationObserver", {
-              staticClass: "left-part",
-              attrs: { tag: "div" },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var invalid = ref.invalid
-                    var passes = ref.passes
-                    return [
-                      _c(
-                        "form",
+        _c("p", { staticClass: "baseline-main-title" }, [
+          _vm._v(_vm._s(_vm.user.name) + " " + _vm._s(_vm.user.surname))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "wrap-central" }, [
+          _vm.user.admin
+            ? _c(
+                "div",
+                { staticClass: "right-part" },
+                [
+                  _c("ValidationObserver", {
+                    attrs: { tag: "div" },
+                    scopedSlots: _vm._u(
+                      [
                         {
-                          staticClass: "wrap-main-form",
-                          attrs: { enctype: "multipart/form-data" },
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              return passes(_vm.saveUser)
-                            }
-                          }
-                        },
-                        [
-                          _c("fieldset", [
-                            _c("h2", { staticClass: "page-subtitle" }, [
-                              _vm._v("Paramètres utilisateur")
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "baseline-main-title" }, [
-                              _vm._v(
-                                _vm._s(_vm.user.name) +
-                                  " " +
-                                  _vm._s(_vm.user.surname)
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "section",
-                              [
-                                _c("ImageUploader", {
-                                  attrs: {
-                                    multiple: false,
-                                    label: "Glissez votre signature ici"
-                                  },
-                                  on: { files: _vm.setLogo }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        ]
-                      )
-                    ]
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _vm.user.admin
-              ? _c(
-                  "div",
-                  { staticClass: "right-part" },
-                  [
-                    _c("ValidationObserver", {
-                      attrs: { tag: "div" },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(ref) {
-                              var invalid = ref.invalid
-                              var passes = ref.passes
-                              return [
-                                _c(
-                                  "form",
-                                  {
-                                    attrs: { enctype: "multipart/form-data" },
-                                    on: {
-                                      submit: function($event) {
-                                        $event.preventDefault()
-                                        return passes(_vm.saveCompany)
-                                      }
+                          key: "default",
+                          fn: function(ref) {
+                            var invalid = ref.invalid
+                            var passes = ref.passes
+                            return [
+                              _c(
+                                "form",
+                                {
+                                  attrs: { enctype: "multipart/form-data" },
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return passes(_vm.saveCompany)
                                     }
-                                  },
-                                  [
-                                    _c(
-                                      "fieldset",
-                                      [
-                                        _c(
-                                          "h2",
-                                          { staticClass: "page-subtitle" },
-                                          [_vm._v("Paramètres entreprise")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("ImageUploader", {
-                                          attrs: {
-                                            multiple: false,
-                                            label: "Glissez votre logo ici"
-                                          },
-                                          on: { files: _vm.setLogo }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("ValidationProvider", {
-                                          staticClass: "wrap-field h-50",
-                                          attrs: {
-                                            tag: "div",
-                                            rules: "required",
-                                            name: "winder"
-                                          },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(ref) {
-                                                  var errors = ref.errors
-                                                  return [
-                                                    _vm.workstationsAreLoading
-                                                      ? _c(
-                                                          "span",
-                                                          {
-                                                            staticClass:
-                                                              "btn-right-field"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "div",
-                                                              {
-                                                                staticClass:
-                                                                  "lds-ring"
-                                                              },
-                                                              [
-                                                                _c("div"),
-                                                                _c("div"),
-                                                                _c("div"),
-                                                                _c("div")
-                                                              ]
-                                                            )
-                                                          ]
-                                                        )
-                                                      : _vm._e(),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "select",
-                                                      {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value:
-                                                              _vm.company
-                                                                .winder,
-                                                            expression:
-                                                              "company.winder"
-                                                          }
-                                                        ],
-                                                        staticClass:
-                                                          "field select",
-                                                        class: {
-                                                          hasValue:
-                                                            _vm.company.winder,
-                                                          "input-error":
-                                                            errors[0]
-                                                        },
-                                                        attrs: { required: "" },
-                                                        on: {
-                                                          focus: function(
-                                                            $event
-                                                          ) {
-                                                            _vm.form.hasFocus = true
-                                                          },
-                                                          blur: function(
-                                                            $event
-                                                          ) {
-                                                            _vm.form.hasFocus = false
-                                                          },
-                                                          animationstart:
-                                                            _vm.checkAnimation,
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$selectedVal = Array.prototype.filter
-                                                              .call(
-                                                                $event.target
-                                                                  .options,
-                                                                function(o) {
-                                                                  return o.selected
-                                                                }
-                                                              )
-                                                              .map(function(o) {
-                                                                var val =
-                                                                  "_value" in o
-                                                                    ? o._value
-                                                                    : o.value
-                                                                return val
-                                                              })
-                                                            _vm.$set(
-                                                              _vm.company,
-                                                              "winder",
-                                                              $event.target
-                                                                .multiple
-                                                                ? $$selectedVal
-                                                                : $$selectedVal[0]
-                                                            )
-                                                          }
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "null"
-                                                            }
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "Choisir un poste"
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _vm._l(
-                                                          _vm.workstations,
-                                                          function(
-                                                            workstation
-                                                          ) {
-                                                            return _c(
-                                                              "option",
-                                                              {
-                                                                domProps: {
-                                                                  value:
-                                                                    workstation.id
-                                                                }
-                                                              },
-                                                              [
-                                                                _vm._v(
-                                                                  "\n                                            " +
-                                                                    _vm._s(
-                                                                      workstation.id
-                                                                    ) +
-                                                                    " - " +
-                                                                    _vm._s(
-                                                                      workstation.name
-                                                                    ) +
-                                                                    "\n                                        "
-                                                                )
-                                                              ]
-                                                            )
-                                                          }
-                                                        )
-                                                      ],
-                                                      2
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c("span", {
-                                                      staticClass: "focus-field"
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "label",
-                                                      {
-                                                        staticClass:
-                                                          "label-field"
-                                                      },
-                                                      [_vm._v("Bobineuse")]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "symbol-left-field"
-                                                      },
-                                                      [
-                                                        _c("i", {
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "fieldset",
+                                    [
+                                      _c(
+                                        "h2",
+                                        { staticClass: "page-subtitle" },
+                                        [_vm._v("Paramètres entreprise")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("ValidationProvider", {
+                                        staticClass: "wrap-field h-50",
+                                        attrs: {
+                                          tag: "div",
+                                          rules: "required",
+                                          name: "winder"
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                return [
+                                                  _vm.workstationsAreLoading
+                                                    ? _c(
+                                                        "span",
+                                                        {
                                                           staticClass:
-                                                            "fas fa-tape"
-                                                        })
-                                                      ]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "v-validate"
+                                                            "btn-right-field"
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "lds-ring"
+                                                            },
+                                                            [
+                                                              _c("div"),
+                                                              _c("div"),
+                                                              _c("div"),
+                                                              _c("div")
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value:
+                                                            _vm.company.winder,
+                                                          expression:
+                                                            "company.winder"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "field select",
+                                                      class: {
+                                                        hasValue:
+                                                          _vm.company.winder,
+                                                        "input-error": errors[0]
                                                       },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(errors[0])
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        }),
-                                        _vm._v(" "),
-                                        _c("ValidationProvider", {
-                                          staticClass: "wrap-field h-50",
-                                          attrs: {
-                                            tag: "div",
-                                            name: "prepress"
-                                          },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(ref) {
-                                                  var errors = ref.errors
-                                                  return [
-                                                    _vm.workstationsAreLoading
-                                                      ? _c(
-                                                          "span",
-                                                          {
-                                                            staticClass:
-                                                              "btn-right-field"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "div",
-                                                              {
-                                                                staticClass:
-                                                                  "lds-ring"
-                                                              },
-                                                              [
-                                                                _c("div"),
-                                                                _c("div"),
-                                                                _c("div"),
-                                                                _c("div")
-                                                              ]
+                                                      attrs: { required: "" },
+                                                      on: {
+                                                        focus: function(
+                                                          $event
+                                                        ) {
+                                                          _vm.form.hasFocus = true
+                                                        },
+                                                        blur: function($event) {
+                                                          _vm.form.hasFocus = false
+                                                        },
+                                                        animationstart:
+                                                          _vm.checkAnimation,
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
                                                             )
-                                                          ]
-                                                        )
-                                                      : _vm._e(),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "select",
-                                                      {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value:
-                                                              _vm.company
-                                                                .prepress,
-                                                            expression:
-                                                              "company.prepress"
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.$set(
+                                                            _vm.company,
+                                                            "winder",
+                                                            $event.target
+                                                              .multiple
+                                                              ? $$selectedVal
+                                                              : $$selectedVal[0]
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "option",
+                                                        {
+                                                          attrs: {
+                                                            value: "null"
                                                           }
-                                                        ],
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "Choisir un poste"
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _vm._l(
+                                                        _vm.workstations,
+                                                        function(workstation) {
+                                                          return _c(
+                                                            "option",
+                                                            {
+                                                              domProps: {
+                                                                value:
+                                                                  workstation.id
+                                                              }
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "\n                                            " +
+                                                                  _vm._s(
+                                                                    workstation.id
+                                                                  ) +
+                                                                  " - " +
+                                                                  _vm._s(
+                                                                    workstation.name
+                                                                  ) +
+                                                                  "\n                                        "
+                                                              )
+                                                            ]
+                                                          )
+                                                        }
+                                                      )
+                                                    ],
+                                                    2
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("span", {
+                                                    staticClass: "focus-field"
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass: "label-field"
+                                                    },
+                                                    [_vm._v("Bobineuse")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "symbol-left-field"
+                                                    },
+                                                    [
+                                                      _c("i", {
                                                         staticClass:
-                                                          "field select",
-                                                        class: {
-                                                          hasValue:
+                                                          "fas fa-tape"
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "v-validate"
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c("ValidationProvider", {
+                                        staticClass: "wrap-field h-50",
+                                        attrs: { tag: "div", name: "prepress" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                return [
+                                                  _vm.workstationsAreLoading
+                                                    ? _c(
+                                                        "span",
+                                                        {
+                                                          staticClass:
+                                                            "btn-right-field"
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "lds-ring"
+                                                            },
+                                                            [
+                                                              _c("div"),
+                                                              _c("div"),
+                                                              _c("div"),
+                                                              _c("div")
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value:
                                                             _vm.company
                                                               .prepress,
-                                                          "input-error":
-                                                            errors[0]
-                                                        },
-                                                        on: {
-                                                          focus: function(
-                                                            $event
-                                                          ) {
-                                                            _vm.form.hasFocus = true
-                                                          },
-                                                          blur: function(
-                                                            $event
-                                                          ) {
-                                                            _vm.form.hasFocus = false
-                                                          },
-                                                          animationstart:
-                                                            _vm.checkAnimation,
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$selectedVal = Array.prototype.filter
-                                                              .call(
-                                                                $event.target
-                                                                  .options,
-                                                                function(o) {
-                                                                  return o.selected
-                                                                }
-                                                              )
-                                                              .map(function(o) {
-                                                                var val =
-                                                                  "_value" in o
-                                                                    ? o._value
-                                                                    : o.value
-                                                                return val
-                                                              })
-                                                            _vm.$set(
-                                                              _vm.company,
-                                                              "prepress",
-                                                              $event.target
-                                                                .multiple
-                                                                ? $$selectedVal
-                                                                : $$selectedVal[0]
-                                                            )
-                                                          }
+                                                          expression:
+                                                            "company.prepress"
                                                         }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "null"
-                                                            }
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "Choisir un poste"
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _vm._l(
-                                                          _vm.workstations,
-                                                          function(
-                                                            workstation
-                                                          ) {
-                                                            return _c(
-                                                              "option",
-                                                              {
-                                                                domProps: {
-                                                                  value:
-                                                                    workstation.id
-                                                                }
-                                                              },
-                                                              [
-                                                                _vm._v(
-                                                                  "\n                                            " +
-                                                                    _vm._s(
-                                                                      workstation.id
-                                                                    ) +
-                                                                    " - " +
-                                                                    _vm._s(
-                                                                      workstation.name
-                                                                    ) +
-                                                                    "\n                                        "
-                                                                )
-                                                              ]
-                                                            )
-                                                          }
-                                                        )
                                                       ],
-                                                      2
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c("span", {
-                                                      staticClass: "focus-field"
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "label",
-                                                      {
-                                                        staticClass:
-                                                          "label-field"
+                                                      staticClass:
+                                                        "field select",
+                                                      class: {
+                                                        hasValue:
+                                                          _vm.company.prepress,
+                                                        "input-error": errors[0]
                                                       },
-                                                      [_vm._v("Prépresse")]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "span",
-                                                      {
+                                                      on: {
+                                                        focus: function(
+                                                          $event
+                                                        ) {
+                                                          _vm.form.hasFocus = true
+                                                        },
+                                                        blur: function($event) {
+                                                          _vm.form.hasFocus = false
+                                                        },
+                                                        animationstart:
+                                                          _vm.checkAnimation,
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
+                                                            )
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.$set(
+                                                            _vm.company,
+                                                            "prepress",
+                                                            $event.target
+                                                              .multiple
+                                                              ? $$selectedVal
+                                                              : $$selectedVal[0]
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "option",
+                                                        {
+                                                          attrs: {
+                                                            value: "null"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "Choisir un poste"
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _vm._l(
+                                                        _vm.workstations,
+                                                        function(workstation) {
+                                                          return _c(
+                                                            "option",
+                                                            {
+                                                              domProps: {
+                                                                value:
+                                                                  workstation.id
+                                                              }
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "\n                                            " +
+                                                                  _vm._s(
+                                                                    workstation.id
+                                                                  ) +
+                                                                  " - " +
+                                                                  _vm._s(
+                                                                    workstation.name
+                                                                  ) +
+                                                                  "\n                                        "
+                                                              )
+                                                            ]
+                                                          )
+                                                        }
+                                                      )
+                                                    ],
+                                                    2
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("span", {
+                                                    staticClass: "focus-field"
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass: "label-field"
+                                                    },
+                                                    [_vm._v("Prépresse")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "symbol-left-field"
+                                                    },
+                                                    [
+                                                      _c("i", {
                                                         staticClass:
-                                                          "symbol-left-field"
-                                                      },
-                                                      [
-                                                        _c("i", {
-                                                          staticClass:
-                                                            "fas fa-pen-nib"
-                                                        })
-                                                      ]
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "v-validate"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(errors[0])
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                }
+                                                          "fas fa-pen-nib"
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "v-validate"
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  )
+                                                ]
                                               }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "button button-small button-primary",
-                                            staticStyle: {
-                                              "margin-left": "auto"
-                                            },
-                                            attrs: {
-                                              type: "submit",
-                                              disabled: invalid
                                             }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                    Sauvegarder\n                                    "
-                                            ),
-                                            _c("i", {
-                                              staticClass: "fas fa-save"
-                                            })
-                                          ]
+                                          ],
+                                          null,
+                                          true
                                         )
-                                      ],
-                                      1
-                                    )
-                                  ]
-                                )
-                              ]
-                            }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("ValidationProvider", {
+                                        staticClass: "wrap-field h-50",
+                                        staticStyle: { height: "auto" },
+                                        attrs: {
+                                          tag: "div",
+                                          name: "head_quotation"
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                return [
+                                                  _c("textarea", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.company
+                                                            .head_quotation,
+                                                        expression:
+                                                          "company.head_quotation"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "field editable",
+                                                    class: {
+                                                      hasValue:
+                                                        _vm.company
+                                                          .head_quotation,
+                                                      "input-error": errors[0]
+                                                    },
+                                                    attrs: {
+                                                      autocomplete: "off"
+                                                    },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.company
+                                                          .head_quotation
+                                                    },
+                                                    on: {
+                                                      keydown:
+                                                        _vm.textareaAutosize,
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.company,
+                                                          "head_quotation",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", {
+                                                    staticClass: "focus-field"
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass: "label-field"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Texte en-tête de devis"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "symbol-left-field"
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-file-alt"
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "v-validate"
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c("ValidationProvider", {
+                                        staticClass: "wrap-field h-50",
+                                        staticStyle: { height: "auto" },
+                                        attrs: {
+                                          tag: "div",
+                                          name: "head_quotation"
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                return [
+                                                  _c("textarea", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.company
+                                                            .foot_quotation,
+                                                        expression:
+                                                          "company.foot_quotation"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "field editable",
+                                                    class: {
+                                                      hasValue:
+                                                        _vm.company
+                                                          .foot_quotation,
+                                                      "input-error": errors[0]
+                                                    },
+                                                    attrs: {
+                                                      autocomplete: "off"
+                                                    },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.company
+                                                          .foot_quotation
+                                                    },
+                                                    on: {
+                                                      keydown:
+                                                        _vm.textareaAutosize,
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.company,
+                                                          "foot_quotation",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", {
+                                                    staticClass: "focus-field"
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass: "label-field"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Texte en pied de devis"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "symbol-left-field"
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-file-alt"
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "v-validate"
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "button button-small button-primary",
+                                          staticStyle: {
+                                            "margin-left": "auto"
+                                          },
+                                          attrs: {
+                                            type: "submit",
+                                            disabled: invalid
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                    Sauvegarder\n                                    "
+                                          ),
+                                          _c("i", {
+                                            staticClass: "fas fa-save"
+                                          })
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              )
+                            ]
                           }
-                        ],
-                        null,
-                        false,
-                        3719205699
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c("ValidationObserver", {
-                      attrs: { tag: "div" },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(ref) {
-                              var invalid = ref.invalid
-                              var passes = ref.passes
-                              return [
-                                _vm.user.admin
-                                  ? _c("form", {
-                                      attrs: { enctype: "multipart/form-data" },
-                                      on: {
-                                        submit: function($event) {
-                                          $event.preventDefault()
-                                          return passes(_vm.saveCompany)
-                                        }
-                                      }
-                                    })
-                                  : _vm._e()
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        false,
-                        2557568493
-                      )
-                    })
-                  ],
-                  1
-                )
-              : _vm._e()
-          ],
-          1
-        ),
+                        }
+                      ],
+                      null,
+                      false,
+                      238664940
+                    )
+                  })
+                ],
+                1
+              )
+            : _c("div")
+        ]),
         _vm._v(" "),
         _c(
           "form",
@@ -55282,41 +55186,17 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         }(),
         saveCompany: function saveCompany(context, credentials) {
             // delete axios.defaults.headers.common["Content-Type"];
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = credentials.formData.keys()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var key = _step.value;
-
-                    console.log(key);
-                }
-                // TODO: file doen't work
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
+            // for (var key of credentials.formData.keys()) {
+            //     console.log(key);
+            // }
+            // TODO: file doen't work
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/profile/company', { // profile.updateCompany
-                    prepress: credentials.formData.get("prepress"),
-                    winder: credentials.formData.get("winder"),
-                    logo: credentials.formData.get("images[]")
+                    company: credentials.company
                 }).then(function (response) {
                     console.log(response);
-                    // context.commit("setCompany", response.data);
-                    // resolve(response);
+                    context.commit("setCompany", response.data);
+                    resolve(response);
                 }).catch(function (error) {
                     console.log(error);
                     reject(error);
@@ -58799,7 +58679,7 @@ exports = module.exports = __webpack_require__(1)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "/*@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');*/\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      width: 15rem;\n}\n.wrap-padding .wrap-main-navigation .wrap-right-part-navigation {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n}\n.wrap-padding .wrap-main-navigation .wrap-right-part-navigation .link-profile {\n        margin-right: 3rem;\n}\n.wrap-padding .wrap-main-navigation .wrap-right-part-navigation .link-profile [class^='fa'] {\n          margin-right: 1rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.price-quotation {\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.8rem;\n  line-height: 2.2rem;\n  color: #91A8D0;\n  letter-spacing: 0.1em;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-fade-enter-active {\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n  padding: 0 10rem;\n}\n.modal-container {\n  position: relative;\n  width: 100%;\n  max-width: 150rem;\n  margin: 0 auto;\n  padding: 3rem;\n  background-position: bottom right;\n  background-size: auto 25rem;\n  background-repeat: no-repeat;\n  background-color: #fff;\n  border-top: 3rem solid #91A8D0;\n  border-radius: 2rem 1rem 3rem 1rem;\n  -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n          box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.modal-container .btn-close {\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    background-color: #62799F;\n    border: none;\n    border-radius: 290486px;\n    cursor: pointer;\n    pointer-events: auto;\n    display: inline-block;\n    -webkit-box-flex: 0;\n        -ms-flex-positive: 0;\n            flex-grow: 0;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    font-size: 1rem;\n    width: 2rem;\n    height: 2rem;\n    max-height: 2rem;\n    max-width: 2rem;\n    min-height: 2rem;\n    min-width: 2rem;\n    outline: 0;\n    vertical-align: top;\n    position: absolute;\n    right: .5rem;\n    top: -2.5rem;\n    font-weight: 700;\n    color: #fff;\n}\n.modal-container .btn-close:before {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: .2rem;\n      width: 50%;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.modal-container .btn-close:after {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: 50%;\n      width: .2rem;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.modal-container .modal-header {\n    padding-bottom: 1rem;\n    border-bottom: 0.1rem solid #62799F;\n}\n.modal-container .modal-body {\n    margin: 20px 0;\n}\n.modal-container .modal-default-button {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 2.5rem;\n  height: 2.5rem;\n}\n.lds-ring div {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 2.5rem;\n  height: 2.5rem;\n  border: 0.3rem solid #91A8D0;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #91A8D0 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"], [class*=\" icon-\"] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom:before {\n  content: \"\\E904\";\n}\n.icon-interior-left:before {\n  content: \"\\E905\";\n}\n.icon-interior-right:before {\n  content: \"\\E906\";\n}\n.icon-interior-top:before {\n  content: \"\\E907\";\n}\nbody {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  max-width: 150rem;\n  margin: 0 auto;\n}\na {\n  font-family: \"Ubuntu\", Arial, Verdana, \"Trebuchet MS\", sans-serif;\n  color: #91A8D0;\n  text-transform: uppercase;\n  transition: all 0.4s;\n  -webkit-transition: all 0.4s;\n  -o-transition: all 0.4s;\n  -moz-transition: all 0.4s;\n}\na:link, a:visited {\n    text-decoration: none;\n}\na:hover, a:active, a:focus {\n    font-weight: 700;\n    color: #C49998;\n}\n.wrap-padding {\n  width: 100%;\n  min-height: 100%;\n  padding: 2rem;\n}\n.wrap-padding .wrap-main-navigation {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 3rem;\n}\n.wrap-padding .wrap-main-navigation .main-logo {\n      max-width: 15rem;\n      max-height: 6.5rem;\n}\n.wrap-padding .wrap-main-navigation .wrap-right-part-navigation {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n}\n.wrap-padding .wrap-main-navigation .wrap-right-part-navigation .link-profile {\n        margin-right: 3rem;\n}\n.wrap-padding .wrap-main-navigation .wrap-right-part-navigation .link-profile [class^='fa'] {\n          margin-right: 1rem;\n}\n.wrap-padding > div {\n    min-height: 100%;\n}\n.wrap-padding .wrap-main-content {\n    margin-bottom: 8rem !important;\n}\n.mobile-hidden {\n  display: none;\n}\n.no-footer + .wrap-main-mobile-footer {\n  display: none;\n}\n.page-main-title {\n  font-weight: 700;\n  font-size: 3rem;\n  line-height: 3.4rem;\n  color: #91A8D0;\n  letter-spacing: -0.02em;\n}\n.baseline-main-title {\n  font-family: \"cooper_hewittlight\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  color: #263238;\n  letter-spacing: 0.1em;\n}\n.page-subtitle {\n  font-weight: 700;\n  font-size: 2rem;\n  line-height: 2.4rem;\n  color: #62799F;\n}\n.price-quotation {\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.8rem;\n  line-height: 2.2rem;\n  color: #91A8D0;\n  letter-spacing: 0.1em;\n}\n.tag {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: .5rem 1rem;\n  min-width: 3.5rem;\n  font-family: \"cooper_hewittmedium\", \"Courier New\", Georgia, \"Times New Roman\", serif;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  color: #6D4C41;\n  background-color: #F7CAC9;\n  border-radius: 1rem;\n  letter-spacing: 0.1em;\n  white-space: nowrap;\n}\n.tag .tag-info {\n    color: #6D4C41;\n    background-color: #F7CAC9;\n}\n.info {\n  width: 100%;\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n}\n.info.info-error {\n    color: #C49998;\n}\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition-duration: 0.3s;\n          transition-duration: 0.3s;\n  -webkit-transition-property: opacity;\n  transition-property: opacity;\n  -webkit-transition-timing-function: ease;\n          transition-timing-function: ease;\n}\n.fade-enter,\n.fade-leave-active {\n  opacity: 0;\n}\n.slide-fade-enter-active {\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\n  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.slide-left-enter-active,\n.slide-left-leave-active,\n.slide-right-enter-active,\n.slide-right-leave-active {\n  -webkit-transition-duration: 0.5s;\n          transition-duration: 0.5s;\n  -webkit-transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, -webkit-transform;\n  transition-property: height, opacity, transform;\n  transition-property: height, opacity, transform, -webkit-transform;\n  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);\n  overflow: hidden;\n}\n.slide-left-enter,\n.slide-right-leave-active {\n  opacity: 0;\n  -webkit-transform: translate(2em, 0);\n          transform: translate(2em, 0);\n}\n.slide-left-leave-active,\n.slide-right-enter {\n  opacity: 0;\n  -webkit-transform: translate(-2em, 0);\n          transform: translate(-2em, 0);\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: table-cell;\n  vertical-align: middle;\n  padding: 0 10rem;\n}\n.modal-container {\n  position: relative;\n  width: 100%;\n  max-width: 150rem;\n  margin: 0 auto;\n  padding: 3rem;\n  background-position: bottom right;\n  background-size: auto 25rem;\n  background-repeat: no-repeat;\n  background-color: #fff;\n  border-top: 3rem solid #91A8D0;\n  border-radius: 2rem 1rem 3rem 1rem;\n  -webkit-box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n          box-shadow: 0 0 1rem rgba(98, 121, 159, 0.4);\n  -webkit-transition: all .3s ease;\n  transition: all .3s ease;\n}\n.modal-container .btn-close {\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    background-color: #62799F;\n    border: none;\n    border-radius: 290486px;\n    cursor: pointer;\n    pointer-events: auto;\n    display: inline-block;\n    -webkit-box-flex: 0;\n        -ms-flex-positive: 0;\n            flex-grow: 0;\n    -ms-flex-negative: 0;\n        flex-shrink: 0;\n    font-size: 1rem;\n    width: 2rem;\n    height: 2rem;\n    max-height: 2rem;\n    max-width: 2rem;\n    min-height: 2rem;\n    min-width: 2rem;\n    outline: 0;\n    vertical-align: top;\n    position: absolute;\n    right: .5rem;\n    top: -2.5rem;\n    font-weight: 700;\n    color: #fff;\n}\n.modal-container .btn-close:before {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: .2rem;\n      width: 50%;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.modal-container .btn-close:after {\n      background-color: #fff;\n      content: \"\";\n      display: block;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      height: 50%;\n      width: .2rem;\n      -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -webkit-transform-origin: center center;\n      transform-origin: center center;\n}\n.modal-container .modal-header {\n    padding-bottom: 1rem;\n    border-bottom: 0.1rem solid #62799F;\n}\n.modal-container .modal-body {\n    margin: 20px 0;\n}\n.modal-container .modal-default-button {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n:-webkit-autofill {\n  -webkit-animation-name: onAutoFillStart;\n          animation-name: onAutoFillStart;\n}\n:not(:-webkit-autofill) {\n  -webkit-animation-name: onAutoFillCancel;\n          animation-name: onAutoFillCancel;\n}\n@-webkit-keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillStart {\nfrom {\n}\nto {\n}\n}\n@-webkit-keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n@keyframes onAutoFillCancel {\nfrom {\n}\nto {\n}\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 2.5rem;\n  height: 2.5rem;\n}\n.lds-ring div {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 2.5rem;\n  height: 2.5rem;\n  border: 0.3rem solid #91A8D0;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #91A8D0 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n.wrap-main-mobile-footer {\n  background-color: #fff;\n  -webkit-box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n          box-shadow: 0 0 0.5rem rgba(38, 50, 56, 0.1);\n  border-radius: 3rem 3rem 0 0;\n  width: 100%;\n  height: 7rem;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  z-index: 5;\n}\n.wrap-main-mobile-footer > * {\n    width: 100%;\n}\n.wrap-main-mobile-footer .wrap-main-menu {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    width: 100%;\n    padding: 0 1.5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu:hover, .wrap-main-mobile-footer .wrap-main-menu .link-menu:active, .wrap-main-mobile-footer .wrap-main-menu .link-menu:focus {\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .link-menu .fas {\n      margin-right: .5rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active {\n      font-weight: 700;\n      color: #C49998;\n      padding: 1rem 1.5rem;\n      background-color: rgba(247, 202, 201, 0.25);\n      border-radius: 4rem;\n}\n.wrap-main-mobile-footer .wrap-main-menu .router-link-exact-active [class^='fa'] {\n        margin-right: 1rem;\n}\n.wrap-main-footer {\n  font-size: 1.4rem;\n  line-height: 1.8rem;\n  text-align: center;\n  border-top: 0.075rem solid #263238;\n  padding: 1.5rem 4rem 0 4rem;\n}\n@media screen and (min-width: 680px) {\n.wrap-padding {\n    padding: 3rem;\n}\n.mobile-hidden {\n    display: initial;\n}\n}\n", ""]);
 
 // exports
 
@@ -58812,8 +58692,13 @@ exports.push([module.i, "/*@import url('https://cdnjs.cloudflare.com/ajax/libs/a
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_style_loader_css_loader_cxlt_vue2_toastr_dist_css_cxlt_vue2_toastr_css__ = __webpack_require__(280);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_style_loader_css_loader_cxlt_vue2_toastr_dist_css_cxlt_vue2_toastr_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__vue_style_loader_css_loader_cxlt_vue2_toastr_dist_css_cxlt_vue2_toastr_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Spinner_vue__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Spinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Spinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Loader__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Loader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Loader__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -58874,11 +58759,11 @@ var DEFAULT_TRANSITION = 'fade';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        Spinner: __WEBPACK_IMPORTED_MODULE_1__Spinner_vue___default.a
+        Loader: __WEBPACK_IMPORTED_MODULE_1__Loader___default.a
     },
     data: function data() {
         return {
-            loading: false,
+            isLoading: false,
             transitionName: DEFAULT_TRANSITION,
             routes: [{
                 name: 'Accueil',
@@ -58898,12 +58783,18 @@ var DEFAULT_TRANSITION = 'fade';
     created: function created() {
         var _this = this;
 
-        // this.loading = true;
+        this.isLoading = true;
 
         window.addEventListener("resize", this.handleWindowResize);
 
-        this.$store.dispatch('getQuote').then(function () {
-            _this.isViewed();
+        // this.$store.dispatch('getQuote').then(() => {
+        //     this.isViewed();
+        // });
+
+        this.$store.dispatch("getCompany").then(function () {
+            _this.isLoading = false;
+        }).catch(function () {
+            _this.isLoading = false;
         });
 
         this.$router.beforeEach(function (to, from, next) {
@@ -58933,8 +58824,8 @@ var DEFAULT_TRANSITION = 'fade';
                 return this.$store.state.windowWidth;
             }
         },
-        quote: function quote() {
-            return this.$store.state.quote;
+        company: function company() {
+            return this.$store.state.company;
         },
         user: function user() {
             return this.$store.state.user;
@@ -58949,24 +58840,23 @@ var DEFAULT_TRANSITION = 'fade';
                 windowSize: e.currentTarget.innerWidth
             });
         },
-        isViewed: function isViewed() {
+
+        // isViewed() {
+        //     let quote = this.quote.quote;
+        //     let numberWords = quote.split(' ');
+        //     let readTime = numberWords.length * 300;
+        //
+        //     setTimeout(() => {
+        //         this.loading = false;
+        //     }, readTime);
+        // },
+        logout: function logout() {
             var _this2 = this;
 
-            var quote = this.quote.quote;
-            var numberWords = quote.split(' ');
-            var readTime = numberWords.length * 300;
-
-            setTimeout(function () {
-                _this2.loading = false;
-            }, readTime);
-        },
-        logout: function logout() {
-            var _this3 = this;
-
             this.$store.dispatch('logout').then(function (resp) {
-                _this3.$router.push({ name: "login" });
+                _this2.$router.push({ name: "login" });
             }).catch(function (error) {
-                _this3.$router.push({ name: "login" });
+                _this2.$router.push({ name: "login" });
             });
         }
     }
@@ -59013,165 +58903,11 @@ exports.push([module.i, ".toast-title{font-weight:700}.toast-message{-ms-word-wr
 
 
 /***/ }),
-/* 282 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(283)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(285)
-/* template */
-var __vue_template__ = __webpack_require__(286)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-7ae326fe"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Spinner.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7ae326fe", Component.options)
-  } else {
-    hotAPI.reload("data-v-7ae326fe", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 283 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(284);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("a8c9b05e", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ae326fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Spinner.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 284 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap);", ""]);
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-light-webfont.svg#cooper_hewittlight\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittmedium';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-medium-webfont.svg#cooper_hewittmedium\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'cooper_hewittbold';\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot\");\n  src: url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.eot?#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff2\") format(\"woff2\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.woff\") format(\"woff\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.ttf\") format(\"truetype\"), url(\"/assets/fonts/CooperHewitt/cooperhewitt-bold-webfont.svg#cooper_hewittbold\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'icomoon';\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74\");\n  src: url(\"/assets/fonts/IconFont/icomoon.eot?s2kg74#iefix\") format(\"embedded-opentype\"), url(\"/assets/fonts/IconFont/icomoon.ttf?s2kg74\") format(\"truetype\"), url(\"/assets/fonts/IconFont/icomoon.woff?s2kg74\") format(\"woff\"), url(\"/assets/fonts/IconFont/icomoon.svg?s2kg74#icomoon\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: block;\n}\n[class^=\"icon-\"][data-v-7ae326fe], [class*=\" icon-\"][data-v-7ae326fe] {\n  /* use !important to prevent issues with browser extensions that change fonts */\n  font-family: 'icomoon' !important;\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  line-height: 1;\n  /* Better Font Rendering =========== */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-exterior-bottom[data-v-7ae326fe]:before {\n  content: \"\\E900\";\n}\n.icon-exterior-left[data-v-7ae326fe]:before {\n  content: \"\\E901\";\n}\n.icon-exterior-right[data-v-7ae326fe]:before {\n  content: \"\\E902\";\n}\n.icon-exterior-top[data-v-7ae326fe]:before {\n  content: \"\\E903\";\n}\n.icon-interior-bottom[data-v-7ae326fe]:before {\n  content: \"\\E904\";\n}\n.icon-interior-left[data-v-7ae326fe]:before {\n  content: \"\\E905\";\n}\n.icon-interior-right[data-v-7ae326fe]:before {\n  content: \"\\E906\";\n}\n.icon-interior-top[data-v-7ae326fe]:before {\n  content: \"\\E907\";\n}\n.wrap-spinner[data-v-7ae326fe] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-flow: row wrap;\n          flex-flow: row wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.wrap-spinner .main-image[data-v-7ae326fe] {\n    width: 100%;\n    margin-bottom: 2rem;\n}\n.wrap-spinner .wrap-quote[data-v-7ae326fe] {\n    width: 100%;\n    position: relative;\n    margin: 3rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe] {\n      font-size: 4rem;\n      color: #F7CAC9;\n      position: absolute;\n      z-index: -1;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(1) {\n        top: -3rem;\n        left: -2rem;\n}\n.wrap-spinner .wrap-quote [class^='fa'][data-v-7ae326fe]:nth-of-type(2) {\n        bottom: 0;\n        right: -2rem;\n}\n.wrap-spinner .wrap-quote .author[data-v-7ae326fe] {\n      margin-top: 1rem;\n      margin-right: 2rem;\n      text-align: right;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 285 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['quote']
-});
-
-/***/ }),
-/* 286 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "wrap-spinner" }, [
-    _c("img", {
-      staticClass: "main-image",
-      attrs: {
-        src: "/assets/img/undraw_printing_invoices_5r4r.svg",
-        alt: "Illustration de la page de connexion"
-      }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "wrap-quote" }, [
-      _c("i", { staticClass: "fas fa-angle-double-left" }),
-      _vm._v(" "),
-      _c("p", { staticClass: "quote page-subtitle" }, [
-        _c("q", [_vm._v(_vm._s(_vm.quote.quote))])
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "author baseline-main-title" }, [
-        _vm._v(_vm._s(_vm.quote.author))
-      ]),
-      _vm._v(" "),
-      _c("i", { staticClass: "fas fa-angle-double-right" })
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7ae326fe", module.exports)
-  }
-}
-
-/***/ }),
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
 /* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -59179,7 +58915,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.loading
+  return !_vm.isLoading
     ? _c(
         "div",
         { staticClass: "wrap-padding" },
@@ -59199,44 +58935,52 @@ var render = function() {
                       }
                     },
                     [
-                      _c("img", {
-                        staticClass: "main-logo",
-                        attrs: {
-                          src: "/assets/img/logo-ethic-software.png",
-                          alt: "Logotype Ethic Software"
-                        }
-                      })
+                      _vm.company.logo
+                        ? _c("img", {
+                            staticClass: "main-logo",
+                            attrs: {
+                              src: "/assets/img/" + _vm.company.logo,
+                              alt: "Logotype de l'entreprise"
+                            }
+                          })
+                        : _c("img", {
+                            staticClass: "main-logo",
+                            attrs: {
+                              src: "/assets/img/logo-ethic-software.png",
+                              alt: "Logotype Ethic Software"
+                            }
+                          })
                     ]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "wrap-right-part-navigation" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "link-profile",
-                          attrs: {
-                            to: { name: "profile" },
-                            tag: "a",
-                            title: "Accéder à mon compte"
-                          }
-                        },
+                  _vm.loggedIn && _vm.user.admin
+                    ? _c(
+                        "div",
+                        { staticClass: "wrap-right-part-navigation" },
                         [
-                          _c("i", { staticClass: "fas fa-user" }),
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(_vm.user.name) +
-                              " " +
-                              _vm._s(_vm.user.surname) +
-                              "\n            "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.loggedIn
-                        ? _c(
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "link-profile",
+                              attrs: {
+                                to: { name: "profile" },
+                                tag: "a",
+                                title: "Accéder à mon compte"
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-user" }),
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(_vm.user.name) +
+                                  " " +
+                                  _vm._s(_vm.user.surname) +
+                                  "\n            "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
                             "form",
                             {
                               on: {
@@ -59262,10 +59006,10 @@ var render = function() {
                               )
                             ]
                           )
-                        : _vm._e()
-                    ],
-                    1
-                  )
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               )
@@ -59320,7 +59064,7 @@ var render = function() {
         ],
         1
       )
-    : _c("Spinner", { attrs: { quote: _vm.quote } })
+    : _c("Loader")
 }
 var staticRenderFns = []
 render._withStripped = true
