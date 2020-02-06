@@ -11,11 +11,57 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+
+$router->group(['prefix' => 'api'], function ($router) {
+    $router->get('/quote', 'QuotationController@getQuote');
+
+
+    $router->group(['prefix' => 'auth'], function ($router) {
+        $router->post('/login', 'AuthController@login');
+
+//        $router->group(['middleware' => 'auth'], function ($router) {
+            $router->group(['prefix' => 'quotations'], function ($router) {
+                $router->post('/autocomplete/customers', 'ApiController@searchCustomersForAutocomplete');
+                $router->post('/customers', 'ApiController@getCustomers');
+                $router->post('/search/contacts', 'ApiController@getThirdContacts');
+                $router->post('/third/labels', 'ApiController@getThirdLabels');
+                $router->post('/printings', 'ApiController@getPrintings');
+                $router->post('/substrates/search/criteria', 'ApiController@getSubstratesSearchCriteria');
+                $router->post('/substrates/search/autocomplete', 'ApiController@searchSubstratesForAutocomplete');
+                $router->post('/autocomplete/substrates', 'ApiController@autocompleteSubstrates');
+                $router->post('/substrates', 'ApiController@getFilteredSubstrates');
+                $router->post('/finishings', 'ApiController@getFinishings');
+                $router->post('/finishings/reworkings', 'ApiController@getReworkings');
+                $router->get('/{page}', 'QuotationController@index');
+                $router->post('/', 'QuotationController@store');
+                //            $router->get('/{id}', 'QuotationController@show');
+                $router->post('/price', 'QuotationController@getPrice');
+                $router->get('/{id}/edit/{company}', 'QuotationController@edit');
+                $router->post('/{id}', 'QuotationController@update');
+                $router->delete('/{id}', 'QuotationController@destroy');
+
+
+                $router->post('/{id}/email', 'QuotationController@sendEmail');
+
+
+                //            $router->get('/substrates', 'QuotationController@getSubstrates');
+    //            $router->get('/consumables', 'QuotationController@getConsumables');
+    //            $router->get('/cuttings', 'QuotationController@getCuttings');
+            });
+
+        $router->group(['prefix' => 'profile'], function ($router) {
+            $router->post('/workstations', 'ProfileController@getWorkstations');
+            $router->get('/company', 'ProfileController@getCompany');
+            $router->post('/company', 'ProfileController@updateCompany');
+        });
+        $router->post('/logout', 'AuthController@logout');
+
+//        });
+        $router->get('/quotations/{id}/pdf/{company}', 'QuotationController@generatePDF');
+    });
 });
 
 
-//$router->get('/{route:.*}/', function ()  {
-//    return view('app');
-//});
+$router->get('/{route:.*}/', function ()  {
+    return view('app');
+});

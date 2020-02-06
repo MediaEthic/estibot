@@ -1,5 +1,8 @@
 <?php
 
+use Faker\Generator as Faker;
+use Illuminate\Support\Str;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -11,9 +14,12 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'surname' => $faker->name,
         'email' => $faker->email,
+        'password' => app('hash')->make('secret'),
+        'remember_token' => Str::random(10),
     ];
 });
