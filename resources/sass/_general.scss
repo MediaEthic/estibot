@@ -1,11 +1,87 @@
+// aside
+.wrap-toggle {
+    position: fixed;
+    bottom: 10rem;
+    right: 2rem;
+
+    #menuToggle {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #menuToggle input
+    {
+        position: absolute;
+        opacity: 0;
+    }
+
+    #menuToggle label
+    {
+        cursor: pointer;
+        z-index: 1;
+        width: 5rem;
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: $white;
+        background-color: $secondary-color;
+        border-radius: 50%;
+    }
+
+    #menuToggle input:checked ~ span
+    {
+        opacity: 1;
+        transform: rotate(45deg) translate(-3px, -1px);
+        background: #36383F;
+    }
+
+    .content-filters {
+        position: absolute;
+        width: calc(100vw);
+        height: calc(100vh - 15.4rem);
+        padding: 1rem 2rem;
+        box-shadow: 0 0 .5rem rgba($primary-color-dark, 0.2);
+        background-color: $white;
+        border-radius: 3rem 3rem 0 0;
+        -webkit-font-smoothing: antialiased;
+        transform-origin: 0 0;
+        transform: translate(100%, 0);
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }
+
+    .content-filters > * {
+        transition-delay: 2s;
+    }
+
+    #menuToggle input:checked ~ .content-filters {
+        transform: translate(-80%, -80%);
+    }
+}
+
+
+
+
+
 // Recap summary
 .wrap-summary {
     //overflow-y:scroll;
     //overflow-x:hidden;
     width: 100%;
-    height: 100%;
+
     position: fixed;
-    top: calc(100vh - 14rem);
+    bottom: 4rem;
+    height: 9.4rem;
+    overflow: hidden;
+
+    //height: 100%;
+    //position: fixed;
+    //top: calc(100vh - 14rem);
     background-color: #fff;
     z-index: 1;
     border-radius: 3rem 3rem 0 0 ;
@@ -15,6 +91,7 @@
     transition: 0.5s;
 
     &.pull {
+        height: 100%;
         top: 8.4rem;
     }
 
