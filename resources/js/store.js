@@ -614,19 +614,17 @@ export default new Vuex.Store({
         },
         saveCompany(context, credentials) {
             // delete axios.defaults.headers.common["Content-Type"];
-            for (var key of credentials.formData.keys()) {
-                console.log(key);
-            }
+            // for (var key of credentials.formData.keys()) {
+            //     console.log(key);
+            // }
             // TODO: file doen't work
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/profile/company', { // profile.updateCompany
-                    prepress: credentials.formData.get("prepress"),
-                    winder: credentials.formData.get("winder"),
-                    logo: credentials.formData.get("images[]"),
+                    company: credentials.company,
                 }).then(response => {
                     console.log(response);
-                    // context.commit("setCompany", response.data);
-                    // resolve(response);
+                    context.commit("setCompany", response.data);
+                    resolve(response);
                 }).catch(error => {
                     console.log(error);
                     reject(error);

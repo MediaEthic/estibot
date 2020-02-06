@@ -31,34 +31,31 @@ class ProfileRepository
 
     public function updateCompany(Array $datas)
     {
+        $company = $datas['company'];
         $model = Company::findOrFail(1);
-        try {
-            if ($datas['prepress'] != "null" && !empty($datas['prepress'])) {
-                $model->prepress = $datas['prepress'];
-            } else {
-                $model->prepress = null;
-            }
+        if ($company['prepress'] != "null" && !empty($company['prepress'])) {
+            $model->prepress = $company['prepress'];
+        } else {
+            $model->prepress = null;
+        }
 
-            if ($datas['winder'] != "null" && !empty($datas['winder'])) {
-                $model->winder = $datas['winder'];
-            } else {
-                $model->winder = null;
-            }
+        if ($company['winder'] != "null" && !empty($company['winder'])) {
+            $model->winder = $company['winder'];
+        } else {
+            $model->winder = null;
+        }
 
-            if (count($datas['logo'])) {
-                foreach ($datas['logo'] as $logo) {
-                    $logo->store('images');
-                }
-            }
+        $model->head_quotation = $company['head_quotation'];
+        $model->foot_quotation = $company['foot_quotation'];
+
+//            if (count($datas['logo'])) {
+//                foreach ($datas['logo'] as $logo) {
+//                    $logo->store('images');
+//                }
+//            }
 
             $model->save();
             return $model;
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the settings cannot be updated'
-            ], 500);
-        }
 
     }
 }

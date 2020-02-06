@@ -14,7 +14,6 @@
                     </span>
                 <ValidationProvider tag="div"
                                     class="wrap-field h-50"
-                                    rules="required"
                                     name="finishing type"
                                     v-slot="{ errors }">
                     <span class="btn-right-field" v-if="finishingsAreLoading">

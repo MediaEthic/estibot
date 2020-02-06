@@ -9,7 +9,7 @@
             </div>
 
             <div v-if="!loading">
-                <section v-if="quotations.data" class="wrap-list-quotations">
+                <section v-if="quotations.data.length || Object.keys(quotations.data).length" class="wrap-list-quotations">
                     <router-link v-if="!isMobile"
                                  class="create-new-quotation"
                                  tag="div"
@@ -39,44 +39,46 @@
                             <p class="third-quotation">{{ quotation.third.name }}</p>
                             <div class="wrap-end-quotation">
                                 <p class="price-quotation">{{ quotation.thousand.toFixed(2) }}<span class="symbol-price">€</span></p>
-                                <div class="wrap-actions-quotation">
-                                    <input :id="'options-toggler' + quotation.id" class="options-toggler" type="checkbox">
-                                    <label :for="'options-toggler' + quotation.id" class="fas fa-cog"></label>
-                                    <ul class="list-actions">
-                                        <li class="action-item"><a href="#" class="fas fa-print"></a></li>
-                                        <li class="action-item"><a href="#" class="fas fa-edit"></a></li>
-<!--                                        <li class="action-item"><a href="#" class="fas fa-copy"></a></li>-->
-                                        <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt"></i></li>
-                                    </ul>
-                                </div>
+<!--                                <div class="wrap-actions-quotation">-->
+<!--                                    <input :id="'options-toggler' + quotation.id" class="options-toggler" type="checkbox">-->
+<!--                                    <label :for="'options-toggler' + quotation.id" class="fas fa-cog"></label>-->
+<!--                                    <ul class="list-actions">-->
+<!--                                        <li class="action-item"><a href="#" class="fas fa-print"></a></li>-->
+<!--                                        <li class="action-item"><a href="#" class="fas fa-edit"></a></li>-->
+<!--&lt;!&ndash;                                        <li class="action-item"><a href="#" class="fas fa-copy"></a></li>&ndash;&gt;-->
+<!--                                        <li class="action-item" @click="destroyQuotation(quotation.id)"><i class="fas fa-trash-alt"></i></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
                             </div>
                         </router-link>
                     </router-link>
 
                     <Pagination :pagination="pagination" v-on:pagechanged="fetchQuotations"></Pagination>
 
-                    <aside v-if="windowWidth < 576" class="wrap-filters">
-                        <input id="filters-toggler" class="filters-toggler" v-model="filtersChecked" type="checkbox">
-                        <label for="filters-toggler" :class="this.filtersChecked ? 'fas fa-times' : 'fas fa-sliders-h'"></label>
-                        <div class="content-filters">
-                            <h3 class="page-subtitle">Filtres</h3>
-                            <div class="wrap-field h-50">
-                                <span v-if="search" class="btn-right-field" @click="clearSearch">
-                                    <i class="fas fa-times"></i>
-                                </span>
-                                <input v-model.trim="search"
-                                       v-on:keyup="getCustomers()"
-                                       class="field"
-                                       :class="{ hasValue: search }"
-                                       type="text"
-                                       autocomplete="off">
+<!--                    <aside v-if="windowWidth < 576" class="wrap-toggle">-->
+<!--                        <div id="menuToggle">-->
+<!--                            <input type="checkbox" id="filters-toggler" v-model="toggle" />-->
+<!--                            <label for="filters-toggler" :class="toggle ? 'fas fa-times' : 'fas fa-sliders-h'"></label>-->
+<!--                            <div class="content-filters">-->
+<!--                                <h3 class="page-subtitle">Filtres</h3>-->
+<!--                                <div class="wrap-field h-50">-->
+<!--                                <span v-if="search" class="btn-right-field" @click="clearSearch">-->
+<!--                                    <i class="fas fa-times"></i>-->
+<!--                                </span>-->
+<!--                                    <input v-model.trim="search"-->
+<!--                                           v-on:keyup="getCustomers()"-->
+<!--                                           class="field"-->
+<!--                                           :class="{ hasValue: search }"-->
+<!--                                           type="text"-->
+<!--                                           autocomplete="off">-->
 
-                                <span class="focus-field"></span>
-                                <label class="label-field">Rechercher un client</label>
-                                <span class="symbol-left-field"><i class="fas fa-search"></i></span>
-                            </div>
-                        </div>
-                    </aside>
+<!--                                    <span class="focus-field"></span>-->
+<!--                                    <label class="label-field">Rechercher un client</label>-->
+<!--                                    <span class="symbol-left-field"><i class="fas fa-search"></i></span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </aside>-->
                 </section>
                 <router-link v-else
                              :to="{ name: 'quotations.create' }"
@@ -123,16 +125,16 @@
                         <p class="third-quotation">Nom du donneur d'ordre</p>
                         <div class="wrap-end-quotation">
                             <p class="price-quotation">123.94<span class="symbol-price">€</span></p>
-                            <div class="wrap-actions-quotation">
-                                <input :id="'options-toggler' + index" class="options-toggler" type="checkbox">
-                                <label :for="'options-toggler' + index" class="fas fa-cog"></label>
-                                <ul class="list-actions">
-                                    <li class="action-item"><i class="fas fa-print"></i></li>
-                                    <li class="action-item"><i class="fas fa-edit"></i></li>
-                                    <li class="action-item"><i class="fas fa-copy"></i></li>
-                                    <li class="action-item"><i class="fas fa-trash-alt"></i></li>
-                                </ul>
-                            </div>
+<!--                            <div class="wrap-actions-quotation">-->
+<!--                                <input :id="'options-toggler' + index" class="options-toggler" type="checkbox">-->
+<!--                                <label :for="'options-toggler' + index" class="fas fa-cog"></label>-->
+<!--                                <ul class="list-actions">-->
+<!--                                    <li class="action-item"><i class="fas fa-print"></i></li>-->
+<!--                                    <li class="action-item"><i class="fas fa-edit"></i></li>-->
+<!--                                    <li class="action-item"><i class="fas fa-copy"></i></li>-->
+<!--                                    <li class="action-item"><i class="fas fa-trash-alt"></i></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </article>
@@ -164,6 +166,7 @@
         data() {
             return {
                 loading: true,
+                toggle: false,
                 search: "",
                 pagination: {},
                 filtersChecked: false
@@ -183,7 +186,6 @@
             }
         },
         created() {
-            console.log("Home component created");
             if (this.dataSuccessMessage !== undefined) {
                 this.$toast.success({
                     title: this.dataSuccessMessage,
@@ -204,12 +206,13 @@
                 return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             },
             thirdType(thirdType) {
-                if (thirdType === "new") {
-                    return "P";
+                if (thirdType === "ethic") {
+                    return "E";
+                } else {
+                    return "W";
                 }
             },
             makePagination(meta) {
-                console.log("makePagination");
                 let pagination = {
                     current_page: meta.current_page,
                     last_page: meta.last_page,
@@ -218,22 +221,16 @@
                     total: meta.total,
                 };
 
-                console.log(pagination);
-
                 this.pagination = pagination;
                 this.loading = false;
             },
             fetchQuotations(page) {
                 this.loading = true;
                 page = page || 1;
-                console.log("fetchQuotations");
-                console.log(page);
                 this.$store.dispatch("getQuotations", {
                     page: parseInt(page)
                 }).then(res => {
-                    console.log("fetchQuotations");
                     this.quotations = this.$store.state.quotations;
-                    console.log(this.quotations);
                     this.makePagination(this.$store.state.quotations);
                 }).catch(() => {
                     this.loading = false;
@@ -249,8 +246,7 @@
                 this.$store.dispatch("destroyQuotation", {
                     id: id
                 }).then(res => {
-                    console.log(res);
-                }).catch(err => console.log(err));
+                }).catch(err => console.log(err.response));
             }
         }
     }
@@ -506,62 +502,6 @@
             .text-new-quotation {
                 width: 100%;
                 text-transform: uppercase;
-            }
-        }
-
-
-        .wrap-filters {
-            width: 100%;
-            z-index: 2;
-
-            .filters-toggler {
-                position: absolute;
-                left: -9999px;
-
-                & + label {
-                    position: fixed;
-                    right: 2rem;
-                    bottom: 9rem;
-                    font-size: 2rem;
-                    color: $white;
-                    background-color: $secondary-color;
-                    border-radius: 50%;
-                    box-shadow: 0 0 1rem rgba($secondary-color, 0.25);
-                    width: 5rem;
-                    height: 5rem;
-                    z-index: 3;
-                    cursor: pointer;
-                    float: right;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    opacity: 1;
-                    transition: .2s;
-                    transition-delay: 0.6s;
-                    -webkit-user-select: none;
-                    user-select: none;
-                }
-
-                & ~ .content-filters {
-                    position: fixed;
-                    width: calc(100% - 3rem);
-                    height: 100%;
-                    padding: 2rem;
-                    box-shadow: 0 0 .5rem rgba($primary-color-dark, 0.2);
-                    background-color: $secondary-color-light;
-                    border-top-left-radius: 2rem;
-                    -webkit-font-smoothing: antialiased;
-                    transform-origin: 0% 0%;
-                    transform: translate(100%, 0);
-                    transition: transform 0.5s cubic-bezier(0.1,0.1,0.05,0.1);
-                }
-
-                &:checked {
-                    & ~ .content-filters {
-                        top: 0;
-                        right: 0;
-                    }
-                }
             }
         }
     }

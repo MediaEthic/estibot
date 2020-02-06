@@ -16,38 +16,39 @@
                 <img v-if="company.logo"
                      class="main-image"
                      :src="`/assets/img/${company.logo}`"
-                     alt="Illustration de la page de connexion"/>
+                     alt="Logotype de l'entreprise"/>
                 <img v-else
                      class="main-image"
                      src="/assets/img/undraw_profile_6l1l.svg"
                      alt="Illustration de la page de connexion"/>
             </div>
+            <p class="baseline-main-title">{{ user.name }} {{ user.surname }}</p>
 
             <div class="wrap-central">
-                <ValidationObserver class="left-part" tag="div" v-slot="{ invalid, passes }">
-                    <form class="wrap-main-form" enctype="multipart/form-data" @submit.prevent="passes(saveUser)">
-                        <fieldset>
+<!--                <ValidationObserver class="left-part" tag="div" v-slot="{ invalid, passes }">-->
+<!--                    <form class="wrap-main-form" enctype="multipart/form-data" @submit.prevent="passes(saveUser)">-->
+<!--                        <fieldset>-->
 
-                            <h2 class="page-subtitle">Paramètres utilisateur</h2>
-                            <p class="baseline-main-title">{{ user.name }} {{ user.surname }}</p>
+<!--                            <h2 class="page-subtitle">Paramètres utilisateur</h2>-->
+<!--                            <p class="baseline-main-title">{{ user.name }} {{ user.surname }}</p>-->
 
-                            <section>
-                                <ImageUploader :multiple="false"
-                                               :label="`Glissez votre signature ici`"
-                                               v-on:files="setLogo" />
-                            </section>
-                        </fieldset>
-                    </form>
-                </ValidationObserver>
+<!--                            <section>-->
+<!--                                <ImageUploader :multiple="false"-->
+<!--                                               :label="`Glissez votre signature ici`"-->
+<!--                                               v-on:files="setLogo" />-->
+<!--                            </section>-->
+<!--                        </fieldset>-->
+<!--                    </form>-->
+<!--                </ValidationObserver>-->
 
                 <div class="right-part" v-if="user.admin">
                     <ValidationObserver tag="div" v-slot="{ invalid, passes }">
                         <form enctype="multipart/form-data" @submit.prevent="passes(saveCompany)">
                             <fieldset>
                                 <h2 class="page-subtitle">Paramètres entreprise</h2>
-                                <ImageUploader :multiple="false"
-                                               :label="`Glissez votre logo ici`"
-                                               v-on:files="setLogo" />
+<!--                                <ImageUploader :multiple="false"-->
+<!--                                               :label="`Glissez votre logo ici`"-->
+<!--                                               v-on:files="setLogo" />-->
                                 <ValidationProvider tag="div"
                                                     class="wrap-field h-50"
                                                     rules="required"
@@ -100,6 +101,40 @@
                                     <span class="v-validate">{{ errors[0] }}</span>
                                 </ValidationProvider>
 
+                                <ValidationProvider tag="div"
+                                                    class="wrap-field h-50"
+                                                    style="height: auto;"
+                                                    name="head_quotation"
+                                                    v-slot="{ errors }">
+                                    <textarea v-model="company.head_quotation"
+                                              class="field editable"
+                                              :class="{ hasValue: company.head_quotation, 'input-error': errors[0] }"
+                                              @keydown="textareaAutosize"
+                                              autocomplete="off">
+                                    </textarea>
+                                    <span class="focus-field"></span>
+                                    <label class="label-field">Texte en-tête de devis</label>
+                                    <span class="symbol-left-field"><i class="fas fa-file-alt"></i></span>
+                                    <span class="v-validate">{{ errors[0] }}</span>
+                                </ValidationProvider>
+
+                                <ValidationProvider tag="div"
+                                                    class="wrap-field h-50"
+                                                    style="height: auto;"
+                                                    name="head_quotation"
+                                                    v-slot="{ errors }">
+                                    <textarea v-model="company.foot_quotation"
+                                              class="field editable"
+                                              :class="{ hasValue: company.foot_quotation, 'input-error': errors[0] }"
+                                              @keydown="textareaAutosize"
+                                              autocomplete="off">
+                                    </textarea>
+                                    <span class="focus-field"></span>
+                                    <label class="label-field">Texte en pied de devis</label>
+                                    <span class="symbol-left-field"><i class="fas fa-file-alt"></i></span>
+                                    <span class="v-validate">{{ errors[0] }}</span>
+                                </ValidationProvider>
+
                                 <button type="submit" :disabled="invalid"
                                         class="button button-small button-primary"
                                         style="margin-left: auto">
@@ -109,11 +144,9 @@
                             </fieldset>
                         </form>
                     </ValidationObserver>
+                </div>
+                <div v-else>
 
-                    <ValidationObserver tag="div" v-slot="{ invalid, passes }">
-                        <form enctype="multipart/form-data" @submit.prevent="passes(saveCompany)" v-if="user.admin">
-                        </form>
-                    </ValidationObserver>
                 </div>
             </div>
             <form @submit.prevent="logout">
@@ -196,23 +229,37 @@
                     target.classList.add("hasValue");
                 }
             },
-            setLogo(files) {
-                this.form.logo = files;
+            textareaAutosize() {
+                let textareaList = document.getElementsByTagName("textarea");
+                for (let i = 0; i < textareaList.length; i++) {
+                    let el = textareaList[i];
+                    setTimeout(() => {
+                        el.style.cssText = 'height:auto !important; padding:0 !important;';
+                        let scrollHeight = el.scrollHeight + 10;
+                        el.style.cssText = 'height:' + scrollHeight + 'px !important; ';
+                        if (el.value === "") {
+                            el.style.cssText = 'height:100% !important; ';
+                        }
+                    }, 0);
+                }
             },
+            // setLogo(files) {
+            //     this.form.logo = files;
+            // },
             saveUser() {
 
             },
             saveCompany() {
-                let formData = new FormData();
-                formData.append('prepress', this.company.prepress);
-                formData.append('winder', this.company.winder);
-                this.form.logo.forEach(file => {
-                    formData.append('images[]', file, file.name);
-                    console.log(file.name);
-                });
+                // let formData = new FormData();
+                // formData.append('prepress', this.company.prepress);
+                // formData.append('winder', this.company.winder);
+                // this.form.logo.forEach(file => {
+                //     formData.append('images[]', file, file.name);
+                //     console.log(file.name);
+                // });
 
                 this.$store.dispatch('saveCompany', {
-                    formData: formData,
+                    company: this.company,
                 }).then(resp => {
                     this.$toast.success({
                         title: "Paramètres enregistrés",

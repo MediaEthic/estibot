@@ -1,14 +1,19 @@
 <template>
-    <div v-if="!loading" class="wrap-padding">
+    <div v-if="!isLoading" class="wrap-padding">
         <nav v-if="windowWidth >= 576" class="wrap-main-navigation">
             <router-link :to="{ name: 'quotations.index' }"
                          tag="a"
                          title="Retour sur la page d'accueil">
-                <img src="/assets/img/logo-ethic-software.png"
-                 alt="Logotype Ethic Software"
-                 class="main-logo" />
+                <img v-if="company.logo"
+                     class="main-logo"
+                     :src="`/assets/img/${company.logo}`"
+                     alt="Logotype de l'entreprise"/>
+                <img v-else
+                     class="main-logo"
+                     src="/assets/img/logo-ethic-software.png"
+                     alt="Logotype Ethic Software"/>
             </router-link>
-            <div class="wrap-right-part-navigation">
+            <div v-if="loggedIn && user.admin" class="wrap-right-part-navigation">
                 <router-link :to="{ name: 'profile' }"
                              tag="a"
                              class="link-profile"
@@ -16,7 +21,7 @@
                     <i class="fas fa-user"></i>
                     {{ user.name }} {{ user.surname }}
                 </router-link>
-                <form v-if="loggedIn" @submit.prevent="logout">
+                <form @submit.prevent="logout">
                     <button type="submit" class="button button-small button-outline-secondary button-submit-secondary">
                         Déconnexion
                     </button>
@@ -48,21 +53,21 @@
             <p>Éthic Software - Copyright © Tous droits réservés</p>
         </footer>
     </div>
-    <Spinner v-else :quote="quote" />
+    <Loader v-else />
 </template>
 
 <script>
     import '!!vue-style-loader!css-loader!cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
-    import Spinner from './Spinner.vue';
+    import Loader from './Loader';
     const DEFAULT_TRANSITION = 'fade';
 
     export default {
         components: {
-            Spinner
+            Loader
         },
         data() {
             return {
-                loading: false,
+                isLoading: false,
                 transitionName: DEFAULT_TRANSITION,
                 routes: [
                     {
@@ -84,12 +89,18 @@
             }
         },
         created() {
-            // this.loading = true;
+            this.isLoading = true;
 
             window.addEventListener("resize", this.handleWindowResize);
 
-            this.$store.dispatch('getQuote').then(() => {
-                this.isViewed();
+            // this.$store.dispatch('getQuote').then(() => {
+            //     this.isViewed();
+            // });
+
+            this.$store.dispatch("getCompany").then(() => {
+                this.isLoading = false;
+            }).catch(() => {
+                this.isLoading = false;
             });
 
             this.$router.beforeEach((to, from, next) => {
@@ -118,8 +129,8 @@
                     return this.$store.state.windowWidth;
                 }
             },
-            quote() {
-                return this.$store.state.quote;
+            company() {
+                return this.$store.state.company;
             },
             user() {
                 return this.$store.state.user;
@@ -134,15 +145,15 @@
                     windowSize: e.currentTarget.innerWidth
                 });
             },
-            isViewed() {
-                let quote = this.quote.quote;
-                let numberWords = quote.split(' ');
-                let readTime = numberWords.length * 300;
-
-                setTimeout(() => {
-                    this.loading = false;
-                }, readTime);
-            },
+            // isViewed() {
+            //     let quote = this.quote.quote;
+            //     let numberWords = quote.split(' ');
+            //     let readTime = numberWords.length * 300;
+            //
+            //     setTimeout(() => {
+            //         this.loading = false;
+            //     }, readTime);
+            // },
             logout () {
                 this.$store.dispatch('logout',).then(resp => {
                     this.$router.push({ name: "login" });
@@ -155,7 +166,6 @@
 </script>
 
 <style lang="scss">
-    /*@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css');*/
     @import '~@/_variables.scss';
 
     body {
@@ -202,7 +212,8 @@
             margin-bottom: 3rem;
 
             .main-logo {
-                width: 15rem;
+                max-width: 15rem;
+                max-height: 6.5rem;
             }
 
             .wrap-right-part-navigation {
