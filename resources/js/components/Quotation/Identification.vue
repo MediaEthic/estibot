@@ -352,7 +352,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <Pagination :pagination="pagination" v-on:fetchResults="getCustomers"></Pagination>
+                            <Pagination :pagination="pagination" v-on:pagechanged="getCustomers"></Pagination>
                         </div>
                         <div v-else class="wrap-empty-result">
                             <p class="text-no-data">Aucun résultat trouvé</p>
@@ -536,6 +536,8 @@
                 this.form.identification.third.addressLine3 = customer.addressLine3;
                 this.form.identification.third.zipcode = customer.zipcode;
                 this.form.identification.third.city = customer.city;
+                this.form.identification.contact.type = "old";
+                this.form.identification.contact.ethic = true;
                 if (customer.email !== undefined && (customer.email !== null || customer.email !== "")) {
                     this.form.identification.contact.email = customer.email;
                 }

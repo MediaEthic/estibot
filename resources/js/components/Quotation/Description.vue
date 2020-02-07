@@ -326,11 +326,9 @@
 <script>
     import Loader from '../Loader';
     import Autocomplete from "./Autocomplete";
-    import Pagination from "../Pagination";
 
     export default {
         components: {
-            Pagination,
             Autocomplete,
             Loader
         },

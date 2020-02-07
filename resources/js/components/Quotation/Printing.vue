@@ -340,7 +340,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <Pagination :pagination="searchSubstrates.pagination" v-on:fetchResults="getFilteredSubstrates"></Pagination>
+                        <Pagination :pagination="searchSubstrates.pagination" v-on:pagechanged="getFilteredSubstrates"></Pagination>
                     </div>
                     <div v-else class="wrap-empty-result">
                         <p class="text-no-data">Aucun résultat trouvé</p>

@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noindex">
-        <title>Devis#{{ $quotation->id }}-{{ $quotation->updated_at }}-{{ $quotation->third->name }}</title>
+        <title>Devis#{{ $quotation->id }}-{{ $quotation->updated_at }}-{{ $quotation->third['name'] }}</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <style>
@@ -61,7 +61,7 @@
                         @isset($quotation->company->address_line1){{ $quotation->company->address_line1 }}, @endisset
                         @isset($quotation->company->address_line2){{ $quotation->company->address_line2 }}, @endisset
                         @isset($quotation->company->address_line3){{ $quotation->company->address_line3 }}, @endisset
-                        {{ $quotation->third->zipcode }} {{ $quotation->third->city }}<br>
+                        {{ $quotation->third['zipcode'] }} {{ $quotation->third['city'] }}<br>
                         @isset($quotation->company->phone)<abbr title="Téléphone">Tél.</abbr> {{ $quotation->company->phone }} | @endisset
                         @isset($quotation->company->email)<a href="mailto:{{ $quotation->company->email }}" class="small">{{ $quotation->company->email }}</a>@endisset
                     </address>
@@ -99,26 +99,26 @@
 
                 <div class="col-xs-5">
                     <address>
-                        <strong>{{ $quotation->third->name }}</strong><br>
-                        @if(isset($quotation->contact->surname) || isset($quotation->contact->name) || isset($quotation->contact->service))
-                            @if(isset($quotation->contact->surname) || isset($quotation->contact->name))
+                        <strong>{{ $quotation->third['name'] }}</strong><br>
+                        @if(isset($quotation->contact_surname) || isset($quotation->contact_name))
+                            @if(isset($quotation->contact_surname) || isset($quotation->contact_name))
                                 À l'attention de
-                                @if($quotation->contact->civility === "Mr")
+                                @if($quotation->contact_civility === "Mr")
                                     <abbr title="Monsieur">{{ $civility = "M." }}</abbr>
                                 @else
                                     <abbr title="Madame">{{ $civility = "Mme" }}</abbr>
                                 @endif
-                                {{ $quotation->contact->surname }} {{ $quotation->contact->name }}<br>
-                            @else
-                                @isset($quotation->contact->service)
-                                    Service {{ $quotation->contact->service }}<br>
-                                @endisset
+                                {{ $quotation->contact_surname }} {{ $quotation->contact_name }}<br>
+{{--                            @else--}}
+{{--                                @isset($quotation->contact->service)--}}
+{{--                                    Service {{ $quotation->contact->service }}<br>--}}
+{{--                                @endisset--}}
                             @endif
                         @endif
-                        @isset($quotation->third->address_line1){{ $quotation->third->address_line1 }}<br>@endisset
-                        @isset($quotation->third->address_line2){{ $quotation->third->address_line2 }}<br>@endisset
-                        @isset($quotation->third->address_line3){{ $quotation->third->address_line3 }}<br>@endisset
-                        {{ $quotation->third->zipcode }} {{ $quotation->third->city }}
+                        @isset($quotation->third['address_line1']){{ $quotation->third['address_line1'] }}<br>@endisset
+                        @isset($quotation->third['address_line2']){{ $quotation->third['address_line2'] }}<br>@endisset
+                        @isset($quotation->third['address_line3']){{ $quotation->third['address_line3'] }}<br>@endisset
+                        {{ $quotation->third['zipcode'] }} {{ $quotation->third['city'] }}
                     </address>
                 </div>
             </div>

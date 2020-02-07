@@ -43,8 +43,7 @@ class QuotationRepository
     {
         $totalPerPage = 15;
 
-        $collection = collect(Quotation::with('third')
-            ->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get());
+        $collection = collect(Quotation::orderBy('created_at', 'desc')->orderBy('id', 'desc')->get());
 
         return new LengthAwarePaginator(
             $collection->forPage(
@@ -65,17 +64,17 @@ class QuotationRepository
 
         if ($quotation->third_type === "ethic") {
             $customers = $this->repository->allCustomers($company);
-            $quotation['third'] = $customers->where('id', $quotation->third_id)->first();
+            $quotation['third'] = collect($customers->where('id', $quotation->third_id)->first());
         } else {
             $quotation['third'] = Third::findOrFail($quotation->third_id);
         }
 
-        if ($quotation->contact_ethic) {
-            $contacts = $this->repository->findByIdThirdContact($company, $quotation->third_id);
-            $quotation['contact'] = $contacts->where('id', $quotation->contact_id)->first();
-        } else {
-            $quotation['contact'] = Contact::findOrFail($quotation->contact_id);
-        }
+//        if ($quotation->contact_ethic) {
+//            $contacts = $this->repository->findByIdThirdContact($company, $quotation->third_id);
+//            if ($quotation->contact_id) $quotation['contact'] = $contacts->where('id', $quotation->contact_id)->first();
+//        } else {
+//            $quotation['contact'] = Contact::findOrFail($quotation->contact_id);
+//        }
 
         if ($quotation->contact_ethic) {
             $quotation['third']['contacts'] = $this->repository->findByIdThirdContact($company, $quotation->third_id);
@@ -201,8 +200,13 @@ class QuotationRepository
         $model->image = $images[array_rand($images)];
         if ($inputs['identification']['third']['ethic']) $model->third_type = "ethic";
         if (!empty($third)) $model->third_id = $third;
-        if ($inputs['identification']['contact']['ethic']) $model->contact_ethic = "ethic";
+        $model->third_name = $inputs['identification']['third']['name'];
+        if ($inputs['identification']['contact']['ethic']) $model->contact_ethic = true;
         if (!empty($contact)) $model->contact_id = $contact;
+        if (!empty($inputs['identification']['contact']['civility'])) $model->contact_civility = $inputs['identification']['contact']['civility'];
+        if (!empty($inputs['identification']['contact']['name'])) $model->contact_name = $inputs['identification']['contact']['name'];
+        if (!empty($inputs['identification']['contact']['surname'])) $model->contact_surname = $inputs['identification']['contact']['surname'];
+        if (!empty($inputs['identification']['contact']['email'])) $model->contact_email = $inputs['identification']['contact']['email'];
         if ($inputs['description']['label']['ethic']) $model->label_type = "ethic";
         if (!empty($label)) $model->label_id = $label;
 //        TODO : to add duration
@@ -387,7 +391,7 @@ class QuotationRepository
 //        }
 //
         if (empty($errors)) {
-            $finishingsLabels = FinishingLabel::where('label_id', $label['id'])->pluck('id')->toArray();
+//            $finishingsLabels = FinishingLabel::where('label_id', $label['id'])->pluck('id')->toArray();
 
 //            $finishingsDeleted = array_diff($finishingsLabels, $finishingsLabel);
 //            foreach ($finishingsDeleted as $finishingDeleted) {
@@ -497,7 +501,7 @@ class QuotationRepository
             }
             if (!empty($press['size_papermaxx'])) {
 //                if ($substrateWidth <= $press['cadence']->size_paperminx) { $errors['errors'][] = "La laize du support d'impression est inférieure à la laize minimum de la machine"; }
-                if ($substrateWidth >= $press['size_papermaxx']) { $errors['errors'][] = "La laize du support d'impression est supérieure à la laize maximum de la machine"; }
+                if ($substrateWidth > $press['size_papermaxx']) { $errors['errors'][] = "La laize du support d'impression est supérieure à la laize maximum de la machine"; }
             } else {
                 $results['warnings'][] = "Veuillez vérifier que la laize du support d'impression correspond à celle de la machine";
             }
@@ -776,7 +780,7 @@ class QuotationRepository
                                 if (!empty($consumable['width']) && !empty($consumable['price'])) {
                                     $consumableWidth = intval($consumable['width']);
                                     $consumablePrice = floatval($consumable['price']);
-                                    if ($consumableWidth <= $finishingPress['size_papermaxx']) {
+                                    if ($consumableWidth < $finishingPress['size_papermaxx']) {
                                         $totalCostConsumable = $substrateLinear * ($consumableWidth / 1000 * $consumablePrice);
                                         $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishingPress['name'] . " : " . $totalCostConsumable . "€";
                                     } else {

@@ -176,9 +176,9 @@
                     <ValidationProvider class="wrap-field h-50"
                                         name="subject email"
                                         v-slot="{ errors }">
-                        <input v-model.trim="quotation.contact.email"
+                        <input v-model.trim="quotation.contact_email"
                                class="field"
-                               :class="[{ hasValue: quotation.contact.email }]"
+                               :class="[{ hasValue: quotation.contact_email }]"
                                type="email"
                                autocomplete="off"
                                required>
@@ -338,17 +338,17 @@
 
 
                 let contact = ``;
-                if (this.quotation.contact.name !== undefined && this.quotation.contact.name !== null || this.quotation.contact.surname !== undefined && this.quotation.contact.surname !== null) {
+                if (this.quotation.contact_name !== undefined && this.quotation.contact_name !== null || this.quotation.contact_surname !== undefined && this.quotation.contact_surname !== null) {
                     let contact = `À l'attention de `;
-                    if (this.quotation.contact.civility === "Mr") {
+                    if (this.quotation.contact_civility === "Mr") {
                         contact += `M.`;
                     } else {
                         contact += `Mme`;
                     }
 
-                    if (this.quotation.contact.name !== undefined && this.quotation.contact.name !== null)  contact += ` ` + this.quotation.contact.name;
-                    if (this.quotation.contact.surname !== undefined && this.quotation.contact.surname !== null)  contact += ` ` + this.quotation.contact.surname;
-                    if (this.quotation.contact.service !== undefined && this.quotation.contact.service !== null)  contact += ` - Service ` + this.quotation.contact.service;
+                    if (this.quotation.contact_name !== undefined && this.quotation.contact_name !== null)  contact += ` ` + this.quotation.contact_name;
+                    if (this.quotation.contact_surname !== undefined && this.quotation.contact_surname !== null)  contact += ` ` + this.quotation.contact_surname;
+                    // if (this.quotation.contact.service !== undefined && this.quotation.contact.service !== null)  contact += ` - Service ` + this.quotation.contact.service;
 
                     if (contact !== "") this.third.push(contact);
                 }
@@ -364,7 +364,7 @@
                     }
                 }
 
-                if (this.quotation.contact.email !== undefined && this.quotation.contact.email !== null) this.third.push(this.quotation.contact.email);
+                if (this.quotation.contact_email !== undefined && this.quotation.contact_email !== null) this.third.push(this.quotation.contact_email);
             },
             textareaAutosize() {
                 let textareaList = document.getElementsByTagName("textarea");
