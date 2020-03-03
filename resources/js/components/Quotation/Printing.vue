@@ -195,7 +195,7 @@
                                 </select>
                                 <span class="focus-field"></span>
                                 <label class="label-field">Famille</label>
-                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="symbol-left-field"><i class="fas fa-folder-open"></i></span>
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
@@ -218,7 +218,7 @@
                                 </select>
                                 <span class="focus-field"></span>
                                 <label class="label-field">Type</label>
-                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="symbol-left-field"><i class="fas fa-file"></i></span>
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
@@ -241,7 +241,7 @@
                                 </select>
                                 <span class="focus-field"></span>
                                 <label class="label-field">Couleur</label>
-                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="symbol-left-field"><i class="fas fa-palette"></i></span>
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
@@ -267,7 +267,7 @@
                                 </select>
                                 <span class="focus-field"></span>
                                 <label class="label-field">Grammage</label>
-                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="symbol-left-field"><i class="fas fa-weight-hanging"></i></span>
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
@@ -297,6 +297,7 @@
                             <Autocomplete :items="searchSubstrates.names"
                                           :isAsync="true"
                                           :label="`Désignation`"
+                                          icon="fas fa-scroll"
                                           :focus="true"
                                           v-on:search="searchSubstratesForAutocomplete"
                                           v-on:input="setSubstrateName"
@@ -386,6 +387,9 @@
         created() {
             this.searchSubstrates.names = [];
         },
+        mounted() {
+            this.form.printing.colors = this.form.description.quantities[0].plate;
+        },
         computed: {
             form() {
                 return this.$store.state.workflow.form;
@@ -412,8 +416,6 @@
                 this.$modal.hide('search-substrate');
             },
             searchSubstratesForAutocomplete(query) {
-                console.log("searchSubstratesForAutocomplete");
-                console.log(query);
                 this.searchSubstrates.names = [];
                 this.searchSubstrates.criteria.name = query.toUpperCase();
                 if (query.length > 2) {
@@ -422,8 +424,6 @@
                     }).then(response => {
                         console.log(response);
                         this.searchSubstrates.names = response;
-                        console.log("searchSubstratesForAutocomplete");
-                        console.log(this.searchSubstrates.names);
                     }).catch(() => {
                         this.$toast.error({
                             title: "Erreur",

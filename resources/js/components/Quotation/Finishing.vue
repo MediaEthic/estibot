@@ -87,7 +87,7 @@
                     <span class="v-validate">{{ errors[0] }}</span>
                 </ValidationProvider>
 
-                <div class="wrap-field h-50" v-if="database.finishing.reworkings.length > 0">
+                <div class="wrap-field h-50" v-if="item.id !== '' && (database.finishing.reworkings.length || Object.keys(database.finishing.reworkings).length)">
                     <span class="btn-right-field" v-if="finishingsAreLoading">
                         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </span>
@@ -107,7 +107,23 @@
                     <label class="label-field">En reprise sur</label>
                 </div>
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && consumables[index]">
+                <div class="wrap-field h-50 switcher" v-if="item.id !== '' && item.reworking">
+                    <input type="radio"
+                           v-model="item.cutting_die"
+                           id="toggle-on"
+                           class="field toggle toggle-left hasValue"
+                           value="true"
+                           required>
+                    <label for="toggle-on" class="toggle-btn"><i class="far fa-check-circle"></i>Oui</label>
+
+                    <input type="radio" id="toggle-off" class="field toggle toggle-right hasValue" name="toggle" v-model="item.cutting_die" value="false">
+                    <label for="toggle-off" class="toggle-btn"><i class="far fa-times-circle"></i>Non</label>
+
+                    <label class="label-field">Machine pour la découpe</label>
+                </div>
+
+
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && consumables[index].length">
                     <select v-model="item.consumable.id"
                             @focus="item.hasFocus = true"
                             @blur="item.hasFocus = false"
@@ -127,7 +143,7 @@
                     <label class="label-field">Désignation du consommable</label>
                 </div>
 
-                <ValidationProvider v-if="item.presence_consumable && item.id !== '' && !consumables[index]"
+                <ValidationProvider v-if="item.presence_consumable && item.id !== '' && !consumables[index].length"
                                     tag="div"
                                     class="wrap-field h-50"
                                     name="consumable name"
@@ -424,12 +440,13 @@
                 this.form.finishing.finishings.push({
                     id: "",
                     name: "",
+                    cutting_die: false,
                     die: {
                         id: "",
                         name: "",
                         price: "",
                     },
-                    reworking: "",
+                    rewdorking: "",
                     presence_consumable: false,
                     hasFocus: false,
                     consumable: ""
@@ -445,7 +462,7 @@
                 let finishingID = this.form.finishing.finishings[index].id;
                 let finishing = this.database.finishing.finishings.find(finishing => finishing.id === finishingID);
 
-                if (finishing.presence_die) {
+                if (finishingID !== "" && finishing.presence_die) {
                     this.dies[index] = finishing.die;
                     // let newDie = {
                     //     id: "",
@@ -462,7 +479,7 @@
                     };
                 }
 
-                if (finishing.presence_consumable) {
+                if (finishingID !== "" && finishing.presence_consumable) {
                     this.consumables[index] = finishing.consumable;
                     let newConsumable = {
                         id: "",

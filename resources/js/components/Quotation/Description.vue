@@ -216,7 +216,7 @@
                                 </select>
                                 <span class="focus-field"></span>
                                 <label class="label-field">Laize</label>
-                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="symbol-left-field"><i class="fas fa-ruler-horizontal"></i></span>
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
@@ -240,7 +240,7 @@
                                 </select>
                                 <span class="focus-field"></span>
                                 <label class="label-field">Avance</label>
-                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="symbol-left-field"><i class="fas fa-ruler-vertical"></i></span>
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
@@ -264,13 +264,14 @@
                                 </select>
                                 <span class="focus-field"></span>
                                 <label class="label-field">Référence client</label>
-                                <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="symbol-left-field"><i class="fas fa-tag"></i></span>
                                 <span class="v-validate">{{ errors[0] }}</span>
                             </ValidationProvider>
 
                             <Autocomplete :items="searchLabels.database.names"
                                           :isAsync="false"
                                           :label="`Désignation`"
+                                          icon="fas fa-image"
                                           :focus="false"
                                           v-on:search="setLabelName"
                                           v-on:input="setLabelName"
@@ -357,16 +358,15 @@
         created() {
             const labels = this.database.description.labels;
             this.allThirdLabels = labels;
-            console.log(labels);
             if (labels.length > 1) {
                 this.form.description.label.type = "old";
 
                 let widths = labels.map(item => item.width)
-                    .filter((value, index, self) => self.indexOf(value) === index);
+                    .filter((value, index, self) => self.indexOf(value) === index).sort();
                 this.searchLabels.database.widths = widths;
 
                 let lengths = labels.map(item => item.length)
-                    .filter((value, index, self) => self.indexOf(value) === index);
+                    .filter((value, index, self) => self.indexOf(value) === index).sort();
                 this.searchLabels.database.lengths = lengths;
 
                 let references = labels.map(item => item.reference)
@@ -506,7 +506,7 @@
                 this.form.description.quantities.push({
                     id: "",
                     quantity: "",
-                    model: "",
+                    model: 1,
                     plate: "",
                     hour: "",
                     minute: "",

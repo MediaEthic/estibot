@@ -185,7 +185,6 @@
                 this.$store.dispatch('getWorkflow', {
                     id: this.$route.params.id
                 }).then(() => {
-                    console.log(this.form);
                     this.summary = this.form.summary;
                     this.$store.dispatch("getThirdLabels", {
                         ethic: this.form.identification.third.ethic,
@@ -259,7 +258,7 @@
                     if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += `\nPapier existant : ` + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m²`;
                     if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += `\nNouveau papier : ` +  + this.form.printing.substrate.width + `mm en laize - ` + this.form.printing.substrate.weight + `g/m²`;
                 }
-                if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
+                if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].id !== "") {
                     if (this.form.finishing.finishings.length > 1) {
                         this.summary += `\nFinitions :`;
                     } else {

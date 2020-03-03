@@ -489,7 +489,11 @@ class QuotationRepository
 
         if (empty($errors)) {
             if (!empty($press['cadence'])) {
-                $pressCadence = $press['cadence'];
+                if ($press['unit_cadence'] === "striking") {
+                    $pressCadence = $press['cadence'];
+                } else {
+                    $pressCadence = $press['cadence'] * 60; // transform meters per minutes into hours
+                }
             } else {
                 $errors['errors'][] = "Aucune cadence n'a été renseignée pour la machine d'impression";
             }
@@ -659,11 +663,10 @@ class QuotationRepository
                         $results['quantities'][$copies]['datas']['prepress'] = 0;
                     }
 
-                    // Clichés
-                    $totalCostPlates = $plates * $press['plate'];
-                    $results['quantities'][$copies]['cost'][] = "Clichés : " . $totalCostPlates . "€";
-
-                    // Outil de découpe
+                    /*
+                     * Outil de découpe
+                     */
+                    // TODO : to add
                     $cuttingShape = floatval($cutting['shape']);
                     if ($cuttingShape > 0) {
                         $costCuttingShape = $cuttingShape;
@@ -672,10 +675,19 @@ class QuotationRepository
                         $costCuttingShape = 0;
                     }
 
+
+                    /*
+                     * Impression
+                     */
+
+                    // Clichés
+                    $totalCostPlates = $plates * $press['plate'];
+                    $results['quantities'][$copies]['cost'][] = "Clichés : " . $totalCostPlates . "€";
+
                     // Métrage de calage impression
                     $meterMakereadyPrinting = $press['overlay_sheet'] * $plates;
                     $meterMakereadyPress = $meterMakereadyPrinting;
-                    $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour l'impression : " . $meterMakereadyPrinting;
+                    $results['quantities'][$copies]['wastage'][] = "Calage pour " . $press['name'] . " : " . $meterMakereadyPrinting . "m";
 
                     // Temps de calage impression
                     $timeMakereadyPrinting = $press['makeready_plate'] * $plates;
@@ -693,6 +705,8 @@ class QuotationRepository
                         $substrateLinear = (($copies / $cuttingPoseWidth) * $labelSizeLengthWithBleed / 1000); // longueur papier en mL
                     }
 
+                    $results['quantities'][$copies]['wastage'][] = "Métrage papier : " . $substrateLinear;
+
 
                     // Temps de roulage
                     if ($press['unit_cadence'] === "striking") {
@@ -701,10 +715,10 @@ class QuotationRepository
                         $timeProductionPress = $substrateLinear / $pressCadence;
                     }
 
-                    $results['quantities'][$copies]['time'][] = "Roulage : " . $timeProductionPress . "h";
+                    $results['quantities'][$copies]['time'][] = "Roulage pour " . $press['name'] . " : " . $timeProductionPress . "h";
 
                     $totalTimeProduction = round($timeMakereadyPrinting + $timeProductionPress, 4);
-                    $totalFixedCostProduction = $costCuttingShape + ($timeMakereadyPrinting * $press['hourly_rate']) + $totalCostPlates;
+                    $totalFixedCostProduction = $costCuttingShape + $timeMakereadyPrinting * $press['hourly_rate'] + $totalCostPlates;
                     $totalVariableCostProduction = $timeProductionPress * $press['hourly_rate'];
                     $totalCostProduction = $totalFixedCostProduction + $totalVariableCostProduction;
                     $results['quantities'][$copies]['cost'][] = "Calage de la machine : " . $timeMakereadyPrinting * $press['hourly_rate'] . "€";
@@ -725,7 +739,7 @@ class QuotationRepository
                                 $totalVariableCostsWithMargin += $result[2];
                                 $totalTimes += $totalTimeProduction;
 
-                                $results['quantities'][$copies]['operations'][$operationId]['name'] = "Production";
+                                $results['quantities'][$copies]['operations'][$operationId]['name'] = $press['name'];
                                 $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeProduction;
                                 $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostProduction;
                                 $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
@@ -738,127 +752,129 @@ class QuotationRepository
                         }
                     }
 
+
                     $marginFinishing = $margin;
                     $finishings = $workflow['finishing']['finishings'];
-                    foreach ($finishings as $finishing) {
-//                        TODO : reworking reprise sur machine
-                        $finishingID = intval($finishing['id']);
+                        foreach ($finishings as $finishing) {
+                            if (!empty($finishing['id'])) {
 
-                        $reworking = $finishing['reworking'];
-                        if (!empty($reworking)) {
-                            $userDatas['class'] = $reworking;
-                            $finishingPress = $this->repository->getWorkstations($userDatas)[0];
-                        } else {
-                            $finishingPress = $press;
-                        }
-
-                        $meterMakereadyFinishing = $finishingPress['overlay_sheet'];
-                        $meterMakereadyPress += $meterMakereadyFinishing;
-                        $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour " . $finishingPress['name'] . " : " . $meterMakereadyFinishing;
-
-                        // Temps de calage finition
-                        $totalTimeFinishing = round($finishingPress['makeready_times'], 4);
-                        $results['quantities'][$copies]['time'][] = "Calage pour " . $finishingPress['name'] . " : " . $totalTimeFinishing . "h";
-
-                        $costFinishingShape = 0;
-                        if (!empty($finishing['die']['id'])) {
-                            $finishingShape = intval($finishing['die']['price']);
-                            if ($finishingShape > 0) {
-                                $costFinishingShape = $finishingShape;
-                                $results['quantities'][$copies]['cost'][] = "Outil de " . $finishingPress['name'] . " : " . $costFinishingShape . "€";
+                            $reworking = $finishing['reworking'];
+                            if (!empty($reworking)) {
+                                $userDatas['class'] = $reworking;
+                                $finishingPress = $this->repository->getWorkstations($userDatas)[0];
+                            } else {
+                                $finishingPress = $press;
                             }
-                        }
+
+                            // Métrage de calage finition
+                            $meterMakereadyFinishing = $finishingPress['overlay_sheet'];
+                            $meterMakereadyPress += $meterMakereadyFinishing;
+                            $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour " . $finishingPress['name'] . " : " . $meterMakereadyFinishing;
+
+                            // Temps de calage finition
+                            $totalTimeFinishing = round($finishingPress['makeready_times'], 4);
+                            $results['quantities'][$copies]['time'][] = "Calage pour " . $finishingPress['name'] . " : " . $totalTimeFinishing . "h";
+
+                            $costFinishingShape = 0;
+                            if (!empty($finishing['die']['id'])) {
+                                $finishingShape = intval($finishing['die']['price']);
+                                if ($finishingShape > 0) {
+                                    $costFinishingShape = $finishingShape;
+                                    $results['quantities'][$copies]['cost'][] = "Outil de " . $finishingPress['name'] . " : " . $costFinishingShape . "€";
+                                }
+                            }
 
 
-                        $totalFixedCostFinishing = $costFinishingShape + ($totalTimeFinishing * $finishingPress['hourly_rate']);
-                        $results['quantities'][$copies]['cost'][] = "Calage pour " . $finishingPress['name'] . " : " . $totalFixedCostFinishing . "€";
+                            $totalFixedCostFinishing = $costFinishingShape + ($totalTimeFinishing * $finishingPress['hourly_rate']);
+                            $results['quantities'][$copies]['cost'][] = "Calage pour " . $finishingPress['name'] . " : " . $totalFixedCostFinishing . "€";
 
-                        $totalCostConsumable = 0;
-                        if ($finishing['presence_consumable']) {
-                            $consumable = $finishing['consumable'];
-                            if (!empty($consumable)) {
-                                if (!empty($consumable['width']) && !empty($consumable['price'])) {
-                                    $consumableWidth = intval($consumable['width']);
-                                    $consumablePrice = floatval($consumable['price']);
-                                    if ($consumableWidth < $finishingPress['size_papermaxx']) {
-                                        $totalCostConsumable = $substrateLinear * ($consumableWidth / 1000 * $consumablePrice);
-                                        $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishingPress['name'] . " : " . $totalCostConsumable . "€";
+                            $totalCostConsumable = 0;
+                            if ($finishing['presence_consumable']) {
+                                $consumable = $finishing['consumable'];
+                                if (!empty($consumable)) {
+                                    if (!empty($consumable['width']) && !empty($consumable['price'])) {
+                                        $consumableWidth = intval($consumable['width']);
+                                        $consumablePrice = floatval($consumable['price']);
+                                        if ($consumableWidth < $finishingPress['size_papermaxx']) {
+                                            $totalCostConsumable = $substrateLinear * ($consumableWidth / 1000 * $consumablePrice);
+                                            $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishingPress['name'] . " : " . $totalCostConsumable . "€";
+                                        } else {
+                                            $errors['errors'][] = "La laize du consommable n'est pas en corrélation avec celle de la machine";
+                                        }
                                     } else {
-                                        $errors['errors'][] = "La laize du consommable n'est pas en corrélation avec celle de la machine";
+                                        if (empty($consumable['width'])) { $errors['errors'][] = "Vous devez saisir la laize du consommable " . $consumable['name']; }
+                                        if (empty($consumable['price'])) { $errors['errors'][] = "Vous devez saisir le prix du consommable " . $consumable['name']; }
                                     }
                                 } else {
-                                    if (empty($consumable['width'])) { $errors['errors'][] = "Vous devez saisir la laize du consommable " . $consumable['name']; }
-                                    if (empty($consumable['price'])) { $errors['errors'][] = "Vous devez saisir le prix du consommable " . $consumable['name']; }
+                                    $errors['errors'][] = "Vous devez saisir les données relatives au consommable pour la finition " . $finishingPress['name'];
                                 }
-                            } else {
-                                $errors['errors'][] = "Vous devez saisir les données relatives au consommable pour la finition " . $finishingPress['name'];
+                            }
+
+                            $totalVariableCostFinishing = $totalCostConsumable;
+                            $totalCostFinishing = $totalFixedCostFinishing + $totalVariableCostFinishing;
+
+                            $costWithMarginReturned = $this->handleMargin($marginFinishing, $totalCostFinishing, $totalFixedCostFinishing, $totalVariableCostFinishing);
+                            if (!empty($costWithMarginReturned)) {
+                                $lastElement = end($costWithMarginReturned);
+                                foreach ($costWithMarginReturned as $result) {
+                                    if ($result === $lastElement) {
+                                        $totalCostsWithoutMargin += $totalCostFinishing;
+                                        $totalCostsWithMargin += $result[0];
+                                        $totalFixedCostsWithoutMargin += $totalFixedCostFinishing;
+                                        $totalVariableCostsWithoutMargin += $totalVariableCostFinishing;
+                                        $totalFixedCostsWithMargin += $result[1];
+                                        $totalVariableCostsWithMargin += $result[2];
+                                        $totalTimes += $totalTimeFinishing;
+
+                                        $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishingPress['name'];
+                                        $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeFinishing;
+                                        $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostFinishing;
+                                        $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
+                                        $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
+                                        $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginFinishing;
+                                        $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
+
+                                        $operationId++;
+                                    }
+                                }
                             }
                         }
 
-                        $totalVariableCostFinishing = $totalCostConsumable;
-                        $totalCostFinishing = $totalFixedCostFinishing + $totalVariableCostFinishing;
 
-                        $costWithMarginReturned = $this->handleMargin($marginFinishing, $totalCostFinishing, $totalFixedCostFinishing, $totalVariableCostFinishing);
+                        /*
+                         * Paper - Substrate
+                         */
+                        $totalFixedCostSubstrate = $meterMakereadyPress * $substratePriceLinearMeter;
+                        $totalVariableCostSubstrate = $substrateLinear * $substratePriceLinearMeter;
+                        $totalCostSubstrate = $totalFixedCostSubstrate + $totalVariableCostSubstrate;
+                        $results['quantities'][$copies]['cost'][] = "Support d'impression : " . $totalCostSubstrate . "€";
+
+                        $totalTimeSubstrate = 0;
+                        $marginSubstrate = $margin;
+
+                        $costWithMarginReturned = $this->handleMargin($marginSubstrate, $totalCostSubstrate, $totalFixedCostSubstrate, $totalVariableCostSubstrate);
                         if (!empty($costWithMarginReturned)) {
                             $lastElement = end($costWithMarginReturned);
                             foreach ($costWithMarginReturned as $result) {
                                 if ($result === $lastElement) {
-                                    $totalCostsWithoutMargin += $totalCostFinishing;
+                                    $totalCostsWithoutMargin += $totalCostSubstrate;
                                     $totalCostsWithMargin += $result[0];
-                                    $totalFixedCostsWithoutMargin += $totalFixedCostFinishing;
-                                    $totalVariableCostsWithoutMargin += $totalVariableCostFinishing;
+                                    $totalFixedCostsWithoutMargin += $totalFixedCostSubstrate;
+                                    $totalVariableCostsWithoutMargin += $totalVariableCostSubstrate;
                                     $totalFixedCostsWithMargin += $result[1];
                                     $totalVariableCostsWithMargin += $result[2];
-                                    $totalTimes += $totalTimeFinishing;
+                                    $totalTimes += $totalTimeSubstrate;
 
-                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishingPress['name'];
-                                    $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeFinishing;
-                                    $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostFinishing;
+                                    $results['quantities'][$copies]['operations'][$operationId]['name'] = "Support d'impression";
+                                    $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeSubstrate;
+                                    $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostSubstrate;
                                     $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
                                     $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
-                                    $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginFinishing;
+                                    $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginSubstrate;
                                     $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
 
                                     $operationId++;
                                 }
-                            }
-                        }
-                    }
-
-
-                    /*
-                     * Paper - Substrate
-                     */
-                    $totalFixedCostSubstrate = $meterMakereadyPress * $substratePriceLinearMeter;
-                    $totalVariableCostSubstrate = $substrateLinear * $substratePriceLinearMeter;
-                    $totalCostSubstrate = $totalFixedCostSubstrate + $totalVariableCostSubstrate;
-                    $results['quantities'][$copies]['cost'][] = "Support d'impression : " . $totalCostSubstrate . "€";
-
-                    $totalTimeSubstrate = 0;
-                    $marginSubstrate = $margin;
-
-                    $costWithMarginReturned = $this->handleMargin($marginSubstrate, $totalCostSubstrate, $totalFixedCostSubstrate, $totalVariableCostSubstrate);
-                    if (!empty($costWithMarginReturned)) {
-                        $lastElement = end($costWithMarginReturned);
-                        foreach ($costWithMarginReturned as $result) {
-                            if ($result === $lastElement) {
-                                $totalCostsWithoutMargin += $totalCostSubstrate;
-                                $totalCostsWithMargin += $result[0];
-                                $totalFixedCostsWithoutMargin += $totalFixedCostSubstrate;
-                                $totalVariableCostsWithoutMargin += $totalVariableCostSubstrate;
-                                $totalFixedCostsWithMargin += $result[1];
-                                $totalVariableCostsWithMargin += $result[2];
-                                $totalTimes += $totalTimeSubstrate;
-
-                                $results['quantities'][$copies]['operations'][$operationId]['name'] = "Support d'impression";
-                                $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeSubstrate;
-                                $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostSubstrate;
-                                $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
-                                $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
-                                $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginSubstrate;
-                                $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
-
-                                $operationId++;
                             }
                         }
                     }

@@ -88,13 +88,10 @@
             startPage() {
                 // When on the first page
                 if (this.pagination.current_page === 1) {
-                    console.log("this.pagination.current_page === 1");
                     return 1;
                 } else if (this.pagination.current_page === this.pagination.last_page) { // When on the last page
-                    console.log("this.pagination.current_page === this.pagination.last_page");
                     return this.pagination.last_page - this.maxVisibleButtons + 1;
                 } else { // When in between
-                    console.log("this.pagination.current_page - 1");
                     return this.pagination.current_page - 1;
                 }
             },

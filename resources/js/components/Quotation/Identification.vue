@@ -61,7 +61,6 @@
                       { hasFocus: form.identification.third.hasFocus }]">
             <ValidationProvider tag="div"
                                 class="wrap-field h-50"
-                                rules="required"
                                 name="address line 1"
                                 v-slot="{ errors }">
                 <input v-model.trim="form.identification.third.addressLine2"
@@ -71,7 +70,8 @@
                        :class="[{ hasValue: form.identification.third.addressLine2, 'input-error': errors[0] }]"
                        type="text"
                        autocomplete="off"
-                       required>
+                       :required="addressLine2Required"
+                >
                 <label class="label-field">Numéro + Libellé de la voie</label>
                 <span class="v-validate">{{ errors[0] }}</span>
             </ValidationProvider>
@@ -139,7 +139,7 @@
             <span class="symbol-left-field"><i class="fas fa-map-marker-alt"></i></span>
         </div>
 
-        <div v-if="form.identification.third.type === 'old' && database.identification.contacts.length"
+        <div v-if="form.identification.third.type === 'old' && (database.identification.contacts.length || Object.keys(database.identification.contacts).length)"
              class="wrap-group-field"
              :class="[{ hasValue: form.identification.contact.id },
                       { hasValue: form.identification.contact.email },
@@ -159,7 +159,7 @@
                         @animationstart="checkAnimation"
                         class="field select"
                         :class="{ hasValue: form.identification.contact.id, 'input-error': errors[0] }"
-                        @change="setContact(contact)"
+                        @change="setContact"
                         required>
                     <option disabled value="">Choisir</option>
                     <option v-for="contact in database.identification.contacts"
@@ -406,6 +406,13 @@
             },
             database() {
                 return this.$store.state.workflow.database;
+            },
+            addressLine2Required() {
+                if (this.form.identification.third.addressLine1 === '' && this.form.identification.third.addressLine3 === '') {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         methods: {
@@ -445,7 +452,8 @@
                     this.form.identification.contact.id = "";
                 }
             },
-            setContact(contact) {
+            setContact() {
+                let contact = this.database.identification.contacts.find(contact => contact.id === this.form.identification.contact.id);
                 this.form.identification.contact.ethic = contact.ethic;
                 this.form.identification.contact.type = "old";
                 if (this.form.identification.contact.email !== null || this.form.identification.contact.email !== "") {
@@ -511,6 +519,11 @@
                 this.database.identification.contacts = [];
                 this.form.identification.contact.type = "new";
                 this.form.identification.contact.ethic = false;
+                this.form.identification.contact.id = "";
+                this.form.identification.contact.civility = "";
+                this.form.identification.contact.name = "";
+                this.form.identification.contact.surname = "";
+                this.form.identification.contact.email = "";
 
                 this.$store.dispatch("getThirdContacts", {
                     ethic: customer.ethic,

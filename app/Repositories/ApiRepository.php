@@ -77,7 +77,7 @@ class ApiRepository
     {
         $filteredEthicContacts = collect();
         if ($datas['ethic']) {
-            $filteredEthicContacts = $this->findByIdThirdContact($datas['company'], $datas['third']);
+            $filteredEthicContacts = collect($this->findByIdThirdContact($datas['company'], $datas['third']));
         }
         $filteredEstibotContacts = Contact::where('third_id', $datas['third'])->get();
         $filteredEstibotContacts = $filteredEstibotContacts->map(function($item) {
@@ -221,9 +221,11 @@ class ApiRepository
         } else {
             if (!empty($datas['label'])) {
                 // TODO: to test
-                $finishings = array();
-                $finishings['form'][] = FinishingLabel::where('label_id', $datas['label'])->all();
-                $finishings['database']['cuttings'] = Label::where('id', $datas['label'])->cutting;
+                $label = Label::findOrFail($datas['label']);
+                if ($label->cutting_type === 'estibot') {
+                    $finishings = array();
+                    $finishings['database']['cuttings'] = Label::where('id', $datas['label'])->cutting;
+                }
             }
             if (empty($finishings)) {
                 $finishings = $this->getAllFinishings($datas);
@@ -326,7 +328,7 @@ class ApiRepository
     {
         try {
             $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTE/'.$company.'/'.$third);
-            return collect(json_decode($response->getBody()))->map(function($item) {
+            $collection = collect(json_decode($response->getBody()))->map(function($item) {
                 $label = collect();
                 $label->offsetSet('ethic', true);
                 $label->offsetSet('id', $item->REFARTICLE);
@@ -339,6 +341,7 @@ class ApiRepository
                 $label->offsetSet('packing', $item->ROULEAUXDE);
                 return $label;
             });
+            return $collection->sortByDesc('id');
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
             return [];
         }
@@ -543,7 +546,7 @@ class ApiRepository
             }
             return $labelFinishings;
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
-            $this->getLabelFinishings($datas);
+            return $this->getLabelFinishings($datas);
         }
     }
 
@@ -637,7 +640,7 @@ class ApiRepository
 
             return $labelFinishings;
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
-            $this->getAllFinishings($datas);
+            return $this->getAllFinishings($datas);
         }
     }
 

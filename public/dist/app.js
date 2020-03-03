@@ -5533,57 +5533,6 @@ if (false) {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(171)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(173)
-/* template */
-var __vue_template__ = __webpack_require__(174)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-d7acf176"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Pagination.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d7acf176", Component.options)
-  } else {
-    hotAPI.reload("data-v-d7acf176", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -5770,6 +5719,57 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(171)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(173)
+/* template */
+var __vue_template__ = __webpack_require__(174)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-d7acf176"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Pagination.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d7acf176", Component.options)
+  } else {
+    hotAPI.reload("data-v-d7acf176", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
 
 
 /***/ }),
@@ -21153,7 +21153,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
 /* 143 */
@@ -24809,7 +24809,7 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(6)))
 
 /***/ }),
 /* 153 */
@@ -37039,7 +37039,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(8)))
 
 /***/ }),
 /* 156 */
@@ -37852,7 +37852,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Loader__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Loader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Loader__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Pagination__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
@@ -38348,15 +38348,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         startPage: function startPage() {
             // When on the first page
             if (this.pagination.current_page === 1) {
-                console.log("this.pagination.current_page === 1");
                 return 1;
             } else if (this.pagination.current_page === this.pagination.last_page) {
                 // When on the last page
-                console.log("this.pagination.current_page === this.pagination.last_page");
                 return this.pagination.last_page - this.maxVisibleButtons + 1;
             } else {
                 // When in between
-                console.log("this.pagination.current_page - 1");
                 return this.pagination.current_page - 1;
             }
         },
@@ -39453,7 +39450,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch('getWorkflow', {
                 id: this.$route.params.id
             }).then(function () {
-                console.log(_this.form);
                 _this.summary = _this.form.summary;
                 _this.$store.dispatch("getThirdLabels", {
                     ethic: _this.form.identification.third.ethic,
@@ -39527,7 +39523,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (this.form.printing.substrate.type === "old" && this.form.printing.substrate.width !== '') this.summary += '\nPapier existant : ' + this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2';
                 if (this.form.printing.substrate.type === "new" && this.form.printing.substrate.width !== '') this.summary += '\nNouveau papier : ' + +this.form.printing.substrate.width + 'mm en laize - ' + this.form.printing.substrate.weight + 'g/m\xB2';
             }
-            if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].type !== "") {
+            if (this.form.finishing.finishings.length > 0 && this.form.finishing.finishings[0].id !== "") {
                 if (this.form.finishing.finishings.length > 1) {
                     this.summary += '\nFinitions :';
                 } else {
@@ -39706,7 +39702,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_google_autocomplete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_google_autocomplete__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Autocomplete__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Autocomplete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Autocomplete__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Pagination__);
 //
 //
@@ -40115,6 +40111,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         database: function database() {
             return this.$store.state.workflow.database;
+        },
+        addressLine2Required: function addressLine2Required() {
+            if (this.form.identification.third.addressLine1 === '' && this.form.identification.third.addressLine3 === '') {
+                return true;
+            } else {
+                return false;
+            }
         }
     },
     methods: {
@@ -40155,7 +40158,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.form.identification.contact.id = "";
             }
         },
-        setContact: function setContact(contact) {
+        setContact: function setContact() {
+            var _this = this;
+
+            var contact = this.database.identification.contacts.find(function (contact) {
+                return contact.id === _this.form.identification.contact.id;
+            });
             this.form.identification.contact.ethic = contact.ethic;
             this.form.identification.contact.type = "old";
             if (this.form.identification.contact.email !== null || this.form.identification.contact.email !== "") {
@@ -40163,17 +40171,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         searchCustomersForAutocomplete: function searchCustomersForAutocomplete(query) {
-            var _this = this;
+            var _this2 = this;
 
             this.filters.name = query.toUpperCase();
             if (query.length > 2) {
                 this.$store.dispatch("searchCustomersForAutocomplete", {
                     queryString: query
                 }).then(function (response) {
-                    _this.autocomplete.customers = response.data;
+                    _this2.autocomplete.customers = response.data;
                 }).catch(function (error) {
-                    _this.autocomplete.customers = [];
-                    _this.$toast.error({
+                    _this2.autocomplete.customers = [];
+                    _this2.$toast.error({
                         title: "Erreur",
                         message: "Oups, un problème est survenu pour charger les donneurs d'ordre"
                     });
@@ -40184,7 +40192,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.filters.name = value.toUpperCase();
         },
         getCustomers: function getCustomers(page) {
-            var _this2 = this;
+            var _this3 = this;
 
             this.customers = [];
             this.isLoading = true;
@@ -40194,16 +40202,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 filters: this.filters,
                 page: parseInt(page)
             }).then(function (response) {
-                _this2.customers = response.data;
-                _this2.makePagination(response);
+                _this3.customers = response.data;
+                _this3.makePagination(response);
             }).catch(function (error) {
                 console.log(error.response);
-                _this2.customers = [];
-                _this2.$toast.error({
+                _this3.customers = [];
+                _this3.$toast.error({
                     title: "Erreur",
                     message: "Oups, un problème est survenu pour charger les donneurs d'ordre"
                 });
-                _this2.isLoading = false;
+                _this3.isLoading = false;
             });
         },
         makePagination: function makePagination(meta) {
@@ -40219,7 +40227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isLoading = false;
         },
         selectedCustomer: function selectedCustomer(customer) {
-            var _this3 = this;
+            var _this4 = this;
 
             this.isLoading = true;
             this.contactsAreLoading = true;
@@ -40227,21 +40235,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.database.identification.contacts = [];
             this.form.identification.contact.type = "new";
             this.form.identification.contact.ethic = false;
+            this.form.identification.contact.id = "";
+            this.form.identification.contact.civility = "";
+            this.form.identification.contact.name = "";
+            this.form.identification.contact.surname = "";
+            this.form.identification.contact.email = "";
 
             this.$store.dispatch("getThirdContacts", {
                 ethic: customer.ethic,
                 third: customer.id
             }).then(function () {
-                _this3.database.identification.contacts.forEach(function (element) {
+                _this4.database.identification.contacts.forEach(function (element) {
                     if (element.default) {
-                        _this3.form.identification.contact.id = element.id;
-                        _this3.form.identification.contact.type = "old";
-                        _this3.form.identification.contact.ethic = element.ethic;
+                        _this4.form.identification.contact.id = element.id;
+                        _this4.form.identification.contact.type = "old";
+                        _this4.form.identification.contact.ethic = element.ethic;
                     }
                 });
-                _this3.contactsAreLoading = false;
+                _this4.contactsAreLoading = false;
             }).catch(function () {
-                _this3.contactsAreLoading = false;
+                _this4.contactsAreLoading = false;
             });
 
             this.form.identification.third.ethic = customer.ethic;
@@ -40263,9 +40276,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ethic: customer.ethic,
                 third: customer.id
             }).then(function () {
-                _this3.isLoading = false;
+                _this4.isLoading = false;
             }).catch(function () {
-                _this3.isLoading = false;
+                _this4.isLoading = false;
             });
         },
         resetIdentification: function resetIdentification() {
@@ -40944,13 +40957,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             required: true,
             default: "Nom"
         },
+        icon: {
+            type: String,
+            required: false,
+            default: "fas fa-user-tie"
+        },
         focus: {
             type: Boolean,
             required: false,
             default: false
         },
         items: {
-            type: Array,
+            type: [Array, Object],
             required: false,
             default: function _default() {
                 return [];
@@ -41149,7 +41167,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", { staticClass: "symbol-left-field" }, [
-              _c("i", { staticClass: "fas fa-user-tie" })
+              _c("i", { class: _vm.icon })
             ]),
             _vm._v(" "),
             _c("span", { staticClass: "v-validate" }, [
@@ -41418,7 +41436,7 @@ var render = function() {
         [
           _c("ValidationProvider", {
             staticClass: "wrap-field h-50",
-            attrs: { tag: "div", rules: "required", name: "address line 1" },
+            attrs: { tag: "div", name: "address line 1" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -41445,7 +41463,7 @@ var render = function() {
                       attrs: {
                         type: "text",
                         autocomplete: "off",
-                        required: ""
+                        required: _vm.addressLine2Required
                       },
                       domProps: {
                         value: _vm.form.identification.third.addressLine2
@@ -41779,7 +41797,8 @@ var render = function() {
       ),
       _vm._v(" "),
       _vm.form.identification.third.type === "old" &&
-      _vm.database.identification.contacts.length
+      (_vm.database.identification.contacts.length ||
+        Object.keys(_vm.database.identification.contacts).length)
         ? _c(
             "div",
             {
@@ -41860,9 +41879,7 @@ var render = function() {
                                         : $$selectedVal[0]
                                     )
                                   },
-                                  function($event) {
-                                    return _vm.setContact(_vm.contact)
-                                  }
+                                  _vm.setContact
                                 ]
                               }
                             },
@@ -41906,7 +41923,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2726553714
+                  1395080532
                 )
               }),
               _vm._v(" "),
@@ -43154,6 +43171,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -43188,7 +43206,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var labels = this.database.description.labels;
         this.allThirdLabels = labels;
-        console.log(labels);
         if (labels.length > 1) {
             this.form.description.label.type = "old";
 
@@ -43196,14 +43213,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return item.width;
             }).filter(function (value, index, self) {
                 return self.indexOf(value) === index;
-            });
+            }).sort();
             this.searchLabels.database.widths = widths;
 
             var lengths = labels.map(function (item) {
                 return item.length;
             }).filter(function (value, index, self) {
                 return self.indexOf(value) === index;
-            });
+            }).sort();
             this.searchLabels.database.lengths = lengths;
 
             var references = labels.map(function (item) {
@@ -43357,7 +43374,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.description.quantities.push({
                 id: "",
                 quantity: "",
-                model: "",
+                model: 1,
                 plate: "",
                 hour: "",
                 minute: "",
@@ -44216,7 +44233,7 @@ var render = function() {
                                     { staticClass: "symbol-left-field" },
                                     [
                                       _c("i", {
-                                        staticClass: "fas fa-map-marker-alt"
+                                        staticClass: "fas fa-ruler-horizontal"
                                       })
                                     ]
                                   ),
@@ -44344,7 +44361,7 @@ var render = function() {
                                     { staticClass: "symbol-left-field" },
                                     [
                                       _c("i", {
-                                        staticClass: "fas fa-map-marker-alt"
+                                        staticClass: "fas fa-ruler-vertical"
                                       })
                                     ]
                                   ),
@@ -44473,11 +44490,7 @@ var render = function() {
                                   _c(
                                     "span",
                                     { staticClass: "symbol-left-field" },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fas fa-map-marker-alt"
-                                      })
-                                    ]
+                                    [_c("i", { staticClass: "fas fa-tag" })]
                                   ),
                                   _vm._v(" "),
                                   _c("span", { staticClass: "v-validate" }, [
@@ -44494,6 +44507,7 @@ var render = function() {
                             items: _vm.searchLabels.database.names,
                             isAsync: false,
                             label: "Désignation",
+                            icon: "fas fa-image",
                             focus: false
                           },
                           on: {
@@ -44870,10 +44884,11 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Autocomplete__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Autocomplete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Autocomplete__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Pagination___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Pagination__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Loader__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Loader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Loader__);
+//
 //
 //
 //
@@ -45262,6 +45277,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         this.searchSubstrates.names = [];
     },
+    mounted: function mounted() {
+        this.form.printing.colors = this.form.description.quantities[0].plate;
+    },
 
     computed: {
         form: function form() {
@@ -45294,8 +45312,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         searchSubstratesForAutocomplete: function searchSubstratesForAutocomplete(query) {
             var _this = this;
 
-            console.log("searchSubstratesForAutocomplete");
-            console.log(query);
             this.searchSubstrates.names = [];
             this.searchSubstrates.criteria.name = query.toUpperCase();
             if (query.length > 2) {
@@ -45304,8 +45320,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (response) {
                     console.log(response);
                     _this.searchSubstrates.names = response;
-                    console.log("searchSubstratesForAutocomplete");
-                    console.log(_this.searchSubstrates.names);
                 }).catch(function () {
                     _this.$toast.error({
                         title: "Erreur",
@@ -46115,7 +46129,7 @@ var render = function() {
                                     { staticClass: "symbol-left-field" },
                                     [
                                       _c("i", {
-                                        staticClass: "fas fa-map-marker-alt"
+                                        staticClass: "fas fa-folder-open"
                                       })
                                     ]
                                   ),
@@ -46239,11 +46253,7 @@ var render = function() {
                                   _c(
                                     "span",
                                     { staticClass: "symbol-left-field" },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fas fa-map-marker-alt"
-                                      })
-                                    ]
+                                    [_c("i", { staticClass: "fas fa-file" })]
                                   ),
                                   _vm._v(" "),
                                   _c("span", { staticClass: "v-validate" }, [
@@ -46367,11 +46377,7 @@ var render = function() {
                                   _c(
                                     "span",
                                     { staticClass: "symbol-left-field" },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fas fa-map-marker-alt"
-                                      })
-                                    ]
+                                    [_c("i", { staticClass: "fas fa-palette" })]
                                   ),
                                   _vm._v(" "),
                                   _c("span", { staticClass: "v-validate" }, [
@@ -46523,7 +46529,7 @@ var render = function() {
                                     { staticClass: "symbol-left-field" },
                                     [
                                       _c("i", {
-                                        staticClass: "fas fa-map-marker-alt"
+                                        staticClass: "fas fa-weight-hanging"
                                       })
                                     ]
                                   ),
@@ -46542,6 +46548,7 @@ var render = function() {
                             items: _vm.searchSubstrates.names,
                             isAsync: true,
                             label: "Désignation",
+                            icon: "fas fa-scroll",
                             focus: true
                           },
                           on: {
@@ -47358,6 +47365,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47410,12 +47433,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.finishing.finishings.push({
                 id: "",
                 name: "",
+                cutting_die: false,
                 die: {
                     id: "",
                     name: "",
                     price: ""
                 },
-                reworking: "",
+                rewdorking: "",
                 presence_consumable: false,
                 hasFocus: false,
                 consumable: ""
@@ -47433,7 +47457,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return finishing.id === finishingID;
             });
 
-            if (finishing.presence_die) {
+            if (finishingID !== "" && finishing.presence_die) {
                 this.dies[index] = finishing.die;
                 // let newDie = {
                 //     id: "",
@@ -47450,7 +47474,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 };
             }
 
-            if (finishing.presence_consumable) {
+            if (finishingID !== "" && finishing.presence_consumable) {
                 this.consumables[index] = finishing.consumable;
                 var newConsumable = {
                     id: "",
@@ -47888,7 +47912,9 @@ var render = function() {
                   })
                 : _vm._e(),
               _vm._v(" "),
-              _vm.database.finishing.reworkings.length > 0
+              item.id !== "" &&
+              (_vm.database.finishing.reworkings.length ||
+                Object.keys(_vm.database.finishing.reworkings).length)
                 ? _c("div", { staticClass: "wrap-field h-50" }, [
                     _vm.finishingsAreLoading
                       ? _c("span", { staticClass: "btn-right-field" }, [
@@ -47969,9 +47995,69 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
+              item.id !== "" && item.reworking
+                ? _c("div", { staticClass: "wrap-field h-50 switcher" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: item.cutting_die,
+                          expression: "item.cutting_die"
+                        }
+                      ],
+                      staticClass: "field toggle toggle-left hasValue",
+                      attrs: {
+                        type: "radio",
+                        id: "toggle-on",
+                        value: "true",
+                        required: ""
+                      },
+                      domProps: { checked: _vm._q(item.cutting_die, "true") },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(item, "cutting_die", "true")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(1, true),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: item.cutting_die,
+                          expression: "item.cutting_die"
+                        }
+                      ],
+                      staticClass: "field toggle toggle-right hasValue",
+                      attrs: {
+                        type: "radio",
+                        id: "toggle-off",
+                        name: "toggle",
+                        value: "false"
+                      },
+                      domProps: { checked: _vm._q(item.cutting_die, "false") },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(item, "cutting_die", "false")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(2, true),
+                    _vm._v(" "),
+                    _c("label", { staticClass: "label-field" }, [
+                      _vm._v("Machine pour la découpe")
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               item.presence_consumable &&
               item.id !== "" &&
-              _vm.consumables[index]
+              _vm.consumables[index].length
                 ? _c("div", { staticClass: "wrap-field h-50" }, [
                     _c(
                       "select",
@@ -48055,7 +48141,7 @@ var render = function() {
               _vm._v(" "),
               item.presence_consumable &&
               item.id !== "" &&
-              !_vm.consumables[index]
+              !_vm.consumables[index].length
                 ? _c("ValidationProvider", {
                     staticClass: "wrap-field h-50",
                     attrs: { tag: "div", name: "consumable name" },
@@ -48283,7 +48369,7 @@ var render = function() {
               _vm._v(" "),
               _c("span", { staticClass: "focus-field" }),
               _vm._v(" "),
-              _vm._m(1, true)
+              _vm._m(3, true)
             ],
             1
           )
@@ -48327,7 +48413,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(4)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "wrap-field" }, [
@@ -48352,7 +48438,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(3)
+          _vm._m(5)
         ])
       ]),
       _vm._v(" "),
@@ -49010,7 +49096,7 @@ var render = function() {
           _vm._v(" "),
           _c("span", { staticClass: "focus-field" }),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(6)
         ],
         1
       )
@@ -49029,6 +49115,26 @@ var staticRenderFns = [
       _c("div"),
       _c("div")
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-on" } },
+      [_c("i", { staticClass: "far fa-check-circle" }), _vm._v("Oui")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "toggle-btn", attrs: { for: "toggle-off" } },
+      [_c("i", { staticClass: "far fa-times-circle" }), _vm._v("Non")]
+    )
   },
   function() {
     var _vm = this
@@ -54248,7 +54354,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     quantities: [{
                         id: "",
                         quantity: "",
-                        model: "",
+                        model: 1,
                         plate: "",
                         hour: "",
                         minute: "",
@@ -54276,6 +54382,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     finishings: [{
                         id: "",
                         name: "",
+                        cutting_die: false,
                         die: {
                             id: "",
                             name: "",
@@ -54558,10 +54665,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 3:
                                 data = _context2.sent.data;
                                 // quotations.index
+                                console.log("getQuotations");
                                 console.log(data);
                                 context.commit("setQuotations", data);
 
-                            case 6:
+                            case 7:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -54791,8 +54899,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     while (1) {
                         switch (_context7.prev = _context7.next) {
                             case 0:
-                                console.log();
-                                _context7.next = 3;
+                                _context7.next = 2;
                                 return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotations/finishings', {
                                     company: context.state.user.company,
                                     establishment: context.state.user.establishment,
@@ -54801,7 +54908,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                                     variant: context.state.workflow.form.description.label.variant
                                 });
 
-                            case 3:
+                            case 2:
                                 data = _context7.sent.data;
 
                                 // let data = response.data;
@@ -54815,6 +54922,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                                     singleFinishing = [{
                                         id: "",
                                         name: "",
+                                        cutting_die: false,
                                         die: {
                                             id: "",
                                             name: "",
@@ -54840,7 +54948,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                                     context.commit("setCuttings", []);
                                 }
 
-                            case 8:
+                            case 7:
                             case 'end':
                                 return _context7.stop();
                         }
@@ -54894,6 +55002,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         //     context.commit("setCuttings", data);
         // },
         updateQuotationSummary: function updateQuotationSummary(context, credentials) {
+            console.log("updateQuotationSummary");
+            console.log(credentials);
             var summary = credentials.summary;
             context.commit("setQuotationSummary", summary);
         },
@@ -54936,6 +55046,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             return getQuotationPrice;
         }(),
         saveQuotation: function saveQuotation(context, credentials) {
+            console.log(context.state.workflow.form);
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
                 __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post('/api/auth/quotations', { // quotations.store
@@ -55047,14 +55158,15 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 3:
                                 data = _context12.sent.data;
                                 // quotations.edit
+                                console.log("getWorkflow");
                                 console.log(data);
                                 workflow = JSON.parse(data.workflow);
                                 third = data.third;
 
                                 context.commit("setWorkflow", workflow);
-                                context.commit("setThirdContacts", third);
+                                context.commit("setThirdContacts", third.contacts);
 
-                            case 9:
+                            case 10:
                             case 'end':
                                 return _context12.stop();
                         }
@@ -55146,10 +55258,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 3:
                                 data = _context15.sent.data;
                                 // profile.getCompany
+                                console.log("getCompany");
                                 console.log(data);
                                 context.commit("setCompany", data);
 
-                            case 6:
+                            case 7:
                             case 'end':
                                 return _context15.stop();
                         }

@@ -20,7 +20,7 @@
             ref="search">
         <span class="focus-field"></span>
         <label class="label-field"> {{ label }}</label>
-        <span class="symbol-left-field"><i class="fas fa-user-tie"></i></span>
+        <span class="symbol-left-field"><i :class="icon"></i></span>
         <span class="v-validate">{{ errors[0] }}</span>
         <div v-show="isOpen"
              class="wrap-autocomplete-results">
@@ -57,13 +57,18 @@
                 required: true,
                 default: "Nom"
             },
+            icon: {
+                type: String,
+                required: false,
+                default: "fas fa-user-tie"
+            },
             focus: {
                 type: Boolean,
                 required: false,
                 default: false
             },
             items: {
-                type: Array,
+                type: [Array, Object],
                 required: false,
                 default: () => []
             },

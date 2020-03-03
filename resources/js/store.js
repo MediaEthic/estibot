@@ -61,7 +61,7 @@ export default new Vuex.Store({
                         {
                             id: "",
                             quantity: "",
-                            model: "",
+                            model: 1,
                             plate: "",
                             hour: "",
                             minute: "",
@@ -91,6 +91,7 @@ export default new Vuex.Store({
                         {
                             id: "",
                             name: "",
+                            cutting_die: false,
                             die: {
                                 id: "",
                                 name: "",
@@ -337,6 +338,7 @@ export default new Vuex.Store({
         async getQuotations(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.get('/api/auth/quotations/' + credentials.page)).data; // quotations.index
+            console.log("getQuotations");
             console.log(data);
             context.commit("setQuotations", data);
         },
@@ -450,7 +452,6 @@ export default new Vuex.Store({
             });
         },
         async getFinishings(context) {
-            console.log()
             let data = (await axios.post('/api/auth/quotations/finishings', {
                 company: context.state.user.company,
                 establishment: context.state.user.establishment,
@@ -469,6 +470,7 @@ export default new Vuex.Store({
                 let singleFinishing = [{
                     id: "",
                     name: "",
+                    cutting_die: false,
                     die: {
                         id: "",
                         name: "",
@@ -507,6 +509,8 @@ export default new Vuex.Store({
         //     context.commit("setCuttings", data);
         // },
         updateQuotationSummary(context, credentials) {
+            console.log("updateQuotationSummary");
+            console.log(credentials);
             const summary = credentials.summary;
             context.commit("setQuotationSummary", summary);
         },
@@ -524,6 +528,7 @@ export default new Vuex.Store({
             context.commit("setQuotationPrice", data);
         },
         saveQuotation(context, credentials) {
+            console.log(context.state.workflow.form);
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
                 axios.post('/api/auth/quotations', { // quotations.store
@@ -574,11 +579,12 @@ export default new Vuex.Store({
         async getWorkflow(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit/' + context.state.user.company)).data; // quotations.edit
+            console.log("getWorkflow");
             console.log(data);
             let workflow = JSON.parse(data.workflow);
             let third = data.third;
             context.commit("setWorkflow", workflow);
-            context.commit("setThirdContacts", third);
+            context.commit("setThirdContacts", third.contacts);
         },
         async generatePDF(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
@@ -597,6 +603,7 @@ export default new Vuex.Store({
         async getCompany(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.get('/api/auth/profile/company')).data; // profile.getCompany
+            console.log("getCompany");
             console.log(data);
             context.commit("setCompany", data);
         },
