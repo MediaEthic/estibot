@@ -48057,7 +48057,8 @@ var render = function() {
               _vm._v(" "),
               item.presence_consumable &&
               item.id !== "" &&
-              _vm.consumables[index].length
+              (_vm.consumables[index].length ||
+                Object.keys(_vm.consumables[index]).length)
                 ? _c("div", { staticClass: "wrap-field h-50" }, [
                     _c(
                       "select",
@@ -48141,7 +48142,8 @@ var render = function() {
               _vm._v(" "),
               item.presence_consumable &&
               item.id !== "" &&
-              !_vm.consumables[index].length
+              (!_vm.consumables[index].length ||
+                !Object.keys(_vm.consumables[index]).length)
                 ? _c("ValidationProvider", {
                     staticClass: "wrap-field h-50",
                     attrs: { tag: "div", name: "consumable name" },

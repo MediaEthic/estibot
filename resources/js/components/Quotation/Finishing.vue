@@ -123,7 +123,7 @@
                 </div>
 
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && consumables[index].length">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && (consumables[index].length || Object.keys(consumables[index]).length)">
                     <select v-model="item.consumable.id"
                             @focus="item.hasFocus = true"
                             @blur="item.hasFocus = false"
@@ -143,7 +143,7 @@
                     <label class="label-field">Désignation du consommable</label>
                 </div>
 
-                <ValidationProvider v-if="item.presence_consumable && item.id !== '' && !consumables[index].length"
+                <ValidationProvider v-if="item.presence_consumable && item.id !== '' && (!consumables[index].length || !Object.keys(consumables[index]).length)"
                                     tag="div"
                                     class="wrap-field h-50"
                                     name="consumable name"
