@@ -38980,7 +38980,8 @@ var render = function() {
                                           "span",
                                           { staticClass: "symbol-price" },
                                           [_vm._v("€")]
-                                        )
+                                        ),
+                                        _vm._v(" du mille")
                                       ]
                                     )
                                   ]
@@ -45318,7 +45319,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.$store.dispatch("searchSubstratesForAutocomplete", {
                     queryString: query
                 }).then(function (response) {
-                    console.log(response);
                     _this.searchSubstrates.names = response;
                 }).catch(function () {
                     _this.$toast.error({
@@ -50352,7 +50352,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 quantity.totals.totalFixedCosts.toFixed(2)
-                              ) + "€"
+                              ) + "€ (fixe)"
                             )
                           ]),
                           _vm._v(" "),
@@ -50361,7 +50361,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 quantity.totals.totalVariableCosts.toFixed(2)
-                              ) + "€"
+                              ) + "€ (variable)"
                             )
                           ]),
                           _vm._v(" "),
@@ -50370,7 +50370,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 (quantity.totals.totalCosts / index).toFixed(2)
-                              ) + "€"
+                              ) + "€ l'unité"
                             )
                           ]),
                           _vm._v(" "),
@@ -50382,7 +50382,7 @@ var render = function() {
                                   (quantity.totals.totalCosts / index) *
                                   1000
                                 ).toFixed(2)
-                              ) + "€"
+                              ) + "€ le mille"
                             )
                           ])
                         ])
@@ -54938,11 +54938,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
                                     context.commit("setFinishingsLabel", singleFinishing);
                                     console.log(context.state.workflow.form.finishing.finishings);
-                                    if (data.database.finishings !== undefined) {
+                                    if (data.database && data.database.finishings) {
                                         context.commit("setFinishings", data.database.finishings);
                                     }
                                 }
-                                if (data.database.cuttings !== undefined) {
+                                if (data.database && data.database.cuttings) {
                                     console.log("cuttings");
                                     console.log(data.database.cuttings);
                                     context.commit("setCuttings", data.database.cuttings);

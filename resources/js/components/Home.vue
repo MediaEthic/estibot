@@ -38,7 +38,7 @@
                             <p class="baseline-main-title"><time :datetime="quotation.created_at">{{ getHumanDate(quotation.created_at) }}</time></p>
                             <p class="third-quotation">{{ quotation.third_name }}</p>
                             <div class="wrap-end-quotation">
-                                <p class="price-quotation">{{ quotation.thousand.toFixed(2) }}<span class="symbol-price">€</span></p>
+                                <p class="price-quotation">{{ quotation.thousand.toFixed(2) }}<span class="symbol-price">€</span> du mille</p>
 <!--                                <div class="wrap-actions-quotation">-->
 <!--                                    <input :id="'options-toggler' + quotation.id" class="options-toggler" type="checkbox">-->
 <!--                                    <label :for="'options-toggler' + quotation.id" class="fas fa-cog"></label>-->

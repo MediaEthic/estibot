@@ -422,7 +422,6 @@
                     this.$store.dispatch("searchSubstratesForAutocomplete", {
                         queryString: query,
                     }).then(response => {
-                        console.log(response);
                         this.searchSubstrates.names = response;
                     }).catch(() => {
                         this.$toast.error({

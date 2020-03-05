@@ -483,11 +483,11 @@ export default new Vuex.Store({
                 }];
                 context.commit("setFinishingsLabel", singleFinishing);
                 console.log(context.state.workflow.form.finishing.finishings);
-                if (data.database.finishings !== undefined) {
+                if (data.database && data.database.finishings) {
                     context.commit("setFinishings", data.database.finishings);
                 }
             }
-            if (data.database.cuttings !== undefined) {
+            if (data.database && data.database.cuttings) {
                 console.log("cuttings");
                 console.log(data.database.cuttings);
                 context.commit("setCuttings", data.database.cuttings);

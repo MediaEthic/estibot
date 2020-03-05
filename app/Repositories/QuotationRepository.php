@@ -300,11 +300,11 @@ class QuotationRepository
             if (!$label['ethic']) $modelLabel = Label::findOrFail($label['id']);
             $modelQuotation = Quotation::findOrFail($inputs['quotation']);
         } else {
-            if ($third['type'] === "new") $modelThird = new Third();
-            if ($contact['type'] === "new") $modelContact = new Contact();
-            if ($substrate['type'] === "new") $modelSubstrate = new Substrate();
-            if ($cutting['type'] === "new") $modelCutting = new Cutting();
-            if ($label['type'] === "new") $modelLabel = new Label();
+            if ($third['type'] === "new" || $third['id'] === "") $modelThird = new Third();
+            if ($contact['type'] === "new" || $contact['id'] === "") $modelContact = new Contact();
+            if ($substrate['type'] === "new" || $substrate['id'] === "") $modelSubstrate = new Substrate();
+            if ($cutting['type'] === "new" || $cutting['id'] === "") $modelCutting = new Cutting();
+            if ($label['type'] === "new" || $label['id'] === "") $modelLabel = new Label();
             $modelQuotation = new Quotation();
         }
 
@@ -663,10 +663,14 @@ class QuotationRepository
                         $results['quantities'][$copies]['datas']['prepress'] = 0;
                     }
 
+
+                    // Nombre de frappes de roulage
+                    $strikingRun = ceil($copies / ($cuttingPoseWidth * $cuttingPoseLength));
+                    $results['quantities'][$copies]['wastage'][] = "Nombre de frappes : " . $strikingRun;
+
                     /*
                      * Outil de découpe
                      */
-                    // TODO : to add
                     $cuttingShape = floatval($cutting['shape']);
                     if ($cuttingShape > 0) {
                         $costCuttingShape = $cuttingShape;
@@ -691,21 +695,17 @@ class QuotationRepository
 
                     // Temps de calage impression
                     $timeMakereadyPrinting = $press['makeready_plate'] * $plates;
-                    $results['quantities'][$copies]['time'][] = "Calage de l'impression : " . $timeMakereadyPrinting . "h";
+                    $results['quantities'][$copies]['time'][] = "Calage pour " . $press['name'] . " : " . $timeMakereadyPrinting . "h";
 
 
                     if ($press['unit_cadence'] === "striking") {
-                        // Nombre de frappes de roulage
-                        $strikingRun = $copies / ($cuttingPoseWidth * $cuttingPoseLength);
-                        $results['quantities'][$copies]['wastage'][] = "Nombre de frappes : " . $strikingRun;
-
                         // Métrage de roulage impression
                         $substrateLinear = $strikingRun * $labelSizeLengthWithBleed * $cuttingPoseLength / 1000;
                     } else {
                         $substrateLinear = (($copies / $cuttingPoseWidth) * $labelSizeLengthWithBleed / 1000); // longueur papier en mL
                     }
 
-                    $results['quantities'][$copies]['wastage'][] = "Métrage papier : " . $substrateLinear;
+                    $results['quantities'][$copies]['wastage'][] = "Roulage pour  " . $press['name'] . " : " . $substrateLinear . "m";
 
 
                     // Temps de roulage
@@ -721,8 +721,8 @@ class QuotationRepository
                     $totalFixedCostProduction = $costCuttingShape + $timeMakereadyPrinting * $press['hourly_rate'] + $totalCostPlates;
                     $totalVariableCostProduction = $timeProductionPress * $press['hourly_rate'];
                     $totalCostProduction = $totalFixedCostProduction + $totalVariableCostProduction;
-                    $results['quantities'][$copies]['cost'][] = "Calage de la machine : " . $timeMakereadyPrinting * $press['hourly_rate'] . "€";
-                    $results['quantities'][$copies]['cost'][] = "Roulage de la machine : " . $totalVariableCostProduction . "€";
+                    $results['quantities'][$copies]['cost'][] = "Calage pour " . $press['name'] . " : " . $timeMakereadyPrinting * $press['hourly_rate'] . "€";
+                    $results['quantities'][$copies]['cost'][] = "Roulage pour " . $press['name'] . " : " . $totalVariableCostProduction . "€";
 
                     $marginProduction = $margin;
 
@@ -755,9 +755,8 @@ class QuotationRepository
 
                     $marginFinishing = $margin;
                     $finishings = $workflow['finishing']['finishings'];
-                        foreach ($finishings as $finishing) {
-                            if (!empty($finishing['id'])) {
-
+                    foreach ($finishings as $finishing) {
+                        if (!empty($finishing['id'])) {
                             $reworking = $finishing['reworking'];
                             if (!empty($reworking)) {
                                 $userDatas['class'] = $reworking;
@@ -769,11 +768,27 @@ class QuotationRepository
                             // Métrage de calage finition
                             $meterMakereadyFinishing = $finishingPress['overlay_sheet'];
                             $meterMakereadyPress += $meterMakereadyFinishing;
-                            $results['quantities'][$copies]['wastage'][] = "Métrage de calage pour " . $finishingPress['name'] . " : " . $meterMakereadyFinishing;
+                            $results['quantities'][$copies]['wastage'][] = "Calage pour " . $finishingPress['name'] . " : " . $meterMakereadyFinishing  . "m";
 
                             // Temps de calage finition
-                            $totalTimeFinishing = round($finishingPress['makeready_times'], 4);
-                            $results['quantities'][$copies]['time'][] = "Calage pour " . $finishingPress['name'] . " : " . $totalTimeFinishing . "h";
+                            $timeMakereadyFinishing = round($finishingPress['makeready_times'], 4);
+                            $results['quantities'][$copies]['time'][] = "Calage pour " . $finishingPress['name'] . " : " . $timeMakereadyFinishing . "h";
+
+                            if (!empty($reworking)) {
+                                if ($finishingPress['unit_cadence'] === "striking") {
+                                    $finishingPressCadence = $finishingPress['cadence'];
+                                    $timeProductionFinishingPress = $strikingRun / $finishingPressCadence;
+                                } else {
+                                    $finishingPressCadence = $finishingPress['cadence'] * 60; // transform meters per minutes into hours
+                                    $timeProductionFinishingPress = $substrateLinear / $finishingPressCadence;
+                                }
+
+                                $results['quantities'][$copies]['time'][] = "Roulage pour " . $finishingPress['name'] . " : " . $timeProductionFinishingPress . "h";
+                            } else {
+                                $timeProductionFinishingPress = 0;
+                            }
+
+                            $totalTimeFinishing = round($timeMakereadyFinishing + $timeProductionFinishingPress, 4);
 
                             $costFinishingShape = 0;
                             if (!empty($finishing['die']['id'])) {
@@ -897,7 +912,13 @@ class QuotationRepository
                                 $results['quantities'][$copies]['time'][] = "Calage de la bobineuse : " . $timeMakereadyWinding . "h";
 
                                 // Temps de production bobineuse
-                                $timeProductionWinding = $substrateLinear / $windingMachine['cadence'] / 60 + $copies / $conditioning * $windingMachine['makeready_times'];
+                                if ($windingMachine['unit_cadence'] === "striking") {
+                                    $windingCadence = $windingMachine['cadence'];
+                                    $timeProductionWinding = $strikingRun / $windingCadence + $copies / $conditioning * $windingMachine['makeready_times'];
+                                } else {
+                                    $windingCadence = $windingMachine['cadence'] * 60; // transform meters per minutes into hours
+                                    $timeProductionWinding = $substrateLinear / $windingCadence + $copies / $conditioning * $windingMachine['makeready_times'];
+                                }
                                 $results['quantities'][$copies]['time'][] = "Roulage de la bobineuse : " . $timeProductionWinding . "h";
 
                                 $totalTimeWinding = round($timeMakereadyWinding + $timeProductionWinding, 4);
@@ -905,7 +926,7 @@ class QuotationRepository
                                 // Coût de production bobineuse
                                 $totalFixedCostWinding = $timeMakereadyWinding * $windingMachine['hourly_rate'];
                                 $results['quantities'][$copies]['cost'][] = "Calage de la bobineuse : " . $totalFixedCostWinding . "€";
-                                $totalVariableCostWinding = $timeProductionWinding * $windingMachine['hourly_rate'];
+                                $totalVariableCostWinding = round($timeProductionWinding * $windingMachine['hourly_rate'], 4);
                                 $results['quantities'][$copies]['cost'][] = "Roulage de la bobineuse : " . $totalVariableCostWinding . "€";
                                 $totalCostWinding = $totalFixedCostWinding + $totalVariableCostWinding;
 

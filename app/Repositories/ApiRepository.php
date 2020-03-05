@@ -685,9 +685,9 @@ class ApiRepository
 
                 if (!empty($labelFinishingDie['cuttings'])) {
                     $labelFinishings['database']['cuttings'] = $labelFinishingDie['cuttings'];
-                } else {
-                    $labelFinishings['database']['finishings'][] = $labelFinishing;
                 }
+
+                $labelFinishings['database']['finishings'][] = $labelFinishing;
             }
             return $labelFinishings;
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
