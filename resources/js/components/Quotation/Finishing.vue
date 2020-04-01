@@ -87,7 +87,7 @@
                     <span class="v-validate">{{ errors[0] }}</span>
                 </ValidationProvider>
 
-                <div class="wrap-field h-50" v-if="item.id !== '' && (database.finishing.reworkings.length || Object.keys(database.finishing.reworkings).length)">
+                <div class="wrap-field h-50" v-if="item.id !== '' && (reworkings[index] || Object.keys(reworkings[index]).length)">
                     <span class="btn-right-field" v-if="finishingsAreLoading">
                         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </span>
@@ -96,12 +96,12 @@
                             @blur="item.hasFocus = false"
                             @animationstart="checkAnimation"
                             class="field select"
-                            :class="{ hasValue: item.reworking }">
+                            :class="{ hasValue: item.reworking }"
+                    >
                         <option value="">Pas de reprise</option>
-                        <option v-for="reworking in database.finishing.reworkings"
-                                v-bind:value="reworking.id"
-                                :data-name="reworking.name">
-                            {{ reworking.name }}
+                        <option v-for="reworking in reworkings[index]"
+                                v-bind:value="reworking.workstation_id || reworking.id">
+                            {{ reworking.workstation_id || reworking.id }}
                         </option>
                     </select>
                     <label class="label-field">En reprise sur</label>
@@ -123,7 +123,7 @@
                 </div>
 
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && (consumables[index].length || Object.keys(consumables[index]).length)">
+                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && ((consumables.length && consumables[index].length) || (Object.keys(consumables).length && Object.keys(consumables[index]).length))">
                     <select v-model="item.consumable.id"
                             @focus="item.hasFocus = true"
                             @blur="item.hasFocus = false"
@@ -143,7 +143,7 @@
                     <label class="label-field">Désignation du consommable</label>
                 </div>
 
-                <ValidationProvider v-if="item.presence_consumable && item.id !== '' && (!consumables[index].length || !Object.keys(consumables[index]).length)"
+                <ValidationProvider v-if="item.presence_consumable && item.id !== '' && ((!consumables.length && !consumables[index].length) || (!Object.keys(consumables).length && !Object.keys(consumables[index]).length))"
                                     tag="div"
                                     class="wrap-field h-50"
                                     name="consumable name"
@@ -399,6 +399,7 @@
                 finishingsAreLoading: false,
                 dies: [],
                 consumables: [],
+                reworkings: [],
                 cuttings: []
             }
         },
@@ -408,6 +409,7 @@
                 this.$store.dispatch('getFinishings').then(() => {
                     this.finishingsAreLoading = false;
 
+                    this.setUpConsumablesAndDies();
                     this.filteredCuttings();
                 }).catch(() => {
                     this.finishingsAreLoading = false;
@@ -417,10 +419,9 @@
                     });
                 });
             } else {
+                this.setUpConsumablesAndDies();
                 this.filteredCuttings();
             }
-
-
         },
         computed: {
             form() {
@@ -435,6 +436,17 @@
                 if (animationName.startsWith("onAutoFillStart")) {
                     target.classList.add("hasValue");
                 }
+            },
+            setUpConsumablesAndDies() {
+                let allFinishings = this.database.finishing.finishings;
+                this.form.finishing.finishings.forEach(function(finishing, index) {
+                    if (finishing.id !== "") {
+                        let operation = allFinishings.find(item => item.id === finishing.id);
+                        this.setFinishingDies(operation, index);
+                        this.setFinishingConsumables(operation, index);
+                        this.setFinishingReworkings(operation, index);
+                    }
+                });
             },
             addFinishing() {
                 this.form.finishing.finishings.push({
@@ -462,7 +474,16 @@
                 let finishingID = this.form.finishing.finishings[index].id;
                 let finishing = this.database.finishing.finishings.find(finishing => finishing.id === finishingID);
 
-                if (finishingID !== "" && finishing.presence_die) {
+                if (finishingID !== "") {
+                    this.setFinishingDies(finishing, index);
+                    this.setFinishingConsumables(finishing, index);
+                    this.setFinishingReworkings(finishing, index);
+                }
+            },
+            setFinishingDies(finishing, index) {
+                console.log("setFinishingDies");
+                console.log(finishing);
+                if (finishing.presence_die && finishing.die) {
                     this.dies[index] = finishing.die;
                     // let newDie = {
                     //     id: "",
@@ -478,8 +499,11 @@
                         price: "",
                     };
                 }
-
-                if (finishingID !== "" && finishing.presence_consumable) {
+            },
+            setFinishingConsumables(finishing, index) {
+                console.log("setFinishingConsumables");
+                console.log(finishing);
+                if (finishing.presence_consumable) {
                     this.consumables[index] = finishing.consumable;
                     let newConsumable = {
                         id: "",
@@ -496,6 +520,14 @@
                     this.form.finishing.finishings[index].presence_consumable = false;
                     this.form.finishing.finishings[index].consumable = "";
                 }
+            },
+            setFinishingReworkings(finishing, index) {
+                console.log("setFinishingReworkings");
+                console.log("finishing");
+                console.log(finishing);
+                console.log("index");
+                console.log(index);
+                this.reworkings[index] = finishing.reworkings;
             },
             handleConsumable(event, index) {
                 if (event.target.options.selectedIndex > 0) {
@@ -525,10 +557,16 @@
             handleCuttingChanging(cuttingID) {
                 let cutting = this.database.finishing.cuttings.find(cutting => cutting.id === cuttingID);
 
+                console.log(cutting);
+
                 this.form.finishing.cutting.ethic = cutting.ethic;
                 this.form.finishing.cutting.id = cutting.id;
                 this.form.finishing.cutting.dimension_width = cutting.width;
                 this.form.finishing.cutting.dimension_length = cutting.length;
+                this.form.finishing.cutting.bleed_width = cutting.bleed_width;
+                this.form.finishing.cutting.bleed_length = cutting.bleed_length;
+                this.form.finishing.cutting.pose_width = cutting.pose_width;
+                this.form.finishing.cutting.pose_length = cutting.pose_length;
             },
             resetCutting() {
                 this.cuttings = [];
