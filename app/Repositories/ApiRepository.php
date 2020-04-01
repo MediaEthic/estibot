@@ -220,7 +220,6 @@ class ApiRepository
             $finishings = $this->getLabelDies($datas);
         } else {
             if (!empty($datas['label'])) {
-                // TODO: to test
                 $label = Label::findOrFail($datas['label']);
                 if ($label->cutting_type === 'estibot') {
                     $finishings = array();
@@ -239,6 +238,40 @@ class ApiRepository
     {
         $workstations = collect($this->getWorkstations($datas));
         return $workstations->where('reworking', 1)->all();
+    }
+
+    public function getCadences(Array $datas)
+    {
+        try {
+            $response = $this->client->request('GET', 'http://89.92.37.229/API/CALAGE/' . $datas['company'] . '/' . $datas['finishing'] . '/' . $datas['workstation']);
+
+
+            $datas['class'] = $datas['workstation'];
+            $workstation = collect($this->getWorkstations($datas)->first());
+
+            return collect(json_decode($response->getBody()))->map(function($item) use($workstation) {
+                $cadence = collect();
+                $cadence->offsetSet('workstation_id', $item->CODEPOSTE);
+                $cadence->offsetSet('workstation_name', $workstation['name']);
+                $cadence->offsetSet('workstation_hourly_rate', $workstation['hourly_rate']);
+                $cadence->offsetSet('workstation_size_papermaxx', $workstation['size_papermaxx']);
+                $cadence->offsetSet('finishing_id', $item->CODEOPEFAB);
+                $cadence->offsetSet('overlay_sheet', $item->PASSECALAGE);
+                $cadence->offsetSet('makeready_times', $item->TEMPSCALAGE);
+                if ($item->UNITE === 1) {
+                    $unitCadence = "striking";
+                } else if ($item->UNITE === 2) { // if === 3 -> sheet
+                    $unitCadence = "meter";
+                } else {
+                    $unitCadence = "error";
+                }
+                $cadence->offsetSet('unit_cadence', $unitCadence);
+                $cadence->offsetSet('cadence', $item->CADENCE);
+                return $cadence;
+            });
+        } catch (\GuzzleHttp\Exception\ClientException $exception) {
+            return [];
+        }
     }
 
     private function searchByCustomerName($estibot, $ethic, $queryString) {
@@ -341,7 +374,7 @@ class ApiRepository
                 $label->offsetSet('packing', $item->ROULEAUXDE);
                 return $label;
             });
-            return $collection->sortByDesc('id');
+            return $collection->sortByDesc('id')->sortByDesc('variant');
         } catch (\GuzzleHttp\Exception\ClientException $exception) {
             return [];
         }
@@ -365,13 +398,14 @@ class ApiRepository
                 $workstation->offsetSet('printable_areax', $item->LAIZEIMPRESSION);
                 $workstation->offsetSet('reworking', $item->CELLULEDEREPRISE);
                 $workstation->offsetSet('cadence', $item->CADENCE);
-                if ($item->CADENCELIBELLEUNITE === "frappes") {
+                if ($item->UNITECADENCE === 1) {
                     $unitCadence = "striking";
-                } else {
+                } else if ($item->UNITECADENCE === 2) { // if === 3 -> sheet
                     $unitCadence = "meter";
+                } else {
+                    $unitCadence = "error";
                 }
                 $workstation->offsetSet('unit_cadence', $unitCadence);
-                $workstation->offsetSet('time_cadence', $item->CADENCELIBELLETEMPS);
                 $workstation->offsetSet('number_units', $item->NBGROUPES);
                 $workstation->offsetSet('type', $item->TYPEDEPOSTE);
                 $workstation->offsetSet('overlay_sheet', $item->PASSAGECALAGE1);
@@ -517,6 +551,8 @@ class ApiRepository
                 return $finishing;
             });
 
+            $datas['class'] = "null";
+            $allReworkings = $this->getReworkings($datas);
 
             $labelFinishings = array();
             foreach ($finishings as $finishing) {
@@ -537,6 +573,15 @@ class ApiRepository
                 }
 
                 $labelFinishing->offsetSet('reworking', ''); // for workflow form
+
+                $datas['finishing'] = $finishing['id'];
+                $datas['workstation'] = "null";
+                $labelFinishingReworkings = collect($this->getCadences($datas));
+                if (count($labelFinishingReworkings) === 0) {
+                    $labelFinishingReworkings = $allReworkings;
+                }
+                $labelFinishing->offsetSet('reworkings', $labelFinishingReworkings->workstation_id);
+
                 $labelFinishing->offsetSet('hasFocus', false);
                 if (!$labelFinishingDie['cutting']) {
                     $labelFinishings['form'][] = $labelFinishing;
@@ -562,6 +607,10 @@ class ApiRepository
                 $finishingDie->offsetSet('name', $item->LIBELLE);
                 $finishingDie->offsetSet('width', $item->LAIZEDIMENSION);
                 $finishingDie->offsetSet('length', $item->AVANCEDIMENSION);
+                $finishingDie->offsetSet('bleed_width', $item->LAIZEENTREPOSE);
+                $finishingDie->offsetSet('bleed_length', $item->AVANCEENTREPOSE);
+                $finishingDie->offsetSet('pose_width', $item->LAIZENBPOSES);
+                $finishingDie->offsetSet('pose_length', $item->AVANCENBPOSES);
                 $finishingDie->offsetSet('list_workstation', $item->LISTEDESPOSTES);
                 $finishingDie->offsetSet('cutting', $item->OUTILDEDECOUPE);
                 $finishingDie->offsetSet('price', 0);
@@ -607,6 +656,10 @@ class ApiRepository
                 return $finishing;
             });
 
+
+            $datas['class'] = "null";
+            $allReworkings = $this->getReworkings($datas);
+
             $labelFinishings = array();
             foreach ($finishings as $finishing) {
                 $labelFinishing = collect();
@@ -631,11 +684,24 @@ class ApiRepository
                     $labelFinishing->offsetSet('presence_consumable', false);
                 }
 
+
+
+                $datas['finishing'] = $finishing['id'];
+                $datas['workstation'] = "null";
+                $labelFinishingReworkings = collect($this->getCadences($datas));
+                if (count($labelFinishingReworkings) === 0) {
+                    $labelFinishingReworkings = $allReworkings;
+                }
+                $labelFinishing->offsetSet('reworkings', $labelFinishingReworkings->workstation_id);
+
+
+
+
                 if (!empty($labelFinishingDie['cuttings'])) {
                     $labelFinishings['database']['cuttings'] = $labelFinishingDie['cuttings'];
-                } else {
-                    $labelFinishings['database']['finishings'][] = $labelFinishing;
                 }
+
+                $labelFinishings['database']['finishings'][] = $labelFinishing;
             }
 
             return $labelFinishings;
@@ -659,6 +725,9 @@ class ApiRepository
                 return $finishing;
             });
 
+            $datas['class'] = "null";
+            $allReworkings = $this->getReworkings($datas);
+
             $labelFinishings = array();
             foreach ($finishings as $finishing) {
                 $labelFinishing = collect();
@@ -682,6 +751,18 @@ class ApiRepository
                 } else {
                     $labelFinishing->offsetSet('presence_consumable', false);
                 }
+
+
+
+                $datas['finishing'] = $finishing['id'];
+                $datas['workstation'] = "null";
+                $labelFinishingReworkings = collect($this->getCadences($datas));
+                if (count($labelFinishingReworkings) === 0) {
+                    $labelFinishingReworkings = $allReworkings;
+                }
+                $labelFinishing->offsetSet('reworkings', $labelFinishingReworkings);
+
+
 
                 if (!empty($labelFinishingDie['cuttings'])) {
                     $labelFinishings['database']['cuttings'] = $labelFinishingDie['cuttings'];
@@ -709,6 +790,10 @@ class ApiRepository
                 $finishingDie->offsetSet('name', $item->LIBELLE);
                 $finishingDie->offsetSet('width', $item->LAIZEDIMENSION);
                 $finishingDie->offsetSet('length', $item->AVANCEDIMENSION);
+                $finishingDie->offsetSet('bleed_width', $item->LAIZEENTREPOSE);
+                $finishingDie->offsetSet('bleed_length', $item->AVANCEENTREPOSE);
+                $finishingDie->offsetSet('pose_width', $item->LAIZENBPOSES);
+                $finishingDie->offsetSet('pose_length', $item->AVANCENBPOSES);
                 $finishingDie->offsetSet('list_workstation', $item->LISTEDESPOSTES);
                 $finishingDie->offsetSet('cutting', $item->OUTILDEDECOUPE);
                 return $finishingDie;

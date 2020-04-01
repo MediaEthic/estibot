@@ -509,8 +509,6 @@ export default new Vuex.Store({
         //     context.commit("setCuttings", data);
         // },
         updateQuotationSummary(context, credentials) {
-            console.log("updateQuotationSummary");
-            console.log(credentials);
             const summary = credentials.summary;
             context.commit("setQuotationSummary", summary);
         },

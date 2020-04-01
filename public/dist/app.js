@@ -47388,6 +47388,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             finishingsAreLoading: false,
             dies: [],
             consumables: [],
+            reworkings: [],
             cuttings: []
         };
     },
@@ -47399,6 +47400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch('getFinishings').then(function () {
                 _this.finishingsAreLoading = false;
 
+                _this.setUpConsumablesAndDies();
                 _this.filteredCuttings();
             }).catch(function () {
                 _this.finishingsAreLoading = false;
@@ -47408,6 +47410,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         } else {
+            this.setUpConsumablesAndDies();
             this.filteredCuttings();
         }
     },
@@ -47428,6 +47431,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (animationName.startsWith("onAutoFillStart")) {
                 target.classList.add("hasValue");
             }
+        },
+        setUpConsumablesAndDies: function setUpConsumablesAndDies() {
+            var allFinishings = this.database.finishing.finishings;
+            this.form.finishing.finishings.forEach(function (finishing, index) {
+                if (finishing.id !== "") {
+                    var operation = allFinishings.find(function (item) {
+                        return item.id === finishing.id;
+                    });
+                    this.setFinishingDies(operation, index);
+                    this.setFinishingConsumables(operation, index);
+                    this.setFinishingReworkings(operation, index);
+                }
+            });
         },
         addFinishing: function addFinishing() {
             this.form.finishing.finishings.push({
@@ -47457,7 +47473,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return finishing.id === finishingID;
             });
 
-            if (finishingID !== "" && finishing.presence_die) {
+            if (finishingID !== "") {
+                this.setFinishingDies(finishing, index);
+                this.setFinishingConsumables(finishing, index);
+                this.setFinishingReworkings(finishing, index);
+            }
+        },
+        setFinishingDies: function setFinishingDies(finishing, index) {
+            console.log("setFinishingDies");
+            console.log(finishing);
+            if (finishing.presence_die && finishing.die) {
                 this.dies[index] = finishing.die;
                 // let newDie = {
                 //     id: "",
@@ -47473,8 +47498,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     price: ""
                 };
             }
-
-            if (finishingID !== "" && finishing.presence_consumable) {
+        },
+        setFinishingConsumables: function setFinishingConsumables(finishing, index) {
+            console.log("setFinishingConsumables");
+            console.log(finishing);
+            if (finishing.presence_consumable) {
                 this.consumables[index] = finishing.consumable;
                 var newConsumable = {
                     id: "",
@@ -47491,6 +47519,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.form.finishing.finishings[index].presence_consumable = false;
                 this.form.finishing.finishings[index].consumable = "";
             }
+        },
+        setFinishingReworkings: function setFinishingReworkings(finishing, index) {
+            console.log("setFinishingReworkings");
+            console.log("finishing");
+            console.log(finishing);
+            console.log("index");
+            console.log(index);
+            this.reworkings[index] = finishing.reworkings;
         },
         handleConsumable: function handleConsumable(event, index) {
             if (event.target.options.selectedIndex > 0) {
@@ -47524,10 +47560,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return cutting.id === cuttingID;
             });
 
+            console.log(cutting);
+
             this.form.finishing.cutting.ethic = cutting.ethic;
             this.form.finishing.cutting.id = cutting.id;
             this.form.finishing.cutting.dimension_width = cutting.width;
             this.form.finishing.cutting.dimension_length = cutting.length;
+            this.form.finishing.cutting.bleed_width = cutting.bleed_width;
+            this.form.finishing.cutting.bleed_length = cutting.bleed_length;
+            this.form.finishing.cutting.pose_width = cutting.pose_width;
+            this.form.finishing.cutting.pose_length = cutting.pose_length;
         },
         resetCutting: function resetCutting() {
             this.cuttings = [];
@@ -47913,8 +47955,8 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               item.id !== "" &&
-              (_vm.database.finishing.reworkings.length ||
-                Object.keys(_vm.database.finishing.reworkings).length)
+              (_vm.reworkings[index] ||
+                Object.keys(_vm.reworkings[index]).length)
                 ? _c("div", { staticClass: "wrap-field h-50" }, [
                     _vm.finishingsAreLoading
                       ? _c("span", { staticClass: "btn-right-field" }, [
@@ -47967,19 +48009,20 @@ var render = function() {
                           _vm._v("Pas de reprise")
                         ]),
                         _vm._v(" "),
-                        _vm._l(_vm.database.finishing.reworkings, function(
-                          reworking
-                        ) {
+                        _vm._l(_vm.reworkings[index], function(reworking) {
                           return _c(
                             "option",
                             {
-                              attrs: { "data-name": reworking.name },
-                              domProps: { value: reworking.id }
+                              domProps: {
+                                value: reworking.workstation_id || reworking.id
+                              }
                             },
                             [
                               _vm._v(
                                 "\n                        " +
-                                  _vm._s(reworking.name) +
+                                  _vm._s(
+                                    reworking.workstation_id || reworking.id
+                                  ) +
                                   "\n                    "
                               )
                             ]
@@ -48057,8 +48100,9 @@ var render = function() {
               _vm._v(" "),
               item.presence_consumable &&
               item.id !== "" &&
-              (_vm.consumables[index].length ||
-                Object.keys(_vm.consumables[index]).length)
+              ((_vm.consumables.length && _vm.consumables[index].length) ||
+                (Object.keys(_vm.consumables).length &&
+                  Object.keys(_vm.consumables[index]).length))
                 ? _c("div", { staticClass: "wrap-field h-50" }, [
                     _c(
                       "select",
@@ -48142,8 +48186,9 @@ var render = function() {
               _vm._v(" "),
               item.presence_consumable &&
               item.id !== "" &&
-              (!_vm.consumables[index].length ||
-                !Object.keys(_vm.consumables[index]).length)
+              ((!_vm.consumables.length && !_vm.consumables[index].length) ||
+                (!Object.keys(_vm.consumables).length &&
+                  !Object.keys(_vm.consumables[index]).length))
                 ? _c("ValidationProvider", {
                     staticClass: "wrap-field h-50",
                     attrs: { tag: "div", name: "consumable name" },
@@ -55004,8 +55049,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         //     context.commit("setCuttings", data);
         // },
         updateQuotationSummary: function updateQuotationSummary(context, credentials) {
-            console.log("updateQuotationSummary");
-            console.log(credentials);
             var summary = credentials.summary;
             context.commit("setQuotationSummary", summary);
         },
