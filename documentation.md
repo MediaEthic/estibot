@@ -288,7 +288,8 @@ ORDER BY T1.LIBELLE
 **Parameters: Body**
 ````
 {
-    company_id: String (required)
+    company_id: String (required),
+    class_poste: String (nullable)
 }
 ````
 
@@ -312,8 +313,7 @@ SELECT DISTINCT T1.CODEPOSTE,
        T1.AVANCEMAXIMUM,
        T1.CELLULEDEREPRISE,
        T1.CADENCE,
-       T1.CADENCELIBELLEUNITE,
-       T1.CADENCELIBELLETEMPS,
+       T1.UNITECADENCE,
        T1.NBGROUPES,
        T1.TYPEDEPOSTE,
        T1.PASSECALAGE1,
@@ -327,6 +327,7 @@ FROM PPOSTES T1,
      PTAUX T2
 WHERE T1.CODESOCIETE = '001'
       AND T1.DATESUSPENSION IS NULL
+      AND T1.CODEPOSTE IN (:class_poste)
       AND T1.CODESOCIETE = T2.CODESOCIETE
       AND T1.CODEPOSTE = T2.CODEPOSTE
       AND T1.CODECONFIGURATION = T2.CODECONFIGURATION
@@ -657,6 +658,10 @@ SELECT DISTINCT T1.IDREFSTOCK,
        T1.LIBELLE,
        T2.LAIZEDIMENSION,
        T2.AVANCEDIMENSION,
+       T2.LAIZEENTREPOSE,
+       T2.AVANCEENTREPOSE,
+       T2.LAIZENBPOSES,
+       T2.AVANCENBPOSES,
        T2.LISTEDESPOSTES,
        T2.OUTILDECOUPE
 FROM PSTOCKMATIERESENTETE T1,
@@ -769,6 +774,10 @@ SELECT T1.IDREFSTOCK,
        T1.LIBELLE,
        T2.LAIZEDIMENSION,
        T2.AVANCEDIMENSION,
+       T2.LAIZEENTREPOSE,
+       T2.AVANCEENTREPOSE,
+       T2.LAIZENBPOSES,
+       T2.AVANCENBPOSES,
        T2.LISTEDESPOSTES,
        T2.OUTILDECOUPE
 FROM PSTOCKMATIERESENTETE T1,
@@ -783,21 +792,23 @@ WHERE T1.CODESOCIETE = :company_id
 ORDER BY T1.LIBELLE
 ````
 
-## 17. Postes de production (R22)
-#### Endpoint : `POST /workstations/group`
+
+## 17. Calages et cadences des opérations de fabrication (R23)
+#### Endpoint : `POST /finishings/cadences`
 
 **Parameters: Body**
 ````
 {
     company_id: String (required),
-    class_poste: String (required)
+    operation_id: String (nullable),
+    workstation_id: String (nullable)
 }
 ````
 
 **Out**
 ````
 - Success :
-    - 200 : Retourne un tableau d'objets avec la liste des postes de production
+    - 200 : Retourne un tableau d'objets avec la liste des cadences et calages
 - Failure :
     - 400 : Les champs passés en paramètre sont manquants et/ou mauvais
     - 404 : Ressource inexistante ou non trouvée
@@ -806,36 +817,16 @@ ORDER BY T1.LIBELLE
 
 **Request**
 ````
-SELECT DISTINCT T1.CODEPOSTE,
-       T1.CODECONFIGURATION,
-       T1.LIBELLE,
-       T1.LAIZEMAXIMUM,
-       T1.LAIZEIMPRESSION,
-       T1.AVANCEMAXIMUM,
-       T1.CELLULEDEREPRISE,
-       T1.CADENCE,
-       T1.CADENCELIBELLEUNITE,
-       T1.CADENCELIBELLETEMPS,
-       T1.NBGROUPES,
-       T1.TYPEDEPOSTE,
-       T1.PASSECALAGE1,
-       T1.PRIXPLAQUEOUCLICHE,
-       T1.TEMPSREGLAGEBOBINE,
-       T1.TEMPSCALAGEPLAQUEOUCLICHE,
-       T1.TEMPSLAVAGEPARGROUPE,
-       T2.TAUX2
-FROM PPOSTES T1,
-     PTAUX T2
-WHERE T1.CODESOCIETE = '001'
-      AND T1.DATESUSPENSION IS NULL
-      AND T1.CODEPOSTE IN (:class_poste)
-      AND T1.CODESOCIETE = T2.CODESOCIETE
-      AND T1.CODEPOSTE = T2.CODEPOSTE
-      AND T1.CODECONFIGURATION = T2.CODECONFIGURATION
-      AND T2.DATEAPPLICATION = (SELECT MAX(DATEAPPLICATION)
-                                FROM PTAUX
-                                WHERE CODESOCIETE = T1.CODESOCIETE
-                                      AND CODEPOSTE = T1.CODEPOSTE
-                                      AND CODECONFIGURATION = T1.CODECONFIGURATION)
-ORDER BY T1.LIBELLE
+SELECT CODEPOSTE,
+       CODEOPEFAB,
+       PASSECALAGE,
+       UNITE,
+       TEMPSCALAGE,
+       CADENCE
+FROM PPOSTESCALAGES
+WHERE CODESOCIETE = :company_id
+      AND CODEOPEFAB = :operation_id
+      AND CODEPOSTE = :workstation_id
+ORDER BY CODEPOSTE ASC,
+         CODEOPEFAB ASC
 ````
