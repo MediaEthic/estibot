@@ -456,9 +456,9 @@ class QuotationRepository
         $third = $identification['third'];
         $contact = $identification['contact'];
 
-        if (empty($third['name'])) { $errors['errors'][] = "Vous devez saisir le nom du prospect"; }
-        if (empty($third['zipcode'])) { $errors['errors'][] = "Vous devez saisir le code postal du prospect"; }
-        if (empty($contact['email'])) { $errors['errors'][] = "Vous devez saisir l'adresse e-mail du prospect"; }
+        if (empty($third['name'])) { $errors['errors'][] = "Vous devez saisir le nom du donneur d'ordre"; }
+        if (empty($third['zipcode'])) { $errors['errors'][] = "Vous devez saisir le code postal du donneur d'ordre"; }
+        if (empty($contact['email'])) { $errors['errors'][] = "Vous devez saisir l'adresse e-mail du donneur d'ordre"; }
 
 
         /*
