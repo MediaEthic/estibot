@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,7 +15,13 @@ const mix = require('laravel-mix');
 mix.copyDirectory('resources/assets', 'public/assets');
 
 mix.js('resources/js/app.js', 'dist')
-    .sass('resources/sass/app.scss', 'dist');
+    .sass('resources/sass/app.scss', 'dist')
+    .options({
+        processCssUrls: false,
+        postCss: [
+            tailwindcss('./tailwind.config.js')
+        ],
+    });
 
 mix.webpackConfig({
         resolve: {
