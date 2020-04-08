@@ -6,7 +6,7 @@
                 <header v-if="!isMobile && $route.params.id !== undefined" class="wrap-main-header">
                     <router-link class="go-back"
                                  tag="a"
-                                 :to="{ name: 'quotations.show', params: { id: $route.params.id }}">
+                                 :to="{ name: 'quotations.show', params: { id: this.$route.params.id }}">
                         <i class="fas fa-arrow-left"></i>
                         Annuler
                     </router-link>
@@ -28,21 +28,43 @@
                 <form class="wrap-main-form left-part" @submit.prevent="passes(next)">
                     <fieldset class="wrap-step">
                         <div class="wrap-progress-form">
-                            <img class="image-step"
-                                 :src="steps[step-1].img"
-                                 alt="Illustration d'un donneur d'ordre"/>
-                            <h2 class="page-subtitle main-title-step">{{ steps[step-1].title }}</h2>
+                            <ul class="nav-tabs flex justify-between items-center">
+                                <li v-for="(tab, index) in steps"
+                                    class="nav-item cursor-pointer" :class="[ step-1 === index ? 'tab-active' : '' ]">
+                                    <button
+                                        class=""
+                                        :disabled="invalid"
+                                        @click="setStep(index)">
+                                        <img
+                                            class="image-step"
+                                            :class="[ step-1 === index ? 'w-20' : 'w-10' ]"
+                                            :src="steps[index].img"
+                                            :alt="steps[index].title"
+                                            :title="steps[index].title"
+                                        />
+                                    </button>
+                                    <h2
+                                        v-if="step-1 === index"
+                                        class="page-subtitle main-title-step">
+                                        {{ steps[index].title }}
+                                    </h2>
+                                </li>
+                            </ul>
+
                             <progress class="progress" :value="progress" max="100">
                                 <div class="progress-bar">
                                     <span :style="{ width: progress + '%' }">Progress: {{ progress }}%</span>
                                 </div>
                             </progress>
                         </div>
+
                         <section class="wrap-content-step">
-                            <transition name="fade"
-                                        mode="out-in">
-                                <component :is="steps[step-1].component"></component>
-                            </transition>
+                            <keep-alive>
+                                <component
+                                    :is="steps[step-1].component"
+                                    :id="steps[step-1].component"
+                                />
+                            </keep-alive>
                         </section>
                     </fieldset>
                     <div class="wrap-buttons-controls-step">
@@ -191,6 +213,8 @@
                         third: this.form.identification.third.id,
                     });
                 });
+            } else {
+                this.$store.dispatch('create');
             }
 
             this.$store.dispatch('getPrintings').then(() => {
@@ -222,15 +246,21 @@
             },
             prev() {
                 this.step--;
-                this.progress = (this.step * 100) / 6;
                 document.getElementById('save-quotation').disabled = true;
+                this.setProgressBar();
                 this.updateSummary();
             },
             next() {
                 this.step++;
-                this.progress = (this.step * 100) / 6;
-
+                this.setProgressBar();
                 this.updateSummary();
+            },
+            setProgressBar() {
+                this.progress = (this.step * 100) / 6;
+            },
+            setStep(index) {
+                this.step = index + 1;
+                this.setProgressBar();
             },
             updateSummary() {
                 this.summary = "";
@@ -346,17 +376,19 @@
 
             .image-step {
                 display: block;
-                width: 100%;
                 max-width: 5rem;
                 margin: 0 auto;
+                transition: all .3s;
             }
 
             .main-title-step {
                 width: 100%;
                 margin: 1rem 0;
+                transition: all .3s;
             }
 
             .progress {
+                transition: all .3s;
             }
 
             .wrap-content-step {
@@ -392,10 +424,6 @@
             .wrap-main-form {
                 .wrap-step {
                     text-align: left;
-
-                    .image-step {
-                        margin-left: 0;
-                    }
                 }
             }
         }

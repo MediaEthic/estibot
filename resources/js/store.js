@@ -4,6 +4,141 @@ import axios from 'axios'
 
 Vue.use(Vuex);
 
+const blankQuotation = {
+    form: {
+        summary: "",
+        identification: {
+            third: {
+                type: "old",
+                ethic: false,
+                id: "",
+                name: "",
+                addressLine1: "",
+                addressLine2: "",
+                addressLine3: "",
+                zipcode: "",
+                city: "",
+                hasFocus: false,
+            },
+            contact: {
+                type: "new",
+                ethic: false,
+                id: "",
+                civility: "",
+                name: "",
+                surname: "",
+                service: "",
+                email: "",
+                hasFocus: false,
+            }
+        },
+        description: {
+            label: {
+                type: "old",
+                ethic: false,
+                id: "",
+                variant: "",
+                name: "",
+                width: "",
+                length: "",
+                hasFocus: false,
+            },
+            quantities: [
+                {
+                    id: "",
+                    quantity: "",
+                    model: 1,
+                    plate: "",
+                    hour: "",
+                    minute: "",
+                    hasFocus: false,
+                }
+            ]
+        },
+        printing: {
+            press: "",
+            name: "",
+            colors: "",
+            quadri: false,
+            hasFocus: false,
+            substrate: {
+                type: "old",
+                ethic: false,
+                id: "",
+                name: "",
+                width: "",
+                weight: "",
+                price: "",
+                hasFocus: false,
+            },
+        },
+        finishing: {
+            finishings: [
+                {
+                    id: "",
+                    name: "",
+                    cutting_die: false,
+                    die: {
+                        id: "",
+                        name: "",
+                        price: "",
+                    },
+                    reworking: "",
+                    presence_consumable: false,
+                    hasFocus: false,
+                    consumable: ""
+                }
+            ],
+            cutting: {
+                type: "old",
+                ethic: false,
+                id: "",
+                name: "",
+                dimension_width: "",
+                dimension_length: "",
+                bleed_width: "",
+                bleed_length: "",
+                pose_width: "",
+                pose_length: "",
+                shape: "",
+                hasFocus: false,
+            }
+        },
+        packing: {
+            packing: "",
+            direction: "",
+        },
+    },
+    database: {
+        identification: {
+            contacts: [],
+        },
+        description: {
+            labels: [],
+        },
+        printing: {
+            printings: [],
+            substrates: {
+                search: {
+                    criteria: {
+                        isLoading: false,
+                        families: [],
+                        types: [],
+                        colors: [],
+                        weights: [],
+                        // suppliers: [],
+                    },
+                },
+            },
+        },
+        finishing: {
+            finishings: [],
+            reworkings: [],
+            cuttings: []
+        }
+    }
+};
+
 export default new Vuex.Store({
     state: {
         user: {
@@ -18,140 +153,7 @@ export default new Vuex.Store({
         windowWidth: window.innerWidth,
         quote: [],
         quotations: [],
-        workflow: {
-            form: {
-                summary: "",
-                identification: {
-                    third: {
-                        type: "old",
-                        ethic: false,
-                        id: "",
-                        name: "",
-                        addressLine1: "",
-                        addressLine2: "",
-                        addressLine3: "",
-                        zipcode: "",
-                        city: "",
-                        hasFocus: false,
-                    },
-                    contact: {
-                        type: "new",
-                        ethic: false,
-                        id: "",
-                        civility: "",
-                        name: "",
-                        surname: "",
-                        service: "",
-                        email: "",
-                        hasFocus: false,
-                    }
-                },
-                description: {
-                    label: {
-                        type: "old",
-                        ethic: false,
-                        id: "",
-                        variant: "",
-                        name: "",
-                        width: "",
-                        length: "",
-                        hasFocus: false,
-                    },
-                    quantities: [
-                        {
-                            id: "",
-                            quantity: "",
-                            model: 1,
-                            plate: "",
-                            hour: "",
-                            minute: "",
-                            hasFocus: false,
-                        }
-                    ]
-                },
-                printing: {
-                    press: "",
-                    name: "",
-                    colors: "",
-                    quadri: false,
-                    hasFocus: false,
-                    substrate: {
-                        type: "old",
-                        ethic: false,
-                        id: "",
-                        name: "",
-                        width: "",
-                        weight: "",
-                        price: "",
-                        hasFocus: false,
-                    },
-                },
-                finishing: {
-                    finishings: [
-                        {
-                            id: "",
-                            name: "",
-                            cutting_die: false,
-                            die: {
-                                id: "",
-                                name: "",
-                                price: "",
-                            },
-                            reworking: "",
-                            presence_consumable: false,
-                            hasFocus: false,
-                            consumable: ""
-                        }
-                    ],
-                    cutting: {
-                        type: "old",
-                        ethic: false,
-                        id: "",
-                        name: "",
-                        dimension_width: "",
-                        dimension_length: "",
-                        bleed_width: "",
-                        bleed_length: "",
-                        pose_width: "",
-                        pose_length: "",
-                        shape: "",
-                        hasFocus: false,
-                    }
-                },
-                packing: {
-                    packing: "",
-                    direction: "",
-                },
-            },
-            database: {
-                identification: {
-                    contacts: [],
-                },
-                description: {
-                    labels: [],
-                },
-                printing: {
-                    printings: [],
-                    substrates: {
-                        search: {
-                            criteria: {
-                                isLoading: false,
-                                families: [],
-                                types: [],
-                                colors: [],
-                                weights: [],
-                                // suppliers: [],
-                            },
-                        },
-                    },
-                },
-                finishing: {
-                    finishings: [],
-                    reworkings: [],
-                    cuttings: []
-                }
-            },
-        },
+        workflow: {blankQuotation},
         price: [],
         quotation: [],
         company: [],
@@ -207,6 +209,9 @@ export default new Vuex.Store({
         },
         setWorkflow(state, data) {
             state.workflow.form = data;
+        },
+        SET_QUOTATION_DATABASE(state, data) {
+            state.workflow.database = data;
         },
         setThirdContacts(state, data) {
             state.workflow.database.identification.contacts = data;
@@ -573,6 +578,16 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
             let data = (await axios.delete('/api/auth/quotations/' + credentials.id)).data; // quotations.destroy
             context.commit("setQuotations", data);
+        },
+        create({ commit }) {
+            commit('setWorkflow', blankQuotation.form);
+            commit('SET_QUOTATION_DATABASE', blankQuotation.database);
+        },
+        async clearWorkflow(context, credentials) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+
+            context.commit("setWorkflow", workflow);
+            console.log(context.state.workflow);
         },
         async getWorkflow(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
