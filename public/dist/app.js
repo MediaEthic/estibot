@@ -59040,11 +59040,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -59240,11 +59235,11 @@ var render = function() {
                             [
                               _c("i", { staticClass: "fas fa-user" }),
                               _vm._v(
-                                "\n                    " +
+                                "\n                " +
                                   _vm._s(_vm.user.name) +
                                   " " +
                                   _vm._s(_vm.user.surname) +
-                                  "\n                "
+                                  "\n            "
                               )
                             ]
                           )
@@ -59284,9 +59279,9 @@ var render = function() {
                             [
                               _c("i", { class: route.icon }),
                               _vm._v(
-                                "\n                            " +
+                                "\n                        " +
                                   _vm._s(route.name) +
-                                  "\n                        "
+                                  "\n                    "
                               )
                             ]
                           )

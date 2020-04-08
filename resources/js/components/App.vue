@@ -21,11 +21,6 @@
                     <i class="fas fa-user"></i>
                     {{ user.name }} {{ user.surname }}
                 </router-link>
-                <form @submit.prevent="logout">
-                    <button type="submit" class="button button-small button-outline-secondary button-submit-secondary">
-                        Déconnexion
-                    </button>
-                </form>
             </div>
         </nav>
 
@@ -154,13 +149,6 @@
             //         this.loading = false;
             //     }, readTime);
             // },
-            logout () {
-                this.$store.dispatch('logout',).then(resp => {
-                    this.$router.push({ name: "login" });
-                }).catch(error => {
-                    this.$router.push({ name: "login" });
-                });
-            },
         }
     }
 </script>
