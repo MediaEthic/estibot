@@ -23452,7 +23452,7 @@ module.exports = {"code":"fr","messages":{"alpha":"Le champ {_field_} ne peut co
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(150);
-module.exports = __webpack_require__(283);
+module.exports = __webpack_require__(285);
 
 
 /***/ }),
@@ -23594,7 +23594,7 @@ __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */].beforeEach(function (to
     next();
 });
 
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(276));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('App', __webpack_require__(278));
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.mixin({
     data: function data() {
@@ -39410,6 +39410,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -39438,31 +39448,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             notification: {
                 body: []
             },
-            step: 1,
+            currentStep: 1,
             steps: [{
                 img: "/assets/img/workflow/undraw_man_eiev.svg",
                 title: "Identité du donneur d'ordre",
-                component: "Identification"
+                component: "Identification",
+                isValid: true
             }, {
                 img: "/assets/img/workflow/undraw_to_do_list_a49b.svg",
                 title: "Descriptif du produit",
-                component: "Description"
+                component: "Description",
+                isValid: false
             }, {
                 img: "/assets/img/workflow/undraw_printing_invoices_5r4r.svg",
                 title: "Impression et support",
-                component: "Printing"
+                component: "Printing",
+                isValid: false
             }, {
                 img: "/assets/img/workflow/undraw_files1_9ool.svg",
                 title: "Finition",
-                component: "Finishing"
+                component: "Finishing",
+                isValid: false
             }, {
                 img: "/assets/img/workflow/undraw_collecting_fjjl.svg",
                 title: "Conditionnement et expédition",
-                component: "Packing"
+                component: "Packing",
+                isValid: false
             }, {
                 img: "/assets/img/workflow/undraw_empty_cart_co35.svg",
                 title: "Bilan",
-                component: "Result"
+                component: "Result",
+                isValid: false
             }],
             progress: 16.666,
             summaryPulled: false,
@@ -39507,6 +39523,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        // cancelQuotation() {
+        // sweet alter doesn't work
+        //     this.$swal({
+        //         title: 'Annulation',
+        //         text: "Vous allez perdre le devis en cours",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         showCloseButton: true,
+        //         confirmButtonText: 'Oui, quitter',
+        //         cancelButtonText: 'Non, rester'
+        //     }).then((result) => {
+        //         if (result.value) {
+        //             this.$router.push({ name: 'quotations.index' });
+        //         }
+        //     })
+        // },
         showNotification: function showNotification() {
             this.isModalVisible = true;
         },
@@ -39514,25 +39546,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isModalVisible = false;
         },
         prev: function prev() {
-            this.step--;
+            this.currentStep--;
             document.getElementById('save-quotation').disabled = true;
             this.setProgressBar();
             this.updateSummary();
         },
         next: function next() {
-            this.step++;
+            this.steps[this.currentStep - 1].isValid = true;
+            this.currentStep++;
             this.setProgressBar();
             this.updateSummary();
         },
-        setProgressBar: function setProgressBar() {
-            this.progress = this.step * 100 / 6;
+        goToStep: function goToStep(step) {
+            var _this2 = this;
+
+            if (step <= this.currentStep) {
+                this.currentStep = step;
+                this.setProgressBar();
+                this.updateSummary();
+            } else {
+                var formStepNumber = this.currentStep - 1;
+                var formRef = 'formSingleStep' + formStepNumber;
+                this.$refs[formRef][0].validate().then(function (success) {
+                    if (!success) {
+                        return;
+                    } else {
+                        _this2.currentStep = step;
+                        _this2.setProgressBar();
+                        _this2.updateSummary();
+                    }
+                });
+            }
         },
-        setStep: function setStep(index) {
-            this.step = index + 1;
-            this.setProgressBar();
+        onSubmit: function onSubmit() {
+            console.log("form submitted");
+        },
+        setProgressBar: function setProgressBar() {
+            this.progress = this.currentStep * 100 / 6;
         },
         updateSummary: function updateSummary() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.summary = "";
 
@@ -39569,10 +39622,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     var $consumable = "";
                     if (el.presence_consumable) $consumable = ' + consommable';
 
-                    if (_this2.form.finishing.finishings.length > 1) {
-                        _this2.summary += '\n - ' + el.name + $consumable;
+                    if (_this3.form.finishing.finishings.length > 1) {
+                        _this3.summary += '\n - ' + el.name + $consumable;
                     } else {
-                        _this2.summary += el.name + $consumable;
+                        _this3.summary += el.name + $consumable;
                     }
                 });
 
@@ -39612,19 +39665,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         saveQuotation: function saveQuotation() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.$store.dispatch('saveQuotation', {
                 quotation: this.$route.params.id
             }).then(function (resp) {
                 console.log(resp);
                 if (resp.errors === undefined) {
-                    _this3.$router.push({ name: "quotations.show", params: { id: resp.data.id } });
+                    _this4.$router.push({ name: "quotations.show", params: { id: resp.data.id } });
                 } else {
-                    _this3.showNotification();
-                    _this3.notification.body = resp.errors;
+                    _this4.showNotification();
+                    _this4.notification.body = resp.errors;
                     setTimeout(function () {
-                        _this3.closeNotification();
+                        _this4.closeNotification();
                     }, 5000);
                 }
             }).catch(function (error) {
@@ -48057,6 +48110,10 @@ var render = function() {
                                   _vm._s(
                                     reworking.workstation_id || reworking.id
                                   ) +
+                                  " - " +
+                                  _vm._s(
+                                    reworking.workstation_name || reworking.name
+                                  ) +
                                   "\n                    "
                               )
                             ]
@@ -48590,7 +48647,9 @@ var render = function() {
                     }
                   },
                   [
-                    _c("option", { attrs: { value: "" } }, [_vm._v("Choisir")]),
+                    _c("option", { attrs: { value: "", disabled: "" } }, [
+                      _vm._v("Choisir")
+                    ]),
                     _vm._v(" "),
                     _vm._l(_vm.cuttings, function(cutting) {
                       return _c("option", { domProps: { value: cutting.id } }, [
@@ -49964,8 +50023,10 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quantity__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Quantity___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Quantity__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Loader__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Loader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Loader__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Quantity__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Quantity___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Quantity__);
 //
 //
 //
@@ -50016,15 +50077,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        Quantity: __WEBPACK_IMPORTED_MODULE_0__Quantity___default.a
+        Loader: __WEBPACK_IMPORTED_MODULE_0__Loader___default.a,
+        Quantity: __WEBPACK_IMPORTED_MODULE_1__Quantity___default.a
     },
     data: function data() {
         return {
+            isLoading: false,
             errors: [],
             quantity: false,
             copies: ""
@@ -50033,6 +50099,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
+        this.isLoading = true;
         this.$store.dispatch("getQuotationPrice").then(function (res) {
             console.log(_this.$store.state.price);
             _this.result = _this.$store.state.price;
@@ -50045,6 +50112,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 document.getElementById('save-quotation').disabled = false;
                 console.log(_this.result);
             }
+
+            _this.isLoading = false;
+        }).catch(function () {
+            _this.isLoading = false;
         });
     },
 
@@ -50338,148 +50409,156 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.errors.length > 0
-      ? _c(
-          "ul",
-          { staticClass: "wrap-list-errors" },
-          _vm._l(_vm.errors, function(error) {
-            return _c("li", { staticClass: "item-list" }, [
-              _vm._v("\n                " + _vm._s(error) + "\n            ")
-            ])
-          }),
-          0
-        )
-      : _vm.quantity
-      ? _c(
-          "div",
-          [
-            _c(
-              "transition",
-              { attrs: { name: "fade", mode: "out-in" } },
-              [
-                _c("Quantity", {
-                  attrs: {
-                    quantities: _vm.result.quantities,
-                    copies: _vm.copies
-                  },
-                  on: { goBack: _vm.hideQuantityDetail }
-                })
-              ],
-              1
-            )
-          ],
-          1
-        )
-      : _c(
-          "div",
-          { staticClass: "wrap-success" },
-          [
-            _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+  return _c(
+    "div",
+    [
+      _vm.isLoading ? _c("Loader") : _vm._e(),
+      _vm._v(" "),
+      _vm.errors.length > 0
+        ? _c(
+            "ul",
+            { staticClass: "wrap-list-errors" },
+            _vm._l(_vm.errors, function(error) {
+              return _c("li", { staticClass: "item-list" }, [
+                _vm._v("\n                " + _vm._s(error) + "\n            ")
+              ])
+            }),
+            0
+          )
+        : _vm.quantity
+        ? _c(
+            "div",
+            [
               _c(
-                "div",
-                { staticClass: "list-results" },
-                _vm._l(_vm.result.quantities, function(quantity, index) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass: "item-list",
-                      on: {
-                        click: function($event) {
-                          return _vm.displayQuantityDetail(index)
-                        }
-                      }
+                "transition",
+                { attrs: { name: "fade", mode: "out-in" } },
+                [
+                  _c("Quantity", {
+                    attrs: {
+                      quantities: _vm.result.quantities,
+                      copies: _vm.copies
                     },
-                    [
-                      _c("div", {}, [
-                        _c("p", { staticClass: "page-subtitle" }, [
-                          _vm._v(_vm._s(index) + " exemplaires")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            _vm._s(quantity.datas.models) +
-                              " modèle(s) - " +
-                              _vm._s(quantity.datas.plates) +
-                              " cliché(s)"
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "price-quotation" }, [
-                          _vm._v(_vm._s(quantity.totals.totalCosts)),
-                          _c("span", { staticClass: "symbol-price" }, [
-                            _vm._v("€")
-                          ]),
-                          _vm._v(" HT")
-                        ]),
-                        _vm._v(" "),
-                        _c("ul", { staticClass: "detail-quantity" }, [
-                          _c("li", { staticClass: "item-detail" }, [
-                            _c("i", { staticClass: "far fa-clock" }),
-                            _vm._v(_vm._s(quantity.totals.totalTimes) + "h")
-                          ]),
-                          _vm._v(" "),
-                          _c("li", { staticClass: "item-detail" }, [
-                            _c("i", { staticClass: "fas fa-weight-hanging" }),
-                            _vm._v(
-                              _vm._s(quantity.totals.weight.toFixed(2)) + "kg"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", { staticClass: "item-detail" }, [
-                            _c("i", { staticClass: "fas fa-layer-group" }),
-                            _vm._v(
-                              _vm._s(
-                                quantity.totals.totalFixedCosts.toFixed(2)
-                              ) + "€ (fixe)"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", { staticClass: "item-detail" }, [
-                            _c("i", { staticClass: "fas fa-percentage" }),
-                            _vm._v(
-                              _vm._s(
-                                quantity.totals.totalVariableCosts.toFixed(2)
-                              ) + "€ (variable)"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", { staticClass: "item-detail" }, [
-                            _c("i", { staticClass: "fas fa-tag" }),
-                            _vm._v(
-                              _vm._s(
-                                (quantity.totals.totalCosts / index).toFixed(2)
-                              ) + "€ l'unité"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", { staticClass: "item-detail" }, [
-                            _c("i", { staticClass: "fas fa-tags" }),
-                            _vm._v(
-                              _vm._s(
-                                (
-                                  (quantity.totals.totalCosts / index) *
-                                  1000
-                                ).toFixed(2)
-                              ) + "€ le mille"
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("button", { staticClass: "detail-result" }, [
-                        _c("i", { staticClass: "fas fa-chevron-right" })
-                      ])
-                    ]
-                  )
-                }),
-                0
+                    on: { goBack: _vm.hideQuantityDetail }
+                  })
+                ],
+                1
               )
-            ])
-          ],
-          1
-        )
-  ])
+            ],
+            1
+          )
+        : _c(
+            "div",
+            { staticClass: "wrap-success" },
+            [
+              _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+                _c(
+                  "div",
+                  { staticClass: "list-results" },
+                  _vm._l(_vm.result.quantities, function(quantity, index) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass: "item-list",
+                        on: {
+                          click: function($event) {
+                            return _vm.displayQuantityDetail(index)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", {}, [
+                          _c("p", { staticClass: "page-subtitle" }, [
+                            _vm._v(_vm._s(index) + " exemplaires")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(quantity.datas.models) +
+                                " modèle(s) - " +
+                                _vm._s(quantity.datas.plates) +
+                                " cliché(s)"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "price-quotation" }, [
+                            _vm._v(_vm._s(quantity.totals.totalCosts)),
+                            _c("span", { staticClass: "symbol-price" }, [
+                              _vm._v("€")
+                            ]),
+                            _vm._v(" HT")
+                          ]),
+                          _vm._v(" "),
+                          _c("ul", { staticClass: "detail-quantity" }, [
+                            _c("li", { staticClass: "item-detail" }, [
+                              _c("i", { staticClass: "far fa-clock" }),
+                              _vm._v(_vm._s(quantity.totals.totalTimes) + "h")
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "item-detail" }, [
+                              _c("i", { staticClass: "fas fa-weight-hanging" }),
+                              _vm._v(
+                                _vm._s(quantity.totals.weight.toFixed(2)) + "kg"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "item-detail" }, [
+                              _c("i", { staticClass: "fas fa-layer-group" }),
+                              _vm._v(
+                                _vm._s(
+                                  quantity.totals.totalFixedCosts.toFixed(2)
+                                ) + "€ (fixe)"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "item-detail" }, [
+                              _c("i", { staticClass: "fas fa-percentage" }),
+                              _vm._v(
+                                _vm._s(
+                                  quantity.totals.totalVariableCosts.toFixed(2)
+                                ) + "€ (variable)"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "item-detail" }, [
+                              _c("i", { staticClass: "fas fa-tag" }),
+                              _vm._v(
+                                _vm._s(
+                                  (quantity.totals.totalCosts / index).toFixed(
+                                    2
+                                  )
+                                ) + "€ l'unité"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "item-detail" }, [
+                              _c("i", { staticClass: "fas fa-tags" }),
+                              _vm._v(
+                                _vm._s(
+                                  (
+                                    (quantity.totals.totalCosts / index) *
+                                    1000
+                                  ).toFixed(2)
+                                ) + "€ le mille"
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("button", { staticClass: "detail-result" }, [
+                          _c("i", { staticClass: "fas fa-chevron-right" })
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ],
+            1
+          )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50757,8 +50836,7 @@ var render = function() {
               {
                 key: "default",
                 fn: function(ref) {
-                  var invalid = ref.invalid
-                  var passes = ref.passes
+                  var handleSubmit = ref.handleSubmit
                   return [
                     _c(
                       "form",
@@ -50767,7 +50845,7 @@ var render = function() {
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
-                            return passes(_vm.next)
+                            return handleSubmit(_vm.onSubmit)
                           }
                         }
                       },
@@ -50785,39 +50863,28 @@ var render = function() {
                                   "li",
                                   {
                                     staticClass: "nav-item cursor-pointer",
-                                    class: [
-                                      _vm.step - 1 === index ? "tab-active" : ""
-                                    ]
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.goToStep(index + 1)
+                                      }
+                                    }
                                   },
                                   [
-                                    _c(
-                                      "button",
-                                      {
-                                        attrs: { disabled: invalid },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.setStep(index)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("img", {
-                                          staticClass: "image-step",
-                                          class: [
-                                            _vm.step - 1 === index
-                                              ? "w-20"
-                                              : "w-10"
-                                          ],
-                                          attrs: {
-                                            src: _vm.steps[index].img,
-                                            alt: _vm.steps[index].title,
-                                            title: _vm.steps[index].title
-                                          }
-                                        })
-                                      ]
-                                    ),
+                                    _c("img", {
+                                      staticClass: "image-step",
+                                      class: [
+                                        _vm.currentStep - 1 === index
+                                          ? "w-20"
+                                          : "w-10"
+                                      ],
+                                      attrs: {
+                                        src: tab.img,
+                                        alt: tab.title,
+                                        title: tab.title
+                                      }
+                                    }),
                                     _vm._v(" "),
-                                    _vm.step - 1 === index
+                                    _vm.currentStep - 1 === index
                                       ? _c(
                                           "h2",
                                           {
@@ -50827,7 +50894,7 @@ var render = function() {
                                           [
                                             _vm._v(
                                               "\n                                    " +
-                                                _vm._s(_vm.steps[index].title) +
+                                                _vm._s(tab.title) +
                                                 "\n                                "
                                             )
                                           ]
@@ -50867,68 +50934,113 @@ var render = function() {
                           _c(
                             "section",
                             { staticClass: "wrap-content-step" },
-                            [
-                              _c(
-                                "keep-alive",
-                                [
-                                  _c(_vm.steps[_vm.step - 1].component, {
-                                    tag: "component",
-                                    attrs: {
-                                      id: _vm.steps[_vm.step - 1].component
-                                    }
+                            _vm._l(_vm.steps, function(tab, index) {
+                              return _vm.currentStep === index + 1
+                                ? _c("ValidationObserver", {
+                                    key: index,
+                                    ref: "formSingleStep" + index,
+                                    refInFor: true,
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "default",
+                                          fn: function(ref) {
+                                            var invalid = ref.invalid
+                                            var passes = ref.passes
+                                            return [
+                                              _c(
+                                                "keep-alive",
+                                                [
+                                                  _c(
+                                                    _vm.steps[
+                                                      _vm.currentStep - 1
+                                                    ].component,
+                                                    {
+                                                      tag: "component",
+                                                      attrs: {
+                                                        id:
+                                                          _vm.steps[
+                                                            _vm.currentStep - 1
+                                                          ].component
+                                                      }
+                                                    }
+                                                  )
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "wrap-buttons-controls-step"
+                                                },
+                                                [
+                                                  _vm.currentStep > 1
+                                                    ? _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "button button-small button-secondary",
+                                                          attrs: {
+                                                            type: "button"
+                                                          },
+                                                          on: {
+                                                            click: _vm.prev
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fas fa-chevron-left"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                    Précédent\n                                "
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _vm._e(),
+                                                  _vm._v(" "),
+                                                  _vm.currentStep < 6
+                                                    ? _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "button button-small button-primary next-step",
+                                                          attrs: {
+                                                            type: "button",
+                                                            disabled: invalid
+                                                          },
+                                                          on: {
+                                                            click: _vm.next
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                                    Suivant\n                                    "
+                                                          ),
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fas fa-chevron-right"
+                                                          })
+                                                        ]
+                                                      )
+                                                    : _vm._e()
+                                                ]
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
                                   })
-                                ],
-                                1
-                              )
-                            ],
+                                : _vm._e()
+                            }),
                             1
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "wrap-buttons-controls-step" },
-                          [
-                            _vm.step > 1
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "button button-small button-secondary",
-                                    attrs: { type: "button" },
-                                    on: { click: _vm.prev }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fas fa-chevron-left"
-                                    }),
-                                    _vm._v(
-                                      "\n                        Précédent\n                    "
-                                    )
-                                  ]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.step < 6
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "button button-small button-primary next-step",
-                                    attrs: { type: "submit", disabled: invalid }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                        Suivant\n                        "
-                                    ),
-                                    _c("i", {
-                                      staticClass: "fas fa-chevron-right"
-                                    })
-                                  ]
-                                )
-                              : _vm._e()
-                          ]
-                        )
+                        ])
                       ]
                     ),
                     _vm._v(" "),
@@ -58887,19 +58999,21 @@ module.exports = {"code":"en","messages":{"alpha":"The {_field_} field may only 
 //# sourceMappingURL=cxlt-vue2-toastr.js.map
 
 /***/ }),
-/* 276 */
+/* 276 */,
+/* 277 */,
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(277)
+  __webpack_require__(279)
 }
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(279)
+var __vue_script__ = __webpack_require__(281)
 /* template */
-var __vue_template__ = __webpack_require__(282)
+var __vue_template__ = __webpack_require__(284)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -58938,13 +59052,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 277 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(278);
+var content = __webpack_require__(280);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -58964,7 +59078,7 @@ if(false) {
 }
 
 /***/ }),
-/* 278 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -58978,12 +59092,12 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'cooper_hewittlight';\n\
 
 
 /***/ }),
-/* 279 */
+/* 281 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_style_loader_css_loader_cxlt_vue2_toastr_dist_css_cxlt_vue2_toastr_css__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_style_loader_css_loader_cxlt_vue2_toastr_dist_css_cxlt_vue2_toastr_css__ = __webpack_require__(282);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_style_loader_css_loader_cxlt_vue2_toastr_dist_css_cxlt_vue2_toastr_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__vue_style_loader_css_loader_cxlt_vue2_toastr_dist_css_cxlt_vue2_toastr_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Loader__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Loader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Loader__);
@@ -59132,13 +59246,13 @@ var DEFAULT_TRANSITION = 'fade';
 });
 
 /***/ }),
-/* 280 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(281);
+var content = __webpack_require__(283);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -59158,7 +59272,7 @@ if(false) {
 }
 
 /***/ }),
-/* 281 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -59172,7 +59286,7 @@ exports.push([module.i, ".toast-title{font-weight:700}.toast-message{-ms-word-wr
 
 
 /***/ }),
-/* 282 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -59314,7 +59428,7 @@ if (false) {
 }
 
 /***/ }),
-/* 283 */
+/* 285 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

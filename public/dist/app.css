@@ -1449,6 +1449,8 @@ progress[value]::-moz-progress-bar {
 
 .go-back {
   display: block;
+  text-align: left;
+  text-transform: uppercase;
   width: 100%;
   margin-right: 2rem;
   color: #C49998;
@@ -1790,6 +1792,10 @@ progress[value]::-moz-progress-bar {
     display: block;
   }
 }
+
+/*
+ * Tailwind CSS
+ */
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
