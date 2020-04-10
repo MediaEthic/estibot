@@ -265,6 +265,8 @@
 // go back button
 .go-back {
     display: block;
+    text-align: left;
+    text-transform: uppercase;
     width: 100%;
     margin-right: 2rem;
     color: $secondary-color;

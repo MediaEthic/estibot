@@ -14,9 +14,10 @@
                 </header>
 
                 <header v-else-if="!isMobile && $route.params.id === undefined" class="wrap-main-header">
-                    <router-link class="go-back"
-                                 tag="a"
-                                 :to="{ name: 'quotations.index' }">
+                    <router-link
+                        class="go-back"
+                        tag="a"
+                        :to="{ name: 'quotations.index' }">
                         <i class="fas fa-arrow-left"></i>
                         Retour
                     </router-link>
@@ -24,29 +25,27 @@
                 </header>
             </div>
 
-            <ValidationObserver tag="div" class="wrap-central" v-slot="{ invalid, passes }">
-                <form class="wrap-main-form left-part" @submit.prevent="passes(next)">
+            <ValidationObserver tag="div" class="wrap-central" v-slot="{ handleSubmit }">
+                <form class="wrap-main-form left-part" @submit.prevent="handleSubmit(onSubmit)">
                     <fieldset class="wrap-step">
                         <div class="wrap-progress-form">
                             <ul class="nav-tabs flex justify-between items-center">
-                                <li v-for="(tab, index) in steps"
-                                    class="nav-item cursor-pointer" :class="[ step-1 === index ? 'tab-active' : '' ]">
-                                    <button
-                                        class=""
-                                        :disabled="invalid"
-                                        @click="setStep(index)">
-                                        <img
-                                            class="image-step"
-                                            :class="[ step-1 === index ? 'w-20' : 'w-10' ]"
-                                            :src="steps[index].img"
-                                            :alt="steps[index].title"
-                                            :title="steps[index].title"
-                                        />
-                                    </button>
+                                <li
+                                    v-for="(tab, index) in steps"
+                                    class="nav-item cursor-pointer"
+                                    @click="goToStep(index + 1)"
+                                >
+                                    <img
+                                        class="image-step"
+                                        :class="[ currentStep-1 === index ? 'w-20' : 'w-10' ]"
+                                        :src="tab.img"
+                                        :alt="tab.title"
+                                        :title="tab.title"
+                                    />
                                     <h2
-                                        v-if="step-1 === index"
+                                        v-if="currentStep-1 === index"
                                         class="page-subtitle main-title-step">
-                                        {{ steps[index].title }}
+                                        {{ tab.title }}
                                     </h2>
                                 </li>
                             </ul>
@@ -59,29 +58,40 @@
                         </div>
 
                         <section class="wrap-content-step">
-                            <keep-alive>
-                                <component
-                                    :is="steps[step-1].component"
-                                    :id="steps[step-1].component"
-                                />
-                            </keep-alive>
+                            <ValidationObserver
+                                v-for="(tab, index) in steps"
+                                :key="index"
+                                v-if="currentStep === index+1"
+                                :ref="'formSingleStep' + index"
+                                v-slot="{ invalid, passes }"
+                            >
+                                <keep-alive>
+                                    <component
+                                        :is="steps[currentStep-1].component"
+                                        :id="steps[currentStep-1].component"
+                                    />
+                                </keep-alive>
+
+
+                                <div class="wrap-buttons-controls-step">
+                                    <button type="button"
+                                            class="button button-small button-secondary"
+                                            v-if="currentStep > 1"
+                                            @click="prev">
+                                        <i class="fas fa-chevron-left"></i>
+                                        Précédent
+                                    </button>
+                                    <button type="button" :disabled="invalid"
+                                            class="button button-small button-primary next-step"
+                                            v-if="currentStep < 6"
+                                            @click="next">
+                                        Suivant
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </ValidationObserver>
                         </section>
                     </fieldset>
-                    <div class="wrap-buttons-controls-step">
-                        <button type="button"
-                                class="button button-small button-secondary"
-                                v-if="step > 1"
-                                @click="prev">
-                            <i class="fas fa-chevron-left"></i>
-                            Précédent
-                        </button>
-                        <button type="submit" :disabled="invalid"
-                                class="button button-small button-primary next-step"
-                                v-if="step < 6">
-                            Suivant
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
                 </form>
                 <aside class="wrap-summary right-part" :class="{ pull: summaryPulled }">
                     <div class="head-summary">
@@ -163,37 +173,43 @@
                 notification: {
                     body: [],
                 },
-                step: 1,
+                currentStep: 1,
                 steps: [
                     {
                         img: "/assets/img/workflow/undraw_man_eiev.svg",
                         title: "Identité du donneur d'ordre",
                         component: "Identification",
+                        isValid: true
                     },
                     {
                         img: "/assets/img/workflow/undraw_to_do_list_a49b.svg",
                         title: "Descriptif du produit",
                         component: "Description",
+                        isValid: false
                     },
                     {
                         img: "/assets/img/workflow/undraw_printing_invoices_5r4r.svg",
                         title: "Impression et support",
                         component: "Printing",
+                        isValid: false
                     },
                     {
                         img: "/assets/img/workflow/undraw_files1_9ool.svg",
                         title: "Finition",
                         component: "Finishing",
+                        isValid: false
                     },
                     {
                         img: "/assets/img/workflow/undraw_collecting_fjjl.svg",
                         title: "Conditionnement et expédition",
                         component: "Packing",
+                        isValid: false
                     },
                     {
                         img: "/assets/img/workflow/undraw_empty_cart_co35.svg",
                         title: "Bilan",
                         component: "Result",
+                        isValid: false
                     }
                 ],
                 progress: 16.666,
@@ -238,6 +254,22 @@
             }
         },
         methods: {
+            // cancelQuotation() {
+            // sweet alter doesn't work
+            //     this.$swal({
+            //         title: 'Annulation',
+            //         text: "Vous allez perdre le devis en cours",
+            //         icon: 'warning',
+            //         showCancelButton: true,
+            //         showCloseButton: true,
+            //         confirmButtonText: 'Oui, quitter',
+            //         cancelButtonText: 'Non, rester'
+            //     }).then((result) => {
+            //         if (result.value) {
+            //             this.$router.push({ name: 'quotations.index' });
+            //         }
+            //     })
+            // },
             showNotification() {
                 this.isModalVisible = true;
             },
@@ -245,22 +277,41 @@
                 this.isModalVisible = false;
             },
             prev() {
-                this.step--;
+                this.currentStep--;
                 document.getElementById('save-quotation').disabled = true;
                 this.setProgressBar();
                 this.updateSummary();
             },
             next() {
-                this.step++;
+                this.steps[this.currentStep - 1].isValid = true;
+                this.currentStep++;
                 this.setProgressBar();
                 this.updateSummary();
             },
-            setProgressBar() {
-                this.progress = (this.step * 100) / 6;
+            goToStep(step) {
+                if (step <= this.currentStep) {
+                    this.currentStep = step;
+                    this.setProgressBar();
+                    this.updateSummary();
+                } else {
+                    let formStepNumber = this.currentStep - 1;
+                    let formRef = `formSingleStep` + formStepNumber;
+                    this.$refs[formRef][0].validate().then(success => {
+                        if (!success) {
+                            return;
+                        } else {
+                            this.currentStep = step;
+                            this.setProgressBar();
+                            this.updateSummary();
+                        }
+                    });
+                }
             },
-            setStep(index) {
-                this.step = index + 1;
-                this.setProgressBar();
+            onSubmit() {
+                console.log("form submitted");
+            },
+            setProgressBar() {
+                this.progress = (this.currentStep * 100) / 6;
             },
             updateSummary() {
                 this.summary = "";

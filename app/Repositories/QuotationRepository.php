@@ -870,9 +870,8 @@ class QuotationRepository
                                     }
                                 }
                             }
+                            $pressMakeready[] = $finishingPress;
                         }
-
-                        $pressMakeready[] = $finishingPress;
                     }
 
 

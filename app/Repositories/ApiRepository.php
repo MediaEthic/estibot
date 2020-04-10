@@ -245,13 +245,13 @@ class ApiRepository
         try {
             $response = $this->client->request('GET', 'http://89.92.37.229/API/CALAGE/' . $datas['company'] . '/' . $datas['finishing'] . '/' . $datas['workstation']);
 
-
-            $datas['class'] = $datas['workstation'];
-            $workstation = collect($this->getWorkstations($datas)->first());
-
-            return collect(json_decode($response->getBody()))->map(function($item) use($workstation) {
+            return collect(json_decode($response->getBody()))->map(function($item) use($datas) {
                 $cadence = collect();
                 $cadence->offsetSet('workstation_id', $item->CODEPOSTE);
+
+                $datas['class'] = $item->CODEPOSTE;
+                $workstation = collect($this->getWorkstations($datas)->first());
+
                 $cadence->offsetSet('workstation_name', $workstation['name']);
                 $cadence->offsetSet('workstation_hourly_rate', $workstation['hourly_rate']);
                 $cadence->offsetSet('workstation_size_papermaxx', $workstation['size_papermaxx']);
@@ -580,7 +580,7 @@ class ApiRepository
                 if (count($labelFinishingReworkings) === 0) {
                     $labelFinishingReworkings = $allReworkings;
                 }
-                $labelFinishing->offsetSet('reworkings', $labelFinishingReworkings->workstation_id);
+                $labelFinishing->offsetSet('reworkings', $labelFinishingReworkings);
 
                 $labelFinishing->offsetSet('hasFocus', false);
                 if (!$labelFinishingDie['cutting']) {
@@ -692,7 +692,7 @@ class ApiRepository
                 if (count($labelFinishingReworkings) === 0) {
                     $labelFinishingReworkings = $allReworkings;
                 }
-                $labelFinishing->offsetSet('reworkings', $labelFinishingReworkings->workstation_id);
+                $labelFinishing->offsetSet('reworkings', $labelFinishingReworkings);
 
 
 

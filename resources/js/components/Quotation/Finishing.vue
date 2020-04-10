@@ -101,7 +101,7 @@
                         <option value="">Pas de reprise</option>
                         <option v-for="reworking in reworkings[index]"
                                 v-bind:value="reworking.workstation_id || reworking.id">
-                            {{ reworking.workstation_id || reworking.id }}
+                            {{ reworking.workstation_id || reworking.id }} - {{ reworking.workstation_name || reworking.name }}
                         </option>
                     </select>
                     <label class="label-field">En reprise sur</label>
@@ -245,7 +245,7 @@
                         :class="{ hasValue: form.finishing.cutting.id }"
                         @change="handleCuttingChanging(form.finishing.cutting.id)"
                         required>
-                    <option value="">Choisir</option>
+                    <option value="" disabled>Choisir</option>
                     <option v-for="cutting in cuttings"
                             v-bind:value="cutting.id">
                         {{ cutting.name }} // {{ cutting.width }} // {{ cutting.length }}

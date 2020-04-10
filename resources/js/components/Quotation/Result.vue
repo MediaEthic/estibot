@@ -1,5 +1,7 @@
 <template>
     <div>
+        <Loader v-if="isLoading" />
+
         <ul v-if="errors.length > 0" class="wrap-list-errors">
             <li class="item-list" v-for="error in errors">
                 {{ error }}
@@ -49,20 +51,24 @@
 </template>
 
 <script>
+    import Loader from '../Loader';
     import Quantity from './Quantity';
 
     export default {
         components: {
+            Loader,
             Quantity
         },
         data() {
             return {
+                isLoading: false,
                 errors: [],
                 quantity: false,
                 copies: "",
             }
         },
         created() {
+            this.isLoading = true;
             this.$store.dispatch("getQuotationPrice").then(res => {
                 console.log(this.$store.state.price);
                 this.result = this.$store.state.price;
@@ -75,6 +81,10 @@
                     document.getElementById('save-quotation').disabled = false;
                     console.log(this.result);
                 }
+
+                this.isLoading = false;
+            }).catch(() => {
+                this.isLoading = false;
             });
         },
         computed: {
