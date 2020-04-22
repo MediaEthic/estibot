@@ -48,22 +48,7 @@
                         <option value="">Choisir</option>
                         <option v-for="die in database.finishing.finishings.filter(operation => operation.id === item.id).map(obj => obj.die)[0]"
                                 v-bind:value="die.id">
-                            {{ die.name }}
-                        </option>
-                    </select>
-                    <label class="label-field">Outil</label>
-                </div>
-
-                <div class="wrap-field h-50" v-else-if="item.id !== '' && item.die.id !== ''">
-                    <select v-model="item.die.id"
-                            @focus="item.hasFocus = true"
-                            @blur="item.hasFocus = false"
-                            @animationstart="checkAnimation"
-                            class="field select"
-                            :class="{ hasValue: item.die.id }"
-                            required>
-                        <option v-bind:value="item.die.id">
-                            {{ item.die.name }} // {{ item.die.width }} // {{ item.die.length }}
+                            {{ die.name }} - {{ die.width }}x{{ die.length }}
                         </option>
                     </select>
                     <label class="label-field">Outil</label>
@@ -551,5 +536,5 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '~@/_variables.scss';
+
 </style>

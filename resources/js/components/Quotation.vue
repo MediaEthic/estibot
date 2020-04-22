@@ -62,7 +62,7 @@
                             <ValidationObserver
                                 v-for="(tab, index) in steps"
                                 :key="index"
-                                v-if="currentStep === index+1"
+                                v-if="!isLoading && currentStep === index+1"
                                 :ref="'formSingleStep' + index"
                                 v-slot="{ invalid, passes }"
                             >

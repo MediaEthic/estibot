@@ -14,8 +14,8 @@ const tailwindcss = require('tailwindcss');
 
 mix.copyDirectory('resources/assets', 'public/assets');
 
-mix.js('resources/js/app.js', 'dist')
-    .sass('resources/sass/app.scss', 'dist')
+mix.js('resources/js/app.js', 'public/dist')
+    .sass('resources/sass/app.scss', 'public/dist')
     .options({
         processCssUrls: false,
         postCss: [

@@ -160,7 +160,7 @@ export default new Vuex.Store({
         windowWidth: window.innerWidth,
         quote: [],
         quotations: [],
-        workflow: {blankQuotation},
+        workflow: {},
         price: [],
         quotation: [],
         company: [],
@@ -477,7 +477,7 @@ export default new Vuex.Store({
             if (data.form !== undefined) {
                 context.commit("SET_FINISHING_LABEL", data.form);
                 context.commit("setFinishings", data.form);
-            } else {
+            } else if (data.form === undefined && !context.state.workflow.form.finishing.finishings.length) {
                 console.log("data.form undefined");
                 let blankFinishing = [{
                     id: "",
@@ -502,10 +502,13 @@ export default new Vuex.Store({
                 }];
                 context.commit("SET_FINISHING_LABEL", blankFinishing);
                 console.log("workflow.form.finishing.finishings");
-                if (data.database && data.database.finishings) {
-                    context.commit("setFinishings", data.database.finishings);
-                }
+
             }
+
+            if (data.database && data.database.finishings) {
+                context.commit("setFinishings", data.database.finishings);
+            }
+
             if (data.database && data.database.cuttings) {
                 console.log("cuttings");
                 console.log(data.database.cuttings);
@@ -597,21 +600,27 @@ export default new Vuex.Store({
             commit('setWorkflow', blankQuotation.form);
             commit('SET_QUOTATION_DATABASE', blankQuotation.database);
         },
-        async clearWorkflow(context, credentials) {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
+        getWorkflow(context, credentials) { // quotations.edit
+            return new Promise((resolve, reject) => {
+                axios.get('/api/auth/quotations/' + credentials.id + '/edit/' + context.state.user.company).then(response => {
+                    let data = response.data;
+                    console.log("getWorkflow");
+                    console.log(data);
+                    let workflow = JSON.parse(data.workflow);
+                    console.log("workflow");
+                    console.log(workflow);
+                    context.commit("setWorkflow", workflow);
 
-            context.commit("setWorkflow", workflow);
-            console.log(context.state.workflow);
-        },
-        async getWorkflow(context, credentials) {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
-            let data = (await axios.get('/api/auth/quotations/' + credentials.id + '/edit/' + context.state.user.company)).data; // quotations.edit
-            console.log("getWorkflow");
-            console.log(data);
-            let workflow = JSON.parse(data.workflow);
-            let third = data.third;
-            context.commit("setWorkflow", workflow);
-            context.commit("setThirdContacts", third.contacts);
+                    context.commit('SET_QUOTATION_DATABASE', blankQuotation.database);
+                    console.log("context.state.workflow");
+                    console.log(context.state.workflow);
+                    let third = data.third;
+                    context.commit("setThirdContacts", third.contacts);
+                    resolve(response);
+                }).catch(error => {
+                    reject(error);
+                });
+            });
         },
         async generatePDF(context, credentials) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' +  context.state.token;
