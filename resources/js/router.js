@@ -13,6 +13,10 @@ import Profile from './components/Profile';
 
 const routes = [
     {
+        path: '*',
+        redirect: { name: 'quotations.index' }
+    },
+    {
         path: '/login',
         name: 'login',
         component: Login,
@@ -31,9 +35,8 @@ const routes = [
             requiresAuth: true
         }
     },
-    { path: '/', redirect: { name: 'quotations.index' }},
     {
-        path: '/quotation',
+        path: '/quotation/create',
         name: 'quotations.create',
         component: Quotation,
         meta: {
@@ -42,7 +45,7 @@ const routes = [
         },
     },
     {
-        path: '/quotations/:id',
+        path: '/quotations/:id/show',
         name: 'quotations.show',
         component: SingleQuotation,
         props: true,
