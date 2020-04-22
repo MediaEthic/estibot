@@ -37,7 +37,7 @@
                     <span class="v-validate">{{ errors[0] }}</span>
                 </ValidationProvider>
 
-                <div class="wrap-field h-50" v-if="item.id !== '' && dies[index]">
+                <div class="wrap-field h-50" v-if="item.id !== '' && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.presence_die)[0] && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.die)[0]">
                     <select v-model="item.die.id"
                             @focus="item.hasFocus = true"
                             @blur="item.hasFocus = false"
@@ -45,8 +45,8 @@
                             class="field select"
                             :class="{ hasValue: item.die.id }"
                             required>
-                        <option disabled value="">Choisir</option>
-                        <option v-for="die in dies[index]"
+                        <option value="">Choisir</option>
+                        <option v-for="die in database.finishing.finishings.filter(operation => operation.id === item.id).map(obj => obj.die)[0]"
                                 v-bind:value="die.id">
                             {{ die.name }}
                         </option>
@@ -69,7 +69,7 @@
                     <label class="label-field">Outil</label>
                 </div>
 
-                <ValidationProvider v-else-if="item.id !== ''"
+                <ValidationProvider v-if="item.id !== '' && item.die.id === ''"
                                     tag="div"
                                     class="wrap-field h-50"
                                     rules="numeric"
@@ -87,7 +87,7 @@
                     <span class="v-validate">{{ errors[0] }}</span>
                 </ValidationProvider>
 
-                <div class="wrap-field h-50" v-if="item.id !== '' && (reworkings[index] || Object.keys(reworkings[index]).length)">
+                <div class="wrap-field h-50" v-if="item.id !== '' && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.reworkings)[0]">
                     <span class="btn-right-field" v-if="finishingsAreLoading">
                         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </span>
@@ -99,7 +99,7 @@
                             :class="{ hasValue: item.reworking }"
                     >
                         <option value="">Pas de reprise</option>
-                        <option v-for="reworking in reworkings[index]"
+                        <option v-for="reworking in database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.reworkings)[0]"
                                 v-bind:value="reworking.workstation_id || reworking.id">
                             {{ reworking.workstation_id || reworking.id }} - {{ reworking.workstation_name || reworking.name }}
                         </option>
@@ -110,20 +110,20 @@
                 <div class="wrap-field h-50 switcher" v-if="item.id !== '' && item.reworking">
                     <input type="radio"
                            v-model="item.cutting_die"
-                           id="toggle-on"
+                           :id="'toggle-on' + index"
                            class="field toggle toggle-left hasValue"
                            value="true"
                            required>
-                    <label for="toggle-on" class="toggle-btn"><i class="far fa-check-circle"></i>Oui</label>
+                    <label :for="'toggle-on' + index" class="toggle-btn"><i class="far fa-check-circle"></i>Oui</label>
 
-                    <input type="radio" id="toggle-off" class="field toggle toggle-right hasValue" name="toggle" v-model="item.cutting_die" value="false">
-                    <label for="toggle-off" class="toggle-btn"><i class="far fa-times-circle"></i>Non</label>
+                    <input type="radio" :id="'toggle-off' + index" class="field toggle toggle-right hasValue" v-model="item.cutting_die" value="false">
+                    <label :for="'toggle-off' + index" class="toggle-btn"><i class="far fa-times-circle"></i>Non</label>
 
                     <label class="label-field">Machine pour la découpe</label>
                 </div>
 
 
-                <div class="wrap-field h-50" v-if="item.presence_consumable && item.id !== '' && ((consumables.length && consumables[index].length) || (Object.keys(consumables).length && Object.keys(consumables[index]).length))">
+                <div class="wrap-field h-50" v-if="item.id !== '' && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.presence_consumable)[0] && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.consumable)[0]">
                     <select v-model="item.consumable.id"
                             @focus="item.hasFocus = true"
                             @blur="item.hasFocus = false"
@@ -133,7 +133,7 @@
                             @change="handleConsumable($event, index)"
                             required>
                         <option value="">Choisir</option>
-                        <option v-for="consumable in consumables[index]"
+                        <option v-for="consumable in database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.consumable)[0]"
                                 v-bind:value="consumable.id"
                                 :data-ethic="consumable.ethic"
                                 :data-price="consumable.price">
@@ -143,7 +143,7 @@
                     <label class="label-field">Désignation du consommable</label>
                 </div>
 
-                <ValidationProvider v-if="item.presence_consumable && item.id !== '' && ((!consumables.length && !consumables[index].length) || (!Object.keys(consumables).length && !Object.keys(consumables[index]).length))"
+                <ValidationProvider v-if="item.id !== '' && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.presence_consumable)[0] && !database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.consumable)[0]"
                                     tag="div"
                                     class="wrap-field h-50"
                                     name="consumable name"
@@ -159,7 +159,7 @@
                     <span class="v-validate">{{ errors[0] }}</span>
                 </ValidationProvider>
 
-                <div class="wrap-field-inline" v-if="item.presence_consumable && item.id !== '' && consumables[index]">
+                <div class="wrap-field-inline" v-if="item.id !== '' && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.presence_consumable)[0] && database.finishing.finishings.filter(finishing => finishing.id === item.id).map(obj => obj.consumable)[0]">
                     <span class="legend-line">Consommable</span>
                     <ValidationProvider tag="div"
                                         class="wrap-field h-50"
@@ -403,13 +403,11 @@
                 cuttings: []
             }
         },
-        created() {
+        mounted() {
             if (this.database.finishing.finishings === undefined || this.database.finishing.finishings.length < 1) {
                 this.finishingsAreLoading = true;
                 this.$store.dispatch('getFinishings').then(() => {
                     this.finishingsAreLoading = false;
-
-                    this.setUpConsumablesAndDies();
                     this.filteredCuttings();
                 }).catch(() => {
                     this.finishingsAreLoading = false;
@@ -419,7 +417,6 @@
                     });
                 });
             } else {
-                this.setUpConsumablesAndDies();
                 this.filteredCuttings();
             }
         },
@@ -437,97 +434,61 @@
                     target.classList.add("hasValue");
                 }
             },
-            setUpConsumablesAndDies() {
-                let allFinishings = this.database.finishing.finishings;
-                this.form.finishing.finishings.forEach(function(finishing, index) {
-                    if (finishing.id !== "") {
-                        let operation = allFinishings.find(item => item.id === finishing.id);
-                        this.setFinishingDies(operation, index);
-                        this.setFinishingConsumables(operation, index);
-                        this.setFinishingReworkings(operation, index);
-                    }
-                });
-            },
             addFinishing() {
                 this.form.finishing.finishings.push({
                     id: "",
                     name: "",
+                    reworking: "",
                     cutting_die: false,
                     die: {
                         id: "",
                         name: "",
                         price: "",
                     },
-                    rewdorking: "",
                     presence_consumable: false,
-                    hasFocus: false,
-                    consumable: ""
-                });
-            },
-            deleteFinishing(index) {
-                this.form.finishing.finishings.splice(index, 1);
-            },
-            handleFinishingChanging(event, index) {
-                if (event.target.options.selectedIndex > 0) {
-                    this.form.finishing.finishings[index].name = event.target.options[event.target.options.selectedIndex].dataset.name;
-                }
-                let finishingID = this.form.finishing.finishings[index].id;
-                let finishing = this.database.finishing.finishings.find(finishing => finishing.id === finishingID);
-
-                if (finishingID !== "") {
-                    this.setFinishingDies(finishing, index);
-                    this.setFinishingConsumables(finishing, index);
-                    this.setFinishingReworkings(finishing, index);
-                }
-            },
-            setFinishingDies(finishing, index) {
-                console.log("setFinishingDies");
-                console.log(finishing);
-                if (finishing.presence_die && finishing.die) {
-                    this.dies[index] = finishing.die;
-                    // let newDie = {
-                    //     id: "",
-                    //     name: "",
-                    //     price: "",
-                    //     hasFocus: false,
-                    // };
-                    // this.form.finishing.finishings[index].die = newDie;
-                } else {
-                    this.form.finishing.finishings[index].die = {
-                        id: "",
-                        name: "",
-                        price: "",
-                    };
-                }
-            },
-            setFinishingConsumables(finishing, index) {
-                console.log("setFinishingConsumables");
-                console.log(finishing);
-                if (finishing.presence_consumable) {
-                    this.consumables[index] = finishing.consumable;
-                    let newConsumable = {
+                    consumable: {
                         id: "",
                         name: "",
                         width: "",
                         price: "",
                         ethic: false,
                         hasFocus: false,
-                    };
-
-                    this.form.finishing.finishings[index].consumable = newConsumable;
-                    this.form.finishing.finishings[index].presence_consumable = true;
-                } else {
-                    this.form.finishing.finishings[index].presence_consumable = false;
-                    this.form.finishing.finishings[index].consumable = "";
-                }
+                    },
+                    hasFocus: false
+                });
             },
-            setFinishingReworkings(finishing, index) {
-                console.log("setFinishingReworkings");
-                console.log("finishing");
-                console.log(finishing);
-                console.log("index");
-                console.log(index);
-                this.reworkings[index] = finishing.reworkings;
+            deleteFinishing(index) {
+                this.form.finishing.finishings.splice(index, 1);
+            },
+            handleFinishingChanging(event, index) {
+                this.form.finishing.finishings[index].cuttong_die = false;
+                this.form.finishing.finishings[index].presence_consumable = false;
+                this.form.finishing.finishings[index].name = "";
+                this.form.finishing.finishings[index].reworking = "";
+                this.form.finishing.finishings[index].die = {
+                    id: "",
+                    name: "",
+                    price: "",
+                };
+
+                this.form.finishing.finishings[index].consumable = {
+                    id: "",
+                    name: "",
+                    width: "",
+                    price: "",
+                    ethic: false,
+                    hasFocus: false,
+                };
+
+                if (event.target.options.selectedIndex > 0) {
+                    this.form.finishing.finishings[index].name = event.target.options[event.target.options.selectedIndex].dataset.name;
+                }
+                let finishingID = this.form.finishing.finishings[index].id;
+
+                if (finishingID !== "") {
+                    let finishing = this.database.finishing.finishings.find(finishing => finishing.id === finishingID);
+                    this.form.finishing.finishings[index].presence_consumable = finishing.presence_consumable;
+                }
             },
             handleConsumable(event, index) {
                 if (event.target.options.selectedIndex > 0) {
@@ -556,8 +517,6 @@
             },
             handleCuttingChanging(cuttingID) {
                 let cutting = this.database.finishing.cuttings.find(cutting => cutting.id === cuttingID);
-
-                console.log(cutting);
 
                 this.form.finishing.cutting.ethic = cutting.ethic;
                 this.form.finishing.cutting.id = cutting.id;

@@ -539,6 +539,9 @@ class ApiRepository
     private function getLabelDies($datas)
     {
         try {
+            $datas['class'] = "null";
+            $allReworkings = $this->getReworkings($datas);
+
             $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTEOUTIL/' . $datas['company'] . '/' . $datas['label'] . '/' . $datas['variant']);
             $finishings = collect(json_decode($response->getBody()))->map(function($item) {
                 $finishing = collect();
@@ -551,8 +554,6 @@ class ApiRepository
                 return $finishing;
             });
 
-            $datas['class'] = "null";
-            $allReworkings = $this->getReworkings($datas);
 
             $labelFinishings = array();
             foreach ($finishings as $finishing) {
@@ -644,6 +645,9 @@ class ApiRepository
     private function getLabelFinishings($datas)
     {
         try {
+            $datas['class'] = "null";
+            $allReworkings = $this->getReworkings($datas);
+
             $response = $this->client->request('GET', 'http://89.92.37.229/API/ETIQUETTEFINITION/' . $datas['company'] . '/' . $datas['label'] . '/' . $datas['variant']);
             $finishings = collect(json_decode($response->getBody()))->map(function($item) {
                 $finishing = collect();
@@ -655,10 +659,6 @@ class ApiRepository
                 $finishing->offsetSet('list_consumable', $item->LISTECODECLASSECONSO);
                 return $finishing;
             });
-
-
-            $datas['class'] = "null";
-            $allReworkings = $this->getReworkings($datas);
 
             $labelFinishings = array();
             foreach ($finishings as $finishing) {
@@ -713,6 +713,9 @@ class ApiRepository
     private function getAllFinishings($datas)
     {
         try {
+            $datas['class'] = "null";
+            $allReworkings = $this->getReworkings($datas);
+
             $response = $this->client->request('GET', 'http://89.92.37.229/API/FINITION/' . $datas['company']);
             $finishings = collect(json_decode($response->getBody()))->map(function($item) {
                 $finishing = collect();
@@ -725,8 +728,6 @@ class ApiRepository
                 return $finishing;
             });
 
-            $datas['class'] = "null";
-            $allReworkings = $this->getReworkings($datas);
 
             $labelFinishings = array();
             foreach ($finishings as $finishing) {

@@ -75,19 +75,26 @@ const blankQuotation = {
         finishing: {
             finishings: [
                 {
+                id: "",
+                name: "",
+                reworking: "",
+                cutting_die: false,
+                die: {
                     id: "",
                     name: "",
-                    cutting_die: false,
-                    die: {
-                        id: "",
-                        name: "",
-                        price: "",
-                    },
-                    reworking: "",
-                    presence_consumable: false,
+                    price: "",
+                },
+                presence_consumable: false,
+                consumable: {
+                    id: "",
+                    name: "",
+                    width: "",
+                    price: "",
+                    ethic: false,
                     hasFocus: false,
-                    consumable: ""
-                }
+                },
+                hasFocus: false
+            }
             ],
             cutting: {
                 type: "old",
@@ -219,7 +226,7 @@ export default new Vuex.Store({
         setThirdLabels(state, data) {
             state.workflow.database.description.labels = data;
         },
-        setFinishingsLabel(state, data) {
+        SET_FINISHING_LABEL(state, data) {
             state.workflow.form.finishing.finishings = data;
         },
         setFinishings(state, data) {
@@ -468,26 +475,33 @@ export default new Vuex.Store({
             console.log("getFinishings store");
             console.log(data);
             if (data.form !== undefined) {
-                context.commit("setFinishingsLabel", data.form);
+                context.commit("SET_FINISHING_LABEL", data.form);
                 context.commit("setFinishings", data.form);
             } else {
                 console.log("data.form undefined");
-                let singleFinishing = [{
+                let blankFinishing = [{
                     id: "",
                     name: "",
+                    reworking: "",
                     cutting_die: false,
                     die: {
                         id: "",
                         name: "",
                         price: "",
                     },
-                    reworking: "",
                     presence_consumable: false,
-                    hasFocus: false,
-                    consumable: ""
+                    consumable: {
+                        id: "",
+                        name: "",
+                        width: "",
+                        price: "",
+                        ethic: false,
+                        hasFocus: false,
+                    },
+                    hasFocus: false
                 }];
-                context.commit("setFinishingsLabel", singleFinishing);
-                console.log(context.state.workflow.form.finishing.finishings);
+                context.commit("SET_FINISHING_LABEL", blankFinishing);
+                console.log("workflow.form.finishing.finishings");
                 if (data.database && data.database.finishings) {
                     context.commit("setFinishings", data.database.finishings);
                 }

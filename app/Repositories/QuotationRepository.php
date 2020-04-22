@@ -713,7 +713,7 @@ class QuotationRepository
                             }
 
                             if (empty($finishingCadences)) {
-                                $errors['errors'][] = "Veuillez renseigner les cadences des opérations de finition dans Paramètres > Gestion production > Postes de production > Calages.";
+                                $errors['errors'][] = "Veuillez renseigner la cadence et calage de base pour le poste " . $finishingPress . " dans Paramètres > Gestion production > Postes de production (onglet Calages).";
                             } else {
                                 $base = $finishingCadences->where('finishing_id', null)->first();
 
@@ -758,119 +758,126 @@ class QuotationRepository
                                     }
                                 }
 
+
+
+
                                 $finishingOperation = $finishingCadences->where('finishing_id', $finishing['id'])->first();
 
-                                // Métrage de calage finition
-                                $meterMakereadyFinishingOperation = $finishingOperation['overlay_sheet'];
-                                $meterMakereadyPress += $meterMakereadyFinishingOperation;
-                                $results['quantities'][$copies]['wastage'][] = "Calage pour " . $finishing['name'] . " : " . $meterMakereadyFinishingOperation . "m";
+                                if (!empty($finishingOperation)) {
+                                    // Métrage de calage finition
+                                    $meterMakereadyFinishingOperation = $finishingOperation['overlay_sheet'];
+                                    $meterMakereadyPress += $meterMakereadyFinishingOperation;
+                                    $results['quantities'][$copies]['wastage'][] = "Calage pour " . $finishing['name'] . " : " . $meterMakereadyFinishingOperation . "m";
 
-                                // Temps de calage finition
-                                $timeMakereadyFinishingOperation = round($finishingOperation['makeready_times'], 4);
-                                $results['quantities'][$copies]['time'][] = "Calage pour " . $finishing['name'] . " : " . $timeMakereadyFinishingOperation . "h";
+                                    // Temps de calage finition
+                                    $timeMakereadyFinishingOperation = round($finishingOperation['makeready_times'], 4);
+                                    $results['quantities'][$copies]['time'][] = "Calage pour " . $finishing['name'] . " : " . $timeMakereadyFinishingOperation . "h";
 
 
-                                $allOperations = array();
-                                foreach ($finishings as $operation) {
-                                    if (!empty($reworking)) {
-                                        if ($operation['reworking'] === $reworking) {
+                                    $allOperations = array();
+                                    foreach ($finishings as $operation) {
+                                        if (!empty($reworking)) {
+                                            if ($operation['reworking'] === $reworking) {
+                                                $allOperations[] = $finishingCadences->where('finishing_id', $operation['id'])->first();
+                                            }
+                                        } else {
                                             $allOperations[] = $finishingCadences->where('finishing_id', $operation['id'])->first();
                                         }
-                                    } else {
-                                        $allOperations[] = $finishingCadences->where('finishing_id', $operation['id'])->first();
                                     }
-                                }
-                                $allOperations[] = $base;
+                                    $allOperations[] = $base;
 
-                                $allOperationsFinishingCadences = array();
-                                foreach ($allOperations as $operation) {
-                                    if ($operation['unit_cadence'] === "meter") {
-                                        $cadence = $operation['cadence'] * 60;
-                                    } else {
-                                        $cadence = $operation['cadence'];
-                                    }
-                                    $allOperationsFinishingCadences[] = $cadence;
-                                }
-
-                                $cadenceFinishingOperation = min($allOperationsFinishingCadences);
-
-                                if ($finishingPress === $press['id']) {
-                                    $pressCadence = $cadenceFinishingOperation;
-                                }
-
-                                if ($finishingOperation['unit_cadence'] === "striking") {
-                                    $timeProductionFinishingOperation = $strikingRun / $cadenceFinishingOperation;
-                                } else {
-                                    $timeProductionFinishingOperation = $substrateLinear / $cadenceFinishingOperation;
-                                }
-                                $results['quantities'][$copies]['time'][] = "Roulage pour " . $finishing['name'] . " : " . $timeProductionFinishingOperation . "h";
-                            }
-
-                            $totalTimeFinishingOperation = round($timeMakereadyFinishingOperation + $timeProductionFinishingOperation, 4);
-
-                            $costFinishingShape = 0;
-                            if (!empty($finishing['die']['id'])) {
-                                $finishingShape = intval($finishing['die']['price']);
-                                if ($finishingShape > 0) {
-                                    $costFinishingShape = $finishingShape;
-                                    $results['quantities'][$copies]['cost'][] = "Outil de " . $finishing['name'] . " : " . $costFinishingShape . "€";
-                                }
-                            }
-
-                            $totalFixedCostFinishingOperation = $costFinishingShape + ($timeMakereadyFinishingOperation * $finishingOperation['workstation_hourly_rate']);
-                            $results['quantities'][$copies]['cost'][] = "Calage pour " . $finishing['name'] . " : " . $totalFixedCostFinishingOperation . "€";
-
-                            $totalCostConsumable = 0;
-                            if ($finishing['presence_consumable']) {
-                                $consumable = $finishing['consumable'];
-                                if (!empty($consumable)) {
-                                    if (!empty($consumable['width']) && !empty($consumable['price'])) {
-                                        $consumableWidth = intval($consumable['width']);
-                                        $consumablePrice = floatval($consumable['price']);
-                                        if ($consumableWidth < $finishingOperation['workstation_size_papermaxx']) {
-                                            $totalCostConsumable = $substrateLinear * ($consumableWidth / 1000 * $consumablePrice);
-                                            $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishing['name'] . " : " . $totalCostConsumable . "€";
+                                    $allOperationsFinishingCadences = array();
+                                    foreach ($allOperations as $operation) {
+                                        if ($operation['unit_cadence'] === "meter") {
+                                            $cadence = $operation['cadence'] * 60;
                                         } else {
-                                            $errors['errors'][] = "La laize du consommable n'est pas en corrélation avec celle de la machine";
+                                            $cadence = $operation['cadence'];
                                         }
+                                        $allOperationsFinishingCadences[] = $cadence;
+                                    }
+
+                                    $cadenceFinishingOperation = min($allOperationsFinishingCadences);
+
+                                    if ($finishingPress === $press['id']) {
+                                        $pressCadence = $cadenceFinishingOperation;
+                                    }
+
+                                    if ($finishingOperation['unit_cadence'] === "striking") {
+                                        $timeProductionFinishingOperation = $strikingRun / $cadenceFinishingOperation;
                                     } else {
-                                        if (empty($consumable['width'])) { $errors['errors'][] = "Vous devez saisir la laize du consommable " . $consumable['name']; }
-                                        if (empty($consumable['price'])) { $errors['errors'][] = "Vous devez saisir le prix du consommable " . $consumable['name']; }
+                                        $timeProductionFinishingOperation = $substrateLinear / $cadenceFinishingOperation;
                                     }
+                                    $results['quantities'][$copies]['time'][] = "Roulage pour " . $finishing['name'] . " : " . $timeProductionFinishingOperation . "h";
+
+                                    $totalTimeFinishingOperation = round($timeMakereadyFinishingOperation + $timeProductionFinishingOperation, 4);
+
+                                    $costFinishingShape = 0;
+                                    if (empty($finishing['die']['id'])) {
+                                        $finishingShape = intval($finishing['die']['price']);
+                                        if ($finishingShape > 0) {
+                                            $costFinishingShape = $finishingShape;
+                                            $results['quantities'][$copies]['cost'][] = "Outil de " . $finishing['name'] . " : " . $costFinishingShape . "€";
+                                        }
+                                    }
+
+                                    $totalFixedCostFinishingOperation = $costFinishingShape + ($timeMakereadyFinishingOperation * $finishingOperation['workstation_hourly_rate']);
+                                    $results['quantities'][$copies]['cost'][] = "Calage pour " . $finishing['name'] . " : " . $totalFixedCostFinishingOperation . "€";
+
+                                    $totalCostConsumable = 0;
+                                    if ($finishing['presence_consumable']) {
+                                        $consumable = $finishing['consumable'];
+                                        if (!empty($consumable)) {
+                                            if (!empty($consumable['width']) && !empty($consumable['price'])) {
+                                                $consumableWidth = intval($consumable['width']);
+                                                $consumablePrice = floatval($consumable['price']);
+                                                if ($consumableWidth < $finishingOperation['workstation_size_papermaxx']) {
+                                                    $totalCostConsumable = $substrateLinear * ($consumableWidth / 1000 * $consumablePrice);
+                                                    $results['quantities'][$copies]['cost'][] = "Consommable " . $consumable['name'] . " pour la finition " . $finishing['name'] . " : " . $totalCostConsumable . "€";
+                                                } else {
+                                                    $errors['errors'][] = "La laize du consommable n'est pas en corrélation avec celle de la machine";
+                                                }
+                                            } else {
+                                                if (empty($consumable['width'])) { $errors['errors'][] = "Vous devez saisir la laize du consommable " . $consumable['name']; }
+                                                if (empty($consumable['price'])) { $errors['errors'][] = "Vous devez saisir le prix du consommable " . $consumable['name']; }
+                                            }
+                                        } else {
+                                            $errors['errors'][] = "Vous devez saisir les données relatives au consommable pour la finition " . $finishing['name'];
+                                        }
+                                    }
+
+                                    $totalVariableCostFinishingOperation = $totalCostConsumable + ($timeProductionFinishingOperation * $finishingOperation['workstation_hourly_rate']);
+                                    $totalCostFinishingOperation = $totalFixedCostFinishingOperation + $totalVariableCostFinishingOperation;
+
+                                    $costWithMarginReturned = $this->handleMargin($marginFinishing, $totalCostFinishingOperation, $totalFixedCostFinishingOperation, $totalVariableCostFinishingOperation);
+                                    if (!empty($costWithMarginReturned)) {
+                                        $lastElement = end($costWithMarginReturned);
+                                        foreach ($costWithMarginReturned as $result) {
+                                            if ($result === $lastElement) {
+                                                $totalCostsWithoutMargin += $totalCostFinishingOperation;
+                                                $totalCostsWithMargin += $result[0];
+                                                $totalFixedCostsWithoutMargin += $totalFixedCostFinishingOperation;
+                                                $totalVariableCostsWithoutMargin += $totalVariableCostFinishingOperation;
+                                                $totalFixedCostsWithMargin += $result[1];
+                                                $totalVariableCostsWithMargin += $result[2];
+                                                $totalTimes += $totalTimeFinishingOperation;
+
+                                                $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishing['name'];
+                                                $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeFinishingOperation;
+                                                $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostFinishingOperation;
+                                                $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
+                                                $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
+                                                $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginFinishing;
+                                                $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
+
+                                                $operationId++;
+                                            }
+                                        }
+                                    }
+                                    $pressMakeready[] = $finishingPress;
                                 } else {
-                                    $errors['errors'][] = "Vous devez saisir les données relatives au consommable pour la finition " . $finishing['name'];
+                                    $errors['errors'][] = "Veuillez renseigner la cadence de l'opération " . $finishing['name'] . " pour le poste " . $finishingPress . " dans Paramètres > Gestion production > Postes de production (onglet Calages).";
                                 }
                             }
-
-                            $totalVariableCostFinishingOperation = $totalCostConsumable + ($timeProductionFinishingOperation * $finishingOperation['workstation_hourly_rate']);
-                            $totalCostFinishingOperation = $totalFixedCostFinishingOperation + $totalVariableCostFinishingOperation;
-
-                            $costWithMarginReturned = $this->handleMargin($marginFinishing, $totalCostFinishingOperation, $totalFixedCostFinishingOperation, $totalVariableCostFinishingOperation);
-                            if (!empty($costWithMarginReturned)) {
-                                $lastElement = end($costWithMarginReturned);
-                                foreach ($costWithMarginReturned as $result) {
-                                    if ($result === $lastElement) {
-                                        $totalCostsWithoutMargin += $totalCostFinishingOperation;
-                                        $totalCostsWithMargin += $result[0];
-                                        $totalFixedCostsWithoutMargin += $totalFixedCostFinishingOperation;
-                                        $totalVariableCostsWithoutMargin += $totalVariableCostFinishingOperation;
-                                        $totalFixedCostsWithMargin += $result[1];
-                                        $totalVariableCostsWithMargin += $result[2];
-                                        $totalTimes += $totalTimeFinishingOperation;
-
-                                        $results['quantities'][$copies]['operations'][$operationId]['name'] = $finishing['name'];
-                                        $results['quantities'][$copies]['operations'][$operationId]['time'] = $totalTimeFinishingOperation;
-                                        $results['quantities'][$copies]['operations'][$operationId]['cost'] = $totalCostFinishingOperation;
-                                        $results['quantities'][$copies]['operations'][$operationId]['fixed'] = $result[1];
-                                        $results['quantities'][$copies]['operations'][$operationId]['variable'] = $result[2];
-                                        $results['quantities'][$copies]['operations'][$operationId]['margin'] = $marginFinishing;
-                                        $results['quantities'][$copies]['operations'][$operationId]['price'] = $result[0];
-
-                                        $operationId++;
-                                    }
-                                }
-                            }
-                            $pressMakeready[] = $finishingPress;
                         }
                     }
 
@@ -1016,7 +1023,7 @@ class QuotationRepository
                     $totalFixedCostSubstrate = $meterMakereadyPress * $substratePriceLinearMeter;
                     $totalVariableCostSubstrate = $substrateLinear * $substratePriceLinearMeter;
                     $totalCostSubstrate = $totalFixedCostSubstrate + $totalVariableCostSubstrate;
-                    $results['quantities'][$copies]['cost'][] = "Support d'impression : " . $totalCostSubstrate . "€ $substratePrice";
+                    $results['quantities'][$copies]['cost'][] = "Support d'impression : " . $totalCostSubstrate . "€";
 
                     $totalTimeSubstrate = 0;
                     $marginSubstrate = $margin;

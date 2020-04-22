@@ -358,7 +358,7 @@
         created() {
             const labels = this.database.description.labels;
             this.allThirdLabels = labels;
-            if (labels.length > 1) {
+            if (labels.length > 0) {
                 this.form.description.label.type = "old";
 
                 let widths = labels.map(item => item.width)

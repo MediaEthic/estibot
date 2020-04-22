@@ -32,6 +32,7 @@
                             <ul class="nav-tabs flex justify-between items-center">
                                 <li
                                     v-for="(tab, index) in steps"
+                                    :key="tab.component"
                                     class="nav-item cursor-pointer"
                                     @click="goToStep(index + 1)"
                                 >
@@ -67,11 +68,10 @@
                             >
                                 <keep-alive>
                                     <component
-                                        :is="steps[currentStep-1].component"
-                                        :id="steps[currentStep-1].component"
+                                        :is="tab.component"
+                                        :id="tab.component"
                                     />
                                 </keep-alive>
-
 
                                 <div class="wrap-buttons-controls-step">
                                     <button type="button"

@@ -397,9 +397,6 @@
                 contactsAreLoading: false,
             }
         },
-        created() {
-
-        },
         computed: {
             form() {
                 return this.$store.state.workflow.form;
@@ -453,7 +450,8 @@
                 }
             },
             setContact() {
-                let contact = this.database.identification.contacts.find(contact => contact.id === this.form.identification.contact.id);
+                let allContacts = Object.values(this.database.identification.contacts);
+                let contact = allContacts.find(contact => contact.id === this.form.identification.contact.id);
                 this.form.identification.contact.ethic = contact.ethic;
                 this.form.identification.contact.type = "old";
                 if (this.form.identification.contact.email !== null || this.form.identification.contact.email !== "") {
